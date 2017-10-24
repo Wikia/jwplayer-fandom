@@ -1,9 +1,14 @@
 function loadJWPlayerScript(callback, elementId, playerURL) {
+	if (typeof jwplayer !== 'undefined') {
+		callback();
+		return;
+	}
 	var script = document.createElement('script'),
 		playerElement = document.getElementById(elementId);
 	script.onload = callback;
 	script.async = true;
 	script.src = playerURL || 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
+	// insert script node just after player element
 	playerElement.parentNode.insertBefore(script, playerElement.nextSibling);
 }
 
@@ -43,7 +48,7 @@ function setupPlayer(elementId, options) {
 	return playerInstance;
 }
 
-function init(elementId, options) {
+function init(elementId, options, callback) {
 	loadJWPlayerScript(function () {
 		WikiaJWPlayerSettings.register();
 		var playerInstance = setupPlayer(elementId, options);
@@ -51,6 +56,9 @@ function init(elementId, options) {
 		JWPlayerEvents(playerInstance, options.autoplay.enabled);
 		if (options.tracking) {
 			JWPlayerTracking(playerInstance, options.autoplay.enabled, 'feautred-video', options.tracking);
+		}
+		if (callback) {
+			callback(playerInstance);
 		}
 	}, elementId, options.playerURL);
 }
