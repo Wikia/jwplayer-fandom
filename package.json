@@ -1,0 +1,38 @@
+{
+  "name": "jwplayer-fandom",
+  "version": "1.0.0",
+  "description": "JWPlayer for Fandom",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm run build && npm-run-all --parallel watch-other watch-scss server",
+    "server": "http-server dist",
+    "copy-html-js": "mkdir -p dist && cp src/*.js src/*.html dist/",
+    "build": "npm run copy-html-js && npm run build-all-css",
+    "build-dev-css": "node-sass src/styles/dev.scss --output-style compressed | postcss -u autoprefixer --autoprefixer.browsers=\"ie >= 11, Safari >= 7.1, last 2 versions\" > dist/dev.css",
+    "build-css": "node-sass src/styles/index.scss --output-style compressed | postcss -u autoprefixer --autoprefixer.browsers=\"ie >= 11, Safari >= 7.1, last 2 versions\" > dist/index.css",
+    "build-all-css": "npm run build-css && npm run build-dev-css",
+    "watch-scss": "nodemon -e scss -x \"npm run build-css\"",
+    "watch-other": "nodemon -e html,js --ignore dist/ -x \"npm run copy-html-js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wikia/jwplayer-fandom.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Wikia/jwplayer-fandom/issues"
+  },
+  "homepage": "https://github.com/Wikia/jwplayer-fandom#readme",
+  "devDependencies": {
+    "autoprefixer": "^7.1.6",
+    "http-server": "^0.10.0",
+    "node-sass": "^4.5.3",
+    "nodemon": "^1.12.1",
+    "npm-run-all": "^4.1.1",
+    "postcss-cli": "^4.1.1"
+  },
+  "dependencies": {
+    "design-system": "git+https://github.com/Wikia/design-system.git#8.11.0"
+  }
+}
