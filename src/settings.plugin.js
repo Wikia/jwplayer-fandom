@@ -201,4 +201,6 @@ WikiaJWPlayerSettings.prototype.updateCurrentQuality = function (qualityLevelsLi
 	});
 };
 
-jwplayer().registerPlugin('wikiaSettings', '8.0.0', WikiaJWPlayerSettings);
+WikiaJWPlayerSettings.register = function () {
+	jwplayer().registerPlugin('wikiaSettings', '8.0.0', WikiaJWPlayerSettings);
+};

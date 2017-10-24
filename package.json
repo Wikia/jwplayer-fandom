@@ -8,7 +8,7 @@
     "server": "http-server dist",
     "copy-html": "mkdir -p dist && cp src/*.html dist/",
     "build": "npm run copy-html && npm run build-all-css && npm run build-js",
-    "build-js": "uglifyjs --compress -o dist/wikiajwplayer.js --wrap WikiaJWPlayer -- src/*.js",
+    "build-js": "uglifyjs --compress --mangle -o dist/wikiajwplayer.js --wrap WikiaJWPlayer -- src/*.js",
     "build-dev-css": "node-sass src/styles/dev.scss --output-style compressed | postcss -u autoprefixer --autoprefixer.browsers=\"ie >= 11, Safari >= 7.1, last 2 versions\" > dist/dev.css",
     "build-css": "node-sass src/styles/index.scss --output-style compressed | postcss -u autoprefixer --autoprefixer.browsers=\"ie >= 11, Safari >= 7.1, last 2 versions\" > dist/index.css",
     "build-all-css": "npm run build-css && npm run build-dev-css",
@@ -28,14 +28,12 @@
   "homepage": "https://github.com/Wikia/jwplayer-fandom#readme",
   "devDependencies": {
     "autoprefixer": "^7.1.6",
+    "design-system": "git+https://github.com/Wikia/design-system.git#8.11.0",
     "http-server": "^0.10.0",
     "node-sass": "^4.5.3",
     "nodemon": "^1.12.1",
     "npm-run-all": "^4.1.1",
     "postcss-cli": "^4.1.1",
     "uglify-js": "^3.1.5"
-  },
-  "dependencies": {
-    "design-system": "git+https://github.com/Wikia/design-system.git#8.11.0"
   }
 }

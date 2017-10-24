@@ -1,3 +1,12 @@
+function loadJWPlayerScript(callback, elementId, playerURL) {
+	var script = document.createElement('script'),
+		playerElement = document.getElementById(elementId);
+	script.onload = callback;
+	script.async = true;
+	script.src = playerURL || 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
+	playerElement.parentNode.insertBefore(script, playerElement.nextSibling);
+}
+
 function setupPlayer(elementId, options) {
 	var playerInstance = jwplayer(elementId),
 		videoId = options.videoDetails.playlist[0].mediaid,
@@ -35,12 +44,15 @@ function setupPlayer(elementId, options) {
 }
 
 function init(elementId, options) {
-	var playerInstance = setupPlayer(elementId, options);
-	JWPlayerIcons(playerInstance);
-	JWPlayerEvents(playerInstance, options.autoplay.enabled);
-	if (options.tracking) {
-		JWPlayerTracking(playerInstance, options.autoplay.enabled, 'feautred-video', options.tracking);
-	}
+	loadJWPlayerScript(function () {
+		WikiaJWPlayerSettings.register();
+		var playerInstance = setupPlayer(elementId, options);
+		JWPlayerIcons(playerInstance);
+		JWPlayerEvents(playerInstance, options.autoplay.enabled);
+		if (options.tracking) {
+			JWPlayerTracking(playerInstance, options.autoplay.enabled, 'feautred-video', options.tracking);
+		}
+	}, elementId, options.playerURL);
 }
 
-window.WikiaJWPlayer = init;
+WikiaJWPlayer = init;
