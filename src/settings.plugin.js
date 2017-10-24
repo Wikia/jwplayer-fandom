@@ -2,10 +2,10 @@ function WikiaJWPlayerSettings(player, config, div) {
 	this.player = player;
 	this.wikiaSettingsElement = div;
 	this.buttonID = 'wikiaSettings';
+	this.config = config;
 	this.documentClickHandler = this.documentClickHandler.bind(this);
 
 	this.addSettingsContent(this.wikiaSettingsElement);
-	this.addButton();
 
 	document.addEventListener('click', this.documentClickHandler);
 }
@@ -93,7 +93,9 @@ WikiaJWPlayerSettings.prototype.createSettingsListElement = function () {
 
 	settingsList.classList.add('wikia-jw-settings__list');
 	settingsList.appendChild(this.createQualityButton());
-	settingsList.appendChild(this.createAutoplayToggle());
+	if (this.config.showToggle) {
+		settingsList.appendChild(this.createAutoplayToggle());
+	}
 
 	return settingsList;
 };
@@ -118,15 +120,15 @@ WikiaJWPlayerSettings.prototype.createAutoplayToggle = function () {
 	toggleInput.setAttribute('type', 'checkbox');
 	toggleInput.setAttribute('id', toggleID);
 	toggleInput.classList.add('wds-toggle__input');
-	// if (featuredVideoAutoplay.isAutoplayEnabled()) {
-	// 	toggleInput.setAttribute('checked', '');
-	// }
+	if (JWPlayerAutoplay.isAutoplayEnabled()) {
+		toggleInput.setAttribute('checked', '');
+	}
 
 	toggleLabel.setAttribute('for', toggleID);
 	toggleLabel.classList.add('wds-toggle__label');
 	toggleLabel.appendChild(document.createTextNode("Autoplay Videos"));
 	toggleLabel.addEventListener('click', function (event) {
-		// featuredVideoAutoplay.toggleAutoplay(!event.target.previousSibling.checked);
+		JWPlayerAutoplay.toggleAutoplay(!event.target.previousSibling.checked);
 		playerInstance.trigger('autoplayToggle', !event.target.previousSibling.checked);
 	});
 
@@ -154,6 +156,12 @@ WikiaJWPlayerSettings.prototype.createQualityLevelsList = function () {
 		var isQualityListEmpty = !data.levels.length || (data.levels.length === 1 && data.levels[0].label === '0');
 
 		this.wikiaSettingsElement.classList.toggle(isQualityListEmptyClass, isQualityListEmpty);
+		// adds/removes button if necessary
+		if (!isQualityListEmpty || this.config.showToggle) {
+			this.show();
+		} else {
+			this.hide();
+		}
 		this.updateQualityLevelsList(qualityLevelsList, data.levels, isActiveClass, backButton);
 	}.bind(this));
 

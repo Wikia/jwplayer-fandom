@@ -8,23 +8,26 @@
 function setupPlayer(elementId, options) {
 	var playerInstance = jwplayer(elementId),
 		videoId = options.videoDetails.playlist[0].mediaid,
+		willAutoplay = JWPlayerAutoplay.willAutoplay(),
 		playerSetup = {
 			advertising: {
-				autoplayadsmuted: options.autoplay,
+				autoplayadsmuted: willAutoplay,
 				client: 'googima'
 			},
-			autostart: options.autoplay && !document.hidden,
+			autostart: willAutoplay && !document.hidden,
 			description: options.videoDetails.description,
 			image: '//content.jwplatform.com/thumbs/' + videoId + '-640.jpg',
-			mute: options.autoplay,
+			mute: willAutoplay,
 			playlist: options.videoDetails.playlist,
 			title: options.videoDetails.title,
 			plugins: {
-				wikiaSettings: null
+				wikiaSettings: {
+					showToggle: options.autoplay.showToggle
+				}
 			}
 		};
 
-	if(options.related) {
+	if (options.related) {
 		playerSetup.related = {
 			autoplaytimer: options.related.time || 3,
 			file: 'https://cdn.jwplayer.com/v2/playlists/' + options.related.playlistId + '?related_media_id=' + videoId,
@@ -40,11 +43,29 @@ function setupPlayer(elementId, options) {
 function init(elementId, options) {
 	// var playerElement = document.getElementById(elementId);
 	// insertJWPlayerScript(playerElement);
-	setupPlayer(elementId, options);
+	JWPlayerAutoplay.showToggle = options.autoplay.showToggle;
+	JWPlayerAutoplay.enabled = options.autoplay.enabled;
+	var playerInstance = setupPlayer(elementId, options);
+	JWPlayerEvents(playerInstance, JWPlayerAutoplay.willAutoplay());
+	if (options.tracking) {
+		JWPlayerTracking(playerInstance, JWPlayerAutoplay.willAutoplay(), 'feautred-video', options.tracking);
+	}
 }
 
 init('player', {
-	autoplay: true,
+	tracking: {
+		track: function (data) {
+			console.log('track', data);
+		},
+		setCustomDimension: function () {
+			console.log('setCustomDimension', arguments);
+		},
+		comscore: true
+	},
+	autoplay: {
+		showToggle: true,
+		enabled: true,
+	},
 	related: {
 		time: 3,
 		playlistId: 'Y2RWCKuS', //recommendedPlaylist: 'Y2RWCKuS',
@@ -108,5 +129,5 @@ init('player', {
 			"originalName": "020217_Harry Potter_FINAL_no watermark.mp4",
 			"ooyalaEmbed": "hwM2FkOTE6R_fZR9uu5jvOy9FHm3NS1O"
 		}]
-	},
+	}
 });
