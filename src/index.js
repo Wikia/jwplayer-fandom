@@ -8,7 +8,7 @@
 function setupPlayer(elementId, options) {
 	var playerInstance = jwplayer(elementId),
 		videoId = options.videoDetails.playlist[0].mediaid,
-		willAutoplay = JWPlayerAutoplay.willAutoplay(),
+		willAutoplay = options.autoplay.enabled,
 		playerSetup = {
 			advertising: {
 				autoplayadsmuted: willAutoplay,
@@ -22,7 +22,8 @@ function setupPlayer(elementId, options) {
 			title: options.videoDetails.title,
 			plugins: {
 				wikiaSettings: {
-					showToggle: options.autoplay.showToggle
+					showToggle: options.autoplay.showToggle,
+					autoplay: options.autoplay.enabled
 				}
 			}
 		};
@@ -43,12 +44,11 @@ function setupPlayer(elementId, options) {
 function init(elementId, options) {
 	// var playerElement = document.getElementById(elementId);
 	// insertJWPlayerScript(playerElement);
-	JWPlayerAutoplay.showToggle = options.autoplay.showToggle;
-	JWPlayerAutoplay.enabled = options.autoplay.enabled;
 	var playerInstance = setupPlayer(elementId, options);
-	JWPlayerEvents(playerInstance, JWPlayerAutoplay.willAutoplay());
+	JWPlayerIcons(playerInstance);
+	JWPlayerEvents(playerInstance, options.autoplay.enabled);
 	if (options.tracking) {
-		JWPlayerTracking(playerInstance, JWPlayerAutoplay.willAutoplay(), 'feautred-video', options.tracking);
+		JWPlayerTracking(playerInstance, options.autoplay.enabled, 'feautred-video', options.tracking);
 	}
 }
 
@@ -60,11 +60,11 @@ init('player', {
 		setCustomDimension: function () {
 			console.log('setCustomDimension', arguments);
 		},
-		comscore: true
+		comscore: false
 	},
 	autoplay: {
 		showToggle: true,
-		enabled: true,
+		enabled: true, // willAutoplay
 	},
 	related: {
 		time: 3,

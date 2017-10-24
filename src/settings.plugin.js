@@ -120,7 +120,7 @@ WikiaJWPlayerSettings.prototype.createAutoplayToggle = function () {
 	toggleInput.setAttribute('type', 'checkbox');
 	toggleInput.setAttribute('id', toggleID);
 	toggleInput.classList.add('wds-toggle__input');
-	if (JWPlayerAutoplay.isAutoplayEnabled()) {
+	if (this.config.autoplay) {
 		toggleInput.setAttribute('checked', '');
 	}
 
@@ -128,7 +128,6 @@ WikiaJWPlayerSettings.prototype.createAutoplayToggle = function () {
 	toggleLabel.classList.add('wds-toggle__label');
 	toggleLabel.appendChild(document.createTextNode("Autoplay Videos"));
 	toggleLabel.addEventListener('click', function (event) {
-		JWPlayerAutoplay.toggleAutoplay(!event.target.previousSibling.checked);
 		playerInstance.trigger('autoplayToggle', !event.target.previousSibling.checked);
 	});
 
