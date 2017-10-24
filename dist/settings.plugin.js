@@ -152,11 +152,11 @@ WikiaJWPlayerSettings.prototype.createQualityLevelsList = function () {
 
 	playerInstance.on('levels', function (data) {
 		// in Safari in data.levels array there is one element with label = '0'
-		var isQualityListEmpty = !data.levels.length || (data.levels.length === 1 && data.levels[0].label === '0');
+		var isQualityListEmpty = !data.levels.length || (data.levels.length === 1 && data.levels[0].label === '0'),
+			shouldShowSettingsButton = !isQualityListEmpty || this.config.showToggle;
 
 		this.wikiaSettingsElement.classList.toggle(isQualityListEmptyClass, isQualityListEmpty);
-		// adds/removes button if necessary
-		if (!isQualityListEmpty || this.config.showToggle) {
+		if (shouldShowSettingsButton) {
 			this.show();
 		} else {
 			this.hide();

@@ -1,10 +1,3 @@
-// function insertJWPlayerScript(playerElement) {
-// 	var jwPlayerScript = document.createElement('script');
-//
-// 	jwPlayerScript.src = 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
-// 	playerElement.parentNode.insertBefore(jwPlayerScript, playerElement.nextSibling);
-// }
-
 function setupPlayer(elementId, options) {
 	var playerInstance = jwplayer(elementId),
 		videoId = options.videoDetails.playlist[0].mediaid,
@@ -42,8 +35,6 @@ function setupPlayer(elementId, options) {
 }
 
 function init(elementId, options) {
-	// var playerElement = document.getElementById(elementId);
-	// insertJWPlayerScript(playerElement);
 	var playerInstance = setupPlayer(elementId, options);
 	JWPlayerIcons(playerInstance);
 	JWPlayerEvents(playerInstance, options.autoplay.enabled);
