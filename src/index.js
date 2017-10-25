@@ -1,3 +1,5 @@
+var logger;
+
 function loadJWPlayerScript(callback, elementId, playerURL) {
 	if (typeof jwplayer !== 'undefined') {
 		callback();
@@ -43,12 +45,16 @@ function setupPlayer(elementId, options) {
 		};
 	}
 
+	logger.info('jwplayer setupPlayer');
 	playerInstance.setup(playerSetup);
+	logger.info('jwplayer after setup');
+	logger.subscribeToPlayerErrors(playerInstance);
 
 	return playerInstance;
 }
 
 function init(elementId, options, callback) {
+	logger = wikiaJWPlayerLogger(options);
 	loadJWPlayerScript(function () {
 		wikiaJWPlayerSettingsPlugin.register();
 		var playerInstance = setupPlayer(elementId, options);
