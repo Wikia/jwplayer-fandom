@@ -1,4 +1,4 @@
-var icons = {
+var wikiaJWPlayerIcons = {
 	// wds-icons-play-triangle-small.svg
 	play: '<path d="M14.767 9.437L3.858 16.903a.553.553 0 0 1-.565.037.531.531 0 0 1-.293-.473V1.533c0-.199.113-.381.293-.473a.557.557 0 0 1 .565.036l10.91 7.467A.53.53 0 0 1 15 9a.53.53 0 0 1-.233.437z" fill-rule="evenodd"/>\n',
 	// wds-icons-pause-small.svg
@@ -12,43 +12,9 @@ var icons = {
 	// wds-icons-volume-off-small.svg
 	volumeOff: '<path d="M8.45 2.17L4.664 6.28H1.036C.256 6.28 0 6.739 0 7.175v3.522c0 .436.256.985 1.036.985h3.646l3.785 4.176a1.1 1.1 0 0 0 .533.143.964.964 0 0 0 .5-.137c.33-.185.5-.526.5-.897V3.013c0-.37-.17-.713-.5-.898-.33-.186-.72-.13-1.05.054zm7.192 7.33l2.121-2.122a.807.807 0 1 0-1.142-1.141l-2.122 2.12-2.12-2.12a.808.808 0 0 0-1.142 1.141L13.358 9.5l-2.121 2.121a.807.807 0 1 0 1.142 1.142l2.12-2.12 2.122 2.12a.805.805 0 0 0 1.142 0 .807.807 0 0 0 0-1.142L15.642 9.5z" fill-rule="evenodd"/>\n',
 	// wds-icons-volume-small.svg
-	volumeOn: '<g fill-rule="evenodd"><path d="M8.45 2.17L4.664 6.28H1.036C.256 6.28 0 6.739 0 7.175v3.522c0 .436.256.985 1.036.985h3.646l3.785 4.176a1.1 1.1 0 0 0 .533.143.964.964 0 0 0 .5-.137c.33-.185.5-.526.5-.897V3.013c0-.37-.17-.713-.5-.898-.33-.186-.72-.13-1.05.054zm4.95 10.156a4.393 4.393 0 0 0 0-6.19.708.708 0 0 0-1.004 1 2.978 2.978 0 0 1 0 4.192.707.707 0 1 0 1.003.998z"/><path d="M17.515 9.231A6.186 6.186 0 0 0 15.7 4.84a.707.707 0 1 0-1.003.998A4.777 4.777 0 0 1 16.1 9.231a4.778 4.778 0 0 1-1.4 3.394.708.708 0 1 0 1.002.999 6.186 6.186 0 0 0 1.814-4.393z"/></g>'
-};
-
-/**
- * Replaces inner markup of JW SVG's with SVG from Design System
- * We cannot override the whole SVG as this makes the player misbehave
- * (e.g.) show fullscreen icon twice, next to each other
- *
- * @param {HTMLElement} icon
- * @param {string} iconHtml
- */
-function replaceJWIconWithCustom(icon, iconHtml) {
-	icon.innerHTML = iconHtml;
-
-	// JW icons have viewBox=0,0,240,240 so we need to override it,
-	// otherwise our icons would be too small
-	icon.setAttribute('viewBox', '0 0 24 24');
-}
-
-/**
- * @param {HTMLElement} videoPlayerElement
- */
-function replaceIcons(videoPlayerElement) {
-	var controlBar = videoPlayerElement.querySelector('.jw-controlbar');
-
-	replaceJWIconWithCustom(controlBar.querySelector('.jw-svg-icon-play'), icons.play);
-	replaceJWIconWithCustom(controlBar.querySelector('.jw-svg-icon-pause'), icons.pause);
-	replaceJWIconWithCustom(controlBar.querySelector('.jw-svg-icon-fullscreen-on'), icons.fullScreenOn);
-	replaceJWIconWithCustom(controlBar.querySelector('.jw-svg-icon-fullscreen-off'), icons.fullScreenOff);
-	replaceJWIconWithCustom(controlBar.querySelector('.jw-svg-icon-settings'), icons.settings);
-	replaceJWIconWithCustom(controlBar.querySelector('.jw-svg-icon-volume-0'), icons.volumeOff);
-	replaceJWIconWithCustom(controlBar.querySelector('.jw-svg-icon-volume-50'), icons.volumeOn);
-	replaceJWIconWithCustom(controlBar.querySelector('.jw-svg-icon-volume-100'), icons.volumeOn);
-}
-
-function JWPlayerIcons(playerInstance) {
-	playerInstance.on('ready', function () {
-		replaceIcons(playerInstance.getContainer());
-	});
+	volumeOn: '<g fill-rule="evenodd"><path d="M8.45 2.17L4.664 6.28H1.036C.256 6.28 0 6.739 0 7.175v3.522c0 .436.256.985 1.036.985h3.646l3.785 4.176a1.1 1.1 0 0 0 .533.143.964.964 0 0 0 .5-.137c.33-.185.5-.526.5-.897V3.013c0-.37-.17-.713-.5-.898-.33-.186-.72-.13-1.05.054zm4.95 10.156a4.393 4.393 0 0 0 0-6.19.708.708 0 0 0-1.004 1 2.978 2.978 0 0 1 0 4.192.707.707 0 1 0 1.003.998z"/><path d="M17.515 9.231A6.186 6.186 0 0 0 15.7 4.84a.707.707 0 1 0-1.003.998A4.777 4.777 0 0 1 16.1 9.231a4.778 4.778 0 0 1-1.4 3.394.708.708 0 1 0 1.002.999 6.186 6.186 0 0 0 1.814-4.393z"/></g>',
+	// wds-menu-control-small.svg
+	back: '<path d="M9 14a.997.997 0 0 1-.707-.293l-7-7a.999.999 0 1 1 1.414-1.414L9 11.586l6.293-6.293a.999.999 0 1 1 1.414 1.414l-7 7A.997.997 0 0 1 9 14"></path>',
+	// jwplayer icon
+	quality: '<svg xmlns="http://www.w3.org/2000/svg" class="jw-svg-icon jw-svg-icon-quality-100" viewBox="0 0 240 240"><path d="M55,200H35c-3,0-5-2-5-4c0,0,0,0,0-1v-30c0-3,2-5,4-5c0,0,0,0,1,0h20c3,0,5,2,5,4c0,0,0,0,0,1v30C60,198,58,200,55,200L55,200z M110,195v-70c0-3-2-5-4-5c0,0,0,0-1,0H85c-3,0-5,2-5,4c0,0,0,0,0,1v70c0,3,2,5,4,5c0,0,0,0,1,0h20C108,200,110,198,110,195L110,195z M160,195V85c0-3-2-5-4-5c0,0,0,0-1,0h-20c-3,0-5,2-5,4c0,0,0,0,0,1v110c0,3,2,5,4,5c0,0,0,0,1,0h20C158,200,160,198,160,195L160,195z M210,195V45c0-3-2-5-4-5c0,0,0,0-1,0h-20c-3,0-5,2-5,4c0,0,0,0,0,1v150c0,3,2,5,4,5c0,0,0,0,1,0h20C208,200,210,198,210,195L210,195z"></path></svg>',
 };
