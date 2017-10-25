@@ -10,9 +10,9 @@
 <div id="player"></div>
 <script src="wikiajwplayer.js"></script>
 <script>
-	// this function is callled to inject jwplayer into element with id `player`, second argument is an options object
+	// this function is called to inject jwplayer into element with id `player`, second argument is an options object
 	wikiaJWPlayer('player', {
-		// addid this object enables tracking
+		// adding this object enables tracking
 		tracking: {
 			// pass track function, data argument structure in tracking.js in track function
 			track: function (data) {
@@ -26,7 +26,7 @@
 			comscore: false
 		},
 		autoplay: {
-			// set to true you want to give user option to enable/disable autoplay
+			// set to true when you want to give user option to enable/disable autoplay
 			// autoplay toggle appears in settings menu which sends event `autoplayToggle` on click
 			showToggle: true,
 			// set to true if you want video to autostart

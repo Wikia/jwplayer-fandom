@@ -1,5 +1,5 @@
 window.wikiaJWPlayer = function (elementId, options, callback) {
-	function loadJWPlayerScript(callback, elementId, playerURL) {
+	function loadJWPlayerScript(elementId, playerURL, callback) {
 		if (typeof jwplayer !== 'undefined') {
 			callback();
 			return;
@@ -56,7 +56,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 	}
 
 	var logger = wikiaJWPlayerLogger(options);
-	loadJWPlayerScript(function () {
+	loadJWPlayerScript(elementId, options.playerURL, function () {
 		var playerInstance = setupPlayer(elementId, options);
 		wikiaJWPlayerReplaceIcons(playerInstance);
 		wikiaJWPlayerEvents(playerInstance, options.autoplay.enabled, logger);
@@ -67,5 +67,5 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		if (callback) {
 			callback(playerInstance);
 		}
-	}, elementId, options.playerURL);
+	});
 };
