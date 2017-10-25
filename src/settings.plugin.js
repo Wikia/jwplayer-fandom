@@ -128,7 +128,9 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 	toggleLabel.classList.add('wds-toggle__label');
 	toggleLabel.appendChild(document.createTextNode("Autoplay Videos"));
 	toggleLabel.addEventListener('click', function (event) {
-		playerInstance.trigger('autoplayToggle', !event.target.previousSibling.checked);
+		playerInstance.trigger('autoplayToggle', {
+			enabled: !event.target.previousSibling.checked
+		});
 	});
 
 	autoplayToggle.appendChild(toggleInput);
