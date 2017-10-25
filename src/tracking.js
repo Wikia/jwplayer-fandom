@@ -60,7 +60,7 @@ function track(gaData) {
 	tracker.track(trackingData);
 }
 
-function JWPlayerTracking(providedPlayerInstance, willAutoplay, providedGACategory, trackingOptions) {
+function wikiaJWPlayerTracking(providedPlayerInstance, willAutoplay, providedGACategory, trackingOptions) {
 	playerInstance = providedPlayerInstance;
 	gaCategory = providedGACategory || defaultGACategory;
 	tracker = trackingOptions;

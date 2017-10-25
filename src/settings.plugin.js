@@ -1,4 +1,4 @@
-function WikiaJWPlayerSettings(player, config, div) {
+function wikiaJWPlayerSettingsPlugin(player, config, div) {
 	this.player = player;
 	this.wikiaSettingsElement = div;
 	this.buttonID = 'wikiaSettings';
@@ -10,14 +10,14 @@ function WikiaJWPlayerSettings(player, config, div) {
 	document.addEventListener('click', this.documentClickHandler);
 }
 
-WikiaJWPlayerSettings.prototype.documentClickHandler = function (event) {
+wikiaJWPlayerSettingsPlugin.prototype.documentClickHandler = function (event) {
 	// check if user didn't click the settings menu or settings button and if settings menu is open
 	if (!event.target.closest('.wikia-jw-settings, .wikia-jw-settings-button') && this.wikiaSettingsElement.style.display) {
 		this.close();
 	}
 };
 
-WikiaJWPlayerSettings.prototype.addButton = function () {
+wikiaJWPlayerSettingsPlugin.prototype.addButton = function () {
 	var settingsIcon = '<svg xmlns="http://www.w3.org/2000/svg" class="jw-svg-icon' +
 			' jw-svg-icon-wikia-settings" viewBox="0 0 24 24">' + wikiaJWPlayerIcons.settings + '</svg>';
 
@@ -30,14 +30,14 @@ WikiaJWPlayerSettings.prototype.addButton = function () {
 	}.bind(this), this.buttonID, 'wikia-jw-settings-button');
 };
 
-WikiaJWPlayerSettings.prototype.removeButton = function () {
+wikiaJWPlayerSettingsPlugin.prototype.removeButton = function () {
 	this.player.removeButton(this.buttonID);
 };
 
 /**
  * closes settings menu
  */
-WikiaJWPlayerSettings.prototype.close = function () {
+wikiaJWPlayerSettingsPlugin.prototype.close = function () {
 	this.showSettingsList();
 	this.wikiaSettingsElement.style.display = null;
 	this.player.getContainer().classList.remove('wikia-jw-settings-open');
@@ -46,7 +46,7 @@ WikiaJWPlayerSettings.prototype.close = function () {
 /**
  * opens settings menu
  */
-WikiaJWPlayerSettings.prototype.open = function () {
+wikiaJWPlayerSettingsPlugin.prototype.open = function () {
 	this.wikiaSettingsElement.style.display = 'block';
 	this.player.getContainer().classList.add('wikia-jw-settings-open');
 };
@@ -54,7 +54,7 @@ WikiaJWPlayerSettings.prototype.open = function () {
 /**
  * hides the entire plugin (button and settings menu_
  */
-WikiaJWPlayerSettings.prototype.hide = function () {
+wikiaJWPlayerSettingsPlugin.prototype.hide = function () {
 	this.close();
 	this.removeButton();
 };
@@ -62,21 +62,21 @@ WikiaJWPlayerSettings.prototype.hide = function () {
 /**
  * shows back the entire plugin (adds button back)
  */
-WikiaJWPlayerSettings.prototype.show = function () {
+wikiaJWPlayerSettingsPlugin.prototype.show = function () {
 	this.addButton();
 };
 
-WikiaJWPlayerSettings.prototype.showQualityLevelsList = function () {
+wikiaJWPlayerSettingsPlugin.prototype.showQualityLevelsList = function () {
 	this.settingsList.style.display = 'none';
 	this.qualityLevelsList.style.display = 'block';
 };
 
-WikiaJWPlayerSettings.prototype.showSettingsList = function () {
+wikiaJWPlayerSettingsPlugin.prototype.showSettingsList = function () {
 	this.settingsList.style.display = 'block';
 	this.qualityLevelsList.style.display = 'none';
 };
 
-WikiaJWPlayerSettings.prototype.addSettingsContent = function (div) {
+wikiaJWPlayerSettingsPlugin.prototype.addSettingsContent = function (div) {
 	div.classList.add('wikia-jw-settings');
 	div.classList.remove('jw-reset', 'jw-plugin');
 	this.settingsList = this.createSettingsListElement();
@@ -88,7 +88,7 @@ WikiaJWPlayerSettings.prototype.addSettingsContent = function (div) {
 	return div;
 };
 
-WikiaJWPlayerSettings.prototype.createSettingsListElement = function () {
+wikiaJWPlayerSettingsPlugin.prototype.createSettingsListElement = function () {
 	var settingsList = document.createElement('ul');
 
 	settingsList.classList.add('wikia-jw-settings__list');
@@ -100,7 +100,7 @@ WikiaJWPlayerSettings.prototype.createSettingsListElement = function () {
 	return settingsList;
 };
 
-WikiaJWPlayerSettings.prototype.createQualityButton = function () {
+wikiaJWPlayerSettingsPlugin.prototype.createQualityButton = function () {
 	var qualityButton = document.createElement('li');
 
 	qualityButton.classList.add('wikia-jw-settings__quality-button');
@@ -110,7 +110,7 @@ WikiaJWPlayerSettings.prototype.createQualityButton = function () {
 	return qualityButton;
 };
 
-WikiaJWPlayerSettings.prototype.createAutoplayToggle = function () {
+wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 	var autoplayToggle = document.createElement('li'),
 		toggleInput = document.createElement('input'),
 		toggleLabel = document.createElement('label'),
@@ -137,7 +137,7 @@ WikiaJWPlayerSettings.prototype.createAutoplayToggle = function () {
 	return autoplayToggle;
 };
 
-WikiaJWPlayerSettings.prototype.createQualityLevelsList = function () {
+wikiaJWPlayerSettingsPlugin.prototype.createQualityLevelsList = function () {
 	var qualityLevelsList = document.createElement('ul'),
 		backButton = document.createElement('li'),
 		playerInstance = this.player,
@@ -170,7 +170,7 @@ WikiaJWPlayerSettings.prototype.createQualityLevelsList = function () {
 	return qualityLevelsList;
 };
 
-WikiaJWPlayerSettings.prototype.updateQualityLevelsList = function (qualityLevelsList, newLevels, isActiveClass, backButton) {
+wikiaJWPlayerSettingsPlugin.prototype.updateQualityLevelsList = function (qualityLevelsList, newLevels, isActiveClass, backButton) {
 	var playerInstance = this.player;
 
 	while (qualityLevelsList.childElementCount > 1) {
@@ -192,7 +192,7 @@ WikiaJWPlayerSettings.prototype.updateQualityLevelsList = function (qualityLevel
 	}, this);
 };
 
-WikiaJWPlayerSettings.prototype.updateCurrentQuality = function (qualityLevelsList, isActiveClass, data) {
+wikiaJWPlayerSettingsPlugin.prototype.updateCurrentQuality = function (qualityLevelsList, isActiveClass, data) {
 	qualityLevelsList.childNodes.forEach(function (node, index) {
 		if (data.currentQuality === index) {
 			node.classList.add(isActiveClass);
@@ -202,6 +202,6 @@ WikiaJWPlayerSettings.prototype.updateCurrentQuality = function (qualityLevelsLi
 	});
 };
 
-WikiaJWPlayerSettings.register = function () {
-	jwplayer().registerPlugin('wikiaSettings', '8.0.0', WikiaJWPlayerSettings);
+wikiaJWPlayerSettingsPlugin.register = function () {
+	jwplayer().registerPlugin('wikiaSettings', '8.0.0', wikiaJWPlayerSettingsPlugin);
 };

@@ -50,12 +50,12 @@ function setupPlayer(elementId, options) {
 
 function init(elementId, options, callback) {
 	loadJWPlayerScript(function () {
-		WikiaJWPlayerSettings.register();
+		wikiaJWPlayerSettingsPlugin.register();
 		var playerInstance = setupPlayer(elementId, options);
-		JWPlayerIcons(playerInstance);
-		JWPlayerEvents(playerInstance, options.autoplay.enabled);
+		wikiaJWPlayerReplaceIcons(playerInstance);
+		wikiaJWPlayerEvents(playerInstance, options.autoplay.enabled);
 		if (options.tracking) {
-			JWPlayerTracking(playerInstance, options.autoplay.enabled, 'feautred-video', options.tracking);
+			wikiaJWPlayerTracking(playerInstance, options.autoplay.enabled, 'feautred-video', options.tracking);
 		}
 		if (callback) {
 			callback(playerInstance);
@@ -63,4 +63,4 @@ function init(elementId, options, callback) {
 	}, elementId, options.playerURL);
 }
 
-window.WikiaJWPlayer = init;
+window.wikiaJWPlayer = init;

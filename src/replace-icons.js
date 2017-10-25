@@ -30,7 +30,7 @@ function replaceIcons(videoPlayerElement) {
 	replaceJWIconWithCustom(controlBar.querySelector('.jw-svg-icon-volume-100'), wikiaJWPlayerIcons.volumeOn);
 }
 
-function JWPlayerIcons(playerInstance) {
+function wikiaJWPlayerReplaceIcons(playerInstance) {
 	playerInstance.on('ready', function () {
 		replaceIcons(playerInstance.getContainer());
 	});

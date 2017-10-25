@@ -59,7 +59,7 @@ function handleTime(prefix, data) {
 	}
 }
 
-function JWPlayerEvents (providedPlayerInstance, willAutoplay) {
+function wikiaJWPlayerEvents (providedPlayerInstance, willAutoplay) {
 	playerInstance = providedPlayerInstance;
 
 	console.info('jwplayer before ready');
