@@ -63,4 +63,4 @@ function init(elementId, options, callback) {
 	}, elementId, options.playerURL);
 }
 
-WikiaJWPlayer = init;
+window.WikiaJWPlayer = init;
