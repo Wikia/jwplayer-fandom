@@ -1,4 +1,4 @@
-function init(elementId, options, callback) {
+window.wikiaJWPlayer = function (elementId, options, callback) {
 	function loadJWPlayerScript(callback, elementId, playerURL) {
 		if (typeof jwplayer !== 'undefined') {
 			callback();
@@ -63,10 +63,9 @@ function init(elementId, options, callback) {
 		if (options.tracking) {
 			wikiaJWPlayerTracking(playerInstance, options.autoplay.enabled, 'feautred-video', options.tracking);
 		}
+		wikiaJWPlayerHandleTabNotActive(playerInstance, options.autoplay.enabled);
 		if (callback) {
 			callback(playerInstance);
 		}
 	}, elementId, options.playerURL);
-}
-
-window.wikiaJWPlayer = init;
+};
