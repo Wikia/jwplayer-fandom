@@ -1,69 +1,62 @@
-var defaultGACategory = 'featured-video',
+function wikiaJWPlayerTracking(playerInstance, willAutoplay, providedGACategory, tracker) {
 	//This will replace 'trackingevent' in internal tracker url path
-	eventName = 'videoplayerevent',
-	gaCategory,
-	playerInstance,
-	tracker;
+	var eventName = 'videoplayerevent',
+		gaCategory = providedGACategory || 'featured-video';
 
-function updateVideoCustomDimensions(currentVideo) {
-	tracker.setCustomDimension(34, currentVideo.mediaid);
-	tracker.setCustomDimension(35, currentVideo.title);
-	tracker.setCustomDimension(36, currentVideo.tags);
-}
-
-/**
- * Comscore Video Metrix tracking, sends tracking request with 3 Comscore parameters:
- * C1 (identifier of content) = 1
- * C2 (client ID) = 6177433 for Fandom
- * C5 (video type identifier) = 04 for featured videos
- * We need to track it at each video playback
- */
-function trackComscoreVideoMetrix() {
-	//Do not track to comscore on dev env
-	if (tracker.comscore) {
-		return;
+	function updateVideoCustomDimensions(currentVideo) {
+		tracker.setCustomDimension(34, currentVideo.mediaid);
+		tracker.setCustomDimension(35, currentVideo.title);
+		tracker.setCustomDimension(36, currentVideo.tags);
 	}
 
-	var scriptId = 'comscoreVideoMetrixTrack',
-		mountedScript = document.getElementById(scriptId);
+	/**
+	 * Comscore Video Metrix tracking, sends tracking request with 3 Comscore parameters:
+	 * C1 (identifier of content) = 1
+	 * C2 (client ID) = 6177433 for Fandom
+	 * C5 (video type identifier) = 04 for featured videos
+	 * We need to track it at each video playback
+	 */
+	function trackComscoreVideoMetrix() {
+		//Do not track to comscore on dev env
+		if (tracker.comscore) {
+			return;
+		}
 
-	if (mountedScript) {
-		mountedScript.parentElement.removeChild(mountedScript)
+		var scriptId = 'comscoreVideoMetrixTrack',
+			mountedScript = document.getElementById(scriptId);
+
+		if (mountedScript) {
+			mountedScript.parentElement.removeChild(mountedScript)
+		}
+
+		var img = document.createElement('img');
+		img.src = 'http://b.scorecardresearch.com/p?C1=1&C2=6177433&C5=04';
+		img.id = scriptId;
+		document.body.appendChild(img);
 	}
 
-	var img = document.createElement('img');
-	img.src = 'http://b.scorecardresearch.com/p?C1=1&C2=6177433&C5=04';
-	img.id = scriptId;
-	document.body.appendChild(img);
-}
+	function track(gaData) {
+		if (!gaData.label) {
+			throw new Error('No tracking label provided');
+		}
 
-function track(gaData) {
-	if (!gaData.label) {
-		throw new Error('No tracking label provided');
+		var trackingData = {
+			action: gaData.action || 'click',
+			category: gaCategory,
+			label: gaData.label,
+			//value tracks sound state: 1 for muted, 0 for unmuted
+			value: Number(playerInstance.getMute()),
+
+			// Internal tracking data
+			eventName: eventName,
+			videoId: playerInstance.getPlaylistItem().mediaid,
+			player: 'jwplayer',
+			trackingMethod: 'analytics'
+		};
+
+		// Will be replaced by connecting Internal + GA trackers
+		tracker.track(trackingData);
 	}
-
-	var trackingData = {
-		action: gaData.action || 'click',
-		category: gaCategory,
-		label: gaData.label,
-		//value tracks sound state: 1 for muted, 0 for unmuted
-		value: Number(playerInstance.getMute()),
-
-		// Internal tracking data
-		eventName: eventName,
-		videoId: playerInstance.getPlaylistItem().mediaid,
-		player: 'jwplayer',
-		trackingMethod: 'analytics'
-	};
-
-	// Will be replaced by connecting Internal + GA trackers
-	tracker.track(trackingData);
-}
-
-function wikiaJWPlayerTracking(providedPlayerInstance, willAutoplay, providedGACategory, trackingOptions) {
-	playerInstance = providedPlayerInstance;
-	gaCategory = providedGACategory || defaultGACategory;
-	tracker = trackingOptions;
 
 	tracker.setCustomDimension(37, willAutoplay ? 'Yes' : 'No');
 
