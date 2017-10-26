@@ -1,0 +1,87 @@
+window.wikiaJWPlayer = function (elementId, options, callback) {
+	/**
+	 * loads jwplayer library
+	 * @param elementId
+	 * @param playerURL
+	 * @param callback
+	 */
+	function loadJWPlayerScript(elementId, playerURL, callback) {
+		if (typeof jwplayer !== 'undefined') {
+			callback();
+			return;
+		}
+		var script = document.createElement('script'),
+			playerElement = document.getElementById(elementId);
+		script.onload = function () {
+			wikiaJWPlayerSettingsPlugin.register();
+			callback();
+		};
+		script.async = true;
+		script.src = playerURL || 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
+		// insert script node just after player element
+		playerElement.parentNode.insertBefore(script, playerElement.nextSibling);
+	}
+
+	/**
+	 * setups player
+	 * @param elementId
+	 * @param options
+	 * @return {*}
+	 */
+	function setupPlayer(elementId, options, logger) {
+		var playerInstance = jwplayer(elementId),
+			videoId = options.videoDetails.playlist[0].mediaid,
+			willAutoplay = options.autoplay.enabled,
+			playerSetup = {
+				advertising: {
+					autoplayadsmuted: willAutoplay,
+					client: 'googima'
+				},
+				autostart: willAutoplay && !document.hidden,
+				description: options.videoDetails.description,
+				image: '//content.jwplatform.com/thumbs/' + videoId + '-640.jpg',
+				mute: willAutoplay,
+				playlist: options.videoDetails.playlist,
+				title: options.videoDetails.title,
+				plugins: {
+					wikiaSettings: {
+						showToggle: options.autoplay.showToggle,
+						autoplay: options.autoplay.enabled
+					}
+				}
+			};
+
+		if (options.related) {
+			playerSetup.related = {
+				autoplaytimer: options.related.time || 3,
+				file: '//cdn.jwplayer.com/v2/playlists/' + options.related.playlistId + '?related_media_id=' + videoId,
+				oncomplete: options.related.autoplay ? 'autoplay' : 'show'
+			};
+		}
+
+		logger.info('setupPlayer');
+		playerInstance.setup(playerSetup);
+		logger.info('after setup');
+		logger.subscribeToPlayerErrors(playerInstance);
+
+		return playerInstance;
+	}
+
+	loadJWPlayerScript(elementId, options.playerURL, function () {
+		var logger = wikiaJWPlayerLogger(options),
+			playerInstance = setupPlayer(elementId, options, logger);
+
+		wikiaJWPlayerReplaceIcons(playerInstance);
+		wikiaJWPlayerEvents(playerInstance, options.autoplay.enabled, logger);
+
+		if (options.tracking) {
+			wikiaJWPlayerTracking(playerInstance, options.autoplay.enabled, options.tracking);
+		}
+
+		wikiaJWPlayerHandleTabNotActive(playerInstance, options.autoplay.enabled);
+
+		if (callback) {
+			callback(playerInstance);
+		}
+	});
+};
