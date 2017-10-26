@@ -13,7 +13,6 @@
 	z-index: $zIndexVideoSettings;
 
 	@media (max-width: $tabletBreakPoint) {
-		font-size: 14px;
 		padding: 6px;
 		right: 0;
 	}
@@ -24,6 +23,10 @@
 
 	&__list {
 		color: #fff;
+
+		@media (max-width: $tabletBreakPoint) {
+			font-size: 14px;
+		}
 
 		li {
 			align-items: center;
@@ -77,6 +80,8 @@
 	}
 
 	.wds-toggle__label {
+		color: #fff;
+
 		@media (max-width: $tabletBreakPoint) {
 			font-size: 14px;
 		}
