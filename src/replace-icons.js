@@ -7,11 +7,14 @@
  * @param {string} iconHtml
  */
 function replaceJWIconWithCustom(icon, iconHtml) {
-	icon.innerHTML = iconHtml;
+	// some icons are not present on smaller devices
+	if (icon) {
+		icon.innerHTML = iconHtml;
 
-	// JW icons have viewBox=0,0,240,240 so we need to override it,
-	// otherwise our icons would be too small
-	icon.setAttribute('viewBox', '0 0 24 24');
+		// JW icons have viewBox=0,0,240,240 so we need to override it,
+		// otherwise our icons would be too small
+		icon.setAttribute('viewBox', '0 0 24 24');
+	}
 }
 
 /**
