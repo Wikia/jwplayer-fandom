@@ -47,4 +47,17 @@
 			display: none !important;
 		}
 	}
+
+	&.jw-flag-touch .jw-slider-time {
+		@media (max-width: $tabletBreakPoint) {
+			height: auto;
+		}
+	}
+
+	.jw-icon {
+		@media (max-width: $mobileBreakPoint) {
+			height: 30px;
+			width: 30px;
+		}
+	}
 }

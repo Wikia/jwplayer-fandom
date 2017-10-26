@@ -1,7 +1,7 @@
 @import '../../node_modules/design-system/dist/scss/wds-variables/index';
 
 .wikia-jw-settings {
-	background-color: rgba(26, 26, 26, 0.8);
+	background-color: rgb(26, 26, 26);
 	border-radius: 4px;
 	bottom: 60px;
 	display: none;
@@ -10,6 +10,17 @@
 	pointer-events: auto;
 	position: absolute;
 	right: 60px;
+	z-index: $zIndexVideoSettings;
+
+	@media (max-width: $tabletBreakPoint) {
+		font-size: 14px;
+		padding: 6px;
+		right: 0;
+	}
+
+	@media (max-width: $mobileBreakPoint) {
+		bottom: 45px;
+	}
 
 	&__list {
 		color: #fff;
@@ -63,6 +74,12 @@
 	&__back-icon {
 		fill: currentColor;
 		transform: rotate(-270deg);
+	}
+
+	.wds-toggle__label {
+		@media (max-width: $tabletBreakPoint) {
+			font-size: 14px;
+		}
 	}
 }
 
