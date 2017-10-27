@@ -1,24 +1,13 @@
 var loadCallbacks = [];
 
 window.wikiaJWPlayer = function (elementId, options, callback) {
+
 	/**
-	 * loads jwplayer library
+	 * adds script tag
 	 * @param elementId
 	 * @param playerURL
-	 * @param callback
 	 */
-	function loadJWPlayerScript(elementId, playerURL, callback) {
-		if (typeof jwplayer !== 'undefined') {
-			callback();
-			return;
-		}
-
-		loadCallbacks.push(callback);
-		// we don't want to load multiple jwplayer libraries
-		if(loadCallbacks.length > 1) {
-			return;
-		}
-
+	function createScriptTag(elementId, playerURL) {
 		var script = document.createElement('script'),
 			playerElement = document.getElementById(elementId);
 
@@ -32,6 +21,25 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		script.src = playerURL || 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
 		// insert script node just after player element
 		playerElement.parentNode.insertBefore(script, playerElement.nextSibling);
+	}
+
+	/**
+	 * loads jwplayer library
+	 * @param elementId
+	 * @param playerURL
+	 * @param callback
+	 */
+	function loadJWPlayerScript(elementId, playerURL, callback) {
+		if (typeof jwplayer !== 'undefined') {
+			callback();
+		} else {
+			loadCallbacks.push(callback);
+
+			// we don't want to load multiple jwplayer libraries
+			if (loadCallbacks.length === 1) {
+				createScriptTag(elementId, playerURL);
+			}
+		}
 	}
 
 	/**
