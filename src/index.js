@@ -35,7 +35,8 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 			playerSetup = {
 				advertising: {
 					autoplayadsmuted: willAutoplay,
-					client: 'googima'
+					client: 'googima',
+					vpaidcontrols: true
 				},
 				autostart: willAutoplay && !document.hidden,
 				description: options.videoDetails.description,
