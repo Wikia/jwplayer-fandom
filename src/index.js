@@ -1,3 +1,5 @@
+var loadCallbacks = [];
+
 window.wikiaJWPlayer = function (elementId, options, callback) {
 	/**
 	 * loads jwplayer library
@@ -10,11 +12,21 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 			callback();
 			return;
 		}
+
+		loadCallbacks.push(callback);
+		// we don't want to load multiple jwplayer libraries
+		if(loadCallbacks.length > 1) {
+			return;
+		}
+
 		var script = document.createElement('script'),
 			playerElement = document.getElementById(elementId);
+
 		script.onload = function () {
 			wikiaJWPlayerSettingsPlugin.register();
-			callback();
+			loadCallbacks.forEach(function (callback) {
+				callback();
+			});
 		};
 		script.async = true;
 		script.src = playerURL || 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
