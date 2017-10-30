@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "npm run build && npm-run-all --parallel watch-other watch-js watch-scss server",
-    "server": "http-server dist",
+    "server": "http-server -c-1 dist",
     "copy-html": "mkdir -p dist && cp src/*.html dist/",
     "build": "npm run copy-html && npm run build-all-css && npm run build-js",
     "build-js": "uglifyjs --compress --mangle -o dist/wikiajwplayer.js --wrap WikiaJWPlayer -- src/*.js",

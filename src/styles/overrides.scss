@@ -1,5 +1,6 @@
 .jwplayer {
-	.jw-button-container {
+	.jw-button-container,
+	.jw-display-container {
 		.jw-icon-rewind,
 		.jw-icon-next,
 		.jw-settings-sharing,
@@ -64,6 +65,13 @@
 			.jw-controls-backdrop {
 				opacity: 0;
 			}
+		}
+	}
+
+	&#player {
+		// because we don't want to use !important
+		&:not(.jw-state-idle) .jw-controlbar {
+			background: linear-gradient(0deg, black, transparent);
 		}
 	}
 }
