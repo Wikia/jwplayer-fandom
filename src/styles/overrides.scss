@@ -1,3 +1,5 @@
+@import '../../node_modules/design-system/dist/scss/wds-variables/index';
+
 .jwplayer {
 	.jw-button-container,
 	.jw-display-container {
@@ -71,7 +73,7 @@
 	&#player {
 		// because we don't want to use !important
 		&:not(.jw-state-idle) .jw-controlbar {
-			background: linear-gradient(0deg, black, transparent);
+			background: linear-gradient(0, $wds-color-black, transparent);
 		}
 	}
 }
