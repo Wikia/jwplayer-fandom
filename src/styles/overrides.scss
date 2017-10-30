@@ -73,7 +73,7 @@
 	&#player {
 		// because we don't want to use !important
 		&:not(.jw-state-idle) .jw-controlbar {
-			background: linear-gradient(0, $wds-color-black, transparent);
+			background: linear-gradient(0, #000, transparent);
 		}
 	}
 }
