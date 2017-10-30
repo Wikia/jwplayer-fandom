@@ -70,10 +70,8 @@
 		}
 	}
 
-	&#player {
-		// because we don't want to use !important
-		&:not(.jw-state-idle) .jw-controlbar {
-			background: linear-gradient(0, #000, transparent);
-		}
+	.jw-controlbar {
+		// background relies on player's id selector so it's impossible to set it for every case
+		background: linear-gradient(0, #000, transparent)!important;
 	}
 }
