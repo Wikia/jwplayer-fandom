@@ -9,8 +9,9 @@ function wikiaJWPlayerLogger(options) {
 			error: 3,
 			off: 4
 		},
-		logLevel = options.logLevel ? logLevels[options.logLevel] : logLevels['error'],
-		clientName = options.logger && options.logger.clientName;
+		loggerOptions = options.logger || {},
+		logLevel = loggerOptions.logLevel ? logLevels[loggerOptions.logLevel] : logLevels['error'],
+		clientName = loggerOptions.clientName;
 
 	/**
 	 * logs errors to event-logger service
