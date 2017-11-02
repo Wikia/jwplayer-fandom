@@ -26,10 +26,11 @@ wikiaJWPlayerSettingsPlugin.prototype.documentClickHandler = function (event) {
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.addButton = function () {
-	var settingsIcon = '<svg xmlns="http://www.w3.org/2000/svg" class="jw-svg-icon' +
-		' jw-svg-icon-wikia-settings" viewBox="0 0 24 24">' + wikiaJWPlayerIcons.settings + '</svg>';
+	var parser = new DOMParser();
+	var settingsIcon = parser.parseFromString(wikiaJWPlayerIcons.settings, "image/svg+xml").documentElement;
+	settingsIcon.classList.add('jw-svg-icon', 'jw-svg-icon-wikia-settings');
 
-	this.player.addButton(settingsIcon, 'Settings', function () {
+	this.player.addButton(settingsIcon.outerHTML, 'Settings', function () {
 		if (!this.wikiaSettingsElement.style.display) {
 			this.open();
 		} else {
