@@ -1,4 +1,5 @@
-var isActiveClass = 'is-active';
+var isActiveClass = 'is-active',
+	domParser = new DOMParser();
 
 function wikiaJWPlayerSettingsPlugin(player, config, div) {
 	this.player = player;
@@ -26,8 +27,7 @@ wikiaJWPlayerSettingsPlugin.prototype.documentClickHandler = function (event) {
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.addButton = function () {
-	var parser = new DOMParser();
-	var settingsIcon = parser.parseFromString(wikiaJWPlayerIcons.settings, "image/svg+xml").documentElement;
+	var settingsIcon = domParser.parseFromString(wikiaJWPlayerIcons.settings, "image/svg+xml").documentElement;
 	settingsIcon.classList.add('jw-svg-icon', 'jw-svg-icon-wikia-settings');
 
 	this.player.addButton(settingsIcon.outerHTML, 'Settings', function () {
@@ -125,7 +125,9 @@ wikiaJWPlayerSettingsPlugin.prototype.createQualityButton = function () {
 	var qualityButton = document.createElement('li');
 
 	qualityButton.classList.add('wikia-jw-settings__quality-button');
-	qualityButton.innerHTML = wikiaJWPlayerIcons.quality + ' Video Quality';
+	var rightArrowIcon = domParser.parseFromString(wikiaJWPlayerIcons.back, "image/svg+xml").documentElement;
+	rightArrowIcon.classList.add('wikia-jw-settings__right-arrow-icon');
+	qualityButton.innerHTML = 'Video Quality' + rightArrowIcon.outerHTML;
 	qualityButton.addEventListener('click', this.showQualityLevelsList.bind(this));
 
 	return qualityButton;
@@ -137,6 +139,8 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 		toggleLabel = document.createElement('label'),
 		playerInstance = this.player,
 		toggleID = playerInstance.getContainer().id + '-videoAutoplayToggle';
+
+	autoplayToggle.classList.add('wikia-jw-settings__autoplay-toggle');
 
 	toggleInput.setAttribute('type', 'checkbox');
 	toggleInput.setAttribute('id', toggleID);
@@ -162,16 +166,17 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.createQualityLevelsList = function () {
-	var playerInstance = this.player;
+	var playerInstance = this.player,
+		backIcon = domParser.parseFromString(wikiaJWPlayerIcons.back, "image/svg+xml").documentElement;
+
+	backIcon.classList.add('wikia-jw-settings__back-icon');
 
 	this.backButton = document.createElement('li');
 	this.qualityLevelsList = document.createElement('ul');
 
-
-	this.qualityLevelsList.classList.add('wikia-jw-settings__quality-levels');
+	this.qualityLevelsList.classList.add('wikia-jw-settings__quality-levels', 'wds-list');
 	this.backButton.classList.add('wikia-jw-settings__back');
-	this.backButton.innerHTML = '<svg class="wikia-jw-settings__back-icon" width="18" height="18"' +
-		' viewBox="0 0 18 18">' + wikiaJWPlayerIcons.back + '</svg> Back';
+	this.backButton.innerHTML = backIcon.outerHTML + ' Back';
 	this.backButton.addEventListener('click', this.showSettingsList.bind(this));
 	this.qualityLevelsList.appendChild(this.backButton);
 
