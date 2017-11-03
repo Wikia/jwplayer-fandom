@@ -20,7 +20,8 @@ function wikiaJWPlayerSettingsPlugin(player, config, div) {
 }
 
 wikiaJWPlayerSettingsPlugin.prototype.isSettingsMenuOrSettingsButton = function (element) {
-	var button = this.player.getContainer().querySelector('[button=' + this.buttonID + ']');
+	var button = this.getSettingsButtonElement();
+
 	return button === element ||
 		button.contains(element) ||
 		this.wikiaSettingsElement === element ||
@@ -81,7 +82,7 @@ wikiaJWPlayerSettingsPlugin.prototype.hide = function () {
  * shows back the entire plugin (adds button back)
  */
 wikiaJWPlayerSettingsPlugin.prototype.show = function () {
-	if (!this.player.getContainer().querySelector('[button=' + this.buttonID + ']')) {
+	if (!this.getSettingsButtonElement()) {
 		this.addButton();
 	}
 };
@@ -312,6 +313,10 @@ wikiaJWPlayerSettingsPlugin.prototype.captionLangMap = {
 
 wikiaJWPlayerSettingsPlugin.prototype.getLabelElement = function (wrapper) {
 	return wrapper.querySelector('label');
+};
+
+wikiaJWPlayerSettingsPlugin.prototype.getSettingsButtonElement = function () {
+	return this.player.getContainer().querySelector('[button=' + this.buttonID + ']');
 };
 
 wikiaJWPlayerSettingsPlugin.register = function () {
