@@ -269,8 +269,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createCaptionsButton = function (captionTr
 		this.getLabelElement(captionsToggle)
 			.addEventListener('click', function () {
 				if (this.areCaptionsOff(captionTracks[this.player.getCurrentCaptions()])) {
-
-					this.player.setCurrentCaptions(1)
+					this.player.setCurrentCaptions(suitableCaptionsIndex)
 				} else {
 					// "off" caption track is always the first one
 					this.player.setCurrentCaptions(0);
