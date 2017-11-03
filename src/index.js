@@ -71,6 +71,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 				wikiaSettings: {
 					showAutoplayToggle: options.settings.showAutoplayToggle,
 					showQuality: options.settings.showQuality,
+					showCaptionsToggle: options.settings.showCaptionsToggle,
 					autoplay: options.autoplay
 				}
 			};
