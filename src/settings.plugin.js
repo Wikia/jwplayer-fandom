@@ -114,7 +114,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createSettingsListElement = function () {
 		settingsList.appendChild(this.createQualityButton());
 	}
 
-	if (this.config.showToggle) {
+	if (this.config.showAutoplayToggle) {
 		settingsList.appendChild(this.createAutoplayToggle());
 	}
 
@@ -186,7 +186,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createQualityLevelsList = function () {
 wikiaJWPlayerSettingsPlugin.prototype.onQualityLevelsChange = function (data) {
 	// in Safari in data.levels array there is one element with label = '0'
 	var isQualityListEmpty = !data.levels.length || (data.levels.length === 1 && data.levels[0].label === '0'),
-		shouldShowSettingsButton = (!isQualityListEmpty && this.config.showQuality) || this.config.showToggle;
+		shouldShowSettingsButton = (!isQualityListEmpty && this.config.showQuality) || this.config.showAutoplayToggle;
 
 	this.wikiaSettingsElement.classList.toggle('is-quality-list-empty', isQualityListEmpty);
 
