@@ -50,7 +50,7 @@
 
 			&.wikia-jw-settings__back {
 				align-items: center;
-				border-top: solid 1px #cccccc;
+				border-top: solid 1px $wds-color-faint-gray;
 				display: flex;
 				margin-top: 5px;
 				padding-top: 11px;
@@ -85,6 +85,7 @@
 	}
 
 	.wds-toggle__label {
+		color: $wds-color-white;
 		font-size: 14px;
 	}
 }
