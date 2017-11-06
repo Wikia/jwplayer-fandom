@@ -59,7 +59,8 @@
 		}
 	}
 
-	&.is-quality-list-empty &__quality-button {
+	&.is-quality-list-empty &__quality-button,
+	&.are-captions-empty &__captions-button {
 		display: none;
 	}
 
