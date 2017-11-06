@@ -132,6 +132,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createSettingsListElement = function () {
 	}
 
 	if (this.config.showCaptionsToggle) {
+		settingsList.appendChild(this.createCaptionsButton());
 		this.addCaptionListener();
 	}
 
@@ -247,42 +248,52 @@ wikiaJWPlayerSettingsPlugin.prototype.updateCurrentQuality = function (data) {
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.addCaptionListener = function () {
-	this.player.once('captionsList', function (event) {
+	var clickHandler = this.captionsClickHandler.bind(this);
+
+	this.player.on('captionsList', function (event) {
 		// tracks always include "off" item
 		if (event.tracks.length > 1) {
-			this.settingsList.appendChild(this.createCaptionsButton(event.tracks));
+			this.currentlySelectedCaptions = this.getSuitableCaptions(this.captionLangMap[this.getUserLang()], event.tracks);
+
+			this.getLabelElement(this.captionsToggle)
+				.addEventListener('click', clickHandler);
+
+			this.wikiaSettingsElement.classList.remove('are-captions-empty');
+			this.player.setCurrentCaptions(this.currentlySelectedCaptions);
+			this.show();
+		} else {
+			this.getLabelElement(this.captionsToggle)
+				.removeEventListener('click', clickHandler);
+
+			this.wikiaSettingsElement.classList.add('are-captions-empty');
 		}
 	}.bind(this));
 };
 
-wikiaJWPlayerSettingsPlugin.prototype.createCaptionsButton = function (captionTracks) {
-	var captionsToggle = createToggle({
+wikiaJWPlayerSettingsPlugin.prototype.createCaptionsButton = function () {
+	this.captionsToggle = createToggle({
 			id: this.player.getContainer().id + '-videoCaptionsToggle',
 			label: 'Captions',
 			checked: this.config.showCaptionsToggle
-		}),
-		suitableCaptionsIndex = this.getSuitableCaptions(this.captionLangMap[this.getUserLang()], captionTracks);
+		});
 
-	if (suitableCaptionsIndex !== -1) {
-		this.getLabelElement(captionsToggle)
-			.addEventListener('click', function () {
-				if (this.areCaptionsOff(captionTracks[this.player.getCurrentCaptions()])) {
-					this.player.setCurrentCaptions(suitableCaptionsIndex)
-				} else {
-					// "off" caption track is always the first one
-					this.player.setCurrentCaptions(0);
-				}
-			}.bind(this));
+	this.captionsToggle.classList.add('wikia-jw-settings__captions-button');
 
-		this.player.setCurrentCaptions(suitableCaptionsIndex);
-		this.show();
-	}
-
-	return captionsToggle;
+	return this.captionsToggle;
 };
 
-wikiaJWPlayerSettingsPlugin.prototype.areCaptionsOff = function(captionObj) {
-	return captionObj.id === 'off';
+wikiaJWPlayerSettingsPlugin.prototype.captionsClickHandler = function () {
+	if (this.areCaptionsOff(this.player.getCurrentCaptions())) {
+		this.player.setCurrentCaptions(this.currentlySelectedCaptions)
+	} else {
+		// "off" caption track is always the first one
+		this.player.setCurrentCaptions(0);
+	}
+};
+
+wikiaJWPlayerSettingsPlugin.prototype.areCaptionsOff = function(captionIndex) {
+	// "off" always has first position in tracks array
+	return captionIndex === 0;
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.getUserLang = function() {
