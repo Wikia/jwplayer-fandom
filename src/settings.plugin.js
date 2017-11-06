@@ -255,7 +255,10 @@ wikiaJWPlayerSettingsPlugin.prototype.addCaptionListener = function () {
 	this.player.on('captionsList', function (event) {
 		// tracks always include "off" item
 		if (event.tracks.length > 1) {
-			this.currentlySelectedCaptions = this.getSuitableCaptions(this.captionLangMap[this.getUserLang()], event.tracks);
+			this.currentlySelectedCaptions = this.getSuitableCaptionsIndex(
+				this.captionLangMap[this.getUserLang()],
+				event.tracks
+			);
 
 			this.getLabelElement(this.captionsToggle)
 				.addEventListener('click', clickHandler);
@@ -302,7 +305,8 @@ wikiaJWPlayerSettingsPlugin.prototype.getUserLang = function() {
 	return window.navigator.language.slice(0, 2);
 };
 
-wikiaJWPlayerSettingsPlugin.prototype.getSuitableCaptions = function(userLang, captionTracks) {
+wikiaJWPlayerSettingsPlugin.prototype.getSuitableCaptionsIndex = function(userLang, captionTracks) {
+	// use findIndex when ES6+ will be available
 	return captionTracks
 		.map(function (track) {
 			return track.label;
@@ -340,18 +344,18 @@ function createToggle(params) {
 		toggleInput = document.createElement('input'),
 		toggleLabel = document.createElement('label');
 
-	toggleWrapper.classList.add('wikia-jw-settings__toggle');
+	toggleWrapper.className = 'wikia-jw-settings__toggle';
 
 	toggleInput.setAttribute('type', 'checkbox');
 	toggleInput.setAttribute('id', params.id);
 	toggleInput.classList.add('wds-toggle__input');
 
 	if (params.checked) {
-		toggleInput.setAttribute('checked', '');
+		toggleInput.checked = true;
 	}
 
 	toggleLabel.setAttribute('for', params.id);
-	toggleLabel.classList.add('wds-toggle__label');
+	toggleLabel.className = 'wds-toggle__label';
 	toggleLabel.appendChild(document.createTextNode(params.label));
 
 	toggleWrapper.appendChild(toggleInput);
