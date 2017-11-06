@@ -346,7 +346,7 @@ function createToggle(params) {
 
 	toggleInput.setAttribute('type', 'checkbox');
 	toggleInput.setAttribute('id', params.id);
-	toggleInput.classList.add('wds-toggle__input');
+	toggleInput.className = 'wds-toggle__input';
 
 	if (params.checked) {
 		toggleInput.checked = true;
