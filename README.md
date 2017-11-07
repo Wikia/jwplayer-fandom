@@ -72,6 +72,9 @@ Id of DOM element where the player should be placed
     // set to true when you want to give user option to change quality of the video
     // show quality option doesn't appear in Safari and mobile browsers even if the option is set to true
     showQuality: boolean,
+	// set to true when you want to show captions toggle
+	// captions toggle appears in settings menu, sends event `captionsSelected` on click
+	showCaptionsToggle: boolean
   },
   related: {
     // countdown time to autoplay next video

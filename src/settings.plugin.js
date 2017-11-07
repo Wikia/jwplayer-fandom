@@ -19,6 +19,8 @@ function wikiaJWPlayerSettingsPlugin(player, config, div) {
 	document.addEventListener('click', this.documentClickHandler);
 	// fixes issue when opening the menu on iPhone 5, executing documentClickHandler twice doesn't break anything
 	document.addEventListener('touchend', this.documentClickHandler);
+
+	window.player = player;
 }
 
 wikiaJWPlayerSettingsPlugin.prototype.isSettingsMenuOrSettingsButton = function (element) {
@@ -266,8 +268,12 @@ wikiaJWPlayerSettingsPlugin.prototype.addCaptionListener = function () {
 			this.wikiaSettingsElement.classList.remove('are-captions-empty');
 			this.show();
 
-			if (this.config.captions) {
+			if (this.config.captions.enabled) {
 				this.player.setCurrentCaptions(this.currentlySelectedCaptions);
+			}
+
+			if (this.config.captions.styles && Object.keys(this.config.captions.styles).length) {
+				this.player.setCaptions(this.config.captions.styles);
 			}
 		} else {
 			this.getLabelElement(this.captionsToggle)
@@ -282,7 +288,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createCaptionsButton = function () {
 	this.captionsToggle = createToggle({
 			id: this.player.getContainer().id + '-videoCaptionsToggle',
 			label: 'Captions',
-			checked: this.config.captions
+			checked: this.config.captions.enabled
 		});
 
 	this.captionsToggle.classList.add('wikia-jw-settings__captions-button');
