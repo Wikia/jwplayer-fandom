@@ -61,6 +61,8 @@ Id of DOM element where the player should be placed
   },
   // set to true if you want video to autostart
   autoplay: boolean,
+  // set to true if you want video to be initiallty muted
+  mute: boolean,
   // if settings is not defined or all show* properties are set to false, settings icon doesn't appear
   settings: {
     // set to true when you want to give user option to enable/disable autoplay
