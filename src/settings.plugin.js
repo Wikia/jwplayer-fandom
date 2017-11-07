@@ -264,8 +264,11 @@ wikiaJWPlayerSettingsPlugin.prototype.addCaptionListener = function () {
 				.addEventListener('click', clickHandler);
 
 			this.wikiaSettingsElement.classList.remove('are-captions-empty');
-			this.player.setCurrentCaptions(this.currentlySelectedCaptions);
 			this.show();
+
+			if (this.config.captions) {
+				this.player.setCurrentCaptions(this.currentlySelectedCaptions);
+			}
 		} else {
 			this.getLabelElement(this.captionsToggle)
 				.removeEventListener('click', clickHandler);
@@ -279,7 +282,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createCaptionsButton = function () {
 	this.captionsToggle = createToggle({
 			id: this.player.getContainer().id + '-videoCaptionsToggle',
 			label: 'Captions',
-			checked: this.config.showCaptionsToggle
+			checked: this.config.captions
 		});
 
 	this.captionsToggle.classList.add('wikia-jw-settings__captions-button');
@@ -288,12 +291,12 @@ wikiaJWPlayerSettingsPlugin.prototype.createCaptionsButton = function () {
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.captionsClickHandler = function () {
-	if (this.areCaptionsOff(this.player.getCurrentCaptions())) {
-		this.player.setCurrentCaptions(this.currentlySelectedCaptions)
-	} else {
-		// "off" caption track is always the first one
-		this.player.setCurrentCaptions(0);
-	}
+	var nextSelectedTrack = this.areCaptionsOff(this.player.getCurrentCaptions()) ? this.currentlySelectedCaptions : 0;
+
+	this.player.setCurrentCaptions(nextSelectedTrack);
+	this.player.trigger('captionsSelected', {
+		enabled: nextSelectedTrack
+	});
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.areCaptionsOff = function(captionIndex) {

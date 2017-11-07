@@ -73,7 +73,8 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 					showAutoplayToggle: options.settings.showAutoplayToggle,
 					showQuality: options.settings.showQuality,
 					showCaptionsToggle: options.settings.showCaptionsToggle,
-					autoplay: options.autoplay
+					autoplay: options.autoplay,
+					captions: options.captions
 				}
 			};
 		}
