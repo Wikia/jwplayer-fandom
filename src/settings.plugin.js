@@ -309,7 +309,7 @@ wikiaJWPlayerSettingsPlugin.prototype.areCaptionsOff = function(captionIndex) {
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.getUserLang = function() {
-	return window.navigator.language.slice(0, 2);
+	return (window.navigator.userLanguage || window.navigator.language).slice(0, 2);
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.getSuitableCaptionsIndex = function(userLang, captionTracks) {
