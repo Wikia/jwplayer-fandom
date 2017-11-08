@@ -122,7 +122,7 @@ wikiaJWPlayerSettingsPlugin.prototype.addSettingsContent = function (div) {
 
 wikiaJWPlayerSettingsPlugin.prototype.createSettingsListElement = function () {
 	var settingsList = document.createElement('ul');
-	
+
 	settingsList.className = 'wikia-jw-settings__list wds-list';
 
 	if (this.config.showQuality) {
@@ -148,7 +148,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createSubmenuWrapper = function () {
 	backButton.className = 'wikia-jw-settings__back';
 	backButton.innerHTML = createArrowIcon('left').outerHTML + ' Back';
 	backButton.addEventListener('click', this.showSettingsList.bind(this));
-	
+
 	submenuWrapper.className = 'wikia-jw-settings__quality-levels wds-list';
 	submenuWrapper.appendChild(backButton);
 
