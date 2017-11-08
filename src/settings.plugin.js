@@ -22,8 +22,7 @@ function wikiaJWPlayerSettingsPlugin(player, config, div) {
 }
 
 wikiaJWPlayerSettingsPlugin.prototype.isSettingsMenuOrSettingsButton = function (element) {
-	var button = this.getSettingsButtonElement();
-
+	var button = this.player.getContainer().querySelector('[button=' + this.buttonID + ']');
 	return button === element ||
 		button.contains(element) ||
 		this.wikiaSettingsElement === element ||
@@ -73,7 +72,7 @@ wikiaJWPlayerSettingsPlugin.prototype.open = function () {
 };
 
 /**
- * hides the entire plugin (button and settings menu)
+ * hides the entire plugin (button and settings menu_
  */
 wikiaJWPlayerSettingsPlugin.prototype.hide = function () {
 	this.close();
@@ -84,7 +83,7 @@ wikiaJWPlayerSettingsPlugin.prototype.hide = function () {
  * shows back the entire plugin (adds button back)
  */
 wikiaJWPlayerSettingsPlugin.prototype.show = function () {
-	if (!this.getSettingsButtonElement()) {
+	if (!this.player.getContainer().querySelector('[button=' + this.buttonID + ']')) {
 		this.addButton();
 	}
 };
@@ -130,12 +129,6 @@ wikiaJWPlayerSettingsPlugin.prototype.createSettingsListElement = function () {
 
 	if (this.config.showAutoplayToggle) {
 		settingsList.appendChild(this.createAutoplayToggle());
-		this.show();
-	}
-
-	if (this.config.showCaptionsToggle) {
-		settingsList.appendChild(this.createCaptionsButton());
-		this.addCaptionListener();
 	}
 
 	return settingsList;
@@ -146,11 +139,11 @@ wikiaJWPlayerSettingsPlugin.prototype.createSVG = function (svgHtml) {
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.createQualityButton = function () {
-	var rightArrowIcon = this.createSVG(wikiaJWPlayerIcons.back);
 	var qualityButton = document.createElement('li');
 
-	rightArrowIcon.classList.add('wikia-jw-settings__right-arrow-icon');
 	qualityButton.classList.add('wikia-jw-settings__quality-button');
+	var rightArrowIcon = this.createSVG(wikiaJWPlayerIcons.back);
+	rightArrowIcon.classList.add('wikia-jw-settings__right-arrow-icon');
 	qualityButton.innerHTML = 'Video Quality' + rightArrowIcon.outerHTML;
 	qualityButton.addEventListener('click', this.showQualityLevelsList.bind(this));
 
@@ -158,18 +151,33 @@ wikiaJWPlayerSettingsPlugin.prototype.createQualityButton = function () {
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
-	var autoplayToggle = createToggle({
-			id: this.player.getContainer().id + '-videoAutoplayToggle',
-			label: 'Autoplay Videos',
-			checked: this.config.autoplay
-		});
+	var autoplayToggle = document.createElement('li'),
+		toggleInput = document.createElement('input'),
+		toggleLabel = document.createElement('label'),
+		playerInstance = this.player,
+		toggleID = playerInstance.getContainer().id + '-videoAutoplayToggle';
 
-	this.getLabelElement(autoplayToggle)
-		.addEventListener('click', function (event) {
-			this.player.trigger('autoplayToggle', {
-				enabled: !event.target.previousSibling.checked
-			});
-		}.bind(this));
+	autoplayToggle.classList.add('wikia-jw-settings__autoplay-toggle');
+
+	toggleInput.setAttribute('type', 'checkbox');
+	toggleInput.setAttribute('id', toggleID);
+	toggleInput.classList.add('wds-toggle__input');
+
+	if (this.config.autoplay) {
+		toggleInput.setAttribute('checked', '');
+	}
+
+	toggleLabel.setAttribute('for', toggleID);
+	toggleLabel.classList.add('wds-toggle__label');
+	toggleLabel.appendChild(document.createTextNode("Autoplay Videos"));
+	toggleLabel.addEventListener('click', function (event) {
+		playerInstance.trigger('autoplayToggle', {
+			enabled: !event.target.previousSibling.checked
+		});
+	});
+
+	autoplayToggle.appendChild(toggleInput);
+	autoplayToggle.appendChild(toggleLabel);
 
 	return autoplayToggle;
 };
@@ -207,6 +215,8 @@ wikiaJWPlayerSettingsPlugin.prototype.onQualityLevelsChange = function (data) {
 
 	if (shouldShowSettingsButton) {
 		this.show();
+	} else {
+		this.hide();
 	}
 
 	if (this.qualityLevelsList) {
@@ -249,125 +259,6 @@ wikiaJWPlayerSettingsPlugin.prototype.updateCurrentQuality = function (data) {
 	}
 };
 
-wikiaJWPlayerSettingsPlugin.prototype.addCaptionListener = function () {
-	var clickHandler = this.captionsClickHandler.bind(this);
-
-	this.player.on('captionsList', function (event) {
-		// tracks always include "off" item
-		if (event.tracks.length > 1) {
-			this.currentlySelectedCaptions = this.getSuitableCaptionsIndex(
-				this.captionLangMap[this.getUserLang()],
-				event.tracks
-			);
-
-			this.getLabelElement(this.captionsToggle)
-				.addEventListener('click', clickHandler);
-
-			this.wikiaSettingsElement.classList.remove('are-captions-empty');
-			this.show();
-
-			if (this.config.captions.enabled) {
-				this.player.setCurrentCaptions(this.currentlySelectedCaptions);
-			}
-
-			if (this.config.captions.styles && Object.keys(this.config.captions.styles).length) {
-				this.player.setCaptions(this.config.captions.styles);
-			}
-		} else {
-			this.getLabelElement(this.captionsToggle)
-				.removeEventListener('click', clickHandler);
-
-			this.wikiaSettingsElement.classList.add('are-captions-empty');
-		}
-	}.bind(this));
-};
-
-wikiaJWPlayerSettingsPlugin.prototype.createCaptionsButton = function () {
-	this.captionsToggle = createToggle({
-			id: this.player.getContainer().id + '-videoCaptionsToggle',
-			label: 'Captions',
-			checked: this.config.captions.enabled
-		});
-
-	this.captionsToggle.classList.add('wikia-jw-settings__captions-button');
-
-	return this.captionsToggle;
-};
-
-wikiaJWPlayerSettingsPlugin.prototype.captionsClickHandler = function () {
-	var nextSelectedTrack = this.areCaptionsOff(this.player.getCurrentCaptions()) ? this.currentlySelectedCaptions : 0;
-
-	this.player.setCurrentCaptions(nextSelectedTrack);
-	this.player.trigger('captionsSelected', {
-		enabled: nextSelectedTrack
-	});
-};
-
-wikiaJWPlayerSettingsPlugin.prototype.areCaptionsOff = function(captionIndex) {
-	// "off" always has first position in tracks array
-	return captionIndex === 0;
-};
-
-wikiaJWPlayerSettingsPlugin.prototype.getUserLang = function() {
-	return (window.navigator.userLanguage || window.navigator.language).slice(0, 2);
-};
-
-wikiaJWPlayerSettingsPlugin.prototype.getSuitableCaptionsIndex = function(userLang, captionTracks) {
-	// use findIndex when ES6+ will be available
-	return captionTracks
-		.map(function (track) {
-			return track.label;
-		})
-		.indexOf(userLang);
-};
-
-wikiaJWPlayerSettingsPlugin.prototype.captionLangMap = {
-	en: 'English',
-	pl: 'Polski',
-	fr: 'Français',
-	de: 'Deutsch',
-	it: 'Italiano',
-	ja: '日本語',
-	pt: 'Português',
-	ru: 'Русский язык',
-	es: 'Español',
-	zh: '中文'
-};
-
-wikiaJWPlayerSettingsPlugin.prototype.getLabelElement = function (wrapper) {
-	return wrapper.querySelector('label');
-};
-
-wikiaJWPlayerSettingsPlugin.prototype.getSettingsButtonElement = function () {
-	return this.player.getContainer().querySelector('[button=' + this.buttonID + ']');
-};
-
 wikiaJWPlayerSettingsPlugin.register = function () {
 	jwplayer().registerPlugin('wikiaSettings', '8.0.0', wikiaJWPlayerSettingsPlugin);
 };
-
-function createToggle(params) {
-	var toggleWrapper = document.createElement('li'),
-		toggleInput = document.createElement('input'),
-		toggleLabel = document.createElement('label');
-
-	toggleWrapper.className = 'wikia-jw-settings__toggle';
-
-	toggleInput.setAttribute('type', 'checkbox');
-	toggleInput.setAttribute('id', params.id);
-	toggleInput.className = 'wds-toggle__input';
-
-	if (params.checked) {
-		toggleInput.checked = true;
-	}
-
-	toggleLabel.setAttribute('for', params.id);
-	toggleLabel.className = 'wds-toggle__label';
-	toggleLabel.appendChild(document.createTextNode(params.label));
-
-	toggleWrapper.appendChild(toggleInput);
-	toggleWrapper.appendChild(toggleLabel);
-
-	return toggleWrapper;
-}
-
