@@ -286,7 +286,7 @@ wikiaJWPlayerSettingsPlugin.prototype.onCaptionsChange = function (event) {
 		this.wikiaSettingsElement.classList.remove(emptyCaptionsClass);
 		this.show();
 
-		if (this.config.captions.enabled) {
+		if (this.config.captions) {
 			this.player.setCurrentCaptions(suitableCaptionsTrack);
 			this.adjustCaptionsPosition();
 		}
