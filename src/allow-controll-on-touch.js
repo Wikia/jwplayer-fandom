@@ -1,4 +1,4 @@
-function allowControllOnTouchDevices(elementId, playerInstance) {
+function wikiaJWPlayerAllowControllOnTouchDevices(elementId, playerInstance) {
 	playerInstance.on('ready', function() {
 		var unmuteIcon = document.querySelector('.jw-autostart-mute');
 
