@@ -1,0 +1,23 @@
+{
+  "admessage": "The ad will end in xx seconds", 
+  "autoplayVideos": "Autoplay Videos", 
+  "back": "Back", 
+  "buffer": "Loading", 
+  "close": "Close", 
+  "cuetext": "Advertisement", 
+  "fullscreen": "Fullscreen", 
+  "loadingAd": "Loading ad", 
+  "next": "Next", 
+  "nextUp": "Next Up", 
+  "pause": "Pause", 
+  "play": "Play", 
+  "playback": "Start playback", 
+  "player": "Video Player", 
+  "prev": "Previous", 
+  "replay": "Replay", 
+  "settings": "Settings", 
+  "skipmessage": "Skip ad in xx", 
+  "skiptext": "Skip", 
+  "videoQuality": "Video Quality", 
+  "volume": "Volume"
+}
