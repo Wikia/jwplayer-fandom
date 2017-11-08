@@ -59,12 +59,11 @@
 		}
 	}
 
-	&.is-quality-list-empty &__quality-button,
-	&.are-captions-empty &__captions-button {
+	&.is-quality-list-empty &__quality-button {
 		display: none;
 	}
 
-	&__list &__toggle {
+	&__list &__autoplay-toggle {
 		padding: 4px 0;
 	}
 
