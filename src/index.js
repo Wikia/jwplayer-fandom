@@ -92,7 +92,8 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 			playerSetup.related = {
 				autoplaytimer: options.related.time || 3,
 				file: '//cdn.jwplayer.com/v2/playlists/' + options.related.playlistId + '?related_media_id=' + videoId,
-				oncomplete: options.related.autoplay ? 'autoplay' : 'show'
+				oncomplete: options.related.autoplay ? 'autoplay' : 'show',
+				autoplaymessage: i18n.nextUpInSeconds
 			};
 		}
 
