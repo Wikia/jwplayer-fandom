@@ -163,7 +163,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 			checked: this.config.autoplay
 		});
 
-	getLabelElement(autoplayToggle)
+	autoplayToggle.querySelector('label')
 		.addEventListener('click', function (event) {
 			this.player.trigger('autoplayToggle', {
 				enabled: !event.target.previousSibling.checked
@@ -252,7 +252,7 @@ wikiaJWPlayerSettingsPlugin.prototype.onCaptionsChange = function (event) {
 	var emptyCaptionsClass = 'are-captions-empty';
 
 	// tracks always include "off" item
-	if (event.tracks.length > 1) {
+	if (this.captionsList && event.tracks.length > 1) {
 		// captionList event is fired twice (probably) because of ads, so we prevent doubling the items
 		if (this.captionsList.childElementCount > 1) {
 			return;
@@ -275,10 +275,6 @@ wikiaJWPlayerSettingsPlugin.prototype.onCaptionsChange = function (event) {
 				});
 			}.bind(this));
 
-			if (this.player.getCurrentCaptions() === index) {
-				captionItem.classList.add(isActiveClass);
-			}
-
 			captionItem.appendChild(document.createTextNode(track.label));
 			this.captionsList.insertBefore(captionItem, this.captionsList.firstElementChild);
 		}, this);
@@ -286,9 +282,12 @@ wikiaJWPlayerSettingsPlugin.prototype.onCaptionsChange = function (event) {
 		this.wikiaSettingsElement.classList.remove(emptyCaptionsClass);
 		this.show();
 
-		if (this.config.captions) {
+		if (this.config.captions && suitableCaptionsTrack) {
 			this.player.setCurrentCaptions(suitableCaptionsTrack);
 			this.adjustCaptionsPosition();
+		} else {
+			// "off" track is always the first one
+			this.player.setCurrentCaptions(0);
 		}
 	} else {
 		clearElement(this.captionsList);
@@ -349,18 +348,23 @@ wikiaJWPlayerSettingsPlugin.prototype.adjustCaptionsPosition = function () {
 
 	}.bind(this), 0);
 
-	var textTracks = this.player.getContainer().querySelector('video').textTracks,
-		activeTrackIndex = Object.keys(textTracks).filter(function (key) {
-			/**
-			 * @see https://developer.mozilla.org/en-US/docs/Web/API/TextTrack/mode
- 			 */
-			return textTracks[key].mode !== 'disabled';
-		})[0];
+	// timeout is used because of a problems on Safari, value is approximate
+	setTimeout(function () {
+		var textTracks = this.player.getContainer().querySelector('video').textTracks,
+			activeTrackIndex = Object.keys(textTracks).filter(function (key) {
+				/**
+				 * @see https://developer.mozilla.org/en-US/docs/Web/API/TextTrack/mode
+				 */
+				return textTracks[key].mode !== 'disabled';
+			})[0];
 
-	Object.keys(textTracks[activeTrackIndex].cues).forEach(function (key) {
-		textTracks[activeTrackIndex].cues[key].snapToLines = false;
-		textTracks[activeTrackIndex].cues[key].line = 85;
-	});
+		if (textTracks.length) {
+			Object.keys(textTracks[activeTrackIndex].cues).forEach(function (key) {
+				textTracks[activeTrackIndex].cues[key].snapToLines = false;
+				textTracks[activeTrackIndex].cues[key].line = 85;
+			});
+		}
+	}.bind(this), 50);
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.captionLangMap = {
@@ -382,19 +386,19 @@ wikiaJWPlayerSettingsPlugin.register = function () {
 };
 
 function createToggle(params) {
-	var toggleWrapper = createElement('li', {
-			className: 'wikia-jw-settings__toggle ' + (params.additionalClassName || '')
-		}),
-		toggleInput = createElement('input', {
-			className: 'wds-toggle__input',
-			id: params.id,
-			type: 'checkbox',
-			checked: params.checked
-		}),
-		toggleLabel = createElement('label', {
-			className: 'wds-toggle__label',
-			htmlFor: params.id
-		});
+	var toggleWrapper = document.createElement('li'),
+		toggleInput = document.createElement('input'),
+		toggleLabel = document.createElement('label');
+
+	toggleWrapper.className = 'wikia-jw-settings__toggle ' + (params.additionalClassName || '');
+
+	toggleInput.className = 'wds-toggle__input';
+	toggleInput.id = params.id;
+	toggleInput.type = 'checkbox';
+	toggleInput.checked = params.checked;
+
+	toggleLabel.toggleLabel = 'wds-toggle__label';
+	toggleLabel.setAttribute('for', params.id);
 
 	toggleLabel.appendChild(document.createTextNode(params.label));
 
@@ -424,18 +428,6 @@ function createArrowIcon(direction) {
 	return arrowIcon;
 }
 
-function createElement(tagName, propObj) {
-	var element = document.createElement(tagName);
-
-	if (propObj) {
-		Object.keys(propObj).forEach(function (key) {
-			element[key] = propObj[key];
-		});
-	}
-
-	return element;
-}
-
 function clearElement(element) {
 	if (element) {
 		while (element.childElementCount > 1) {
@@ -446,10 +438,6 @@ function clearElement(element) {
 
 function createSVG(svgHtml) {
 	return domParser.parseFromString(svgHtml, 'image/svg+xml').documentElement;
-}
-
-function getLabelElement(wrapper) {
-	return wrapper.querySelector('label');
 }
 
 function showElement(element) {
