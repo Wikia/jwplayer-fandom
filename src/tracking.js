@@ -4,9 +4,27 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 		gaCategory = tracker.category || 'featured-video';
 
 	function updateVideoCustomDimensions(currentVideo) {
+		if (typeof tracker.setCustomDimension !== 'function') {
+			return;
+		}
+
 		tracker.setCustomDimension(34, currentVideo.mediaid);
 		tracker.setCustomDimension(35, currentVideo.title);
 		tracker.setCustomDimension(36, currentVideo.tags);
+	}
+
+	function addTrackingPixel(id, url) {
+		var mountedPixel = document.getElementById(id);
+
+		if (mountedPixel) {
+			mountedPixel.parentElement.removeChild(mountedPixel);
+		}
+
+		var img = document.createElement('img');
+		img.src = url;
+		img.id = id;
+
+		document.body.appendChild(img);
 	}
 
 	/**
@@ -21,17 +39,19 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 			return;
 		}
 
-		var scriptId = 'comscoreVideoMetrixTrack',
-			mountedScript = document.getElementById(scriptId);
+		var pixelID = 'comscoreVideoMetrixTrack',
+			url = 'http://b.scorecardresearch.com/p?C1=1&C2=6177433&C5=04';
 
-		if (mountedScript) {
-			mountedScript.parentElement.removeChild(mountedScript)
+		addTrackingPixel(pixelID, url);
+	}
+
+	/**
+	 * adds custom tracking pixel if specified
+	 */
+	function trackCustomPixel(pixelURL) {
+		if (pixelURL) {
+			addTrackingPixel('wikiaJWPlayerCustomPixel', pixelURL);
 		}
-
-		var img = document.createElement('img');
-		img.src = 'http://b.scorecardresearch.com/p?C1=1&C2=6177433&C5=04';
-		img.id = scriptId;
-		document.body.appendChild(img);
 	}
 
 	function track(gaData) {
@@ -95,6 +115,7 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 		});
 
 		trackComscoreVideoMetrix();
+		trackCustomPixel(data.item.pixel);
 	});
 
 	playerInstance.on('videoResumed', function () {
@@ -111,6 +132,7 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 		track(gaData);
 
 		trackComscoreVideoMetrix();
+		trackCustomPixel(tracker.pixel);
 	});
 
 	playerInstance.on('pause', function () {
