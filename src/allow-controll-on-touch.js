@@ -4,6 +4,6 @@ function wikiaJWPlayerAllowControllOnTouchDevices(elementId, playerInstance) {
 			jwPlayerClassList = document.getElementById(elementId).classList;
 
 		jwPlayerClassList.remove('jw-flag-autostart');
-		unmuteIcon.remove();
+		unmuteIcon.style.display = "none";
 	});
 }
