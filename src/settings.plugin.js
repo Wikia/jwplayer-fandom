@@ -216,7 +216,7 @@ wikiaJWPlayerSettingsPlugin.prototype.onQualityLevelsChange = function (data) {
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.updateQualityLevelsList = function (newLevels) {
-	clearElement(this.qualityLevelsList);
+	clearListElement(this.qualityLevelsList);
 
 	newLevels.forEach(function (level, index) {
 		var qualityLevelItem = document.createElement('li');
@@ -251,12 +251,10 @@ wikiaJWPlayerSettingsPlugin.prototype.updateCurrentQuality = function (data) {
 wikiaJWPlayerSettingsPlugin.prototype.onCaptionsChange = function (event) {
 	var emptyCaptionsClass = 'are-captions-empty';
 
+	clearListElement(this.captionsList);
+
 	// tracks always include "off" item
 	if (this.captionsList && event.tracks.length > 1) {
-		// captionList event is fired twice (probably) because of ads, so we prevent doubling the items
-		if (this.captionsList.childElementCount > 1) {
-			return;
-		}
 		var suitableCaptionsTrack = this.getSuitableCaptionsIndex(
 			this.captionLangMap[this.getUserLang()],
 			event.tracks
@@ -290,7 +288,6 @@ wikiaJWPlayerSettingsPlugin.prototype.onCaptionsChange = function (event) {
 			this.player.setCurrentCaptions(0);
 		}
 	} else {
-		clearElement(this.captionsList);
 		this.wikiaSettingsElement.classList.add(emptyCaptionsClass);
 	}
 };
@@ -344,10 +341,6 @@ wikiaJWPlayerSettingsPlugin.prototype.updateCurrentCaptions = function (data) {
  * @see https://www.w3.org/TR/webvtt1/#webvtt-cue-line
  */
 wikiaJWPlayerSettingsPlugin.prototype.adjustCaptionsPosition = function () {
-	setTimeout(function () {
-
-	}.bind(this), 0);
-
 	// timeout is used because of a problems on Safari, value is approximate
 	setTimeout(function () {
 		var textTracks = this.player.getContainer().querySelector('video').textTracks,
@@ -390,7 +383,7 @@ function createToggle(params) {
 		toggleInput = document.createElement('input'),
 		toggleLabel = document.createElement('label');
 
-	toggleWrapper.className = 'wikia-jw-settings__toggle ' + (params.additionalClassName || '');
+	toggleWrapper.className = 'wikia-jw-settings__toggle';
 
 	toggleInput.className = 'wds-toggle__input';
 	toggleInput.id = params.id;
@@ -428,7 +421,7 @@ function createArrowIcon(direction) {
 	return arrowIcon;
 }
 
-function clearElement(element) {
+function clearListElement(element) {
 	if (element) {
 		while (element.childElementCount > 1) {
 			element.removeChild(element.firstChild);
