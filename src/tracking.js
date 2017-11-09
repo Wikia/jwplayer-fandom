@@ -77,7 +77,9 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 		tracker.track(trackingData);
 	}
 
-	tracker.setCustomDimension(37, willAutoplay ? 'Yes' : 'No');
+	if (typeof tracker.setCustomDimension === 'function') {
+		tracker.setCustomDimension(37, willAutoplay ? 'Yes' : 'No');
+	}
 
 	playerInstance.once('ready', function () {
 		updateVideoCustomDimensions(
