@@ -1,8 +1,24 @@
 function wikiaJWPlayerAllowControllOnTouchDevices(elementId, playerInstance) {
-	playerInstance.on('ready', function() {
-		var unmuteIcon = document.querySelector('.jw-autostart-mute');
+	var adStarted = false;
 
-		document.getElementById(elementId).classList.remove('jw-flag-autostart');
-		document.getElementById(elementId).lastChild.removeChild(unmuteIcon);
+	playerInstance.on('adStarted', function () {
+		adStarted = true;
+	});
+
+	if (adStarted) {
+		removeMuteButton(playerInstance, elementId, 'adComplete');
+	} else {
+		removeMuteButton(playerInstance, elementId, 'firstFrame');
+	}
+
+}
+
+function removeMuteButton(playerInstance, elementId, event) {
+	playerInstance.on(event, function() {
+		var unmuteIcon = document.querySelector('.jw-autostart-mute'),
+			jwPlayerNode = document.getElementById(elementId);
+
+		jwPlayerNode.classList.remove('jw-flag-autostart');
+		jwPlayerNode.lastChild.removeChild(unmuteIcon);
 	})
 }
