@@ -1,9 +1,10 @@
 function wikiaJWPlayerAllowControllOnTouchDevices(playerInstance) {
 	playerInstance.on('playerStart', function () {
-		var unmuteIcon = document.querySelector('.jw-autostart-mute'),
-			jwPlayerClassList = playerInstance.getContainer().classList;
+		var unmuteIcon = document.querySelector('.jw-autostart-mute');
 
-		jwPlayerClassList.remove('jw-flag-autostart');
-		unmuteIcon.style.display = 'none';
+		if (unmuteIcon) {
+			playerInstance.getContainer().classList.remove('jw-flag-autostart');
+			unmuteIcon.style.display = 'none';
+		}
 	});
 }
