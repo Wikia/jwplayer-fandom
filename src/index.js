@@ -56,7 +56,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 			lang = options.lang || 'en',
 			// IMA supports two-letter ISO 639-1 code
 			langForAds = lang.substr(0, 2),
-			i18n = wikiaJWPlayeri18n[lang],
+			i18n = wikiaJWPlayeri18n[lang] || wikiaJWPlayeri18n['en'],
 			playerSetup = {
 				advertising: {
 					autoplayadsmuted: willAutoplay,
