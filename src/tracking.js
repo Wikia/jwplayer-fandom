@@ -4,6 +4,10 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 		gaCategory = tracker.category || 'featured-video';
 
 	function updateVideoCustomDimensions(currentVideo) {
+		if (typeof tracker.setCustomDimension !== 'function') {
+			return;
+		}
+
 		tracker.setCustomDimension(34, currentVideo.mediaid);
 		tracker.setCustomDimension(35, currentVideo.title);
 		tracker.setCustomDimension(36, currentVideo.tags);
