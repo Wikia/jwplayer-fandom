@@ -149,7 +149,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createSubmenuWrapper = function () {
 	backButton.innerHTML = createArrowIcon('left').outerHTML + ' Back';
 	backButton.addEventListener('click', this.showSettingsList.bind(this));
 
-	submenuWrapper.className = 'wikia-jw-settings__quality-levels wds-list';
+	submenuWrapper.className = 'wikia-jw-settings__submenu wds-list';
 	submenuWrapper.appendChild(backButton);
 
 	return submenuWrapper;
@@ -256,12 +256,13 @@ wikiaJWPlayerSettingsPlugin.prototype.onCaptionsChange = function (event) {
 	// tracks always include "off" item
 	if (this.captionsList && event.tracks.length > 1) {
 		var suitableCaptionsTrack = this.getSuitableCaptionsIndex(
-			this.captionLangMap[this.getUserLang()],
+			this.config.selectedCaptions || this.captionLangMap[this.getUserLang()],
 			event.tracks
 		);
 
 		event.tracks.forEach(function (track, index) {
-			var captionItem = document.createElement('li');
+			var captionItem = document.createElement('li'),
+				normalizedLabel = track.label === 'Off' ? 'No captions' : track.label;
 
 			captionItem.dataset.track = index;
 			captionItem.addEventListener('click', function () {
@@ -269,18 +270,19 @@ wikiaJWPlayerSettingsPlugin.prototype.onCaptionsChange = function (event) {
 				this.adjustCaptionsPosition();
 				this.close();
 				this.player.trigger('captionsSelected', {
-					selected: track.label
+					selectedLang: track.label
 				});
 			}.bind(this));
 
-			captionItem.appendChild(document.createTextNode(track.label));
+			captionItem.appendChild(document.createTextNode(normalizedLabel));
 			this.captionsList.insertBefore(captionItem, this.captionsList.firstElementChild);
 		}, this);
 
 		this.wikiaSettingsElement.classList.remove(emptyCaptionsClass);
 		this.show();
 
-		if (this.config.captions && suitableCaptionsTrack) {
+		// in !this.config.selectedCaptions empty string would pass as well
+		if (this.config.selectedCaptions !== false && suitableCaptionsTrack !== -1) {
 			this.player.setCurrentCaptions(suitableCaptionsTrack);
 			this.adjustCaptionsPosition();
 		} else {
@@ -362,15 +364,15 @@ wikiaJWPlayerSettingsPlugin.prototype.adjustCaptionsPosition = function () {
 
 wikiaJWPlayerSettingsPlugin.prototype.captionLangMap = {
 	en: 'English',
-	pl: 'Polski',
-	fr: 'Français',
-	de: 'Deutsch',
-	it: 'Italiano',
-	ja: '日本語',
-	pt: 'Português',
-	ru: 'Русский язык',
-	es: 'Español',
-	zh: '中文'
+	pl: 'Polish',
+	fr: 'French',
+	de: 'German',
+	it: 'Italian',
+	ja: 'Japanese',
+	pt: 'Portuguese',
+	ru: 'Russian',
+	es: 'Spanish',
+	zh: 'Chinese'
 };
 // end captions
 
@@ -390,7 +392,7 @@ function createToggle(params) {
 	toggleInput.type = 'checkbox';
 	toggleInput.checked = params.checked;
 
-	toggleLabel.toggleLabel = 'wds-toggle__label';
+	toggleLabel.className = 'wds-toggle__label';
 	toggleLabel.setAttribute('for', params.id);
 
 	toggleLabel.appendChild(document.createTextNode(params.label));
