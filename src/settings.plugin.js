@@ -256,7 +256,7 @@ wikiaJWPlayerSettingsPlugin.prototype.onCaptionsChange = function (event) {
 	// tracks always include "off" item
 	if (this.captionsList && event.tracks.length > 1) {
 		var suitableCaptionsTrack = this.getSuitableCaptionsIndex(
-			this.config.selectedCaptions || this.captionLangMap[this.getUserLang()],
+			this.config.selectedCaptionsLanguage || this.captionLangMap[this.getUserLang()],
 			event.tracks
 		);
 
@@ -281,8 +281,8 @@ wikiaJWPlayerSettingsPlugin.prototype.onCaptionsChange = function (event) {
 		this.wikiaSettingsElement.classList.remove(emptyCaptionsClass);
 		this.show();
 
-		// in !this.config.selectedCaptions empty string would pass as well
-		if (this.config.selectedCaptions !== false && suitableCaptionsTrack !== -1) {
+		// in !this.config.selectedCaptionsLanguage empty string would pass as well
+		if (this.config.selectedCaptionsLanguage !== false && suitableCaptionsTrack !== -1) {
 			this.player.setCurrentCaptions(suitableCaptionsTrack);
 			this.adjustCaptionsPosition();
 		} else {
