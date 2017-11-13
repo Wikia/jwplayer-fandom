@@ -1,22 +1,11 @@
 {
   "name": "jwplayer-fandom",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "JWPlayer for Fandom",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run build && npm-run-all --parallel watch-other watch-js watch-scss watch-i18n server",
-    "server": "http-server -c-1 dist",
-    "copy-html": "mkdir -p dist && cp src/*.html dist/",
-    "build": "npm run copy-html && npm run build-all-css && npm run build-js && npm run build-i18n",
-    "build-js": "uglifyjs --compress --mangle -o dist/wikiajwplayer.js --wrap wikiaJWPlayer -- src/*.js",
-    "build-dev-css": "node-sass src/styles/dev.scss --output-style compressed | postcss -u autoprefixer --autoprefixer.browsers=\"ie >= 11, Safari >= 7.1, last 2 versions\" > dist/dev.css",
-    "build-css": "node-sass src/styles/index.scss --output-style compressed | postcss -u autoprefixer --autoprefixer.browsers=\"ie >= 11, Safari >= 7.1, last 2 versions\" > dist/index.css",
-    "build-all-css": "npm run build-css && npm run build-dev-css",
-    "build-i18n": "node scripts/i18n-build.es6",
-    "watch-scss": "nodemon -e scss -x \"npm run build-all-css\"",
-    "watch-other": "nodemon -e html --ignore dist/ -x \"npm run copy-html\"",
-    "watch-js": "nodemon -e js --ignore dist/ -x \"npm run build-js\"",
-    "watch-i18n": "nodemon --watch src/locales -e json --ignore dist/ -x \"npm run build-i18n\""
+    "dev": "webpack-dev-server --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
   },
   "repository": {
     "type": "git",
@@ -29,13 +18,20 @@
   },
   "homepage": "https://github.com/Wikia/jwplayer-fandom#readme",
   "devDependencies": {
-    "autoprefixer": "7.1.6",
-    "design-system": "git+https://github.com/Wikia/design-system.git#8.11.1",
-    "http-server": "0.10.0",
-    "node-sass": "4.5.3",
-    "nodemon": "1.12.1",
-    "npm-run-all": "4.1.1",
-    "postcss-cli": "4.1.1",
-    "uglify-js": "3.1.5"
+    "autoprefixer": "^7.1.6",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "core-js": "^2.5.1",
+    "css-loader": "^0.28.7",
+    "design-system": "git+https://github.com/Wikia/design-system.git#8.11.0",
+    "es6-promise": "^4.1.1",
+    "extract-text-webpack-plugin": "^3.0.1",
+    "node-sass": "^4.5.3",
+    "postcss-loader": "^2.0.8",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.19.0",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.3"
   }
 }
