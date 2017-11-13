@@ -343,9 +343,11 @@ wikiaJWPlayerSettingsPlugin.prototype.updateCurrentCaptions = function (track) {
 };
 
 /**
- * Hack warning!
+ * Programmatically set 'line' of every caption as a percentage value from the top of video.
  *
- * Programmatically set 'line' of every caption as a percentage value from the top of video
+ * We want to add some spacing between the bottom edge of video and the captions. Since it's impossible to achieve
+ * that using CSS, we can either set the position in every text track for every cue while creating the cues
+ * (lot of work to do), or we can do it much easier, programmatically, in a hacky way.
  *
  * @see https://www.w3.org/TR/webvtt1/#webvtt-cue-line
  */
