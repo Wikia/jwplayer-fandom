@@ -282,10 +282,7 @@ wikiaJWPlayerSettingsPlugin.prototype.onCaptionsChange = function (event) {
 wikiaJWPlayerSettingsPlugin.prototype.createCaptionsList = function () {
 	this.captionsList = this.createSubmenuWrapper();
 
-	this.player.on('captionsChanged', function (data) {
-		this.updateCurrentCaptions(data.track);
-		this.adjustCaptionsPosition();
-	}.bind(this))
+	this.player.on('captionsChanged', this.updateCurrentCaptions.bind(this))
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.createCaptionsListItem = function (track, index) {
@@ -295,7 +292,6 @@ wikiaJWPlayerSettingsPlugin.prototype.createCaptionsListItem = function (track, 
 	captionItem.dataset.track = index;
 	captionItem.addEventListener('click', function () {
 		this.player.setCurrentCaptions(index);
-		this.adjustCaptionsPosition();
 		this.close();
 		this.player.trigger('captionsSelected', {
 			selectedLang: track.label
@@ -334,38 +330,12 @@ wikiaJWPlayerSettingsPlugin.prototype.getSuitableCaptionsIndex = function(userLa
 		.indexOf(userLang);
 };
 
-wikiaJWPlayerSettingsPlugin.prototype.updateCurrentCaptions = function (track) {
+wikiaJWPlayerSettingsPlugin.prototype.updateCurrentCaptions = function (data) {
 	for (var i = 0; i < this.captionsList.childNodes.length; i++) {
 		this.captionsList.childNodes[i].classList.remove(isActiveClass);
 	}
 
-	this.captionsList.querySelector('[data-track="' + track + '"]').classList.add(isActiveClass);
-};
-
-/**
- * Programmatically set 'line' of every caption as a percentage value from the top of video.
- *
- * We want to add some spacing between the bottom edge of video and the captions. Since it's impossible to achieve
- * that using CSS, we can either set the position in every text track for every cue while creating the cues
- * (lot of work to do), or we can do it much easier, programmatically, in a hacky way.
- *
- * @see https://www.w3.org/TR/webvtt1/#webvtt-cue-line
- */
-wikiaJWPlayerSettingsPlugin.prototype.adjustCaptionsPosition = function () {
-	var textTracks = this.player.getContainer().querySelector('video').textTracks,
-		activeTrackIndex = Object.keys(textTracks).filter(function (key) {
-			/**
-			 * @see https://developer.mozilla.org/en-US/docs/Web/API/TextTrack/mode
-			 */
-			return textTracks[key].mode !== 'disabled';
-		})[0];
-
-	if (textTracks.length) {
-		Object.keys(textTracks[activeTrackIndex].cues).forEach(function (key) {
-			textTracks[activeTrackIndex].cues[key].snapToLines = false;
-			textTracks[activeTrackIndex].cues[key].line = 85;
-		});
-	}
+	this.captionsList.querySelector('[data-track="' + data.track + '"]').classList.add(isActiveClass);
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.captionLangMap = {
@@ -385,70 +355,3 @@ wikiaJWPlayerSettingsPlugin.prototype.captionLangMap = {
 wikiaJWPlayerSettingsPlugin.register = function () {
 	jwplayer().registerPlugin('wikiaSettings', '8.0.0', wikiaJWPlayerSettingsPlugin);
 };
-
-function createToggle(params) {
-	var toggleWrapper = document.createElement('li'),
-		toggleInput = document.createElement('input'),
-		toggleLabel = document.createElement('label');
-
-	toggleWrapper.className = 'wikia-jw-settings__toggle';
-
-	toggleInput.className = 'wds-toggle__input';
-	toggleInput.id = params.id;
-	toggleInput.type = 'checkbox';
-	toggleInput.checked = params.checked;
-
-	toggleLabel.className = 'wds-toggle__label';
-	toggleLabel.setAttribute('for', params.id);
-
-	toggleLabel.appendChild(document.createTextNode(params.label));
-
-	toggleWrapper.appendChild(toggleInput);
-	toggleWrapper.appendChild(toggleLabel);
-
-	return toggleWrapper;
-}
-
-/**
- * Available directions:
- * - left
- * - right
- *
- * @param {String} direction
- * @returns {HTMLElement}
- */
-function createArrowIcon(direction) {
-	var arrowIcon = createSVG(wikiaJWPlayerIcons.back);
-
-	if (direction === 'left') {
-		arrowIcon.classList.add('wikia-jw-settings__back-icon');
-	} else {
-		arrowIcon.classList.add('wikia-jw-settings__right-arrow-icon');
-	}
-
-	return arrowIcon;
-}
-
-function clearListElement(element) {
-	if (element) {
-		while (element.childElementCount > 1) {
-			element.removeChild(element.firstChild);
-		}
-	}
-}
-
-function createSVG(svgHtml) {
-	return domParser.parseFromString(svgHtml, 'image/svg+xml').documentElement;
-}
-
-function showElement(element) {
-	if (element) {
-		element.style.display = 'block';
-	}
-}
-
-function hideElement(element) {
-	if (element) {
-		element.style.display = 'none';
-	}
-}
