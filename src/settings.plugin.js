@@ -146,8 +146,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createSubmenuWrapper = function () {
 		submenuWrapper = document.createElement('ul');
 
 	backElement.className = 'wikia-jw-settings__back';
-	// todo change label after i18n
-	backElement.innerHTML = createArrowIcon('left').outerHTML + ' Back';
+	backElement.innerHTML = createArrowIcon('left').outerHTML + ' ' + this.config.i18n.back;
 	backElement.addEventListener('click', this.showSettingsList.bind(this));
 
 	submenuWrapper.className = 'wikia-jw-settings__submenu wds-list';
@@ -158,7 +157,6 @@ wikiaJWPlayerSettingsPlugin.prototype.createSubmenuWrapper = function () {
 
 // autoplay button specific methods
 wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
-	// todo change label after i18n
 	var autoplayToggle = createToggle({
 			id: this.player.getContainer().id + '-videoAutoplayToggle',
 			label: this.config.i18n.autoplayVideos,
@@ -181,8 +179,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createQualityButton = function () {
 	var qualityElement = document.createElement('li');
 
 	qualityElement.className = 'wikia-jw-settings__quality-button';
-	// todo change label after i18n
-	qualityElement.innerHTML = 'Video Quality' + createArrowIcon('right').outerHTML;
+	qualityElement.innerHTML = this.config.i18n.videoQuality + createArrowIcon('right').outerHTML;
 	qualityElement.addEventListener('click', function () {
 		hideElement(this.settingsList);
 		showElement(this.qualityLevelsList);
@@ -306,8 +303,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createCaptionsButton = function () {
 	var captionsButton = document.createElement('li');
 
 	captionsButton.className = 'wikia-jw-settings__captions-button';
-	// todo change label after i18n
-	captionsButton.innerHTML = 'Captions' + createArrowIcon('right').outerHTML;
+	captionsButton.innerHTML = this.config.i18n.captions + createArrowIcon('right').outerHTML;
 
 	captionsButton.addEventListener('click', function () {
 		hideElement(this.settingsList);
