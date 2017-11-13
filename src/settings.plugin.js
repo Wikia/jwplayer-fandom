@@ -25,10 +25,10 @@ function wikiaJWPlayerSettingsPlugin(player, config, div) {
 wikiaJWPlayerSettingsPlugin.prototype.isSettingsMenuOrSettingsButton = function (element) {
 	var button = this.getSettingsButtonElement();
 
-	return button === element ||
+	return button && (button === element ||
 		button.contains(element) ||
 		this.wikiaSettingsElement === element ||
-		this.wikiaSettingsElement.contains(element);
+		this.wikiaSettingsElement.contains(element));
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.getSettingsButtonElement = function () {
@@ -47,7 +47,7 @@ wikiaJWPlayerSettingsPlugin.prototype.addButton = function () {
 	settingsIcon.classList.add('jw-svg-icon');
 	settingsIcon.classList.add('jw-svg-icon-wikia-settings');
 
-	this.player.addButton(settingsIcon.outerHTML, 'Settings', function () {
+	this.player.addButton(settingsIcon.outerHTML, this.config.i18n.settings, function () {
 		if (!this.wikiaSettingsElement.style.display) {
 			this.open();
 		} else {
@@ -161,7 +161,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 	// todo change label after i18n
 	var autoplayToggle = createToggle({
 			id: this.player.getContainer().id + '-videoAutoplayToggle',
-			label: 'Autoplay Videos',
+			label: this.config.i18n.autoplayVideos,
 			checked: this.config.autoplay
 		});
 
