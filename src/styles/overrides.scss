@@ -106,18 +106,20 @@
 		line-height: 24px;
 		padding: 6px;
 		top: -20px!important;
+	}
 
-		@media (max-width:768px) {
+    .jw-text-track-container {
+      margin-left: 30px !important;
+      margin-right: 30px !important;
+    }
+
+	.jw-flag-small-player {
+		.jw-text-track-cue {
 			font-size: 14px;
 			top: 0!important;
 		}
-	}
 
-	.jw-text-track-container {
-		margin-left: 30px!important;
-		margin-right: 30px!important;
-
-		@media (max-width:768px) {
+		.jw-text-track-container {
 			margin-left: 10px!important;
 			margin-right: 10px!important;
 		}
