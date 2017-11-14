@@ -5,7 +5,7 @@ import wikiaJWPlayerTracking from './tracking';
 import wikiaJWPlayerHandleTabNotActive from './tab-active';
 import wikiaJWPlayerLogger from './logger';
 import wikiaJWPlayerSettingsPlugin from './settings.plugin';
-import wikiaJWPlayerAllowControllOnTouchDevices from './allow-control-on-scroll';
+import wikiaJWPlayerAllowControllOnTouchDevices from './allow-control-on-touch';
 import wikiaJWPlayeri18n from './../locales/i18n';
 
 const loadCallbacks = [];
