@@ -256,7 +256,7 @@ wikiaJWPlayerSettingsPlugin.prototype.updateQualityLevelsList = function (newLev
 	newLevels.forEach(function (level, index) {
 		var qualityLevelItem = document.createElement('li');
 		qualityLevelItem.tabIndex = 0;
-		qualitylevelItem.setAttribute('aria-label', 'Quality Level ' + level.label);
+		qualityLevelItem.setAttribute('aria-label', 'Quality Level ' + level.label);
 
 		this._onClick(qualityLevelItem, function () {
 			this.player.setCurrentQuality(index);
