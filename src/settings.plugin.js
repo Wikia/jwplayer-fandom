@@ -175,7 +175,8 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 
 	var label = autoplayToggle.querySelector('label');
 
-	label.addEventListener('click', toggleAutoplayToggle);
+	label.addEventListener('click', toggleAutoplayToggle.bind(this));
+	label.tabIndex = 0;
 	label.addEventListener('keyup', function (event) {
 		if (event.keyCode === 13 || event.keyCode === 32) {
 			toggleAutoplayToggle(event);
@@ -197,8 +198,9 @@ wikiaJWPlayerSettingsPlugin.prototype.createQualityButton = function () {
 	var qualityElement = document.createElement('li');
 
 	qualityElement.className = 'wikia-jw-settings__quality-button';
+	qualityElement.tabIndex = 0;
 	qualityElement.innerHTML = this.config.i18n.videoQuality + createArrowIcon('right').outerHTML;
-	qualityElement.addEventListener('click', openQualityMenu);
+	qualityElement.addEventListener('click', openQualityMenu.bind(this));
 	qualityElement.addEventListener('keyup', function (event) {
 		if (event.keyCode === 13 || event.keyCode === 32) {
 			openQualityMenu();
