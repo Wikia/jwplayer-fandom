@@ -22,6 +22,20 @@ function wikiaJWPlayerSettingsPlugin(player, config, div) {
 	document.addEventListener('touchend', this.documentClickHandler);
 }
 
+wikiaJWPlayerSettingsPlugin.prototype._onClick = function (target, handler) {
+	var boundHandler = handler.bind(this);
+
+	target.addEventListener('click', boundHandler);
+	target.addEventListener('keydown', function (evt) {
+		//13 -> enter, 32 -> space
+		if ([13, 32].indexOf(evt.keyCode) !== -1) {
+			boundHandler(evt);
+			evt.preventDefault();
+			evt.stopPropagation();
+		}
+	});
+};
+
 wikiaJWPlayerSettingsPlugin.prototype.isSettingsMenuOrSettingsButton = function (element) {
 	var button = this.getSettingsButtonElement();
 
@@ -143,15 +157,12 @@ wikiaJWPlayerSettingsPlugin.prototype.createSettingsListElement = function () {
 
 wikiaJWPlayerSettingsPlugin.prototype.createSubmenuWrapper = function () {
 	var backElement = document.createElement('li'),
-		submenuWrapper = document.createElement('ul'),
-		backButton = document.createElement('button');
+		submenuWrapper = document.createElement('ul');
 
 	backElement.className = 'wikia-jw-settings__back';
-	backButton.className = 'wikia-jw-settings__accessibility-button';
-
-	backButton.innerHTML = createArrowIcon('left').outerHTML + ' ' + this.config.i18n.back;
-	backButton.addEventListener('click', this.showSettingsList.bind(this));
-	backElement.appendChild(backButton);
+	backElement.tabIndex = 0;
+	backElement.innerHTML = createArrowIcon('left').outerHTML + ' ' + this.config.i18n.back;
+	this._onClick(backElement, this.showSettingsList);
 
 	submenuWrapper.className = 'wikia-jw-settings__submenu wds-list';
 	submenuWrapper.appendChild(backElement);
@@ -161,7 +172,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createSubmenuWrapper = function () {
 
 // autoplay button specific methods
 wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
-	function toggleAutoplayToggle(event) {
+	function toggleAutoplay(event) {
 		this.player.trigger('autoplayToggle', {
 			enabled: !event.target.previousSibling.checked
 		});
@@ -175,15 +186,8 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 
 	var label = autoplayToggle.querySelector('label');
 
-	label.addEventListener('click', toggleAutoplayToggle.bind(this));
+	this._onClick(label, toggleAutoplay);
 	label.tabIndex = 0;
-	label.addEventListener('keyup', function (event) {
-		if (event.keyCode === 13 || event.keyCode === 32) {
-			toggleAutoplayToggle.bind(this)(event);
-			event.preventDefault();
-			event.stopPropagation();
-		}
-	}.bind(this));
 
 	return autoplayToggle;
 };
@@ -200,14 +204,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createQualityButton = function () {
 	qualityElement.className = 'wikia-jw-settings__quality-button';
 	qualityElement.tabIndex = 0;
 	qualityElement.innerHTML = this.config.i18n.videoQuality + createArrowIcon('right').outerHTML;
-	qualityElement.addEventListener('click', openQualityMenu.bind(this));
-	qualityElement.addEventListener('keyup', function (event) {
-		if (event.keyCode === 13 || event.keyCode === 32) {
-			openQualityMenu.bind(this)();
-			event.preventDefault();
-			event.stopPropagation();
-		}
-	}.bind(this));
+	this._onClick(qualityElement, openQualityMenu)
 
 	return qualityElement;
 };
@@ -243,22 +240,19 @@ wikiaJWPlayerSettingsPlugin.prototype.updateQualityLevelsList = function (newLev
 	clearListElement(this.qualityLevelsList);
 
 	newLevels.forEach(function (level, index) {
-		var qualityLevelItem = document.createElement('li'),
-			qualityLevelItemButton = document.createElement('button');
+		var qualityLevelItem = document.createElement('li');
+		qualityLevelItem.tabIndex = 0;
 
-		qualityLevelItemButton.className = 'wikia-jw-settings__accessibility-button';
-
-		qualityLevelItemButton.addEventListener('click', function () {
+		this._onClick(qualityLevelItem, function () {
 			this.player.setCurrentQuality(index);
 			this.close();
-		}.bind(this));
+		});
 
 		if (this.player.getCurrentQuality() === index) {
 			qualityLevelItem.classList.add(isActiveClass);
 		}
 
-		qualityLevelItemButton.appendChild(document.createTextNode(level.label));
-		qualityLevelItem.appendChild(qualityLevelItemButton);
+		qualityLevelItem.appendChild(document.createTextNode(level.label));
 		this.qualityLevelsList.insertBefore(qualityLevelItem, this.qualityLevelsList.lastElementChild);
 	}, this);
 };
@@ -312,40 +306,34 @@ wikiaJWPlayerSettingsPlugin.prototype.createCaptionsList = function () {
 
 wikiaJWPlayerSettingsPlugin.prototype.createCaptionsListItem = function (track, index) {
 	var captionItem = document.createElement('li'),
-		captionItemButton = document.createElement('button'),
 		normalizedLabel = track.label === 'Off' ? 'No captions' : track.label;
 
 	captionItem.dataset.track = index;
-	captionItemButton.className = 'wikia-jw-settings__accessibility-button';
-	captionItemButton.addEventListener('click', function () {
+
+	this._onClick(captionItem, function () {
 		this.player.setCurrentCaptions(index);
 		this.close();
 		this.player.trigger('captionsSelected', {
 			selectedLang: track.label
 		});
-	}.bind(this));
+	});
 
-	captionItemButton.appendChild(document.createTextNode(normalizedLabel));
-	captionItem.appendChild(captionItemButton);
+	captionItem.appendChild(document.createTextNode(normalizedLabel));
 	this.captionsList.insertBefore(captionItem, this.captionsList.firstElementChild);
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.createCaptionsButton = function () {
-	var captionsTrigger = document.createElement('li'),
-		captionsTriggerButton = document.createElement('button');
+	var captionsButton = document.createElement('li');
 
-	captionsTrigger.className = 'wikia-jw-settings__captions-button';
-	captionsTriggerButton.className = 'wikia-jw-settings__accessibility-button';
-	captionsTriggerButton.innerHTML = this.config.i18n.captions + createArrowIcon('right').outerHTML;
+	captionsButton.className = 'wikia-jw-settings__captions-button';
+	captionsButton.innerHTML = this.config.i18n.captions + createArrowIcon('right').outerHTML;
 
-	captionsTriggerButton.addEventListener('click', function () {
+	captionsButton.addEventListener('click', function () {
 		hideElement(this.settingsList);
 		showElement(this.captionsList);
 	}.bind(this));
 
-	captionsTrigger.appendChild(captionsTriggerButton);
-
-	return captionsTrigger;
+	return captionsButton;
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.getUserLang = function() {
