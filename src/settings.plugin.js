@@ -168,19 +168,21 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 	}
 
 	var autoplayToggle = createToggle({
-			id: this.player.getContainer().id + '-videoAutoplayToggle',
-			label: this.config.i18n.autoplayVideos,
-			checked: this.config.autoplay
-		});
+		id: this.player.getContainer().id + '-videoAutoplayToggle',
+		label: this.config.i18n.autoplayVideos,
+		checked: this.config.autoplay
+	});
 
 	var label = autoplayToggle.querySelector('label');
 
 	label.addEventListener('click', toggleAutoplayToggle);
 	label.addEventListener('keyup', function (event) {
 		if (event.keyCode === 13 || event.keyCode === 32) {
-			toggleAutoplayToggle(event)
+			toggleAutoplayToggle(event);
+			event.preventDefault();
+			event.stopPropagation();
 		}
-	});
+	}.bind(this));
 
 	return autoplayToggle;
 };
@@ -200,8 +202,10 @@ wikiaJWPlayerSettingsPlugin.prototype.createQualityButton = function () {
 	qualityElement.addEventListener('keyup', function (event) {
 		if (event.keyCode === 13 || event.keyCode === 32) {
 			openQualityMenu();
+			event.preventDefault();
+			event.stopPropagation();
 		}
-	});
+	}.bind(this));
 
 	return qualityElement;
 };
