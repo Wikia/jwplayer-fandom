@@ -179,7 +179,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 	label.tabIndex = 0;
 	label.addEventListener('keyup', function (event) {
 		if (event.keyCode === 13 || event.keyCode === 32) {
-			toggleAutoplayToggle(event);
+			toggleAutoplayToggle.bind(this)(event);
 			event.preventDefault();
 			event.stopPropagation();
 		}
@@ -203,7 +203,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createQualityButton = function () {
 	qualityElement.addEventListener('click', openQualityMenu.bind(this));
 	qualityElement.addEventListener('keyup', function (event) {
 		if (event.keyCode === 13 || event.keyCode === 32) {
-			openQualityMenu();
+			openQualityMenu.bind(this)();
 			event.preventDefault();
 			event.stopPropagation();
 		}
