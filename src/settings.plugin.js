@@ -173,7 +173,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 			checked: this.config.autoplay
 		});
 
-	const label = autoplayToggle.querySelector('label');
+	var label = autoplayToggle.querySelector('label');
 
 	label.addEventListener('click', toggleAutoplayToggle);
 	label.addEventListener('keyup', function (event) {
