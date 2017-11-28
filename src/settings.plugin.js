@@ -198,7 +198,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 		}
 	});
 
-	this._onClick(label, toggleAutoplay);
+	label.addEventListener('click', toggleAutoplay.bind(this));
 	label.tabIndex = 0;
 	label.setAttribute('aria-label', this.config.i18n.autoplayVideos);
 
