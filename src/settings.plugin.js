@@ -161,7 +161,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createSubmenuWrapper = function () {
 
 	backElement.className = 'wikia-jw-settings__back';
 	backElement.tabIndex = 0;
-	backElement.setAttribute('aria-label', 'Back Button');
+	backElement.setAttribute('aria-label', this.config.i18n.back);
 	backElement.innerHTML = createArrowIcon('left').outerHTML + ' ' + this.config.i18n.back;
 	this._onClick(backElement, this.showSettingsList);
 
@@ -200,7 +200,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 
 	this._onClick(label, toggleAutoplay);
 	label.tabIndex = 0;
-	label.setAttribute('aria-label', 'Autoplay Toggle');
+	label.setAttribute('aria-label', this.config.i18n.autoplayVideos);
 
 	return autoplayToggle;
 };
@@ -216,7 +216,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createQualityButton = function () {
 
 	qualityElement.className = 'wikia-jw-settings__quality-button';
 	qualityElement.tabIndex = 0;
-	qualityElement.setAttribute('aria-label', 'Quality Menu');
+	qualityElement.setAttribute('aria-label', this.config.i18n.videoQuality);
 	qualityElement.innerHTML = this.config.i18n.videoQuality + createArrowIcon('right').outerHTML;
 	this._onClick(qualityElement, openQualityMenu)
 
@@ -256,7 +256,7 @@ wikiaJWPlayerSettingsPlugin.prototype.updateQualityLevelsList = function (newLev
 	newLevels.forEach(function (level, index) {
 		var qualityLevelItem = document.createElement('li');
 		qualityLevelItem.tabIndex = 0;
-		qualityLevelItem.setAttribute('aria-label', 'Quality Level ' + level.label);
+		qualityLevelItem.setAttribute('aria-label', this.config.i18n.videoQuality + ' ' + level.label);
 
 		this._onClick(qualityLevelItem, function () {
 			this.player.setCurrentQuality(index);
