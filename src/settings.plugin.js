@@ -22,6 +22,20 @@ function wikiaJWPlayerSettingsPlugin(player, config, div) {
 	document.addEventListener('touchend', this.documentClickHandler);
 }
 
+wikiaJWPlayerSettingsPlugin.prototype._onClick = function (target, handler) {
+	var boundHandler = handler.bind(this);
+
+	target.addEventListener('click', boundHandler);
+	target.addEventListener('keydown', function (evt) {
+		//13 -> enter, 32 -> space
+		if ([13, 32].indexOf(evt.keyCode) !== -1) {
+			boundHandler(evt);
+			evt.preventDefault();
+			evt.stopPropagation();
+		}
+	});
+};
+
 wikiaJWPlayerSettingsPlugin.prototype.isSettingsMenuOrSettingsButton = function (element) {
 	var button = this.getSettingsButtonElement();
 
@@ -146,8 +160,10 @@ wikiaJWPlayerSettingsPlugin.prototype.createSubmenuWrapper = function () {
 		submenuWrapper = document.createElement('ul');
 
 	backElement.className = 'wikia-jw-settings__back';
+	backElement.tabIndex = 0;
+	backElement.setAttribute('aria-label', 'Back Button');
 	backElement.innerHTML = createArrowIcon('left').outerHTML + ' ' + this.config.i18n.back;
-	backElement.addEventListener('click', this.showSettingsList.bind(this));
+	this._onClick(backElement, this.showSettingsList);
 
 	submenuWrapper.className = 'wikia-jw-settings__submenu wds-list';
 	submenuWrapper.appendChild(backElement);
@@ -157,18 +173,34 @@ wikiaJWPlayerSettingsPlugin.prototype.createSubmenuWrapper = function () {
 
 // autoplay button specific methods
 wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
-	var autoplayToggle = createToggle({
-			id: this.player.getContainer().id + '-videoAutoplayToggle',
-			label: this.config.i18n.autoplayVideos,
-			checked: this.config.autoplay
+	function toggleAutoplay(event) {
+		this.player.trigger('autoplayToggle', {
+			enabled: !event.target.previousSibling.checked
 		});
+	}
 
-	autoplayToggle.querySelector('label')
-		.addEventListener('click', function (event) {
-			this.player.trigger('autoplayToggle', {
-				enabled: !event.target.previousSibling.checked
-			});
-		}.bind(this));
+	var autoplayToggle = createToggle({
+		id: this.player.getContainer().id + '-videoAutoplayToggle',
+		label: this.config.i18n.autoplayVideos,
+		checked: this.config.autoplay
+	});
+
+	var label = autoplayToggle.querySelector('label');
+
+	label.addEventListener('keydown', function (evt) {
+		if ([13, 32].indexOf(evt.keyCode) !== -1) {
+			evt.preventDefault();
+			evt.stopPropagation();
+
+			var input = event.target.previousSibling;
+
+			input.checked = !input.checked;
+		}
+	});
+
+	this._onClick(label, toggleAutoplay);
+	label.tabIndex = 0;
+	label.setAttribute('aria-label', 'Autoplay Toggle');
 
 	return autoplayToggle;
 };
@@ -176,14 +208,17 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 
 // quality button specific methods
 wikiaJWPlayerSettingsPlugin.prototype.createQualityButton = function () {
+	function openQualityMenu() {
+		hideElement(this.settingsList);
+		showElement(this.qualityLevelsList);
+	}
 	var qualityElement = document.createElement('li');
 
 	qualityElement.className = 'wikia-jw-settings__quality-button';
+	qualityElement.tabIndex = 0;
+	qualityElement.setAttribute('aria-label', 'Quality Menu');
 	qualityElement.innerHTML = this.config.i18n.videoQuality + createArrowIcon('right').outerHTML;
-	qualityElement.addEventListener('click', function () {
-		hideElement(this.settingsList);
-		showElement(this.qualityLevelsList);
-	}.bind(this));
+	this._onClick(qualityElement, openQualityMenu)
 
 	return qualityElement;
 };
@@ -220,11 +255,13 @@ wikiaJWPlayerSettingsPlugin.prototype.updateQualityLevelsList = function (newLev
 
 	newLevels.forEach(function (level, index) {
 		var qualityLevelItem = document.createElement('li');
+		qualityLevelItem.tabIndex = 0;
+		qualityLevelItem.setAttribute('aria-label', 'Quality Level ' + level.label);
 
-		qualityLevelItem.addEventListener('click', function () {
+		this._onClick(qualityLevelItem, function () {
 			this.player.setCurrentQuality(index);
 			this.close();
-		}.bind(this));
+		});
 
 		if (this.player.getCurrentQuality() === index) {
 			qualityLevelItem.classList.add(isActiveClass);
@@ -287,13 +324,14 @@ wikiaJWPlayerSettingsPlugin.prototype.createCaptionsListItem = function (track, 
 		normalizedLabel = track.label === 'Off' ? 'No captions' : track.label;
 
 	captionItem.dataset.track = index;
-	captionItem.addEventListener('click', function () {
+
+	this._onClick(captionItem, function () {
 		this.player.setCurrentCaptions(index);
 		this.close();
 		this.player.trigger('captionsSelected', {
 			selectedLang: track.label
 		});
-	}.bind(this));
+	});
 
 	captionItem.appendChild(document.createTextNode(normalizedLabel));
 	this.captionsList.insertBefore(captionItem, this.captionsList.firstElementChild);
