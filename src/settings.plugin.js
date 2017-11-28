@@ -16,6 +16,7 @@ function wikiaJWPlayerSettingsPlugin(player, config, div) {
 
 	this.player.on('levels', this.onQualityLevelsChange.bind(this));
 	this.player.on('captionsList', this.onCaptionsChange.bind(this));
+	this.triggerKeyCodes = [13, 32];
 
 	document.addEventListener('click', this.documentClickHandler);
 	// fixes issue when opening the menu on iPhone 5, executing documentClickHandler twice doesn't break anything
@@ -28,7 +29,7 @@ wikiaJWPlayerSettingsPlugin.prototype._onClick = function (target, handler) {
 	target.addEventListener('click', boundHandler);
 	target.addEventListener('keydown', function (evt) {
 		//13 -> enter, 32 -> space
-		if ([13, 32].indexOf(evt.keyCode) !== -1) {
+		if (this.triggerKeyCodes.indexOf(evt.keyCode) !== -1) {
 			boundHandler(evt);
 			evt.preventDefault();
 			evt.stopPropagation();
@@ -188,7 +189,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 	var label = autoplayToggle.querySelector('label');
 
 	label.addEventListener('keydown', function (evt) {
-		if ([13, 32].indexOf(evt.keyCode) !== -1) {
+		if (this.triggerKeyCodes.indexOf(evt.keyCode) !== -1) {
 			evt.preventDefault();
 			evt.stopPropagation();
 
