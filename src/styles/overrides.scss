@@ -95,19 +95,20 @@
 	}
 
 	&.jw-state-idle {
-		// mobile, oasis on-scroll
 		&.jw-breakpoint-0,
-		&.jw-breakpoint-1,
+		&.jw-breakpoint-1, 		// mobile portrait, oasis on-scroll
 		&.jw-breakpoint-2,
-		&.jw-breakpoint-3 {
+		&.jw-breakpoint-3 {		// mobile landscape
 			@include play-screen(64px, 12px, 16px);
 		}
 
+		// oasis
 		&.jw-breakpoint-4,
 		&.jw-breakpoint-5 {
 			@include play-screen(94px, 30px, 24px);
 		}
 
+		// bigger than oasis
 		&.jw-breakpoint-6,
 		&.jw-breakpoint-7 {
 			@include play-screen(124px, 48px, 32px);
