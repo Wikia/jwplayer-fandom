@@ -63,16 +63,16 @@
 
 	@mixin play-screen($play-icon-size, $padding, $title-font-size) {
 		$icon-padding: $padding - 0.083 * $play-icon-size;
-		$icon-size: 1.2 * $play-icon-size;
+		$icon-container-size: 1.2 * $play-icon-size;
 
 		.jw-icon-display {
 			bottom: $icon-padding;
-			height: $icon-size;
+			height: $icon-container-size;
 			left: auto;
 			position: absolute;
 			right: $icon-padding;
 			top: auto;
-			width: $icon-size;
+			width: $icon-container-size;
 
 			svg {
 				height: 100%;
@@ -81,15 +81,21 @@
 		}
 
 		.jw-title {
-			bottom: $padding + 4px;
-			position: relative;
+			bottom: $padding;
+			display: flex;
+			flex-direction: column;
+			height: $play-icon-size;
+			justify-content: center;
+			padding: 0;
+			position: absolute;
 			top: auto;
-			width: calc(100% - 2 * #{$padding} - #{$play-icon-size});
+			max-width: calc(100% - 2 * #{$padding} - #{$play-icon-size});
 
 			.jw-title-primary {
 				font-size: $title-font-size;
 				padding-left: $padding;
 				padding-right: 0;
+				white-space: normal;
 			}
 
 			.jw-title-secondary {
@@ -116,6 +122,10 @@
 		&.jw-breakpoint-6,
 		&.jw-breakpoint-7 {
 			@include play-screen(120px, 48px, 32px);
+		}
+
+		.jw-reset {
+			background: linear-gradient(to bottom, rgba(0,0,0,0) 50%,rgba(0,0,0,0.65) 100%);
 		}
 	}
 
