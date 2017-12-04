@@ -43,7 +43,8 @@ var wikiaJWPlayeri18n = {
   "skipmessage": "Skip ad in xx",
   "skiptext": "Skip",
   "videoQuality": "Video Quality",
-  "volume": "Volume"
+  "volume": "Volume",
+  "watch": "Watch"
 },
 "es": {
   "admessage": "El anuncio termina en xx segundos", 
