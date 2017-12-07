@@ -12,7 +12,6 @@ function wikiaJWPlayerIdleScreen(playerInstance, i18n) {
 		durationWatchElement.className = 'wikia-jw-title-duration-watch';
 		durationTimeElement.className = 'wikia-jw-title-duration-time';
 		durationWatchElement.innerText = i18n.watch;
-		window.playerInstance = playerInstance;
 		durationTimeElement.innerText = getUserFriendlyDuration(playerInstance.getDuration());
 
 		durationElement.appendChild(durationWatchElement);
