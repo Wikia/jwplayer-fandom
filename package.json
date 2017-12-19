@@ -1,6 +1,6 @@
 {
   "name": "jwplayer-fandom",
-  "version": "1.0.0",
+  "version": "1.0.25",
   "description": "JWPlayer for Fandom",
   "main": "index.js",
   "scripts": {
