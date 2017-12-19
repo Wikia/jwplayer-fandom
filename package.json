@@ -18,6 +18,9 @@
     "watch-js": "nodemon -e js --ignore dist/ -x \"npm run build-js\"",
     "watch-i18n": "nodemon --watch src/locales -e json --ignore dist/ -x \"npm run build-i18n\""
   },
+  "publishConfig": {
+    "registry": "https://artifactory.wikia-inc.com/artifactory/api/npm/wikia-npm/"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Wikia/jwplayer-fandom.git"
