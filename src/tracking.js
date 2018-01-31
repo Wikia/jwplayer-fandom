@@ -173,10 +173,9 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 				label: 'played-percentage-' + percentPlayed,
 				action: 'close'
 			});
-		} else {
-			onScroll = data.state === 'active';
-			tracker.setCustomDimension(38, onScroll ? 'Yes' : 'No');
 		}
+		onScroll = data.state === 'active';
+		tracker.setCustomDimension(38, onScroll ? 'Yes' : 'No');
 	});
 
 	playerInstance.on('videoFeedbackImpression', function () {
