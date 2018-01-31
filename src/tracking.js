@@ -166,6 +166,7 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 	});
 
 	playerInstance.on('onScrollStateChanged', function (data) {
+		console.log(playerInstance);
 		if(data.state === 'closed') {
 			track({
 				label: 'played-percentage-' + data.time,
