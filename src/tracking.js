@@ -1,7 +1,8 @@
 function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 	//This will replace 'trackingevent' in internal tracker url path
 	var eventName = 'videoplayerevent',
-		gaCategory = tracker.category || 'featured-video';
+		gaCategory = tracker.category || 'featured-video',
+		onScroll = false;
 
 	function updateVideoCustomDimensions(currentVideo) {
 		if (typeof tracker.setCustomDimension !== 'function') {
@@ -70,6 +71,7 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 			eventName: eventName,
 			videoId: playerInstance.getPlaylistItem().mediaid,
 			player: 'jwplayer',
+			onScroll: onScroll,
 			trackingMethod: 'analytics'
 		};
 
@@ -163,11 +165,16 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 		});
 	});
 
-	playerInstance.on('onScrollClosed', function () {
-		track({
-			label: 'collapsed',
-			action: 'close'
-		});
+	playerInstance.on('onScrollStateChanged', function (data) {
+		if(data.state === 'closed') {
+			track({
+				label: 'played-percentage-' + data.time,
+				action: 'close'
+			});
+		} else {
+			onScroll = data.state === 'active';
+			tracker.setCustomDimension(38, onScroll ? 'Yes' : 'No');
+		}
 	});
 
 	playerInstance.on('videoFeedbackImpression', function () {
