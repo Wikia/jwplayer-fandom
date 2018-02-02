@@ -141,3 +141,9 @@ in video custom parameter in jwplayer dashboard.
 * run `npm install`
 * run `npm run dev` to build project, watch for file changes and run server
 * we keep built project in dist folder, remember to run `npm run build`
+* after merging your PR to master:
+	* bump version with `npm version [patch|minor|major]`
+	* add tag with the version e.g. `git tag 1.2.0`
+	* if you don't have `~/.npmrc` created, run: `curl -su <ARTIFACTORY_USERNAME>:<ARTIFACTORY_API_KEY> "https://artifactory.wikia-inc.com/artifactory/api/npm/wikia-npm/auth/wikia" | sed 's|http://|https://|g' >> ~/.npmrc`
+	* run `npm publish` to publish new version
+
