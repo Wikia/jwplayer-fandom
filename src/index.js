@@ -13,6 +13,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 		script.onload = function () {
 			wikiaJWPlayerSettingsPlugin.register();
+
 			loadCallbacks.forEach(function (callback) {
 				callback();
 			});
@@ -85,6 +86,9 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 					autoplay: options.autoplay,
 					selectedCaptionsLanguage: options.selectedCaptionsLanguage,
 					i18n: i18n
+				},
+				wikiaWatermark: {
+					show: true//!!options.videoDetails.playlist[0].watermark
 				}
 			};
 		}
@@ -128,6 +132,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		wikiaJWPlayerHandleTabNotActive(playerInstance, options.autoplay);
 
 		wikiaJWPlayerAllowControllOnTouchDevices(playerInstance);
+		WikiaJWPlayerWatermarkPlugin.register();
 
 		if (callback) {
 			callback(playerInstance);
