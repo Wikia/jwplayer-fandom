@@ -33,7 +33,7 @@ WikiaJWPlayerWatermarkPlugin.prototype.getWatermarkElement = function () {
 };
 
 WikiaJWPlayerWatermarkPlugin.prototype.update = function () {
-	if(this.isEnabled && this.player.getState() === 'playing') {
+	if (this.isEnabled && this.player.getState() === 'playing') {
 		this.container.style.display = 'block';
 	} else {
 		this.container.style.display = '';
