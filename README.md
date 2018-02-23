@@ -87,6 +87,8 @@ Id of DOM element where the player should be placed
     // enable/disable autoplay for related videos
     autoplay: true
   },
+  // enables/disables watermark plugin (enabled by default)
+  watermark: boolean
   videoDetails: {
     // description of the video
     description: string,
