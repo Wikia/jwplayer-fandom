@@ -99,7 +99,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 			};
 		}
 
-		if (options.watermark) {
+		if (options.watermark !== false) {
 			playerSetup.plugins['wikiaWatermark'] = {};
 		}
 
@@ -134,7 +134,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 		wikiaJWPlayerAllowControllOnTouchDevices(playerInstance);
 
-		if(options.watermark) {
+		if(options.watermark !== false) {
 			WikiaJWPlayerWatermarkPlugin.register();
 		}
 
