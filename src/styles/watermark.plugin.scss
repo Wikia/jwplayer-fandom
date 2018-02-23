@@ -1,4 +1,7 @@
 .wikia-watermark-container {
+	// overrides `.jw-plugin` bottom property
+	bottom: auto !important;
+	display: none;
 	left: 3%;
 	opacity: 0.75;
 	top: 5%;
