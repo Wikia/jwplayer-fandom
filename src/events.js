@@ -1,4 +1,4 @@
-function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
+function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger, playlistId) {
 	var state = getNewState(),
 		wasAlreadyUnmuted = false,
 		depth = 0,
@@ -45,6 +45,9 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 			percentPlayed = Math.floor(positionFloor * 100 / data.duration);
 
 		if (percentPlayed > 100) {
+			data.mediaId = playerInstance.getPlaylistItem().mediaid;
+			data.playlistId = playlistId;
+
 			logger.error('played-percentage', data);
 		}
 
