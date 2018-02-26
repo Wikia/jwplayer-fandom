@@ -44,6 +44,10 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 		var positionFloor = Math.floor(data.position),
 			percentPlayed = Math.floor(positionFloor * 100 / data.duration);
 
+		if (percentPlayed > 100) {
+			logger.error('played-percentage', data);
+		}
+
 		if (positionFloor > state[prefix].progress.durationWatched && positionFloor % 5 === 0) {
 			playerInstance.trigger(prefix + 'SecondsPlayed', { value: positionFloor });
 

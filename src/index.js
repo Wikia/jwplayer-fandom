@@ -48,6 +48,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 	 * @param elementId
 	 * @param options
 	 * @param logger
+	 * @param lang
 	 * @param i18n
 	 * @return {*}
 	 */
@@ -127,7 +128,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 		if (options.tracking) {
 			options.tracking.pixel = options.videoDetails.playlist[0].pixel;
-			wikiaJWPlayerTracking(playerInstance, options.autoplay, options.tracking);
+			wikiaJWPlayerTracking(playerInstance, options.autoplay, options.tracking, logger);
 		}
 
 		wikiaJWPlayerHandleTabNotActive(playerInstance, options.autoplay);
