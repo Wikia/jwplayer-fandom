@@ -1,4 +1,4 @@
-function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger, playlistId) {
+function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 	var state = getNewState(),
 		wasAlreadyUnmuted = false,
 		depth = 0,
@@ -10,7 +10,8 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger, playlistId) {
 
 	/**
 	 * returns default state for video/ad
-	 * @return {{wasFirstQuartileTriggered: boolean, wasMidPointTriggered: boolean, wasThirdQuartileTriggered: boolean, progress: {durationWatched: number, percentWatched: number}}}
+	 * @return {{wasFirstQuartileTriggered: boolean, wasMidPointTriggered: boolean, wasThirdQuartileTriggered: boolean,
+	 *     progress: {durationWatched: number, percentWatched: number}}}
 	 */
 	function getDefaultState() {
 		return {
@@ -26,7 +27,10 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger, playlistId) {
 
 	/**
 	 * retruns new state for ad and video
-	 * @return {{ad: {wasFirstQuartileTriggered: boolean, wasMidPointTriggered: boolean, wasThirdQuartileTriggered: boolean, progress: {durationWatched: number, percentWatched: number}}, video: {wasFirstQuartileTriggered: boolean, wasMidPointTriggered: boolean, wasThirdQuartileTriggered: boolean, progress: {durationWatched: number, percentWatched: number}}}}
+	 * @return {{ad: {wasFirstQuartileTriggered: boolean, wasMidPointTriggered: boolean, wasThirdQuartileTriggered:
+	 *     boolean, progress: {durationWatched: number, percentWatched: number}}, video: {wasFirstQuartileTriggered:
+	 *     boolean, wasMidPointTriggered: boolean, wasThirdQuartileTriggered: boolean, progress: {durationWatched:
+	 *     number, percentWatched: number}}}}
 	 */
 	function getNewState() {
 		return {
@@ -42,17 +46,17 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger, playlistId) {
 	 */
 	function handleTime(prefix, data) {
 		var positionFloor = Math.floor(data.position),
-			percentPlayed = Math.floor(positionFloor * 100 / data.duration);
+			percentPlayed = Math.floor(positionFloor * 100 / data.duration),
+			playlistItem = playerInstance.getPlaylistItem();
 
-		if (percentPlayed > 100) {
-			data.mediaId = playerInstance.getPlaylistItem().mediaid;
-			data.playlistId = playlistId;
+		if (percentPlayed > 100 && playlistItem) {
+			data.mediaId = playlistItem.mediaid;
 
 			logger.error('played-percentage', data);
 		}
 
 		if (positionFloor > state[prefix].progress.durationWatched && positionFloor % 5 === 0) {
-			playerInstance.trigger(prefix + 'SecondsPlayed', { value: positionFloor });
+			playerInstance.trigger(prefix + 'SecondsPlayed', {value: positionFloor});
 
 			state[prefix].progress.durationWatched = positionFloor;
 		}
@@ -73,7 +77,7 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger, playlistId) {
 		}
 
 		if (percentPlayed > state[prefix].progress.percentWatched && percentPlayed % 10 === 0) {
-			playerInstance.trigger(prefix + 'PercentPlayed', { value: percentPlayed });
+			playerInstance.trigger(prefix + 'PercentPlayed', {value: percentPlayed});
 
 			state[prefix].progress.percentWatched = percentPlayed;
 		}
@@ -118,7 +122,7 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger, playlistId) {
 
 	playerInstance.on('firstFrame', function () {
 		if (depth === 0) {
-			playerInstance.trigger('playerStart', { auto: willAutoplay });
+			playerInstance.trigger('playerStart', {auto: willAutoplay});
 			logger.info('playerStart triggered');
 		}
 
