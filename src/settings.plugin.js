@@ -15,7 +15,8 @@ function wikiaJWPlayerSettingsPlugin(player, config, div) {
 	this.container.appendChild(this.wikiaSettingsElement);
 
 	this.player.on('levels', this.onQualityLevelsChange.bind(this));
-	this.player.on('playlistItem', this.onCaptionsChange.bind(this));
+	this.player.on('relatedVideoPlay', this.onCaptionsChange.bind(this));
+	this.player.once('ready', this.onCaptionsChange.bind(this));
 
 	document.addEventListener('click', this.documentClickHandler);
 	// fixes issue when opening the menu on iPhone 5, executing documentClickHandler twice doesn't break anything
