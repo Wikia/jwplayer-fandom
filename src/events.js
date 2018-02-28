@@ -10,8 +10,7 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 
 	/**
 	 * returns default state for video/ad
-	 * @return {{wasFirstQuartileTriggered: boolean, wasMidPointTriggered: boolean, wasThirdQuartileTriggered: boolean,
-	 *     progress: {durationWatched: number, percentWatched: number}}}
+	 * @return {{wasFirstQuartileTriggered: boolean, wasMidPointTriggered: boolean, wasThirdQuartileTriggered: boolean, progress: {durationWatched: number, percentWatched: number}}}
 	 */
 	function getDefaultState() {
 		return {
@@ -27,10 +26,7 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 
 	/**
 	 * retruns new state for ad and video
-	 * @return {{ad: {wasFirstQuartileTriggered: boolean, wasMidPointTriggered: boolean, wasThirdQuartileTriggered:
-	 *     boolean, progress: {durationWatched: number, percentWatched: number}}, video: {wasFirstQuartileTriggered:
-	 *     boolean, wasMidPointTriggered: boolean, wasThirdQuartileTriggered: boolean, progress: {durationWatched:
-	 *     number, percentWatched: number}}}}
+	 * @return {{ad: {wasFirstQuartileTriggered: boolean, wasMidPointTriggered: boolean, wasThirdQuartileTriggered: boolean, progress: {durationWatched: number, percentWatched: number}}, video: {wasFirstQuartileTriggered: boolean, wasMidPointTriggered: boolean, wasThirdQuartileTriggered: boolean, progress: {durationWatched: number, percentWatched: number}}}}
 	 */
 	function getNewState() {
 		return {
@@ -56,7 +52,7 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 		}
 
 		if (positionFloor > state[prefix].progress.durationWatched && positionFloor % 5 === 0) {
-			playerInstance.trigger(prefix + 'SecondsPlayed', {value: positionFloor});
+			playerInstance.trigger(prefix + 'SecondsPlayed', { value: positionFloor });
 
 			state[prefix].progress.durationWatched = positionFloor;
 		}
@@ -77,7 +73,7 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 		}
 
 		if (percentPlayed > state[prefix].progress.percentWatched && percentPlayed % 10 === 0) {
-			playerInstance.trigger(prefix + 'PercentPlayed', {value: percentPlayed});
+			playerInstance.trigger(prefix + 'PercentPlayed', { value: percentPlayed });
 
 			state[prefix].progress.percentWatched = percentPlayed;
 		}
@@ -122,7 +118,7 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 
 	playerInstance.on('firstFrame', function () {
 		if (depth === 0) {
-			playerInstance.trigger('playerStart', {auto: willAutoplay});
+			playerInstance.trigger('playerStart', { auto: willAutoplay });
 			logger.info('playerStart triggered');
 		}
 
