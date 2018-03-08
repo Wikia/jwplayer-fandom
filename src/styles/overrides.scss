@@ -10,6 +10,18 @@
 		}
 	}
 
+	&:not(.jw-flag-user-inactive) {
+		.jw-autostart-mute {
+			display: flex;
+		}
+	}
+
+	&.jw-state-playing.jw-flag-user-inactive {
+		.jw-autostart-mute {
+			display: none;
+		}
+	}
+
 	.jw-display-container {
 		.jw-display-icon-rewind,
 		.jw-display-icon-next {

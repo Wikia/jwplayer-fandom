@@ -13,6 +13,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 		script.onload = function () {
 			wikiaJWPlayerSettingsPlugin.register();
+			wikiaJWPlayerRecommendedControlsPlugin.register();
 
 			loadCallbacks.forEach(function (callback) {
 				callback();
@@ -88,6 +89,10 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 				autoplay: options.autoplay,
 				selectedCaptionsLanguage: options.selectedCaptionsLanguage,
 				i18n: i18n
+			};
+
+			playerSetup.plugins['smallPlayerControls'] = {
+				showSmallPlayerControls: true
 			};
 		}
 

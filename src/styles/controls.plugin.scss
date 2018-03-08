@@ -1,0 +1,39 @@
+.wikia-jw-small-player-controls {
+	#player_smallPlayerControls {
+		fill: white;
+		left: calc(50% - 52.5px);
+		opacity: 0;
+		position: absolute;
+		top: calc(50% - 17.5px);
+		transition: all .1s linear .1s;
+		visibility: hidden;
+
+		svg {
+			cursor: pointer;
+			height: 35px;
+			margin-right: 35px;
+			width: 35px;
+		}
+	}
+
+	.jw-button-container {
+		display: none;
+	}
+
+	.jw-display-icon-container {
+		display: none;
+	}
+}
+
+.jwplayer:hover {
+	#player_smallPlayerControls {
+		opacity: 1;
+		visibility: unset;
+	}
+}
+
+.jwplayer:not(.wikia-jw-small-player-controls), .jw-state-idle {
+	#player_smallPlayerControls {
+		display: none;
+	}
+}
