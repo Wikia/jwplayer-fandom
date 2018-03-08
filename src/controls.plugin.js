@@ -5,7 +5,6 @@ function wikiaJWPlayerRecommendedControlsPlugin(player, config, div) {
 	this.container = div;
 	this.config = config;
 	this.muteIcon = parser.parseFromString(wikiaJWPlayerIcons.volumeOff, 'image/svg+xml').documentElement;
-	this.unmuteIcon = parser.parseFromString(wikiaJWPlayerIcons.volumeOn, 'image/svg+xml').documentElement;
 	this.playIcon = parser.parseFromString(wikiaJWPlayerIcons.play, 'image/svg+xml').documentElement;
 	this.pauseIcon = parser.parseFromString(wikiaJWPlayerIcons.pause, 'image/svg+xml').documentElement;
 	this.wikiaControlsElement = document.createElement('div');
@@ -20,7 +19,6 @@ function wikiaJWPlayerRecommendedControlsPlugin(player, config, div) {
 	this.muteIcon.addEventListener('click', this.unmuteHandler);
 	this.pauseIcon.addEventListener('click', this.pauseHandler);
 	this.playIcon.addEventListener('click', this.playHandler);
-	this.unmuteIcon.addEventListener('click', this.unmuteHandler);
 
 	this.player.on('ready', this.onreadyHandler);
 }
