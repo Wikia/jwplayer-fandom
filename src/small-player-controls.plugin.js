@@ -1,4 +1,4 @@
-function wikiaJWPlayerRecommendedControlsPlugin(player, config, div) {
+function wikiaJWPlayerSmallPlayerControls(player, config, div) {
 	var parser = new DOMParser();
 
 	this.player = player;
@@ -15,44 +15,53 @@ function wikiaJWPlayerRecommendedControlsPlugin(player, config, div) {
 	this.playHandler = this.playHandler.bind(this);
 	this.pauseHandler = this.pauseHandler.bind(this);
 	this.onreadyHandler = this.onreadyHandler.bind(this);
+	this.resizeHandler = this.resizeHandler.bind(this);
+
 
 	this.muteIcon.addEventListener('click', this.unmuteHandler);
 	this.pauseIcon.addEventListener('click', this.pauseHandler);
 	this.playIcon.addEventListener('click', this.playHandler);
+	window.addEventListener('resize', this.resizeHandler);
+
 
 	this.player.on('ready', this.onreadyHandler);
 }
 
-wikiaJWPlayerRecommendedControlsPlugin.prototype.onreadyHandler = function () {
+wikiaJWPlayerSmallPlayerControls.prototype.onreadyHandler = function () {
 	var isSmallScreen = this.player.getWidth() <= 200;
-	var playerDiv = document.querySelector('.jwplayer');
 
-	if (this.config.showSmallPlayerControls && isSmallScreen) {
-		playerDiv.classList.add('wikia-jw-small-player-controls');
+	if (isSmallScreen) {
+		this.player.getContainer().classList.add('wikia-jw-small-player-controls');
 		this.container.appendChild(this.wikiaControlsElement);
 	}
 };
 
-wikiaJWPlayerRecommendedControlsPlugin.prototype.unmuteHandler = function () {
-	this.player.setVolume(50);
+wikiaJWPlayerSmallPlayerControls.prototype.unmuteHandler = function () {
+	this.player.setMute(false);
 };
 
-wikiaJWPlayerRecommendedControlsPlugin.prototype.pauseHandler = function () {
-	var container = document.querySelector('#player_smallPlayerControls'),
-		icon = container.firstChild.childNodes[1];
+wikiaJWPlayerSmallPlayerControls.prototype.pauseHandler = function () {
+	var icon = this.container.firstChild.childNodes[1];
 
 	icon.parentNode.replaceChild(this.playIcon, icon);
 	this.player.pause();
 };
 
-wikiaJWPlayerRecommendedControlsPlugin.prototype.playHandler = function () {
-	var container = document.querySelector('#player_smallPlayerControls'),
-		icon = container.firstChild.childNodes[1];
+wikiaJWPlayerSmallPlayerControls.prototype.playHandler = function () {
+	var icon = this.container.firstChild.childNodes[1];
 
 	icon.parentNode.replaceChild(this.pauseIcon, icon);
 	this.player.play();
 };
 
-wikiaJWPlayerRecommendedControlsPlugin.register = function () {
-	jwplayer().registerPlugin('smallPlayerControls', '8.0.0', wikiaJWPlayerRecommendedControlsPlugin);
+wikiaJWPlayerSmallPlayerControls.prototype.resizeHandler = function () {
+	var isBigScreen = this.player.getWidth() > 200;
+
+	if (isBigScreen) {
+		this.player.getContainer().classList.remove('wikia-jw-small-player-controls');
+	}
+};
+
+wikiaJWPlayerSmallPlayerControls.register = function () {
+	jwplayer().registerPlugin('smallPlayerControls', '8.0.0', wikiaJWPlayerSmallPlayerControls);
 };

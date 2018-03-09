@@ -13,7 +13,10 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 		script.onload = function () {
 			wikiaJWPlayerSettingsPlugin.register();
-			wikiaJWPlayerRecommendedControlsPlugin.register();
+
+			if (options.showSmallPlayerControls) {
+				wikiaJWPlayerSmallPlayerControls.register();
+			}
 
 			loadCallbacks.forEach(function (callback) {
 				callback();
@@ -90,10 +93,6 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 				selectedCaptionsLanguage: options.selectedCaptionsLanguage,
 				i18n: i18n
 			};
-
-			playerSetup.plugins['smallPlayerControls'] = {
-				showSmallPlayerControls: true
-			};
 		}
 
 		if (options.related) {
@@ -107,6 +106,10 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 		if (options.watermark !== false) {
 			playerSetup.plugins['wikiaWatermark'] = {};
+		}
+
+		if (options.showSmallPlayerControls) {
+			playerSetup.plugins['smallPlayerControls'] = {};
 		}
 
 		logger.info('setupPlayer');

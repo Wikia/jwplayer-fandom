@@ -1,18 +1,28 @@
 .wikia-jw-small-player-controls {
 	#player_smallPlayerControls {
+		align-items: center;
+		display: flex;
 		fill: white;
-		left: calc(50% - 52.5px);
+		height: 100%;
+		justify-content: center;
+		left: 0;
 		opacity: 0;
 		position: absolute;
-		top: calc(50% - 17.5px);
+		top: 0;
 		transition: all .1s linear .1s;
+		width: 100%;
 		visibility: hidden;
 
-		svg {
-			cursor: pointer;
-			height: 35px;
-			margin-right: 35px;
-			width: 35px;
+		div {
+			display: flex;
+			justify-content: space-evenly;
+			width: 100%;
+
+			svg {
+				cursor: pointer;
+				height: 35px;
+				width: 35px;
+			}
 		}
 	}
 
