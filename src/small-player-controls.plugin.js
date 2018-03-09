@@ -7,6 +7,7 @@ function wikiaJWPlayerSmallPlayerControls(player, config, div) {
 	this.muteIcon = parser.parseFromString(wikiaJWPlayerIcons.volumeOff, 'image/svg+xml').documentElement;
 	this.playIcon = parser.parseFromString(wikiaJWPlayerIcons.play, 'image/svg+xml').documentElement;
 	this.pauseIcon = parser.parseFromString(wikiaJWPlayerIcons.pause, 'image/svg+xml').documentElement;
+	this.container.classList.add('wikia-jw-small-player-controls-plugin');
 	this.wikiaControlsElement = document.createElement('div');
 	this.wikiaControlsElement.appendChild(this.muteIcon);
 	this.wikiaControlsElement.appendChild(this.pauseIcon);

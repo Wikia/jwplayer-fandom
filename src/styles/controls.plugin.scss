@@ -1,5 +1,5 @@
 .wikia-jw-small-player-controls {
-	#player_smallPlayerControls {
+	.wikia-jw-small-player-controls-plugin {
 		align-items: center;
 		display: flex;
 		fill: white;
@@ -33,17 +33,21 @@
 	.jw-display-icon-container {
 		display: none;
 	}
+
+	.jw-controlbar {
+		margin-bottom: 2px;
+	}
 }
 
 .jwplayer:hover {
-	#player_smallPlayerControls {
+	.wikia-jw-small-player-controls-plugin {
 		opacity: 1;
 		visibility: unset;
 	}
 }
 
 .jwplayer:not(.wikia-jw-small-player-controls), .jw-state-idle {
-	#player_smallPlayerControls {
+	.wikia-jw-small-player-controls-plugin {
 		display: none;
 	}
 }
