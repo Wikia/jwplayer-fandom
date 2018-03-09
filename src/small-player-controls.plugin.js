@@ -22,9 +22,8 @@ function wikiaJWPlayerSmallPlayerControls(player, config, div) {
 	this.muteIcon.addEventListener('click', this.unmuteHandler);
 	this.pauseIcon.addEventListener('click', this.pauseHandler);
 	this.playIcon.addEventListener('click', this.playHandler);
-	window.addEventListener('resize', this.resizeHandler);
 
-
+	this.player.on('resize', this.resizeHandler);
 	this.player.on('ready', this.onreadyHandler);
 }
 
@@ -55,8 +54,8 @@ wikiaJWPlayerSmallPlayerControls.prototype.playHandler = function () {
 	this.player.play();
 };
 
-wikiaJWPlayerSmallPlayerControls.prototype.resizeHandler = function () {
-	var isBigScreen = this.player.getWidth() > 200;
+wikiaJWPlayerSmallPlayerControls.prototype.resizeHandler = function (event) {
+	var isBigScreen = event.width > 200;
 
 	if (isBigScreen) {
 		this.player.getContainer().classList.remove('wikia-jw-small-player-controls');
