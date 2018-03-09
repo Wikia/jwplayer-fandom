@@ -11,7 +11,6 @@
 		top: 0;
 		transition: all .1s linear .1s;
 		width: 100%;
-		visibility: hidden;
 
 		div {
 			display: flex;
@@ -39,10 +38,9 @@
 	}
 }
 
-.jwplayer:hover {
+.jwplayer:not(.jw-flag-user-inactive) {
 	.wikia-jw-small-player-controls-plugin {
 		opacity: 1;
-		visibility: unset;
 	}
 }
 

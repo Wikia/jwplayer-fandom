@@ -18,7 +18,6 @@ function wikiaJWPlayerSmallPlayerControls(player, config, div) {
 	this.onreadyHandler = this.onreadyHandler.bind(this);
 	this.resizeHandler = this.resizeHandler.bind(this);
 
-
 	this.muteIcon.addEventListener('click', this.unmuteHandler);
 	this.pauseIcon.addEventListener('click', this.pauseHandler);
 	this.playIcon.addEventListener('click', this.playHandler);
