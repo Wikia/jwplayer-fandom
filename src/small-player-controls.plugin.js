@@ -27,9 +27,7 @@ function wikiaJWPlayerSmallPlayerControls(player, config, div) {
 }
 
 wikiaJWPlayerSmallPlayerControls.prototype.onreadyHandler = function () {
-	var isSmallScreen = this.player.getWidth() <= 200;
-
-	if (isSmallScreen) {
+	if (this.player.getWidth() <= 200) {
 		this.player.getContainer().classList.add('wikia-jw-small-player-controls');
 		this.container.appendChild(this.wikiaControlsElement);
 	}
@@ -53,10 +51,8 @@ wikiaJWPlayerSmallPlayerControls.prototype.playHandler = function () {
 	this.player.play();
 };
 
-wikiaJWPlayerSmallPlayerControls.prototype.resizeHandler = function (event) {
-	var isBigScreen = event.width > 200;
-
-	if (isBigScreen) {
+wikiaJWPlayerSmallPlayerControls.prototype.resizeHandler = function (playerDimensions) {
+	if (playerDimensions.width > 200) {
 		this.player.getContainer().classList.remove('wikia-jw-small-player-controls');
 	}
 };
