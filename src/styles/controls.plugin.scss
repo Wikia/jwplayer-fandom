@@ -1,7 +1,7 @@
 .wikia-jw-small-player-controls {
 	.wikia-jw-small-player-controls-plugin {
 		align-items: center;
-		display: flex;
+		display: none;
 		fill: white;
 		height: 100%;
 		justify-content: center;
@@ -38,9 +38,10 @@
 	}
 }
 
-.jwplayer:not(.jw-flag-user-inactive) {
+.jwplayer:not(.jw-flag-user-inactive):not(.jw-state-idle), .jw-state-paused  {
 	.wikia-jw-small-player-controls-plugin {
 		opacity: 1;
+		display: flex;
 	}
 }
 
