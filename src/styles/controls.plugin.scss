@@ -14,13 +14,17 @@
 
 		div {
 			display: flex;
-			justify-content: space-evenly;
+			justify-content: center;
 			width: 100%;
 
 			svg {
 				cursor: pointer;
 				height: 35px;
 				width: 35px;
+
+				&:first-child {
+					margin-right: 35px;
+				}
 			}
 		}
 	}
