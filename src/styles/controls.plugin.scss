@@ -45,7 +45,7 @@
 	}
 }
 
-.jwplayer:not(.wikia-jw-small-player-controls), .jw-state-idle {
+.jwplayer:not(.wikia-jw-small-player-controls), .jw-state-idle, .jwplayer:not(.jw-flag-user-inactive):not(.wikia-jw-small-player-controls) {
 	.wikia-jw-small-player-controls-plugin {
 		display: none;
 	}
