@@ -79,7 +79,8 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 				mute: options.mute,
 				playlist: options.videoDetails.playlist,
 				title: options.videoDetails.title,
-				localization: i18n
+				localization: i18n,
+				repeat: options.repeat
 			};
 
 		playerSetup.plugins = {};
