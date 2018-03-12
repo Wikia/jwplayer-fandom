@@ -1,12 +1,10 @@
 function wikiaJWPlayerSmallPlayerControls(player, config, div) {
-	var parser = new DOMParser();
-
 	this.player = player;
 	this.container = div;
 	this.config = config;
-	this.muteIcon = parser.parseFromString(wikiaJWPlayerIcons.volumeOff, 'image/svg+xml').documentElement;
-	this.playIcon = parser.parseFromString(wikiaJWPlayerIcons.play, 'image/svg+xml').documentElement;
-	this.pauseIcon = parser.parseFromString(wikiaJWPlayerIcons.pause, 'image/svg+xml').documentElement;
+	this.muteIcon = createSVG(wikiaJWPlayerIcons.volumeOff);
+	this.playIcon = createSVG(wikiaJWPlayerIcons.play);
+	this.pauseIcon = createSVG(wikiaJWPlayerIcons.pause);
 	this.container.classList.add('wikia-jw-small-player-controls-plugin');
 	this.wikiaControlsElement = document.createElement('div');
 	this.wikiaControlsElement.appendChild(this.muteIcon);
