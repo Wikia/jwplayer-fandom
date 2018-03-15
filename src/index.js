@@ -13,6 +13,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 		script.onload = function () {
 			wikiaJWPlayerSettingsPlugin.register();
+			wikiaJWPlayerSharingPlugin.register();
 
 			if (options.showSmallPlayerControls) {
 				wikiaJWPlayerSmallPlayerControls.register();
@@ -87,6 +88,18 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 		if (options.settings) {
 			playerSetup.plugins['wikiaSettings'] = {
+				showAutoplayToggle: options.settings.showAutoplayToggle,
+				showQuality: options.settings.showQuality,
+				showCaptions: options.settings.showCaptions,
+				autoplay: options.autoplay,
+				selectedCaptionsLanguage: options.selectedCaptionsLanguage,
+				i18n: i18n
+			};
+		}
+
+		if (options.sharing) {
+			console.log('siema');
+			playerSetup.plugins['wikiaSharing'] = {
 				showAutoplayToggle: options.settings.showAutoplayToggle,
 				showQuality: options.settings.showQuality,
 				showCaptions: options.settings.showCaptions,

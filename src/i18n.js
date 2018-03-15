@@ -42,6 +42,7 @@ var wikiaJWPlayeri18n = {
   "replay": "Replay",
   "settings": "Settings",
   "skipmessage": "Skip ad in xx",
+  "sharing": "Sharing",
   "skiptext": "Skip",
   "videoQuality": "Video Quality",
   "volume": "Volume",
