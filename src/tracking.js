@@ -235,7 +235,6 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 	});
 
 	playerInstance.on('socialNetworkClicked', function (data) {
-		console.log(data);
 		track({
 			action: 'share',
 			label: data.socialNetwork
