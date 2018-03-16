@@ -227,4 +227,18 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
             label: 'watermark-fandom'
         });
     });
+
+	playerInstance.on('wikiaShareMenuExpanded', function (data) {
+		track({
+			label: 'share'
+		});
+	});
+
+	playerInstance.on('socialNetworkClicked', function (data) {
+		console.log(data);
+		track({
+			action: 'share',
+			label: data.socialNetwork
+		});
+	});
 }

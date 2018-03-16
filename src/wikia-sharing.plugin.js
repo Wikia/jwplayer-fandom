@@ -1,6 +1,5 @@
 var isActiveClass = 'is-active',
 	domParser = new DOMParser();
-console.log('edsawrfcx');
 
 function wikiaJWPlayerSharingPlugin(player, config, div) {
 	this.player = player;
@@ -18,7 +17,6 @@ function wikiaJWPlayerSharingPlugin(player, config, div) {
 	document.addEventListener('click', this.documentClickHandler);
 	// fixes issue when opening the menu on iPhone 5, executing documentClickHandler twice doesn't break anything
 	document.addEventListener('touchend', this.documentClickHandler);
-
 }
 
 wikiaJWPlayerSharingPlugin.prototype.isSharingMenuOrSharingButton = function (element) {
@@ -43,6 +41,7 @@ wikiaJWPlayerSharingPlugin.prototype.documentClickHandler = function (event) {
 
 wikiaJWPlayerSharingPlugin.prototype.addButton = function () {
 	var sharingIcon = createSVG(wikiaJWPlayerIcons.sharing);
+
 	sharingIcon.classList.add('jw-svg-icon');
 	sharingIcon.classList.add('jw-svg-icon-wikia-sharing');
 
@@ -63,7 +62,6 @@ wikiaJWPlayerSharingPlugin.prototype.removeButton = function () {
  * closes sharing menu
  */
 wikiaJWPlayerSharingPlugin.prototype.close = function () {
-	this.showSharingList();
 	this.container.style.display = null;
 	this.player.getContainer().classList.remove('wikia-jw-sharing-open');
 };
@@ -73,8 +71,9 @@ wikiaJWPlayerSharingPlugin.prototype.close = function () {
  */
 wikiaJWPlayerSharingPlugin.prototype.open = function () {
 	this.wikiaSharingElement.innerHTML = '';
-	this.wikiaSharingElement.appendChild(this.createSharingListElement());
+	this.wikiaSharingElement.appendChild(this.getContent());
 	showElement(this.container);
+	this.player.trigger('wikiaShareMenuExpanded');
 	this.player.getContainer().classList.add('wikia-jw-sharing-open');
 };
 
@@ -95,12 +94,23 @@ wikiaJWPlayerSharingPlugin.prototype.show = function () {
 	}
 };
 
+wikiaJWPlayerSharingPlugin.prototype.getContent = function () {
+	var fragment = document.createDocumentFragment(),
+		header = document.createElement('h3');
+
+	header.innerText = this.config.i18n.sharing;
+	fragment.appendChild(header);
+	fragment.appendChild(this.createSharingListElement());
+
+	return fragment;
+};
+
 wikiaJWPlayerSharingPlugin.prototype.addSharingContent = function (div) {
 	div.classList.add('wikia-jw-sharing');
 	div.classList.remove('jw-reset');
 	div.classList.remove('jw-plugin');
 
-	return div;
+	this.show();
 };
 
 wikiaJWPlayerSharingPlugin.prototype.createSharingListElement = function () {
@@ -121,11 +131,14 @@ wikiaJWPlayerSharingPlugin.prototype.createSharingListElement = function () {
 };
 
 wikiaJWPlayerSharingPlugin.prototype.getSocialNetworkButton = function (socialNetwork) {
-	var button = document.createElement('a');
+	var button = document.createElement('button');
 
-	button.href = this[socialNetwork]();
-	button.target = '_blank';
+	button.className = 'wds-is-square wds-is-' + socialNetwork + '-color wds-button';
 	button.appendChild(createSVG(wikiaJWPlayerIcons[socialNetwork]));
+	button.addEventListener('click', function () {
+		this.player.trigger('socialNetworkClicked', {socialNetwork: socialNetwork});
+		window.open(this[socialNetwork]());
+	}.bind(this));
 
 	return button;
 };
@@ -233,7 +246,7 @@ wikiaJWPlayerSharingPlugin.prototype.google = function () {
  */
 wikiaJWPlayerSharingPlugin.prototype.reddit = function () {
 	return 'http://www.reddit.com/submit?url=' + encodeURIComponent(this.getVideoPageUrl()) +
-		'&title=' + encodeURIComponent(this.get('title'));
+		'&title=' + encodeURIComponent(this.getVideoTitle());
 };
 
 /**
