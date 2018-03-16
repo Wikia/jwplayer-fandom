@@ -71,7 +71,7 @@ wikiaJWPlayerSharingPlugin.prototype.close = function () {
  */
 wikiaJWPlayerSharingPlugin.prototype.open = function () {
 	this.wikiaSharingElement.innerHTML = '';
-	this.wikiaSharingElement.appendChild(this.getContent());
+	this.wikiaSharingElement.appendChild(this.createSharingListElement());
 	showElement(this.container);
 	this.player.trigger('wikiaShareMenuExpanded');
 	this.player.getContainer().classList.add('wikia-jw-sharing-open');
@@ -92,17 +92,6 @@ wikiaJWPlayerSharingPlugin.prototype.show = function () {
 	if (!this.getSharingButtonElement()) {
 		this.addButton();
 	}
-};
-
-wikiaJWPlayerSharingPlugin.prototype.getContent = function () {
-	var fragment = document.createDocumentFragment(),
-		header = document.createElement('h3');
-
-	header.innerText = this.config.i18n.sharing;
-	fragment.appendChild(header);
-	fragment.appendChild(this.createSharingListElement());
-
-	return fragment;
 };
 
 wikiaJWPlayerSharingPlugin.prototype.addSharingContent = function (div) {

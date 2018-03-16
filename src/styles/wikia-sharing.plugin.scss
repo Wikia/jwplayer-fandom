@@ -4,18 +4,10 @@
 	background-color: $wds-color-black;
 	border-radius: 4px;
 	bottom: 44px;
-	padding: 0 12px 24px;
+	padding: 24px 12px;
 	pointer-events: auto;
 	position: absolute;
 	right: 12px;
-
-	h3 {
-		color: $wds-color-white;
-		display: flex;
-		font-size: 14px;
-		justify-content: center;
-		width: 100%;
-	}
 
 	&__plugin {
 		display: none;
