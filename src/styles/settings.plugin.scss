@@ -54,20 +54,6 @@
 		color: $wds-color-white;
 		font-size: 14px;
 	}
-
-	&-open &-button__open::after {
-		border: 8px solid transparent;
-		border-top-color: $wds-color-black;
-		content: '';
-		display: block;
-		height: 0;
-		left: 50%;
-		margin-left: -8px;
-		position: absolute;
-		top: -1px;
-		width: 0;
-	}
-
 }
 
 // hide jw settings menu button
