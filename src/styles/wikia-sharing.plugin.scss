@@ -1,7 +1,7 @@
 @import '../../node_modules/design-system/dist/scss/wds-variables/index';
 
 .wikia-jw-sharing {
-	padding: 24px 12px;
+	padding: 16px 12px;
 
 	.wds-button {
 		&:not(:last-child) {
@@ -11,5 +11,9 @@
 		svg {
 			fill: $wds-color-white;
 		}
+	}
+
+	.wds-list {
+		padding: 0;
 	}
 }
