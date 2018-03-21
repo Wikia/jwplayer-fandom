@@ -11,7 +11,8 @@ JWPlayer wrapped with Fandom's custom solutions:
 ## Installation
 
 ```
-npm install https://github.com/Wikia/jwplayer-fandom --save
+npm config set @wikia:registry https://artifactory.wikia-inc.com/artifactory/api/npm/wikia-npm/
+npm install @wikia/jwplayer-fandom --save
 ```
 
 ## Usage
@@ -151,4 +152,3 @@ in video custom parameter in jwplayer dashboard.
 	* add tag with the version e.g. `git tag 1.2.0`
 	* if you don't have `~/.npmrc` created, run: `curl -su <ARTIFACTORY_USERNAME>:<ARTIFACTORY_API_KEY> "https://artifactory.wikia-inc.com/artifactory/api/npm/wikia-npm/auth/wikia" | sed 's|http://|https://|g' >> ~/.npmrc`
 	* run `npm publish` to publish new version
-
