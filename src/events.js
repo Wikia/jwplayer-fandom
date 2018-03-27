@@ -34,6 +34,23 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 			video: getDefaultState()
 		}
 	}
+	
+	/**
+	 * Rounds progress in seconds to nearest 5
+	 * @param {number} position 
+	 */
+	function roundPositionProgress(position) {
+		return Math.floor(position / 5) * 5;
+	}
+	
+	/**
+	 * Rounds progress in percents to nearest 5
+	 * @param {number} position 
+	 * @param {number} duration 
+	 */
+	function roundPercentProgress(position, duration) {
+		return (Math.floor((position / duration) * 100) / 5 ) * 5;
+	}
 
 	/**
 	 * triggers video/ad time-based events
@@ -41,41 +58,42 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 	 * @param data
 	 */
 	function handleTime(prefix, data) {
-		var positionFloor = Math.floor(data.position),
-			percentPlayed = Math.floor(positionFloor * 100 / data.duration),
+		var positionRounded = roundPositionProgress(data.position),
+			percentPlayedRounded = roundPercentProgress(data.position, data.duration),
 			playlistItem = playerInstance.getPlaylistItem();
 
-		if (percentPlayed > 100 && playlistItem) {
+		if (percentPlayedRounded > 100 && playlistItem) {
 			data.mediaId = playlistItem.mediaid;
 
 			logger.error('played-percentage', data);
 		}
 
-		if (positionFloor > state[prefix].progress.durationWatched && positionFloor % 5 === 0) {
-			playerInstance.trigger(prefix + 'SecondsPlayed', { value: positionFloor });
+		if (positionRounded > state[prefix].progress.durationWatched && positionRounded % 5 === 0) {
+			playerInstance.trigger(prefix + 'SecondsPlayed', { value: positionRounded });
 
-			state[prefix].progress.durationWatched = positionFloor;
+			state[prefix].progress.durationWatched = positionRounded;
 		}
 
-		if (percentPlayed >= 25 && !state[prefix].wasFirstQuartileTriggered) {
+		if (percentPlayedRounded >= 25 && !state[prefix].wasFirstQuartileTriggered) {
 			playerInstance.trigger(prefix + 'FirstQuartile');
 			state[prefix].wasFirstQuartileTriggered = true;
 		}
 
-		if (percentPlayed >= 50 && !state[prefix].wasMidPointTriggered) {
+		if (percentPlayedRounded >= 50 && !state[prefix].wasMidPointTriggered) {
 			playerInstance.trigger(prefix + 'MidPoint');
 			state[prefix].wasMidPointTriggered = true;
 		}
 
-		if (percentPlayed >= 75 && !state[prefix].wasThirdQuartileTriggered) {
+		if (percentPlayedRounded >= 75 && !state[prefix].wasThirdQuartileTriggered) {
 			playerInstance.trigger(prefix + 'ThirdQuartile');
 			state[prefix].wasThirdQuartileTriggered = true;
 		}
+		console.log(percentPlayedRounded, state[prefix].progress.percentWatched);
 
-		if (percentPlayed > state[prefix].progress.percentWatched && percentPlayed % 10 === 0) {
-			playerInstance.trigger(prefix + 'PercentPlayed', { value: percentPlayed });
+		if (percentPlayedRounded > state[prefix].progress.percentWatched && percentPlayedRounded % 10 === 0) {
+			playerInstance.trigger(prefix + 'PercentPlayed', { value: percentPlayedRounded });
 
-			state[prefix].progress.percentWatched = percentPlayed;
+			state[prefix].progress.percentWatched = percentPlayedRounded;
 		}
 	}
 
@@ -87,13 +105,13 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 		relatedPlugin.on('open', function () {
 			logger.info('related plugin open');
 			playerInstance.trigger('relatedVideoImpression');
-			state[prefixes.video] = getDefaultState();
 		});
-
+		
 		relatedPlugin.on('play', function (data) {
 			logger.info('related plugin play');
 			depth++;
-
+			
+			state[prefixes.video] = getDefaultState();
 			playerInstance.trigger('relatedVideoPlay', {
 				auto: data.auto,
 				item: data.item,
