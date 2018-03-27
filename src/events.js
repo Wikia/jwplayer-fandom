@@ -34,7 +34,7 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 			video: getDefaultState()
 		}
 	}
-	
+
 	/**
 	 * Rounds progress in seconds to nearest 5
 	 * @param {number} position 
@@ -42,14 +42,14 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 	function roundPositionProgress(position) {
 		return Math.floor(position / 5) * 5;
 	}
-	
+
 	/**
 	 * Rounds progress in percents to nearest 5
 	 * @param {number} position 
 	 * @param {number} duration 
 	 */
 	function roundPercentProgress(position, duration) {
-		return (Math.floor((position / duration) * 100) / 5 ) * 5;
+		return (Math.floor((position / duration) * 100) / 5) * 5;
 	}
 
 	/**
@@ -69,7 +69,7 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 		}
 
 		if (positionRounded > state[prefix].progress.durationWatched && positionRounded % 5 === 0) {
-			playerInstance.trigger(prefix + 'SecondsPlayed', { value: positionRounded });
+			playerInstance.trigger(prefix + 'SecondsPlayed', {value: positionRounded});
 
 			state[prefix].progress.durationWatched = positionRounded;
 		}
@@ -91,7 +91,7 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 		console.log(percentPlayedRounded, state[prefix].progress.percentWatched);
 
 		if (percentPlayedRounded > state[prefix].progress.percentWatched && percentPlayedRounded % 10 === 0) {
-			playerInstance.trigger(prefix + 'PercentPlayed', { value: percentPlayedRounded });
+			playerInstance.trigger(prefix + 'PercentPlayed', {value: percentPlayedRounded});
 
 			state[prefix].progress.percentWatched = percentPlayedRounded;
 		}
@@ -106,11 +106,11 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 			logger.info('related plugin open');
 			playerInstance.trigger('relatedVideoImpression');
 		});
-		
+
 		relatedPlugin.on('play', function (data) {
 			logger.info('related plugin play');
 			depth++;
-			
+
 			state[prefixes.video] = getDefaultState();
 			playerInstance.trigger('relatedVideoPlay', {
 				auto: data.auto,
@@ -136,7 +136,7 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 
 	playerInstance.on('firstFrame', function () {
 		if (depth === 0) {
-			playerInstance.trigger('playerStart', { auto: willAutoplay });
+			playerInstance.trigger('playerStart', {auto: willAutoplay});
 			logger.info('playerStart triggered');
 		}
 
