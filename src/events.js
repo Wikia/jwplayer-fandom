@@ -88,7 +88,6 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 			playerInstance.trigger(prefix + 'ThirdQuartile');
 			state[prefix].wasThirdQuartileTriggered = true;
 		}
-		console.log(percentPlayedRounded, state[prefix].progress.percentWatched);
 
 		if (percentPlayedRounded > state[prefix].progress.percentWatched && percentPlayedRounded % 10 === 0) {
 			playerInstance.trigger(prefix + 'PercentPlayed', {value: percentPlayedRounded});
