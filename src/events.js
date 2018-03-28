@@ -36,20 +36,12 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 	}
 
 	/**
-	 * Rounds progress in seconds to nearest 5
-	 * @param {number} position 
+	 * Rounds a number to a 5
+	 * e.g 42 -> 40; 58 -> 55
+	 * @param {number} number 
 	 */
-	function roundPositionProgress(position) {
-		return Math.floor(position / 5) * 5;
-	}
-
-	/**
-	 * Rounds progress in percents to nearest 5
-	 * @param {number} position 
-	 * @param {number} duration 
-	 */
-	function roundPercentProgress(position, duration) {
-		return (Math.floor((position / duration) * 100) / 5) * 5;
+	function roundTo5(number) {
+		return Math.floor(number / 5) * 5;
 	}
 
 	/**
@@ -58,8 +50,8 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 	 * @param data
 	 */
 	function handleTime(prefix, data) {
-		var positionRounded = roundPositionProgress(data.position),
-			percentPlayedRounded = roundPercentProgress(data.position, data.duration),
+		var positionRounded = roundTo5(data.position),
+			percentPlayedRounded = roundTo5((data.position / data.duration) * 100),
 			playlistItem = playerInstance.getPlaylistItem();
 
 		if (percentPlayedRounded > 100 && playlistItem) {
