@@ -39,6 +39,7 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 	 * Rounds a number to a 5
 	 * e.g 42 -> 40; 58 -> 55
 	 * @param {number} number 
+	 * @returns number
 	 */
 	function roundTo5(number) {
 		return Math.floor(number / 5) * 5;
@@ -53,7 +54,7 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 		var positionRounded = roundTo5(data.position),
 			percentPlayedRounded = roundTo5((data.position / data.duration) * 100),
 			playlistItem = playerInstance.getPlaylistItem();
-
+		
 		if (percentPlayedRounded > 100 && playlistItem) {
 			data.mediaId = playlistItem.mediaid;
 
