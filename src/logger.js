@@ -53,7 +53,7 @@ function wikiaJWPlayerLogger(options) {
 		}
 
 		if (logDebugToService) {
-			logErrorToService('debug', name, description);
+			logToService('debug', name, description);
 		}
 	}
 
