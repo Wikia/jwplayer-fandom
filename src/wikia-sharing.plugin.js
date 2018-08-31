@@ -34,6 +34,7 @@ wikiaJWPlayerSharingPlugin.prototype.documentClickHandler = function (event) {
 	// check if user didn't click the sharing menu or sharing button and if sharing menu is open
 	if (!this.isSharingMenuOrSharingButton(event.target) && this.container.style.display) {
 		this.close();
+		event.preventDefault();
 	}
 };
 
