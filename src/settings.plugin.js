@@ -41,9 +41,8 @@ wikiaJWPlayerSettingsPlugin.prototype.documentClickHandler = function (event) {
 	// check if user didn't click the settings menu or settings button and if settings menu is open
 	if (!this.isSettingsMenuOrSettingsButton(event.target) && this.container.style.display) {
 		this.close();
+		event.preventDefault();
 	}
-
-	event.preventDefault();
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.addButton = function () {
