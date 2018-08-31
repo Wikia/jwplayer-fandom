@@ -42,6 +42,8 @@ wikiaJWPlayerSettingsPlugin.prototype.documentClickHandler = function (event) {
 	if (!this.isSettingsMenuOrSettingsButton(event.target) && this.container.style.display) {
 		this.close();
 	}
+
+	event.preventDefault();
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.addButton = function () {

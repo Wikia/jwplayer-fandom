@@ -35,6 +35,8 @@ wikiaJWPlayerSharingPlugin.prototype.documentClickHandler = function (event) {
 	if (!this.isSharingMenuOrSharingButton(event.target) && this.container.style.display) {
 		this.close();
 	}
+
+	event.preventDefault();
 };
 
 wikiaJWPlayerSharingPlugin.prototype.addButton = function () {
