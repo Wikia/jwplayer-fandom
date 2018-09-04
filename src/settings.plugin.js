@@ -59,6 +59,7 @@ wikiaJWPlayerSettingsPlugin.prototype.addButton = function () {
 			setTimeout(function (){
 				if (!this.isDocumentHandlerMounted) {
 					document.addEventListener('click', this.documentClickHandler);
+					// fixes issue when opening the menu on iPhone 5, executing documentClickHandler twice doesn't break anything
 					document.addEventListener('touchend', this.documentClickHandler);
 
 					this.isDocumentHandlerMounted = true;
