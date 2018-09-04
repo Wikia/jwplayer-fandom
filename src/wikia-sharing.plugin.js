@@ -50,6 +50,7 @@ wikiaJWPlayerSharingPlugin.prototype.addButton = function () {
 		if (!this.wikiaSharingElement.style.display) {
 			this.open(evt.currentTarget);
 
+			// If not for setTimeout, click handler defined in addButton() would trigger the code below as well
 			setTimeout(function (){
 				if (!this.isDocumentHandlerMounted) {
 					document.addEventListener('click', this.documentClickHandler);
