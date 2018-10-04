@@ -1,17 +1,19 @@
-function wikiaJWPlayerHandleTabNotActive(playerInstance, willAutoplay) {
+function wikiaJWPlayerHandleTabNotActive(playerInstance) {
 	var isPausedByBrowserTabSwitch = false;
 
-	function onBrowserTabFocus(event) {
+	function onBrowserTabFocus() {
 		if (isPausedByBrowserTabSwitch) {
 			isPausedByBrowserTabSwitch = false;
 			playerInstance.play();
+			playerInstance.trigger('playerResumedByBrowserTabSwitch');
 		}
 	}
 
-	function onBrowserTabBlur(event) {
-		if (playerInstance.getState() !== 'paused') {
-			playerInstance.pause();
+	function onBrowserTabBlur() {
+		if (playerInstance.getState() === 'playing') {
 			isPausedByBrowserTabSwitch = true;
+			playerInstance.pause();
+			playerInstance.trigger('playerPausedByBrowserTabSwitch');
 		}
 	}
 
