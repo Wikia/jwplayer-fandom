@@ -17,6 +17,11 @@ function wikiaJWPlayerHandleTabNotActive(playerInstance) {
 		}
 	}
 
-	window.addEventListener('blur', onBrowserTabBlur);
-	window.addEventListener('focus', onBrowserTabFocus);
+	document.addEventListener('visibilitychange', function () {
+		if (document.hidden) {
+			onBrowserTabBlur();
+		} else {
+			onBrowserTabFocus();
+		}
+	});
 }
