@@ -2,6 +2,7 @@ function wikiaJWPlayerHandleTabNotActive(playerInstance) {
 	var isPausedByBrowserTabSwitch = false;
 
 	function onBrowserTabFocus() {
+		debugger;
 		if (isPausedByBrowserTabSwitch) {
 			isPausedByBrowserTabSwitch = false;
 			playerInstance.play();
