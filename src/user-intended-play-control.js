@@ -91,6 +91,8 @@ function wikiaJWPlayerUserIntendedPlayControl(isInitiallyUserIntendedPlay, playe
 			setUserIntendedPlay(true, reasonsForUserIntendedPlay.clickToPlay, true);
 		} else if (isInitiallyUserIntendedPlay) {
 			setUserIntendedPlay(true, reasonsForUserIntendedPlay.playerInitializedByUserInteraction, true);
+		} else {
+			setUserIntendedPlay(false, null, true);
 		}
 	}
 
