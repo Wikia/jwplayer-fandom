@@ -1,6 +1,7 @@
 function wikiaJWPlayerHandleTabNotActive(playerInstance, willAutoplay) {
 	function canPlayVideo() {
-		return !document.hidden && (['playing', 'paused', 'complete'].indexOf(playerInstance.getState()) === -1 || pausedOnRelated);
+		return willAutoplay && !document.hidden && (['playing', 'paused', 'complete'].indexOf(
+			playerInstance.getState()) === -1 || pausedOnRelated);
 	}
 
 	var pausedOnRelated = false;
