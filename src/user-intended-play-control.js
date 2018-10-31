@@ -1,39 +1,32 @@
 function wikiaJWPlayerUserIntendedPlayControl(isInitiallyUserIntendedPlay, playerInstance, tracker, willAutoplay) {
 	var isUserIntendedPlay = null;
-	var userIntendedPlayReason = null;
+	var isUserIntendedByUnmuting = false;
 	var wasPausedByUserInteraction = false;
-	var reasonsForUserIntendedPlay = {
-		unpausing: 'unpausing',
-		fullScreen: 'fullscreen',
-		unmuting: 'unmuting',
-		videoThumbnailInsidePlayer: 'videothumbnailinsideplayer',
-		clickToPlay: 'clicktoplay',
-		playerInitializedByUserInteraction: 'playerinitializedbyuserinteraction'
-	};
+	var customDimensionNumber = 39;
+	var customDimensionValueWhenIntended = 'user-intended';
+	var customDimensionValueWhenNotIntended = 'not-user-intended';
 
-	function setUserIntendedPlay(isUserIntended, userIntendedReason, immediate) {
+	function setUserIntendedPlay(isUserIntended, immediate) {
 		if (isUserIntendedPlay === isUserIntended) {
 			return;
 		}
 
 		isUserIntendedPlay = isUserIntended;
 
-		if (isUserIntended) {
-			userIntendedPlayReason = userIntendedReason;
-		} else {
-			userIntendedReason = null;
-		}
-
 		if (typeof tracker.setCustomDimension !== 'function') {
 			return;
 		}
 
 		if (immediate) {
-			tracker.setCustomDimension(39, isUserIntended ? 'user-intended' : 'not-user-intended');
+			tracker.setCustomDimension(
+				customDimensionNumber, isUserIntended ?customDimensionValueWhenIntended : customDimensionValueWhenNotIntended
+			);
 		} else {
 			// Related video impression happens just before the potential subsequent video play
 			playerInstance.on('relatedVideoImpression', function () {
-				tracker.setCustomDimension(39, isUserIntended ? 'user-intended' : 'not-user-intended');
+				tracker.setCustomDimension(
+					customDimensionNumber, isUserIntended ? customDimensionValueWhenIntended : customDimensionValueWhenNotIntended
+				);
 			});
 		}
 	}
@@ -44,28 +37,29 @@ function wikiaJWPlayerUserIntendedPlayControl(isInitiallyUserIntendedPlay, playe
 		}
 	}
 
-	function onPlay(data) {
+	function onPlay() {
 		if (wasPausedByUserInteraction) {
-			setUserIntendedPlay(true, reasonsForUserIntendedPlay.unpausing);
+			setUserIntendedPlay(true);
 		}
 	}
 
 	function onFullScreen() {
-		setUserIntendedPlay(true, reasonsForUserIntendedPlay.fullScreen);
+		setUserIntendedPlay(true);
 	}
 
 	function onUnmute() {
-		setUserIntendedPlay(true, reasonsForUserIntendedPlay.unmuting);
+		setUserIntendedPlay(true);
+		isUserIntendedByUnmuting = true;
 	}
 
 	function onMute() {
-		if (isUserIntendedPlay && userIntendedPlayReason === reasonsForUserIntendedPlay.unmuting) {
+		if (isUserIntendedPlay && isUserIntendedByUnmuting) {
 			setUserIntendedPlay(false);
 		}
 	}
 
 	function onVideoThumbnailInsidePlayerClicked() {
-		setUserIntendedPlay(true, reasonsForUserIntendedPlay.videoThumbnailInsidePlayer, true);
+		setUserIntendedPlay(true, true);
 	}
 
 	function init() {
@@ -88,17 +82,15 @@ function wikiaJWPlayerUserIntendedPlayControl(isInitiallyUserIntendedPlay, playe
 		});
 
 		if (!willAutoplay) {
-			setUserIntendedPlay(true, reasonsForUserIntendedPlay.clickToPlay, true);
+			setUserIntendedPlay(true, true);
 		} else if (isInitiallyUserIntendedPlay) {
-			setUserIntendedPlay(true, reasonsForUserIntendedPlay.playerInitializedByUserInteraction, true);
+			setUserIntendedPlay(true, true);
 		} else {
-			setUserIntendedPlay(false, null, true);
+			setUserIntendedPlay(false, true);
 		}
 	}
 
-	playerInstance.once('ready', function () {
-		init();
-	});
+	playerInstance.once('ready', init);
 }
 
 window.wikiaJWPlayerUserIntendedPlayControl = wikiaJWPlayerUserIntendedPlayControl;
