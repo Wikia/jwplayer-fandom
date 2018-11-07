@@ -6,7 +6,7 @@ function wikiaJWPlayerUserIntendedPlayControl(isInitiallyUserIntendedPlay, playe
 	var customDimensionValueWhenIntended = 'user-intended';
 	var customDimensionValueWhenNotIntended = 'not-user-intended';
 
-	function setUserIntendedPlay(isUserIntended, immediate) {
+	function setUserIntendedPlay(isUserIntended) {
 		if (isUserIntendedPlay === isUserIntended) {
 			return;
 		}
@@ -17,18 +17,9 @@ function wikiaJWPlayerUserIntendedPlayControl(isInitiallyUserIntendedPlay, playe
 			return;
 		}
 
-		if (immediate) {
-			tracker.setCustomDimension(
-				customDimensionNumber, isUserIntended ?customDimensionValueWhenIntended : customDimensionValueWhenNotIntended
-			);
-		} else {
-			// Related video impression happens just before the potential subsequent video play
-			playerInstance.on('relatedVideoImpression', function () {
-				tracker.setCustomDimension(
-					customDimensionNumber, isUserIntended ? customDimensionValueWhenIntended : customDimensionValueWhenNotIntended
-				);
-			});
-		}
+		tracker.setCustomDimension(
+			customDimensionNumber, isUserIntended ?customDimensionValueWhenIntended : customDimensionValueWhenNotIntended
+		);
 	}
 
 	function onPause(data) {
@@ -59,7 +50,7 @@ function wikiaJWPlayerUserIntendedPlayControl(isInitiallyUserIntendedPlay, playe
 	}
 
 	function onVideoThumbnailInsidePlayerClicked() {
-		setUserIntendedPlay(true, true);
+		setUserIntendedPlay(true);
 	}
 
 	function init() {
@@ -82,11 +73,11 @@ function wikiaJWPlayerUserIntendedPlayControl(isInitiallyUserIntendedPlay, playe
 		});
 
 		if (!willAutoplay) {
-			setUserIntendedPlay(true, true);
+			setUserIntendedPlay(true);
 		} else if (isInitiallyUserIntendedPlay) {
-			setUserIntendedPlay(true, true);
+			setUserIntendedPlay(true);
 		} else {
-			setUserIntendedPlay(false, true);
+			setUserIntendedPlay(false);
 		}
 	}
 
