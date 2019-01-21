@@ -1,19 +1,20 @@
-function wikiaJWPlayerHandleTabNotActive(playerInstance) {
-	function canPlayVideo() {
-		return !document.hidden && (['playing', 'paused', 'complete'].indexOf(
-			playerInstance.getState()) === -1 || pausedOnRelated);
-	}
-
+function wikiaJWPlayerHandleTabNotActive(playerInstance, willAutoplay) {
 	var pausedOnRelated = false;
 
-	playerInstance.on('playerStart', function () {
-		document.addEventListener('visibilitychange', function () {
-			if (canPlayVideo()) {
+	function playVideoOnTabSwitch() {
+		if (['playing', 'paused', 'complete'].indexOf(playerInstance.getState()) === -1 || pausedOnRelated) {
+			if (willAutoplay) {
 				playerInstance.play();
 				pausedOnRelated = false;
 				playerInstance.trigger('playerResumedByBrowserTabSwitch');
+			} else {
+				playerInstance.setMute(false);
 			}
-		}, false);
+		}
+	}
+
+	playerInstance.once('ready', function () {
+		document.addEventListener('visibilitychange', playVideoOnTabSwitch, false);
 	});
 
 	playerInstance.on('relatedVideoPlay', function () {
