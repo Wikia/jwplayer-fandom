@@ -75,7 +75,7 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 			value: Number(playerInstance.getMute()),
 
 			// Internal tracking data
-			eventName: gaData.name || eventName,
+			eventName: eventName,
 			videoId: currentItem.mediaid,
 			player: 'jwplayer',
 			onScroll: onScroll,
@@ -188,7 +188,6 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 			action: 'close'
 		});
 		track({
-			name: 'jwplayerClosed',
 			category: 'force_close',
 			label: 'featured',
 		});
