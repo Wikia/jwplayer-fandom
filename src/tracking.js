@@ -187,7 +187,6 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 			label: 'played-percentage-' + percentPlayed,
 			action: 'close'
 		});
-		console.log('FORCE CLOSE AKA X-CLICK');
 		track({
 			category: 'force_close',
 			label: 'featured',
