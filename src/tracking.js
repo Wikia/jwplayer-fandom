@@ -190,7 +190,7 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 		track({
 			category: 'force_close',
 			label: 'featured',
-		});
+		}, false);
 	});
 
 	playerInstance.on('videoFeedbackImpression', function () {
