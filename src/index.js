@@ -9,6 +9,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 	 */
 	function createScriptTag(elementId, playerURL) {
 		var script = document.createElement('script'),
+			script2 = document.createElement('script'),
 			playerElement = document.getElementById(elementId);
 
 		script.onload = function () {
@@ -28,6 +29,10 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		};
 		script.async = true;
 		script.src = playerURL || 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
+
+		script2.src = "https://edge-player5.wirewax.com/plugins/prod/jwplayer/jw-wirewax.js";
+		document.getElementsByTagName('head')[0].appendChild(script2);
+		console.log('ahhhhhhhhh =====-----====-----====----=========');
 		// insert script node just after player element
 		playerElement.parentNode.insertBefore(script, playerElement.nextSibling);
 	}
@@ -114,10 +119,10 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		if (options.related) {
 			playerSetup.related = {
 				autoplaytimer: options.related.time || 3,
-				file: '//cdn.jwplayer.com/v2/playlists/' + options.related.playlistId + '?related_media_id=' + videoId,
+				// file: '//cdn.jwplayer.com/v2/playlists/iMEoNAEk?related_media_id=HFkuNXp0',
 				oncomplete: options.related.autoplay ? 'autoplay' : 'show',
 				autoplaymessage: i18n.nextUpInSeconds,
-				displayMode: options.related.displayMode ? options.related.displayMode : 'none'
+				displayMode: options.related.displayMode ? options.related.displayMode : 'default'
 			};
 		}
 
@@ -129,10 +134,14 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 			playerSetup.plugins['smallPlayerControls'] = {};
 		}
 
-		playerSetup.plugins['https://edge-player.wirewax.com/ww4release/javascripts/wirewax-jwplayer-playlist.js'] = {};
+		// playerSetup.plugins['https://wirewax.s3.eu-west-1.amazonaws.com/creativeData/sdk/jw-wirewax.js'] = {};
 
+		console.log(playerSetup);
 		logger.info('setupPlayer');
 		playerInstance.setup(playerSetup);
+		var embedder = new WIREWAX.Embedder(elementId, {
+			player: jwplayer(elementId),
+		});
 		logger.info('after setup');
 		logger.subscribeToPlayerErrors(playerInstance);
 
