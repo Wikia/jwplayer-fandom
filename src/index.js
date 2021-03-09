@@ -136,8 +136,8 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		playerInstance.setup(playerSetup).on('ready', function (event) {
 			if(options.useWirewax !== false) {
 				var embedder = new WIREWAX.Embedder(elementId, {
-				player: jwplayer(elementId),
-				ready: event,
+					player: jwplayer(elementId),
+					ready: event,
 				});
 			}
 		});
