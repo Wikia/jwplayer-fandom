@@ -92,7 +92,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 			repeat: options.repeat
 		};
 		
-		playerSetup.autostart = typeof willAutoplay === 'string' ? 'viewable' : willAutoplay;
+		playerSetup.autostart = typeof willAutoplay === 'string' ? 'viewable' : (willAutoplay && !document.hidden);
 		if (willAutoplay === 'viewable') {
 			playerSetup.autoPause = { viewability: true }
 		}
