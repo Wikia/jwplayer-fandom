@@ -113,7 +113,9 @@ Id of DOM element where the player should be placed
   // services domain, required by logging errors to event-logger service, default: 'services.wikia.com'
   servicesDomian: string,
   // language code, default 'en'
-  lang: string
+  lang: string,
+  // enables/disables wirewax plugin (enabled by default)
+  useWirewax:  boolean
 }
 ```
 
