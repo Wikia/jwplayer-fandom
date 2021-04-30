@@ -61,41 +61,36 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 	 * @return {*}
 	 */
 	function setupPlayer(elementId, options, logger, lang, i18n) {
-		var playerInstance = jwplayer(elementId);
-		var videoId = options.videoDetails.playlist[0].mediaid;
-		var willAutoplay = options.autoplay;
-
-		// IMA supports two-letter ISO 639-1 code
-		var langForAds = lang.substr(0, 2);
-		var playerSetup = {
-			advertising: {
-				admessage: i18n.admessage,
-				autoplayadsmuted: typeof willAutoplay === 'string' ? true : willAutoplay,
-				client: 'googima',
-				cuetext: i18n.cuetext,
-				loadVideoTimeout: 16000,
-				maxRedirects: 8,
-				requestTimeout: 11500,
-				setLocale: langForAds,
-				skipmessage: i18n.skipmessage,
-				skiptext: i18n.skiptext,
-				truncateMacros: false,
-				vastLoadTimeout: 11000,
-				vpaidcontrols: true
-			},
-			description: options.videoDetails.description,
-			image: '//content.jwplatform.com/thumbs/' + videoId + '-640.jpg',
-			mute: options.mute,
-			playlist: options.videoDetails.playlist,
-			title: options.videoDetails.title,
-			localization: i18n,
-			repeat: options.repeat
-		};
-		
-		playerSetup.autostart = typeof willAutoplay === 'string' ? 'viewable' : (willAutoplay && !document.hidden);
-		if (willAutoplay === 'viewable') {
-			playerSetup.autoPause = { viewability: true }
-		}
+		var playerInstance = jwplayer(elementId),
+			videoId = options.videoDetails.playlist[0].mediaid,
+			willAutoplay = options.autoplay,
+			// IMA supports two-letter ISO 639-1 code
+			langForAds = lang.substr(0, 2),
+			playerSetup = {
+				advertising: {
+					admessage: i18n.admessage,
+					autoplayadsmuted: willAutoplay,
+					client: 'googima',
+					cuetext: i18n.cuetext,
+					loadVideoTimeout: 16000,
+					maxRedirects: 8,
+					requestTimeout: 11500,
+					setLocale: langForAds,
+					skipmessage: i18n.skipmessage,
+					skiptext: i18n.skiptext,
+					truncateMacros: false,
+					vastLoadTimeout: 11000,
+					vpaidcontrols: true
+				},
+				autostart: willAutoplay && !document.hidden,
+				description: options.videoDetails.description,
+				image: '//content.jwplatform.com/thumbs/' + videoId + '-640.jpg',
+				mute: options.mute,
+				playlist: options.videoDetails.playlist,
+				title: options.videoDetails.title,
+				localization: i18n,
+				repeat: options.repeat
+			};
 
 		playerSetup.plugins = {};
 

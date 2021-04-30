@@ -59,8 +59,8 @@ Id of DOM element where the player should be placed
     // set to true if you want to enable comscore tracking
     comscore: boolean
   },
-  // When true, playback will start automatically on desktop devices or when the player is 50% visible on desktop
-  autoplay: boolean or string,
+  // set to true if you want video to autostart
+  autoplay: boolean,
   // set to true if you want video to be initiallty muted
   mute: boolean,
   // set language for captions, must map captions' label, defaults to user browser language
