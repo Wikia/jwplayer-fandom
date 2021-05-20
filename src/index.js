@@ -30,7 +30,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		script.async = true;
 		script.src = playerURL || 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
 		// insert script node just after player element
-		playerElement.parentNode.insertBefore(script, playerElement.nextSibling);
+		document.getElementsByTagName('head')[0].appendChild(script);
 	}
 
 	/**
@@ -78,7 +78,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		script.async = true;
 		script.src = 'https://edge-player5.wirewax.com/plugins/prod/jwplayer/jw-wirewax.js';
 		// insert script node just after player element
-		playerElement.parentNode.insertBefore(script, playerElement.nextSibling);
+		document.getElementsByTagName('head')[0].appendChild(script);
 	}
 
 	/**
