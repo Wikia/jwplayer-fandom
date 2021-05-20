@@ -224,7 +224,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 	});
 
 	loadWWPlayerScript(elementId, function() {
-		const embedder = new WIREWAX.Embedder(elementId, {
+		var embedder = new WIREWAX.Embedder(elementId, {
             player: jwplayer(elementId),
     	});
 	});
