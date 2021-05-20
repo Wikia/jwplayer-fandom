@@ -94,7 +94,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 			// we don't want to load multiple wirewax libraries
 			if (loadWWCallbacks.length === 1) {
-				createWWScriptTag(elementId, playerURL);
+				createWWScriptTag(elementId);
 			}
 		}
 	}
