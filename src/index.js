@@ -56,7 +56,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 	 */
 	function createWWScriptTag(elementId) {
 		var script = document.createElement('script');
-		
+
 		script.onload = function () {
 			wikiaJWPlayerSettingsPlugin.register();
 
@@ -217,11 +217,11 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		if (callback) {
 			callback(playerInstance);
 		}
-	});
 
-	loadWWPlayerScript(elementId, function() {
-		var embedder = new WIREWAX.Embedder(elementId, {
-            player: jwplayer(elementId),
-    	});
+		loadWWPlayerScript(elementId, function() {
+			var embedder = new WIREWAX.Embedder(elementId, {
+				player: jwplayer(elementId),
+			});
+		});
 	});
 };
