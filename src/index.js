@@ -12,9 +12,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		if (typeof jwplayer !== 'undefined') {
 			callback();
 		} else {
-			console.log('pushing to array', callback);
 			loadJWCallbacks.push(callback);
-			console.log('new pushed', loadJWCallbacks);
 			// we don't want to load multiple jwplayer libraries
 			if (loadJWCallbacks.length === 1) {
 				createJWScriptTag();
@@ -42,7 +40,6 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 			}
 
 			loadJWCallbacks.forEach(function (callback) {
-				console.log('jwscript callbacks', callback);
 				callback();
 			});
 		};
@@ -79,7 +76,6 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 		script.onload = function () {
 			loadWWCallbacks.forEach(function (callback) {
-				console.log('wwscript callbacks', callback);
 				callback();
 			});
 		};
@@ -98,6 +94,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 	 * @return {*}
 	 */
 	function setupPlayer(elementId, options, logger, lang, i18n) {
+		jwplayer.remove();
 		var playerInstance = jwplayer(elementId),
 			videoId = options.videoDetails.playlist[0].mediaid,
 			willAutoplay = options.autoplay,
@@ -207,16 +204,9 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 			WikiaJWPlayerWatermarkPlugin.register();
 		}
 
-		console.log('===================================');
-		console.log('===================================');
-		console.log(jwplayer);
-		console.log('===================================');
-		console.log('===================================');
-
 		loadWWPlayerScript(function () {
-			console.log('here we goooooooo');
 			var embedder = new WIREWAX.Embedder(elementId, {
-				player: jwplayer(elementId),
+				player: playerInstance,
 			});
 	
 		});
@@ -225,13 +215,4 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 			callback(playerInstance);
 		}
 	});
-
-	// loadWWPlayerScript(function () {
-	// 	console.log('here we goooooooo');
-	// 	var embedder = new WIREWAX.Embedder(elementId, {
-	// 		player: jwplayer(elementId),
-	// 	});
-
-	// });
-
 };
