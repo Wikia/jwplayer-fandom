@@ -166,7 +166,13 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		}
 
 		logger.info('setupPlayer');
-		playerInstance.setup(playerSetup);
+		playerInstance.setup(playerSetup).then(() => {
+			loadWWPlayerScript(function() {
+				var embedder = new WIREWAX.Embedder(elementId, {
+					player: jwplayer(elementId),
+				});
+			});
+		});
 		logger.info('after setup');
 		logger.subscribeToPlayerErrors(playerInstance);
 
@@ -210,11 +216,5 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		if (callback) {
 			callback(playerInstance);
 		}
-
-		loadWWPlayerScript(function() {
-			var embedder = new WIREWAX.Embedder(elementId, {
-				player: jwplayer(elementId),
-			});
-		});
 	});
 };
