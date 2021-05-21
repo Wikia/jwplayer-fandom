@@ -12,8 +12,9 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		if (typeof jwplayer !== 'undefined') {
 			callback();
 		} else {
+			console.log('pushing to array', callback);
 			loadJWCallbacks.push(callback);
-
+			console.log('new pushed', loadJWCallbacks);
 			// we don't want to load multiple jwplayer libraries
 			if (loadJWCallbacks.length === 1) {
 				createJWScriptTag();
