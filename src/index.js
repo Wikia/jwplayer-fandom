@@ -167,10 +167,6 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 		logger.info('setupPlayer');
 		playerInstance.setup(playerSetup);
-		console.log('here we goooooooo');
-		var embedder = new WIREWAX.Embedder(elementId, {
-			player: jwplayer(elementId),
-		});
 		logger.info('after setup');
 		logger.subscribeToPlayerErrors(playerInstance);
 
@@ -214,7 +210,14 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		if (callback) {
 			callback(playerInstance);
 		}
-
-		loadWWPlayerScript();
 	});
+
+	loadWWPlayerScript(function () {
+		console.log('here we goooooooo');
+		var embedder = new WIREWAX.Embedder(elementId, {
+			player: jwplayer(elementId),
+		});
+
+	});
+
 };
