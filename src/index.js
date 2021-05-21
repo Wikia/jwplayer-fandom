@@ -23,6 +23,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 			}
 
 			loadJWCallbacks.forEach(function (callback) {
+				console.log('jwscript callbacks', callback);
 				callback();
 			});
 		};
@@ -60,6 +61,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 		script.onload = function () {
 			loadWWCallbacks.forEach(function (callback) {
+				console.log('wwscript callbacks', callback);
 				callback();
 			});
 		};
