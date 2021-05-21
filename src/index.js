@@ -210,14 +210,20 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		if (callback) {
 			callback(playerInstance);
 		}
+	}).then(function(){
+		console.log('===================================');
+		console.log('===================================');
+		console.log(jwplayer);
+		console.log('===================================');
+		console.log('===================================');
 	});
 
-	loadWWPlayerScript(function () {
-		console.log('here we goooooooo');
-		var embedder = new WIREWAX.Embedder(elementId, {
-			player: jwplayer(elementId),
-		});
+	// loadWWPlayerScript(function () {
+	// 	console.log('here we goooooooo');
+	// 	var embedder = new WIREWAX.Embedder(elementId, {
+	// 		player: jwplayer(elementId),
+	// 	});
 
-	});
+	// });
 
 };
