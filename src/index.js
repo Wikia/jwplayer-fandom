@@ -2,13 +2,31 @@ var loadJWCallbacks = [];
 var loadWWCallbacks = [];
 
 window.wikiaJWPlayer = function (elementId, options, callback) {
+	/**
+	 * loads jwplayer library
+	 * @param elementId
+	 * @param playerURL
+	 * @param callback
+	 */
+	function loadJWPlayerScript(callback) {
+		if (typeof jwplayer !== 'undefined') {
+			callback();
+		} else {
+			loadJWCallbacks.push(callback);
+
+			// we don't want to load multiple jwplayer libraries
+			if (loadJWCallbacks.length === 1) {
+				createJWScriptTag();
+			}
+		}
+	}
 
 	/**
 	 * adds script tag
 	 * @param elementId
 	 * @param playerURL
 	 */
-	 function createJWScriptTag(playerURL) {
+	 function createJWScriptTag() {
 		var script = document.createElement('script');
 
 		script.onload = function () {
@@ -34,29 +52,28 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 	}
 
 	/**
-	 * loads jwplayer library
+	 * loads wirewax library
 	 * @param elementId
-	 * @param playerURL
 	 * @param callback
 	 */
-	function loadJWPlayerScript(elementId, callback) {
-		if (typeof jwplayer !== 'undefined') {
+	 function loadWWPlayerScript(callback) {
+		if (typeof WIREWAX !== 'undefined') {
 			callback();
 		} else {
-			loadJWCallbacks.push(callback);
+			loadWWCallbacks.push(callback);
 
-			// we don't want to load multiple jwplayer libraries
-			if (loadJWCallbacks.length === 1) {
-				createJWScriptTag(elementId);
+			// we don't want to load multiple wirewax libraries
+			if (loadWWCallbacks.length === 1) {
+				createWWScriptTag();
 			}
 		}
 	}
 
-		/**
+	/**
 	 * adds script tag
 	 * @param elementId
 	 */
-	function createWWScriptTag(elementId) {
+	function createWWScriptTag() {
 		var script = document.createElement('script');
 
 		script.onload = function () {
@@ -68,24 +85,6 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
  		script.src = 'https://edge-player5.wirewax.com/plugins/prod/jwplayer/jw-wirewax.js';
 		// insert script node just after player element
 		document.getElementsByTagName('head')[0].appendChild(script);
-	}
-
-	/**
-	 * loads wirewax library
-	 * @param elementId
-	 * @param callback
-	 */
-		function loadWWPlayerScript(elementId, callback) {
-		if (typeof WIREWAX !== 'undefined') {
-			callback();
-		} else {
-			loadWWCallbacks.push(callback);
-
-			// we don't want to load multiple wirewax libraries
-			if (loadWWCallbacks.length === 1) {
-				createWWScriptTag(elementId);
-			}
-		}
 	}
 
 	/**
@@ -173,7 +172,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		return playerInstance;
 	}
 
-	loadJWPlayerScript(elementId, options.playerURL, function () {
+	loadJWPlayerScript(function () {
 		var logger = wikiaJWPlayerLogger(options),
 			lang = options.lang || 'en',
 			i18n = wikiaJWPlayeri18n[lang] || wikiaJWPlayeri18n['en'],
@@ -211,7 +210,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 			callback(playerInstance);
 		}
 
-		loadWWPlayerScript(elementId, function() {
+		loadWWPlayerScript(function() {
 			var embedder = new WIREWAX.Embedder(elementId, {
 				player: jwplayer(elementId),
 			});
