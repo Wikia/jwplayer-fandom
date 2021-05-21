@@ -8,7 +8,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 	 * @param elementId
 	 * @param playerURL
 	 */
-	 function createJWScriptTag(elementId, playerURL) {
+	 function createJWScriptTag(playerURL) {
 		var script = document.createElement('script');
 
 		script.onload = function () {
