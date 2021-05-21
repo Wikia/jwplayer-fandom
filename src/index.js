@@ -26,7 +26,8 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 				callback();
 			});
 		};
-		script.src = playerURL || 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
+		// script.src = playerURL || 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
+		script.src = 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
 		// insert script node just after player element
 		document.getElementsByTagName('head')[0].appendChild(script);
 	}
