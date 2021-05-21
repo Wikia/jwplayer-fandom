@@ -58,16 +58,6 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		var script = document.createElement('script');
 
 		script.onload = function () {
-			wikiaJWPlayerSettingsPlugin.register();
-
-			if (options.sharing) {
-				wikiaJWPlayerSharingPlugin.register();
-			}
-
-			if (options.showSmallPlayerControls) {
-				wikiaJWPlayerSmallPlayerControls.register();
-			}
-
 			loadWWCallbacks.forEach(function (callback) {
 				callback();
 			});
