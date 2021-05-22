@@ -2,100 +2,28 @@ var loadJWCallbacks = [];
 var loadWWCallbacks = [];
 
 window.wikiaJWPlayer = function (elementId, options, callback) {
-	/**
-	 * loads jwplayer library
-	 * @param elementId
-	 * @param playerURL
-	 * @param callback
-	 */
-	function loadJWPlayerScript(callback) {
-		if (typeof jwplayer !== 'undefined') {
-			callback();
-		} else {
-			loadJWCallbacks.push(callback);
-			// we don't want to load multiple jwplayer libraries
-			if (loadJWCallbacks.length === 1) {
-				createJWScriptTag();
+	function afterLoad(elementId, options, callback) {
+		// LOAD WW SCRIPTS IF ENABLED AND NOT IN HEAD
+		if (typeof WIREWAX === 'undefined') {
+			var script = document.createElement('script');
+			script.src = 'https://edge-player5.wirewax.com/plugins/prod/jwplayer/jw-wirewax.js';
+			script.onload = function () {
+				afterLoad2(elementId, options, callback)
 			}
+			document.getElementsByTagName('head')[0].appendChild(script);
+		} else {
+			afterLoad2(elementId, options, callback)
 		}
 	}
 
-	/**
-	 * adds script tag
-	 * @param elementId
-	 * @param playerURL
-	 */
-	 function createJWScriptTag() {
-		var script = document.createElement('script');
-
-		script.onload = function () {
-			wikiaJWPlayerSettingsPlugin.register();
-
-			if (options.sharing) {
-				wikiaJWPlayerSharingPlugin.register();
-			}
-
-			if (options.showSmallPlayerControls) {
-				wikiaJWPlayerSmallPlayerControls.register();
-			}
-
-			loadJWCallbacks.forEach(function (callback) {
-				callback();
-			});
-		};
-		// script.src = playerURL || 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
-		script.src = 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
-		// insert script node just after player element
-		document.getElementsByTagName('head')[0].appendChild(script);
-	}
-
-	/**
-	 * loads wirewax library
-	 * @param elementId
-	 * @param callback
-	 */
-	 function loadWWPlayerScript(callback) {
-		if (typeof WIREWAX !== 'undefined') {
-			callback();
-		} else {
-			loadWWCallbacks.push(callback);
-
-			// we don't want to load multiple wirewax libraries
-			if (loadWWCallbacks.length === 1) {
-				createWWScriptTag();
-			}
-		}
-	}
-
-	/**
-	 * adds script tag
-	 * @param elementId
-	 */
-	function createWWScriptTag() {
-		var script = document.createElement('script');
-
-		script.onload = function () {
-			loadWWCallbacks.forEach(function (callback) {
-				callback();
-			});
-		};
- 		script.src = 'https://edge-player5.wirewax.com/plugins/prod/jwplayer/jw-wirewax.js';
-		// insert script node just after player element
-		document.getElementsByTagName('head')[0].appendChild(script);
-	}
-
-	/**
-	 * setups player
-	 * @param elementId
-	 * @param options
-	 * @param logger
-	 * @param lang
-	 * @param i18n
-	 * @return {*}
-	 */
-	function setupPlayer(elementId, options, logger, lang, i18n) {
-		jwplayer.remove();
-		var playerInstance = jwplayer(elementId),
+	function afterLoad2(elementId, options, callback) {
+		// CREATE PLAYER
+		// Delete in case it exists
+		jwplayer(elementId).remove();
+		var logger = wikiaJWPlayerLogger(options),
+			lang = options.lang || 'en',
+			i18n = wikiaJWPlayeri18n[lang] || wikiaJWPlayeri18n['en'],
+			playerInstance = jwplayer(elementId),
 			videoId = options.videoDetails.playlist[0].mediaid,
 			willAutoplay = options.autoplay,
 			// IMA supports two-letter ISO 639-1 code
@@ -167,15 +95,6 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		logger.info('after setup');
 		logger.subscribeToPlayerErrors(playerInstance);
 
-		return playerInstance;
-	}
-
-	loadJWPlayerScript(function () {
-		var logger = wikiaJWPlayerLogger(options),
-			lang = options.lang || 'en',
-			i18n = wikiaJWPlayeri18n[lang] || wikiaJWPlayeri18n['en'],
-			playerInstance = setupPlayer(elementId, options, logger, lang, i18n);
-
 		wikiaJWPlayerIdleScreen(playerInstance, i18n);
 		wikiaJWPlayerReplaceIcons(playerInstance);
 		wikiaJWPlayerEvents(playerInstance, options.autoplay, logger);
@@ -203,16 +122,37 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		if(options.watermark !== false) {
 			WikiaJWPlayerWatermarkPlugin.register();
 		}
-
-		loadWWPlayerScript(function () {
-			var embedder = new WIREWAX.Embedder(elementId, {
-				player: playerInstance,
-			});
-	
+		
+		// ATTACH WW
+		new WIREWAX.Embedder(elementId, {
+			player: playerInstance,
 		});
 
 		if (callback) {
 			callback(playerInstance);
 		}
-	});
+	}
+
+	if (typeof jwplayer === 'undefined') {
+		var script = document.createElement('script');
+
+		script.onload = function () {
+			wikiaJWPlayerSettingsPlugin.register();
+
+			if (options.sharing) {
+				wikiaJWPlayerSharingPlugin.register();
+			}
+
+			if (options.showSmallPlayerControls) {
+				wikiaJWPlayerSmallPlayerControls.register();
+			}
+
+			afterLoad(elementId, options, callback);
+		};
+		// script.src = playerURL || 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
+		script.src = 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
+		document.getElementsByTagName('head')[0].appendChild(script);
+	} else {
+		afterLoad(elementId, options, callback);
+	}
 };
