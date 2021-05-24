@@ -111,11 +111,11 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 		if (typeof WIREWAX === 'undefined') {
 			var script = document.createElement('script');
-			script.src = 'https://edge-player5.wirewax.com/plugins/prod/jwplayer/jw-wirewax.js';
 			script.onload = function () {
 				afterLoad2(elementId, playerInstance, callback)
 			}
 			document.getElementsByTagName('head')[0].appendChild(script);
+			script.src = 'https://edge-player5.wirewax.com/plugins/prod/jwplayer/jw-wirewax.js';
 		} else {
 			afterLoad2(elementId, playerInstance, callback)
 		}
@@ -255,8 +255,8 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 			afterLoad(elementId, options, callback);
 		};
 		// script.src = playerURL || 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
-		script.src = 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
 		document.getElementsByTagName('head')[0].appendChild(script);
+		script.src = 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
 	} else {
 		afterLoad(elementId, options, callback);
 	}
