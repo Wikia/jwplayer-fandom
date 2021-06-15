@@ -80,7 +80,8 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 					skiptext: i18n.skiptext,
 					truncateMacros: false,
 					vastLoadTimeout: 11000,
-					vpaidcontrols: true
+					vpaidcontrols: true,
+					vpaidmode: 'enabled',
 				},
 				autostart: willAutoplay && !document.hidden,
 				description: options.videoDetails.description,
