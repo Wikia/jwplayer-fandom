@@ -115,7 +115,9 @@ Id of DOM element where the player should be placed
   // language code, default 'en'
   lang: string,
   // enables/disables wirewax plugin (enabled by default)
-  useWirewax:  boolean
+  useWirewax:  boolean,
+  // enables/disables wirewax plugin debug for wirewax team debugging
+  useWirewaxDebug:  boolean
 }
 ```
 
