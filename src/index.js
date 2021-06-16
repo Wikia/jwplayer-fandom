@@ -61,7 +61,6 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 	 * @return {*}
 	 */
 	function setupPlayer(elementId, options, logger, lang, i18n) {
-		console.log('========================= setup start =========================');
 		var playerInstance = jwplayer(elementId),
 			videoId = options.videoDetails.playlist[0].mediaid,
 			willAutoplay = options.autoplay,
@@ -134,7 +133,6 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		}
 
 		if(options.useWirewaxDebug !== false) {
-			console.log('========================= use debug =========================');
 			playerSetup.plugins['https://wirewax.s3.eu-west-1.amazonaws.com/creativeData/wirewax-jw-plugin-test-demo/plugin/jw-wirewax.js'] = {};
 		}
 
