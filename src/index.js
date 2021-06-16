@@ -132,9 +132,13 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 			playerSetup.plugins['https://edge-player5.wirewax.com/plugins/prod/jwplayer/jw-wirewax.js'] = {};
 		}
 
+		if(options.useWirewaxDebug !== false) {
+			playerSetup.plugins['https://wirewax.s3.eu-west-1.amazonaws.com/creativeData/wirewax-jw-plugin-test-demo/plugin/jw-wirewax.js'] = {};
+		}
+
 		logger.info('setupPlayer');
 		playerInstance.setup(playerSetup).on('ready', function (event) {
-			if(options.useWirewax !== false) {
+			if(options.useWirewax !== false || options.useWirewaxDebug !== false) {
 				var embedder = new WIREWAX.Embedder(elementId, {
 					player: jwplayer(elementId),
 					ready: event,
