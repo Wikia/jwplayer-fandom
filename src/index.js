@@ -3,6 +3,13 @@ var loadCallbacks = [];
 window.wikiaJWPlayer = function (elementId, options, callback) {
 
 	/**
+	 * gets the android player if user is on an android device browser
+	 */
+	function getDefaultPlayerUrl(){
+		return !!navigator.userAgent.match(/android/i) ? 'https://cdn.jwplayer.com/libraries/MFqndUHM.js' : 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
+	}
+
+	/**
 	 * adds script tag
 	 * @param elementId
 	 * @param playerURL
@@ -27,7 +34,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 			});
 		};
 		script.async = true;
-		script.src = playerURL || 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
+		script.src = playerURL || getDefaultPlayerUrl();
 		// insert script node just after player element
 		playerElement.parentNode.insertBefore(script, playerElement.nextSibling);
 	}
