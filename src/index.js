@@ -136,7 +136,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		}
 
 		if(options.useWirewax !== false) {
-			playerSetup.plugins['https://edge-player5.wirewax.com/plugins/prod/jwplayer/jw-wirewax.js'] = {};
+			playerSetup.plugins['https://edge-player5-wirewax.wikia-services.com/plugins/prod/jwplayer/jw-wirewax.js'] = {};
 		}
 
 		logger.info('setupPlayer');
