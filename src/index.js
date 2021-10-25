@@ -96,7 +96,8 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 				playlist: options.videoDetails.playlist,
 				title: options.videoDetails.title,
 				localization: i18n,
-				repeat: options.repeat
+				repeat: options.repeat,
+				setTimeEvents: options.setTimeEvents || true,
 			};
 
 		playerSetup.plugins = {};
