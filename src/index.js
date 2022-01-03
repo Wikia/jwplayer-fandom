@@ -29,6 +29,10 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 				wikiaJWPlayerSmallPlayerControls.register();
 			}
 
+			if (options.useWirewax !== false) {
+				FandomWirewaxPlugin.register();
+			}
+
 			loadCallbacks.forEach(function (callback) {
 				callback();
 			});
@@ -137,16 +141,21 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		}
 
 		if(options.useWirewax !== false) {
-			playerSetup.plugins['https://edge-player5-wirewax.wikia-services.com/plugins/prod/jwplayer/jw-wirewax.js'] = {};
+			playerSetup.plugins['fandomWirewax'] = {};
 		}
 
 		logger.info('setupPlayer');
 		playerInstance.setup(playerSetup).on('ready', function (event) {
 			if(options.useWirewax !== false) {
-				window.wirewax_embedder = new WIREWAX.Embedder(elementId, {
+				// window.wirewax_embedder = new WIREWAX.Embedder(elementId, {
+				// 	player: jwplayer(elementId),
+				// 	ready: event,
+				// });
+
+				window.wirewax_plugin = new FandomWirewaxPlugin(elementId, {
 					player: jwplayer(elementId),
 					ready: event,
-				});
+				  });
 			}
 		});
 		logger.info('after setup');
