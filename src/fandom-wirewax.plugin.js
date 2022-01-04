@@ -57,7 +57,8 @@ function FandomWirewaxPlugin(rootId, options) {
   
     fetch(
       'https://edge-player.wirewax.com/jwPlayerData/' + mediaId + '.txt'
-    ).then(function(response){
+    )
+    .then(function(response){
       if (response.status !== 200) {
         throw new Error("No vidId is mapped with this mediaid");
       }
@@ -68,11 +69,11 @@ function FandomWirewaxPlugin(rootId, options) {
       // Inject SDK
       return injectEmbedderSDK();
     }.bind(this))
-    .then(this.setupEmbedder().bind(this))
-    .then(this.registerEvents().bind(this))
     .catch(function(error) {
       console.warn(error);
-    });
+    })
+    .then(this.setupEmbedder().bind(this))
+    .then(this.registerEvents().bind(this));
   }.bind(this));
 }
 
