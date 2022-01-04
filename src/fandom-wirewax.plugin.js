@@ -2,23 +2,6 @@
 
 console.log("FandomWirewaxPlugin loaded");
 
-// Utilities
-function fetchWIREWAXVidId(mediaid) {
-  if (!mediaid) {
-    throw new TypeError("No JW media id is specified.");
-  }
-
-  fetch(
-    'https://edge-player.wirewax.com/jwPlayerData/' + mediaid + '.txt'
-  ).then(function(response){
-    if (response.status !== 200) {
-      throw new Error("No vidId is mapped with this mediaid");
-    }
-
-    return response.json();
-  });
-};
-
 function injectEmbedderSDK() {
   if (window.createWirewaxEmbedder) {
     console.warn("Embedder SDK is already loaded");
@@ -67,18 +50,28 @@ function FandomWirewaxPlugin(rootId, options) {
       this.player.getConfig().playlistItem.videoId;
 
     // validate interaction
-    fetchWIREWAXVidId(mediaId)
-      .then(function(vidId) {
-        this.vidId = vidId;
+    if (!mediaId) {
+      throw new TypeError("No JW media id is specified.");
+    }
+  
+    fetch(
+      'https://edge-player.wirewax.com/jwPlayerData/' + mediaId + '.txt'
+    ).then(function(response){
+      if (response.status !== 200) {
+        throw new Error("No vidId is mapped with this mediaid");
+      }
+      console.log('===================================== IT HIT! ==================================');
+      console.log(this);
+      this.vidId = response.json;
 
-        // Inject SDK
-        return injectEmbedderSDK();
-      }.bind(this))
-      .then(this.setupEmbedder().bind(this))
-      .then(this.registerEvents().bind(this))
-      .catch(function(error) {
-        console.warn(error);
-      });
+      // Inject SDK
+      return injectEmbedderSDK();
+    }.bind(this))
+    .then(this.setupEmbedder().bind(this))
+    .then(this.registerEvents().bind(this))
+    .catch(function(error) {
+      console.warn(error);
+    });
   });
 }
 
