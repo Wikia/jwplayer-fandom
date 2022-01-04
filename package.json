@@ -10,8 +10,8 @@
     "create-dist": "mkdir -p dist",
     "build": "npm run create-dist && npm run build-i18n && npm run build-index-css && npm run build-js",
     "build-dev": "npm run copy-html && npm run build-i18n && npm run build-all-css-dev && npm run build-js-dev",
-    "build-js": "terser --compress --mangle -o dist/wikiajwplayer.js --wrap wikiaJWPlayer -- src/*.{js,es6}",
-    "build-js-dev": "terser --compress --mangle -o dev/wikiajwplayer.js --wrap wikiaJWPlayer -- src/*.{js,es6}",
+    "build-js": "uglifyjs --compress --mangle -o dist/wikiajwplayer.js --wrap wikiaJWPlayer -- src/*.js",
+    "build-js-dev": "uglifyjs -o dev/wikiajwplayer.js --wrap wikiaJWPlayer -- src/*.js",
     "build-vendor-css": "node-sass src/styles/vendor.scss --output-style compressed | postcss -u autoprefixer --autoprefixer.browsers=\"ie >= 11, Safari >= 7.1, last 2 versions\" > dist/vendor.css",
     "build-vendor-css-dev": "node-sass src/styles/vendor.scss --output-style compressed | postcss -u autoprefixer --autoprefixer.browsers=\"ie >= 11, Safari >= 7.1, last 2 versions\" > dev/vendor.css",
     "build-index-css": "node-sass src/styles/index.scss --output-style compressed | postcss -u autoprefixer --autoprefixer.browsers=\"ie >= 11, Safari >= 7.1, last 2 versions\" > dist/index.css",
@@ -44,6 +44,6 @@
     "nodemon": "1.12.1",
     "npm-run-all": "4.1.1",
     "postcss-cli": "4.1.1",
-    "terser": "5.10.0"
+    "uglify-js": "3.1.5"
   }
 }

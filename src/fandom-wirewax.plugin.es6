@@ -237,10 +237,9 @@ class FandomWirewaxPlugin {
 }
 
 FandomWirewaxPlugin.register = function () {
-  // const registerPlugin =
-  //   window.jwplayerPluginJsonp || window.jwplayer().registerPlugin;
-  // registerPlugin("fandomWirewax", "8.0", FandomWirewaxPlugin);
-  jwplayer().registerPlugin("fandomWirewax", "8.0", FandomWirewaxPlugin);
+  const registerPlugin =
+    window.jwplayerPluginJsonp || window.jwplayer().registerPlugin;
+  registerPlugin("fandomWirewax", "8.0", FandomWirewaxPlugin);
 };
 
 // export default FandomWirewaxPlugin;
