@@ -239,7 +239,7 @@ class FandomWirewaxPlugin {
 FandomWirewaxPlugin.register = function () {
   const registerPlugin =
     window.jwplayerPluginJsonp || window.jwplayer().registerPlugin;
-  registerPlugin("wirewax", "8.0", FandomWirewaxPlugin);
+  registerPlugin("fandomWirewax", "8.0", FandomWirewaxPlugin);
 };
 
 // export default FandomWirewaxPlugin;
