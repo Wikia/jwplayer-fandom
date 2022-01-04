@@ -51,7 +51,7 @@ function FandomWirewaxPlugin(rootId, options) {
   this.player.on("playlistItem", function(){
     if (this.embedder) {
 
-      this.stopTimeUpdate();
+      this.stopTimeUpdate().bind(this);
 
       // Dispose pre video interaction
       try {
@@ -153,7 +153,7 @@ FandomWirewaxPlugin.prototype.stopTimeUpdate = function () {
 
 FandomWirewaxPlugin.prototype.JWPlayHandler = function () {
   console.log("JW -> WIREWAX: play");
-  this.startTimeUpdate();
+  this.startTimeUpdate().bind(this);
 
   try {
     this.embedder.play();
@@ -164,7 +164,7 @@ FandomWirewaxPlugin.prototype.JWPlayHandler = function () {
 
 FandomWirewaxPlugin.prototype.JWPauseHandler = function () {
   console.log("JW -> WIREWAX: pause");
-  this.stopTimeUpdate();
+  this.stopTimeUpdate().bind(this);
 
   try {
     this.embedder.pause();
@@ -235,9 +235,7 @@ FandomWirewaxPlugin.prototype.stopTimeUpdate = function () {
 }
 
 FandomWirewaxPlugin.register = function () {
-  var registerPlugin =
-    window.jwplayerPluginJsonp || window.jwplayer().registerPlugin;
-  registerPlugin("fandomWirewax", "8.0", FandomWirewaxPlugin);
+  jwplayer().registerPlugin("fandomWirewax", "8.0", FandomWirewaxPlugin);
 };
 
 // export default FandomWirewaxPlugin;
