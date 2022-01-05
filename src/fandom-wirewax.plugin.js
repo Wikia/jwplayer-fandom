@@ -30,13 +30,26 @@ function FandomWirewaxPlugin(rootId, options) {
   this.rootId = rootId;
   this.options = options;
   this.player = options.player;
-
   this.autoPlay = true;
+  this.setupEmbedder = this.setupEmbedder.bind(this);
+  this.registerEvents = this.registerEvents.bind(this);
+  this.startTimeUpdate = this.startTimeUpdate.bind(this); 
+  this.JWPlayHandler = this.JWPlayHandler.bind(this); 
+  this.JWPauseHandler = this.JWPauseHandler.bind(this); 
+  this.JWSeekHandler = this.JWSeekHandler.bind(this); 
+  this.WirewaxPlayHandler = this.WirewaxPlayHandler.bind(this);
+  this.WirewaxPauseHandler = this.WirewaxPauseHandler.bind(this); 
+  this.WirewaxSeekedHandler = this.WirewaxSeekedHandler.bind(this); 
+  this.WirewaxHotspotClickHandler = this.WirewaxHotspotClickHandler.bind(this);
+  this.WirewaxOverlayShowHandler = this.WirewaxOverlayShowHandler.bind(this);
+  this.WirewaxOverlayHideHandler = this.WirewaxOverlayHideHandler.bind(this);
+  this.startTimeUpdate = this.startTimeUpdate.bind(this);
+  this.stopTimeUpdate = this.stopTimeUpdate.bind(this);
 
   this.player.on("playlistItem", function(){
     if (this.embedder) {
 
-      this.stopTimeUpdate().bind(this);
+      this.stopTimeUpdate();
 
       // Dispose pre video interaction
       try {
@@ -55,7 +68,7 @@ function FandomWirewaxPlugin(rootId, options) {
     if (!mediaId) {
       throw new TypeError("No JW media id is specified.");
     }
-  
+
     fetch(
       'https://edge-player.wirewax.com/jwPlayerData/' + mediaId + '.txt'
     )
@@ -72,8 +85,8 @@ function FandomWirewaxPlugin(rootId, options) {
       // Inject SDK
       return injectEmbedderSDK();
     }.bind(this))
-    .then(this.setupEmbedder.bind(this))
-    .then(this.registerEvents.bind(this))
+    .then(this.setupEmbedder)
+    .then(this.registerEvents)
     .catch(function(error) {
       console.warn(error);
     });
@@ -131,17 +144,17 @@ FandomWirewaxPlugin.prototype.registerEvents = function () {
   if (this.isPlayerRegistered) return;
 
   // Bind WIREWAX to JW player events
-  this.player.on("play", this.JWPlayHandler.bind(this));
-  this.player.on("pause", this.JWPauseHandler.bind(this));
-  this.player.on("seek", this.JWSeekHandler.bind(this));
+  this.player.on("play", this.JWPlayHandler);
+  this.player.on("pause", this.JWPauseHandler);
+  this.player.on("seek", this.JWSeekHandler);
 
   // Bind JW to WIREWAX events
-  this.embedder.on("play", this.WirewaxPlayHandler.bind(this));
-  this.embedder.on("pause", this.WirewaxPauseHandler.bind(this));
-  this.embedder.on("seeked", this.WirewaxSeekedHandler.bind(this));
-  this.embedder.on("overlayshow", this.WirewaxOverlayShowHandler.bind(this));
-  this.embedder.on("overlayhide", this.WirewaxOverlayHideHandler.bind(this));
-  this.embedder.on("hotspotclick", this.WirewaxHotspotClickHandler.bind(this));
+  this.embedder.on("play", this.WirewaxPlayHandler);
+  this.embedder.on("pause", this.WirewaxPauseHandler);
+  this.embedder.on("seeked", this.WirewaxSeekedHandler);
+  this.embedder.on("overlayshow", this.WirewaxOverlayShowHandler);
+  this.embedder.on("overlayhide", this.WirewaxOverlayHideHandler);
+  this.embedder.on("hotspotclick", this.WirewaxHotspotClickHandler);
 
   this.isPlayerRegistered = true;
   console.log('======================================= registerEvents END =======================================');
@@ -158,7 +171,7 @@ FandomWirewaxPlugin.prototype.stopTimeUpdate = function () {
 
 FandomWirewaxPlugin.prototype.JWPlayHandler = function () {
   console.log("JW -> WIREWAX: play");
-  this.startTimeUpdate().bind(this);
+  this.startTimeUpdate();
 
   try {
     this.embedder.play();
@@ -169,7 +182,7 @@ FandomWirewaxPlugin.prototype.JWPlayHandler = function () {
 
 FandomWirewaxPlugin.prototype.JWPauseHandler = function () {
   console.log("JW -> WIREWAX: pause");
-  this.stopTimeUpdate().bind(this);
+  this.stopTimeUpdate();
 
   try {
     this.embedder.pause();
