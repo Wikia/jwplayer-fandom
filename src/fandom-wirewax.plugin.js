@@ -59,15 +59,18 @@ function FandomWirewaxPlugin(rootId, options) {
     fetch(
       'https://edge-player.wirewax.com/jwPlayerData/' + mediaId + '.txt'
     )
-    .catch(function(error) {
-      console.warn(error);
-    })
     .then(function(response){
-      this.vidId = response.json();
+      return response.json();
+    })
+    .then(function(data){
+      this.vidId = data;
 
       // Inject SDK
       return injectEmbedderSDK();
     }.bind(this))
+    .catch(function(error) {
+      console.error('Error:', error);
+    })
     .then(this.setupEmbedder.bind(this))
     .then(this.registerEvents.bind(this));
   }.bind(this));
