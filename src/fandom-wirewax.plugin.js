@@ -59,20 +59,17 @@ function FandomWirewaxPlugin(rootId, options) {
     fetch(
       'https://edge-player.wirewax.com/jwPlayerData/' + mediaId + '.txt'
     )
-    .then(function(response){
-      return response.json();
+    .catch(function(error) {
+      console.warn(error);
     })
     .then(function(data){
-      this.vidId = data;
+      this.vidId = response.json();
 
       // Inject SDK
       return injectEmbedderSDK();
     }.bind(this))
     .then(this.setupEmbedder.bind(this))
-    .then(this.registerEvents.bind(this))
-    .catch(function(error) {
-      console.warn(error);
-    });
+    .then(this.registerEvents.bind(this));
   }.bind(this));
 }
 
@@ -109,6 +106,8 @@ FandomWirewaxPlugin.prototype.registerEvents = function () {
   // Custom time sync handler
   var HTML5VideoEl = this.player.getConfig().mediaElement;
   this.setWIREWAXCurrentTime = function () {
+    console.log('****************************************** setWIREWAXCurrentTime ******************************************');
+    console.log(HTML5VideoEl.currentTime);
     this.embedder.setCurrentTime(HTML5VideoEl.currentTime);
     this.animationId = window.requestAnimationFrame(
       this.setWIREWAXCurrentTime
@@ -174,7 +173,7 @@ FandomWirewaxPlugin.prototype.JWPauseHandler = function () {
 
 FandomWirewaxPlugin.prototype.JWSeekHandler = function (event) {
   console.log("JW -> WIREWAX: seek");
-
+  console.log(event);
   try {
     this.embedder.setCurrentTime(event.offset);
   } catch (error) {
