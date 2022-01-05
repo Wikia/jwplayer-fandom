@@ -68,8 +68,12 @@ function FandomWirewaxPlugin(rootId, options) {
       // Inject SDK
       return injectEmbedderSDK();
     }.bind(this))
-    .then(this.setupEmbedder().bind(this))
-    .then(this.registerEvents().bind(this))
+    .then(function(){
+      this.setupEmbedder().bind(this)
+    }.bind(this))
+    .then(function(){
+      this.registerEvents().bind(this)
+    }.bind(this))
     .catch(function(error) {
       console.warn(error);
     });
