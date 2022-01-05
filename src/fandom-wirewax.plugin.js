@@ -62,7 +62,7 @@ function FandomWirewaxPlugin(rootId, options) {
     .catch(function(error) {
       console.warn(error);
     })
-    .then(function(data){
+    .then(function(response){
       this.vidId = response.json();
 
       // Inject SDK
