@@ -127,7 +127,7 @@ FandomWirewaxPlugin.prototype.registerEvents = function () {
   var HTML5VideoEl = this.player.getConfig().mediaElement;
   this.setWIREWAXCurrentTime = function () {
     console.log('****************************************** setWIREWAXCurrentTime ******************************************');
-    console.log(HTML5VideoEl.currentTime);
+    console.log(this.embedder);
     this.embedder.setCurrentTime(HTML5VideoEl.currentTime);
     this.animationId = window.requestAnimationFrame(
       this.setWIREWAXCurrentTime
@@ -193,7 +193,7 @@ FandomWirewaxPlugin.prototype.JWPauseHandler = function () {
 
 FandomWirewaxPlugin.prototype.JWSeekHandler = function (event) {
   console.log("JW -> WIREWAX: seek");
-  console.log(event);
+  console.log(event.offset);
   try {
     this.embedder.setCurrentTime(event.offset);
   } catch (error) {
