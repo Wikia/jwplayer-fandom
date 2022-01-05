@@ -61,6 +61,10 @@ function FandomWirewaxPlugin(rootId, options) {
       if (response.status !== 200) {
         throw new Error("No vidId is mapped with this mediaid");
       }
+
+      return response.json();
+    })
+    .then(function(data){
       console.log('===================================== IT HIT! ==================================');
       console.log(this);
       this.vidId = response.json;
@@ -68,11 +72,11 @@ function FandomWirewaxPlugin(rootId, options) {
       // Inject SDK
       return injectEmbedderSDK();
     }.bind(this))
+    .then(this.setupEmbedder().bind(this))
+    .then(this.registerEvents().bind(this))
     .catch(function(error) {
       console.warn(error);
-    })
-    .then(this.setupEmbedder().bind(this))
-    .then(this.registerEvents().bind(this));
+    });
   }.bind(this));
 }
 
