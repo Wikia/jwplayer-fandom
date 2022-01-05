@@ -32,7 +32,6 @@ function FandomWirewaxPlugin(rootId, options) {
   this.autoPlay = true;
 
   this.player.on("playlistItem", function(){
-    console.log('*****************************************************************************');
     if (this.embedder) {
 
       this.stopTimeUpdate().bind(this);
@@ -78,6 +77,7 @@ function FandomWirewaxPlugin(rootId, options) {
 }
 
 FandomWirewaxPlugin.prototype.setupEmbedder = function () {
+  console.log('**************************************************** OK *******************************************************');
   if (!this.embedder) {
     // Create a container
     this.container = document.createElement("div");
