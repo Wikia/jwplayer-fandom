@@ -136,7 +136,12 @@ FandomWirewaxPlugin.prototype.registerEvents = function () {
 
   // Handle the delay caused by injecting script
   var isPlaying = this.player.getState() === "playing";
+
+  console.log('-=-=-=-=-=-=-=-= inside is playing -=-=-=-=-=-=-=-=');
+  console.log('isPlaying', isPlaying); 
+  console.log('this.autoPlay', this.autoPlay);
   if (isPlaying || this.autoPlay) {
+    console.log('-=-=-=-=-=-=-=-= inside is playing -=-=-=-=-=-=-=-=');
     this.startTimeUpdate();
     this.embedder.play();
   }
