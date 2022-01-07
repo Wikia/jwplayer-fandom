@@ -91,7 +91,7 @@ function FandomWirewaxPlugin(rootId, options) {
       console.warn(error);
     });
   }.bind(this));
-};
+}
 
 FandomWirewaxPlugin.prototype.setupEmbedder = function () {
   console.log('======================================= setupEmbedder START =======================================');
@@ -144,92 +144,92 @@ FandomWirewaxPlugin.prototype.registerEvents = function () {
   if (this.isPlayerRegistered) return;
 
   // Bind WIREWAX to JW player events
-  // this.player.on("play", this.JWPlayHandler);
-  // this.player.on("pause", this.JWPauseHandler);
-  // this.player.on("seek", this.JWSeekHandler);
+  this.player.on("play", this.JWPlayHandler);
+  this.player.on("pause", this.JWPauseHandler);
+  this.player.on("seek", this.JWSeekHandler);
 
   // Bind JW to WIREWAX events
-  // this.embedder.on("play", this.WirewaxPlayHandler);
-  // this.embedder.on("pause", this.WirewaxPauseHandler);
-  // this.embedder.on("seeked", this.WirewaxSeekedHandler);
-  // this.embedder.on("overlayshow", this.WirewaxOverlayShowHandler);
-  // this.embedder.on("overlayhide", this.WirewaxOverlayHideHandler);
-  // this.embedder.on("hotspotclick", this.WirewaxHotspotClickHandler);
+  this.embedder.on("play", this.WirewaxPlayHandler);
+  this.embedder.on("pause", this.WirewaxPauseHandler);
+  this.embedder.on("seeked", this.WirewaxSeekedHandler);
+  this.embedder.on("overlayshow", this.WirewaxOverlayShowHandler);
+  this.embedder.on("overlayhide", this.WirewaxOverlayHideHandler);
+  this.embedder.on("hotspotclick", this.WirewaxHotspotClickHandler);
 
   this.isPlayerRegistered = true;
   console.log('======================================= registerEvents END =======================================');
 }
 
-// FandomWirewaxPlugin.prototype.startTimeUpdate = function () {
-//   window.cancelAnimationFrame(this.animationId);
-//   this.animationId = window.requestAnimationFrame(this.setWIREWAXCurrentTime);
-// };
+FandomWirewaxPlugin.prototype.startTimeUpdate = function () {
+  window.cancelAnimationFrame(this.animationId);
+  this.animationId = window.requestAnimationFrame(this.setWIREWAXCurrentTime);
+}
 
-// FandomWirewaxPlugin.prototype.stopTimeUpdate = function () {
-//   window.cancelAnimationFrame(this.animationId);
-// };
+FandomWirewaxPlugin.prototype.stopTimeUpdate = function () {
+  window.cancelAnimationFrame(this.animationId);
+}
 
-// FandomWirewaxPlugin.prototype.JWPlayHandler = function () {
-//   console.log("JW -> WIREWAX: play");
-//   this.startTimeUpdate();
+FandomWirewaxPlugin.prototype.JWPlayHandler = function () {
+  console.log("JW -> WIREWAX: play");
+  this.startTimeUpdate();
 
-//   try {
-//     this.embedder.play();
-//   } catch (error) {
-//     console.warn(error);
-//   }
-// };
+  try {
+    this.embedder.play();
+  } catch (error) {
+    console.warn(error);
+  }
+};
 
-// FandomWirewaxPlugin.prototype.JWPauseHandler = function () {
-//   console.log("JW -> WIREWAX: pause");
-//   this.stopTimeUpdate();
+FandomWirewaxPlugin.prototype.JWPauseHandler = function () {
+  console.log("JW -> WIREWAX: pause");
+  this.stopTimeUpdate();
 
-//   try {
-//     this.embedder.pause();
-//   } catch (error) {
-//     console.warn(error);
-//   }
-// };
+  try {
+    this.embedder.pause();
+  } catch (error) {
+    console.warn(error);
+  }
+};
 
-// FandomWirewaxPlugin.prototype.JWSeekHandler = function (event) {
-//   console.log("JW -> WIREWAX: seek");
-//   console.log(event.offset);
-//   try {
-//     this.embedder.setCurrentTime(event.offset);
-//   } catch (error) {
-//     console.warn(error);
-//   }
-// };
+FandomWirewaxPlugin.prototype.JWSeekHandler = function (event) {
+  console.log("JW -> WIREWAX: seek");
+  console.log(event.offset);
+  try {
+    this.embedder.setCurrentTime(event.offset);
+  } catch (error) {
+    console.warn(error);
+  }
+};
 
-// FandomWirewaxPlugin.prototype.WirewaxPlayHandler = function () {
-//   console.log("WIREWAX -> JW: play");
+FandomWirewaxPlugin.prototype.WirewaxPlayHandler = function () {
+  console.log("WIREWAX -> JW: play");
 
-//   try {
-//     this.player.play();
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
+  try {
+    this.player.play();
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-// FandomWirewaxPlugin.prototype.WirewaxPauseHandler = function () {
-//   console.log("WIREWAX -> JW: pause");
+FandomWirewaxPlugin.prototype.WirewaxPauseHandler = function () {
+  console.log("WIREWAX -> JW: pause");
 
-//   try {
-//     this.player.pause();
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
+  try {
+    this.player.pause();
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-// FandomWirewaxPlugin.prototype.WirewaxSeekedHandler = function(seekTo) {
-//   console.log("WIREWAX -> JW: seek");
+FandomWirewaxPlugin.prototype.WirewaxSeekedHandler = function(seekTo) {
+  console.log("WIREWAX -> JW: seek");
 
-//   try {
-//     this.player.seek(seekTo);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
+  try {
+    this.player.seek(seekTo);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 FandomWirewaxPlugin.prototype.WirewaxHotspotClickHandler = function (event) {
   console.log("hotspot click", event );
@@ -246,12 +246,14 @@ FandomWirewaxPlugin.prototype.WirewaxOverlayHideHandler = function (event) {
 FandomWirewaxPlugin.prototype.startTimeUpdate = function () {
   window.cancelAnimationFrame(this.animationId);
   this.animationId = window.requestAnimationFrame(this.setWIREWAXCurrentTime);
-};
+}
 
 FandomWirewaxPlugin.prototype.stopTimeUpdate = function () {
   window.cancelAnimationFrame(this.animationId);
-};
+}
 
 FandomWirewaxPlugin.register = function () {
   jwplayer().registerPlugin("fandomWirewax", "8.0", FandomWirewaxPlugin);
 };
+
+// export default FandomWirewaxPlugin;
