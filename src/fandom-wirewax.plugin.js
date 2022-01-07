@@ -3,7 +3,6 @@
 console.log("FandomWirewaxPlugin loaded");
 
 function injectEmbedderSDK() {
-  console.log('======================================= injectEmbedderSDK START =======================================');
   if (window.createWirewaxEmbedder) {
     console.warn("Embedder SDK is already loaded");
 
@@ -15,7 +14,6 @@ function injectEmbedderSDK() {
 
   console.log("inject WIREWAX embedder SDK fandom build", fandomSDKUrl);
 
-  console.log('======================================= injectEmbedderSDK END =======================================');
   return new Promise(function(resolve, reject) {
     var script = document.createElement("script");
     script.src = fandomSDKUrl;
@@ -94,7 +92,6 @@ function FandomWirewaxPlugin(rootId, options) {
 }
 
 FandomWirewaxPlugin.prototype.setupEmbedder = function () {
-  console.log('======================================= setupEmbedder START =======================================');
   if (!this.embedder) {
     // Create a container
     this.container = document.createElement("div");
@@ -116,18 +113,13 @@ FandomWirewaxPlugin.prototype.setupEmbedder = function () {
     rootId: this.rootId,
   });
 
-  console.log('======================================= setupEmbedder END =======================================');
   return this.embedder.ready();
 }
 
 FandomWirewaxPlugin.prototype.registerEvents = function () {
-  console.log('======================================= registerEvents START =======================================');
-
   // Custom time sync handler
   var HTML5VideoEl = this.player.getConfig().mediaElement;
   this.setWIREWAXCurrentTime = function () {
-    console.log('****************************************** setWIREWAXCurrentTime ******************************************');
-    console.log(this.embedder);
     this.embedder.setCurrentTime(HTML5VideoEl.currentTime);
     this.animationId = window.requestAnimationFrame(
       this.setWIREWAXCurrentTime
@@ -158,7 +150,6 @@ FandomWirewaxPlugin.prototype.registerEvents = function () {
   this.embedder.on("hotspotclick", this.WirewaxHotspotClickHandler);
 
   this.isPlayerRegistered = true;
-  console.log('======================================= registerEvents END =======================================');
 }
 
 FandomWirewaxPlugin.prototype.startTimeUpdate = function () {
@@ -256,5 +247,3 @@ FandomWirewaxPlugin.prototype.stopTimeUpdate = function () {
 FandomWirewaxPlugin.register = function () {
   jwplayer().registerPlugin("fandomWirewax", "8.0", FandomWirewaxPlugin);
 };
-
-// export default FandomWirewaxPlugin;
