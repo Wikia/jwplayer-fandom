@@ -136,6 +136,8 @@ FandomWirewaxPlugin.prototype.registerEvents = function () {
 
   if (this.isPlayerRegistered) return;
 
+  window.dataLayer = window.dataLayer || [];
+
   // Bind WIREWAX to JW player events
   this.player.on("play", this.JWPlayHandler);
   this.player.on("pause", this.JWPauseHandler);
@@ -162,7 +164,6 @@ FandomWirewaxPlugin.prototype.stopTimeUpdate = function () {
 }
 
 FandomWirewaxPlugin.prototype.JWPlayHandler = function () {
-  console.log("JW -> WIREWAX: play");
   this.startTimeUpdate();
 
   try {
@@ -173,7 +174,6 @@ FandomWirewaxPlugin.prototype.JWPlayHandler = function () {
 };
 
 FandomWirewaxPlugin.prototype.JWPauseHandler = function () {
-  console.log("JW -> WIREWAX: pause");
   this.stopTimeUpdate();
 
   try {
@@ -184,8 +184,6 @@ FandomWirewaxPlugin.prototype.JWPauseHandler = function () {
 };
 
 FandomWirewaxPlugin.prototype.JWSeekHandler = function (event) {
-  console.log("JW -> WIREWAX: seek");
-  console.log(event.offset);
   try {
     this.embedder.setCurrentTime(event.offset);
   } catch (error) {
@@ -194,8 +192,7 @@ FandomWirewaxPlugin.prototype.JWSeekHandler = function (event) {
 };
 
 FandomWirewaxPlugin.prototype.WirewaxPlayHandler = function () {
-  console.log("WIREWAX -> JW: play");
-
+  window.dataLayer.push({ event: 'wirewax-play'});
   try {
     this.player.play();
   } catch (err) {
@@ -204,8 +201,7 @@ FandomWirewaxPlugin.prototype.WirewaxPlayHandler = function () {
 };
 
 FandomWirewaxPlugin.prototype.WirewaxPauseHandler = function () {
-  console.log("WIREWAX -> JW: pause");
-
+  window.dataLayer.push({ event: 'wirewax-pause'});
   try {
     this.player.pause();
   } catch (err) {
@@ -214,8 +210,6 @@ FandomWirewaxPlugin.prototype.WirewaxPauseHandler = function () {
 };
 
 FandomWirewaxPlugin.prototype.WirewaxSeekedHandler = function(seekTo) {
-  console.log("WIREWAX -> JW: seek");
-
   try {
     this.player.seek(seekTo);
   } catch (err) {
@@ -224,15 +218,15 @@ FandomWirewaxPlugin.prototype.WirewaxSeekedHandler = function(seekTo) {
 };
 
 FandomWirewaxPlugin.prototype.WirewaxHotspotClickHandler = function (event) {
-  console.log("hotspot click", event );
+  window.dataLayer.push({ event: 'wirewax-hotspotclick'});
 };
 
 FandomWirewaxPlugin.prototype.WirewaxOverlayShowHandler = function (event) {
-  console.log("overlay open", event );
+  window.dataLayer.push({ event: 'wirewax-overlayshow'});
 };
 
 FandomWirewaxPlugin.prototype.WirewaxOverlayHideHandler = function (event) {
-  console.log("overlay close", event );
+  window.dataLayer.push({ event: 'wirewax-overlayhide'});
 };
 
 FandomWirewaxPlugin.prototype.startTimeUpdate = function () {
