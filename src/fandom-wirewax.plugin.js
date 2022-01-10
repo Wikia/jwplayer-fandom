@@ -43,6 +43,8 @@ function FandomWirewaxPlugin(rootId, options) {
   this.WirewaxOverlayHideHandler = this.WirewaxOverlayHideHandler.bind(this);
   this.startTimeUpdate = this.startTimeUpdate.bind(this);
   this.stopTimeUpdate = this.stopTimeUpdate.bind(this);
+  this.hotspotEvent = false;
+  this.debouncePlayPause = false;
 
   this.player.on("playlistItem", function(){
     if (this.embedder) {
@@ -163,8 +165,15 @@ FandomWirewaxPlugin.prototype.stopTimeUpdate = function () {
   window.cancelAnimationFrame(this.animationId);
 }
 
-FandomWirewaxPlugin.prototype.JWPlayHandler = function () {
+FandomWirewaxPlugin.prototype.JWPlayHandler = function (eventData) {
   this.startTimeUpdate();
+
+  console.log('==============================-------------------==================');
+  console.log(eventData);
+  console.log('==============================-------------------==================');
+  if(eventData.playReason == 'interaction') {
+    window.dataLayer.push({ event: 'wirewax-play'});
+  }
 
   try {
     this.embedder.play();
@@ -173,8 +182,12 @@ FandomWirewaxPlugin.prototype.JWPlayHandler = function () {
   }
 };
 
-FandomWirewaxPlugin.prototype.JWPauseHandler = function () {
+FandomWirewaxPlugin.prototype.JWPauseHandler = function (eventData) {
   this.stopTimeUpdate();
+
+  if(eventData.pauseReason == 'interaction') {
+    window.dataLayer.push({ event: 'wirewax-play'});
+  }
 
   try {
     this.embedder.pause();
@@ -192,7 +205,6 @@ FandomWirewaxPlugin.prototype.JWSeekHandler = function (event) {
 };
 
 FandomWirewaxPlugin.prototype.WirewaxPlayHandler = function () {
-  window.dataLayer.push({ event: 'wirewax-play'});
   try {
     this.player.play();
   } catch (err) {
@@ -201,7 +213,6 @@ FandomWirewaxPlugin.prototype.WirewaxPlayHandler = function () {
 };
 
 FandomWirewaxPlugin.prototype.WirewaxPauseHandler = function () {
-  window.dataLayer.push({ event: 'wirewax-pause'});
   try {
     this.player.pause();
   } catch (err) {
