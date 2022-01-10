@@ -168,9 +168,6 @@ FandomWirewaxPlugin.prototype.stopTimeUpdate = function () {
 FandomWirewaxPlugin.prototype.JWPlayHandler = function (eventData) {
   this.startTimeUpdate();
 
-  console.log('==============================-------------------==================');
-  console.log(eventData);
-  console.log('==============================-------------------==================');
   if(eventData.playReason == 'interaction') {
     window.dataLayer.push({ event: 'wirewax-play'});
   }
@@ -186,7 +183,7 @@ FandomWirewaxPlugin.prototype.JWPauseHandler = function (eventData) {
   this.stopTimeUpdate();
 
   if(eventData.pauseReason == 'interaction') {
-    window.dataLayer.push({ event: 'wirewax-play'});
+    window.dataLayer.push({ event: 'wirewax-pause'});
   }
 
   try {
