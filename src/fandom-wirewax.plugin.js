@@ -194,23 +194,16 @@ FandomWirewaxPlugin.prototype.JWSeekHandler = function (event) {
 FandomWirewaxPlugin.prototype.WirewaxPlayHandler = function () {
   window.dataLayer.push({ event: 'wirewax-play'});
   try {
-    if(this.player.getState() !== 'playing') {
-      this.player.play();
-    }
+    this.player.play();
   } catch (err) {
     console.log(err);
   }
 };
 
-FandomWirewaxPlugin.prototype.WirewaxPauseHandler = function (event) {
-  console.log('=--=-=-=-=-=-=-=-=-=-=-=-=-=--==');
-  console.log(event);
-  console.log('=--=-=-=-=-=-=-=-=-=-=-=-=-=--==');
+FandomWirewaxPlugin.prototype.WirewaxPauseHandler = function () {
   window.dataLayer.push({ event: 'wirewax-pause'});
   try {
-    if(this.player.getState() !== 'paused') {
-      this.player.pause();
-    }
+    this.player.pause();
   } catch (err) {
     console.log(err);
   }
