@@ -223,7 +223,12 @@ FandomWirewaxPlugin.prototype.WirewaxPauseHandler = function () {
 
 FandomWirewaxPlugin.prototype.WirewaxSeekedHandler = function(seekTo) {
   try {
-    this.player.seek(seekTo.seekTo);
+    // console.log('======================================');
+    // console.log(seekTo.seekTo);
+    // console.log('======================================');
+    if(typeof seekTo === 'number') {
+      this.player.seek(seekTo);
+    }
   } catch (err) {
     console.log(err);
   }
