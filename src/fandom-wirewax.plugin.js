@@ -193,16 +193,16 @@ FandomWirewaxPlugin.prototype.JWPauseHandler = function (eventData) {
   }
 };
 
-// FandomWirewaxPlugin.prototype.JWSeekHandler = function (event) {
-//   try {
-//     console.log('******************************');
-//     console.log(JSON.stringify(event.offset));
-//     console.log('******************************');
-//     this.embedder.setCurrentTime(event.offset);
-//   } catch (error) {
-//     console.warn(error);
-//   }
-// };
+FandomWirewaxPlugin.prototype.JWSeekHandler = function (event) {
+  try {
+    console.log('******************************');
+    console.log(JSON.stringify(event.offset));
+    console.log('******************************');
+    this.embedder.setCurrentTime(event.offset);
+  } catch (error) {
+    console.warn(error);
+  }
+};
 
 FandomWirewaxPlugin.prototype.WirewaxPlayHandler = function () {
   try {
