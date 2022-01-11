@@ -167,23 +167,23 @@ FandomWirewaxPlugin.prototype.stopTimeUpdate = function () {
   window.cancelAnimationFrame(this.animationId);
 }
 
-FandomWirewaxPlugin.prototype.JWPlayHandler = function (eventData) {
+FandomWirewaxPlugin.prototype.JWPlayHandler = function (event) {
   this.startTimeUpdate();
 
   try {
     this.embedder.play();
-    window.dataLayer.push({ event: 'wirewax', action: 'play' });
+    window.dataLayer.push({ event: 'wirewax', action: 'play', eventData: event });
   } catch (error) {
     console.warn(error);
   }
 };
 
-FandomWirewaxPlugin.prototype.JWPauseHandler = function (eventData) {
+FandomWirewaxPlugin.prototype.JWPauseHandler = function (event) {
   this.stopTimeUpdate();
 
   try {
     this.embedder.pause();
-    window.dataLayer.push({ event: 'wirewax', action: 'pause' });
+    window.dataLayer.push({ event: 'wirewax', action: 'pause', eventData: event });
   } catch (error) {
     console.warn(error);
   }
@@ -228,19 +228,19 @@ FandomWirewaxPlugin.prototype.WirewaxSeekedHandler = function(seekTo) {
 };
 
 FandomWirewaxPlugin.prototype.WirewaxHotspotClickHandler = function (event) {
-  window.dataLayer.push({ event: 'wirewax', action: 'hotspotclick' });
+  window.dataLayer.push({ event: 'wirewax', action: 'hotspotclick', eventData: event });
 };
 
 FandomWirewaxPlugin.prototype.WirewaxOverlayShowHandler = function (event) {
-  window.dataLayer.push({ event: 'wirewax', action: 'overlayshow' });
+  window.dataLayer.push({ event: 'wirewax', action: 'overlayshow', eventData: event });
 };
 
 FandomWirewaxPlugin.prototype.WirewaxOverlayHideHandler = function (event) {
-  window.dataLayer.push({ event: 'wirewax', action: 'overlayhide' });
+  window.dataLayer.push({ event: 'wirewax', action: 'overlayhide', eventData: event });
 };
 
 FandomWirewaxPlugin.prototype.WirewaxOverlayEventHandler = function (event) {
-  window.dataLayer.push({ event: 'wirewax', action: 'overlayevent' });
+  window.dataLayer.push({ event: 'wirewax', action: 'overlayevent', eventData: event });
 };
 
 FandomWirewaxPlugin.prototype.startTimeUpdate = function () {
