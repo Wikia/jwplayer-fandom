@@ -123,9 +123,9 @@ FandomWirewaxPlugin.prototype.registerEvents = function () {
   var HTML5VideoEl = this.player.getConfig().mediaElement;
   this.setWIREWAXCurrentTime = function () {
     console.log('=-=-=-=-=-=-=-=-=-=-=-=-=');
-    console.log(parseFloat(HTML5VideoEl.currentTime));
+    console.log(HTML5VideoEl.currentTime);
     console.log('=-=-=-=-=-=-=-=-=-=-=-=-=');
-    this.embedder.setCurrentTime(parseFloat(HTML5VideoEl.currentTime));
+    this.embedder.setCurrentTime(HTML5VideoEl.currentTime);
     this.animationId = window.requestAnimationFrame(
       this.setWIREWAXCurrentTime
     );
@@ -199,9 +199,9 @@ FandomWirewaxPlugin.prototype.JWPauseHandler = function (eventData) {
 FandomWirewaxPlugin.prototype.JWSeekHandler = function (event) {
   try {
     console.log('******************************');
-    console.log(parseFloat(event.offset));
+    console.log(JSON.stringify(event.offset));
     console.log('******************************');
-    this.embedder.setCurrentTime(parseFloat(event.offset));
+    this.embedder.setCurrentTime(event.offset);
   } catch (error) {
     console.warn(error);
   }
