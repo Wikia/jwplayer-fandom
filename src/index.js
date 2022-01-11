@@ -147,11 +147,6 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		logger.info('setupPlayer');
 		playerInstance.setup(playerSetup).on('ready', function (event) {
 			if(options.useWirewax !== false) {
-				// window.wirewax_embedder = new WIREWAX.Embedder(elementId, {
-				// 	player: jwplayer(elementId),
-				// 	ready: event,
-				// });
-
 				window.wirewax_plugin = new FandomWirewaxPlugin(elementId, {
 					player: jwplayer(elementId),
 					ready: event,
