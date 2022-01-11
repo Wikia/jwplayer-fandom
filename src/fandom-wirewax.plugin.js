@@ -41,6 +41,7 @@ function FandomWirewaxPlugin(rootId, options) {
   this.WirewaxHotspotClickHandler = this.WirewaxHotspotClickHandler.bind(this);
   this.WirewaxOverlayShowHandler = this.WirewaxOverlayShowHandler.bind(this);
   this.WirewaxOverlayHideHandler = this.WirewaxOverlayHideHandler.bind(this);
+  this.WirewaxOverlayEventHandler = this.WirewaxOverlayEventHandler.bind(this);
   this.startTimeUpdate = this.startTimeUpdate.bind(this);
   this.stopTimeUpdate = this.stopTimeUpdate.bind(this);
   this.hotspotEvent = false;
@@ -152,6 +153,7 @@ FandomWirewaxPlugin.prototype.registerEvents = function () {
   this.embedder.on("overlayshow", this.WirewaxOverlayShowHandler);
   this.embedder.on("overlayhide", this.WirewaxOverlayHideHandler);
   this.embedder.on("hotspotclick", this.WirewaxHotspotClickHandler);
+  this.embedder.on('overlayevent', this.WirewaxOverlayEventHandler);
 
   this.isPlayerRegistered = true;
 }
@@ -170,7 +172,7 @@ FandomWirewaxPlugin.prototype.JWPlayHandler = function (eventData) {
 
   try {
     this.embedder.play();
-    window.dataLayer.push({ event: 'wirewax-play'});
+    window.dataLayer.push({ event: 'wirewax', action: 'play' });
   } catch (error) {
     console.warn(error);
   }
@@ -181,7 +183,7 @@ FandomWirewaxPlugin.prototype.JWPauseHandler = function (eventData) {
 
   try {
     this.embedder.pause();
-    window.dataLayer.push({ event: 'wirewax-pause'});
+    window.dataLayer.push({ event: 'wirewax', action: 'pause' });
   } catch (error) {
     console.warn(error);
   }
@@ -226,15 +228,19 @@ FandomWirewaxPlugin.prototype.WirewaxSeekedHandler = function(seekTo) {
 };
 
 FandomWirewaxPlugin.prototype.WirewaxHotspotClickHandler = function (event) {
-  window.dataLayer.push({ event: 'wirewax-hotspotclick'});
+  window.dataLayer.push({ event: 'wirewax', action: 'hotspotclick' });
 };
 
 FandomWirewaxPlugin.prototype.WirewaxOverlayShowHandler = function (event) {
-  window.dataLayer.push({ event: 'wirewax-overlayshow'});
+  window.dataLayer.push({ event: 'wirewax', action: 'overlayshow' });
 };
 
 FandomWirewaxPlugin.prototype.WirewaxOverlayHideHandler = function (event) {
-  window.dataLayer.push({ event: 'wirewax-overlayhide'});
+  window.dataLayer.push({ event: 'wirewax', action: 'overlayhide' });
+};
+
+FandomWirewaxPlugin.prototype.WirewaxOverlayEventHandler = function (event) {
+  window.dataLayer.push({ event: 'wirewax', action: 'overlayevent' });
 };
 
 FandomWirewaxPlugin.prototype.startTimeUpdate = function () {
