@@ -168,7 +168,7 @@ FandomWirewaxPlugin.prototype.stopTimeUpdate = function () {
 FandomWirewaxPlugin.prototype.JWPlayHandler = function (eventData) {
   this.startTimeUpdate();
 
-  if(eventData.playReason == 'interaction') {
+  if(eventData.playReason != 'external') {
     window.dataLayer.push({ event: 'wirewax-play'});
   }
 
@@ -182,7 +182,7 @@ FandomWirewaxPlugin.prototype.JWPlayHandler = function (eventData) {
 FandomWirewaxPlugin.prototype.JWPauseHandler = function (eventData) {
   this.stopTimeUpdate();
 
-  if(eventData.pauseReason == 'interaction') {
+  if(eventData.pauseReason != 'external') {
     window.dataLayer.push({ event: 'wirewax-pause'});
   }
 
@@ -203,7 +203,9 @@ FandomWirewaxPlugin.prototype.JWSeekHandler = function (event) {
 
 FandomWirewaxPlugin.prototype.WirewaxPlayHandler = function () {
   try {
-    this.player.play();
+    if(this.player.getState() !== 'playing'){
+      this.player.play();
+    }  
   } catch (err) {
     console.log(err);
   }
@@ -211,7 +213,9 @@ FandomWirewaxPlugin.prototype.WirewaxPlayHandler = function () {
 
 FandomWirewaxPlugin.prototype.WirewaxPauseHandler = function () {
   try {
-    this.player.pause();
+    if(this.player.getState() !== 'paused'){
+      this.player.pause();
+    }
   } catch (err) {
     console.log(err);
   }
