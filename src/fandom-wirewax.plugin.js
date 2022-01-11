@@ -196,7 +196,7 @@ FandomWirewaxPlugin.prototype.JWPauseHandler = function (eventData) {
 FandomWirewaxPlugin.prototype.JWSeekHandler = function (event) {
   try {
     console.log('******************************');
-    console.log(JSON.stringify(event.offset));
+    console.log(event.offset);
     console.log('******************************');
     this.embedder.setCurrentTime(event.offset);
   } catch (error) {
@@ -226,6 +226,9 @@ FandomWirewaxPlugin.prototype.WirewaxPauseHandler = function () {
 
 FandomWirewaxPlugin.prototype.WirewaxSeekedHandler = function(seekTo) {
   try {
+    console.log('======================================');
+    console.log(seekTo);
+    console.log('======================================');
     this.player.seek(seekTo);
   } catch (err) {
     console.log(err);
