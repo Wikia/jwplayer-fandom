@@ -224,13 +224,13 @@ FandomWirewaxPlugin.prototype.WirewaxPauseHandler = function () {
   }
 };
 
-// FandomWirewaxPlugin.prototype.WirewaxSeekedHandler = function(seekTo) {
-//   try {
-//     this.player.seek(seekTo);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
+FandomWirewaxPlugin.prototype.WirewaxSeekedHandler = function(seekTo) {
+  try {
+    this.player.seek(seekTo);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 FandomWirewaxPlugin.prototype.WirewaxHotspotClickHandler = function (event) {
   window.dataLayer.push({ event: 'wirewax-hotspotclick'});
