@@ -150,7 +150,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 				window.wirewax_plugin = new FandomWirewaxPlugin(elementId, {
 					player: jwplayer(elementId),
 					ready: event,
-				  });
+				});
 			}
 		});
 		logger.info('after setup');
