@@ -122,6 +122,9 @@ FandomWirewaxPlugin.prototype.registerEvents = function () {
   // Custom time sync handler
   var HTML5VideoEl = this.player.getConfig().mediaElement;
   this.setWIREWAXCurrentTime = function () {
+    console.log('=-=-=-=-=-=-=-=-=-=-=-=-=');
+    console.log(HTML5VideoEl);
+    console.log('=-=-=-=-=-=-=-=-=-=-=-=-=');
     this.embedder.setCurrentTime(HTML5VideoEl.currentTime);
     this.animationId = window.requestAnimationFrame(
       this.setWIREWAXCurrentTime
