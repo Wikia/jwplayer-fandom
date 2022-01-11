@@ -123,7 +123,7 @@ FandomWirewaxPlugin.prototype.registerEvents = function () {
   var HTML5VideoEl = this.player.getConfig().mediaElement;
   this.setWIREWAXCurrentTime = function () {
     console.log('=-=-=-=-=-=-=-=-=-=-=-=-=');
-    console.log(HTML5VideoEl);
+    console.log(HTML5VideoEl.currentTime);
     console.log('=-=-=-=-=-=-=-=-=-=-=-=-=');
     this.embedder.setCurrentTime(HTML5VideoEl.currentTime);
     this.animationId = window.requestAnimationFrame(
