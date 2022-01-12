@@ -215,6 +215,9 @@ FandomWirewaxPlugin.prototype.WirewaxPauseHandler = function () {
 
 FandomWirewaxPlugin.prototype.WirewaxSeekedHandler = function(seekTo) {
   try {
+    console.log('=======================================');
+    console.log(seekTo);
+    console.log('=======================================');
     if(typeof seekTo === 'number') {
       this.player.seek(seekTo);
     }
