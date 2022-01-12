@@ -1,7 +1,5 @@
 // fandom-jw-plugin.js
 
-console.log("FandomWirewaxPlugin loaded");
-
 function injectEmbedderSDK() {
   if (window.createWirewaxEmbedder) {
     console.warn("Embedder SDK is already loaded");
@@ -11,8 +9,6 @@ function injectEmbedderSDK() {
 
   var fandomSDKUrl =
     "https://edge-assets-wirewax.wikia-services.com/creativeData/sdk-fandom/wirewax-embedder-sdk.js";
-
-  console.log("inject WIREWAX embedder SDK fandom build", fandomSDKUrl);
 
   return new Promise(function(resolve, reject) {
     var script = document.createElement("script");
