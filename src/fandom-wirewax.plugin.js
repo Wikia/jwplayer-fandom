@@ -215,11 +215,10 @@ FandomWirewaxPlugin.prototype.WirewaxPauseHandler = function () {
 
 FandomWirewaxPlugin.prototype.WirewaxSeekedHandler = function(seekTo) {
   try {
-    console.log('=======================================');
-    console.log(seekTo);
-    console.log('=======================================');
     if(typeof seekTo === 'number') {
       this.player.seek(seekTo);
+    } else if(typeof seekTo.seekTo === 'number') {
+      this.player.seek(seekTo.seekTo)
     }
   } catch (err) {
     console.log(err);
