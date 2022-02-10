@@ -5,9 +5,9 @@ import resolve from '@rollup/plugin-node-resolve';
 export default {
     input: 'src/main.ts',
     output: {
-      file: 'dist/bundle.min.js',
+      file: 'dist/bundle.js',
       compact: true,
-      format: 'cjs'
+      format: 'es'
     },
     plugins: [
       babel({ 

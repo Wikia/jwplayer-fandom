@@ -2,7 +2,7 @@
   "name": "jwplayer-fandom",
   "version": "1.12.1",
   "description": "JWPlayer for Fandom",
-  "main": "dist/bundle.min.js",
+  "main": "dist/bundle.js",
   "scripts": {
     "build": "npm run create-dist && rollup -c",
     "create-dist": "mkdir -p dist"
