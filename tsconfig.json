@@ -8,7 +8,9 @@
 		"jsx": "react",
 		"allowJs": true,
 		"checkJs": false,
+		"allowSyntheticDefaultImports": true,
 		"baseUrl": "./",
+		"typeRoots": ["node_modules/@types"],
 	// 	"paths": {
 	// 		"*": ["node_modules", "src/*"]
 	// 	},

@@ -1,7 +1,8 @@
 import React from 'react';
+import JwPlayerWrapper from './shared/JwPlayerWrapper';
 
 const VideoPlayer = () => (
-    <div>OH DAMN OK</div>
+    <JwPlayerWrapper />
 )
 
 export default VideoPlayer;
