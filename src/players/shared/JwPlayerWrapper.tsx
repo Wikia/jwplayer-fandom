@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { JWPlayerApi } from 'src/types';
+import FandomWirewaxPlugin from 'src/plugins/fandom-wirewax.plugin';
 
 interface WindowJWPlayer extends Window {
 	jwplayer?: JWPlayerApi;
@@ -24,11 +25,19 @@ function createScriptTag(elementId, playerURL) {
 
 	script.async = true;
 	script.src = playerURL || getDefaultPlayerUrl();
-	script.onload = () => {
+	script.onload = () => {	
+		const registerPlugin = window.jwplayer().registerPlugin;
+		registerPlugin("wirewax", "8.0", FandomWirewaxPlugin);
+
 		window.jwplayer(elementId).setup({
 			playlist: 'https://cdn.jwplayer.com/v2/media/dWVV3F7S',
-			plugins: {},
-		})
+			plugins: { fandomWirewax: {}},
+		}).on('ready', (event) => {
+			new FandomWirewaxPlugin(elementId, {
+				player: window.jwplayer(elementId),
+				ready: event,
+			});
+		});
 	}
 
 	document.getElementsByTagName('head')[0].appendChild(script);

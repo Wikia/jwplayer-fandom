@@ -7,8 +7,9 @@ export type PlayerFunctions = {
 	setMute: () => null;
 	setFullscreen: () => null;
 	getPlaylistItem: () => { title: string };
-	on: (name: string, handler: () => void) => null;
+	on: (name: string, handler: (event?: string) => void) => null;
 	getState: () => string;
 	getMute(): () => boolean;
-	setup(options: object): () => PlayerFunctions;
+	setup(options: object): PlayerFunctions;
+	registerPlugin(name: string, version: string, plugin: object)
 };

@@ -27,7 +27,6 @@ export default {
       }),
       typescript(),
       resolve(),
-      terser()
     ],
     external: ['react']
 };
