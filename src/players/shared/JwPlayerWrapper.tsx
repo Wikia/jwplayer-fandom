@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { JWPlayerApi } from 'src/types';
-import waitForEvent from 'src/utils/waitForEvent';
+
 interface WindowJWPlayer extends Window {
 	jwplayer?: JWPlayerApi;
 }
@@ -20,28 +20,8 @@ declare let window: WindowJWPlayer;
  * @param playerURL
  */
 function createScriptTag(elementId, playerURL) {
-	var script = document.createElement('script'),
-		playerElement = document.getElementById(elementId);
+	var script = document.createElement('script');
 
-	// script.onload = function () {
-	// 	wikiaJWPlayerSettingsPlugin.register();
-
-	// 	if (options.sharing) {
-	// 		wikiaJWPlayerSharingPlugin.register();
-	// 	}
-
-	// 	if (options.showSmallPlayerControls) {
-	// 		wikiaJWPlayerSmallPlayerControls.register();
-	// 	}
-
-	// 	if (options.useWirewax !== false) {
-	// 		FandomWirewaxPlugin.register();
-	// 	}
-
-	// 	loadCallbacks.forEach(function (callback) {
-	// 		callback();
-	// 	});
-	// };
 	script.async = true;
 	script.src = playerURL || getDefaultPlayerUrl();
 	script.onload = () => {
@@ -50,15 +30,14 @@ function createScriptTag(elementId, playerURL) {
 			plugins: {},
 		})
 	}
-	// insert script node just after player element
-	// console.log(playerElement.nextSibling);
-	// playerElement.parentNode.insertBefore(script, playerElement.nextSibling);
+
 	document.getElementsByTagName('head')[0].appendChild(script);
 }
 
 const JwPlayerWrapper = () => {
 
 	useEffect(() => {
+		// TODO: check if jwplayer is already loaded
 		createScriptTag('fandom-video-player', getDefaultPlayerUrl())
 	}, []);
 

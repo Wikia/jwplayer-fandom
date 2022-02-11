@@ -3,7 +3,6 @@
 	"exclude": ["node_modules", "src/old", "src/locales", "scripts"],
 	"compilerOptions": {
 		"lib": ["es5", "es6", "es7", "es2017", "dom"],
-	// 	"noImplicitAny": false,
 		"target": "es5",
 		"jsx": "react",
 		"allowJs": true,
@@ -11,6 +10,7 @@
 		"allowSyntheticDefaultImports": true,
 		"baseUrl": "./",
 		"typeRoots": ["node_modules/@types"],
+		"moduleResolution": "node"
 	// 	"paths": {
 	// 		"*": ["node_modules", "src/*"]
 	// 	},

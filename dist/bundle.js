@@ -14,22 +14,6 @@ function getDefaultPlayerUrl() {
 
 function createScriptTag(elementId, playerURL) {
   var script = document.createElement('script');
-      document.getElementById(elementId); // script.onload = function () {
-  // 	wikiaJWPlayerSettingsPlugin.register();
-  // 	if (options.sharing) {
-  // 		wikiaJWPlayerSharingPlugin.register();
-  // 	}
-  // 	if (options.showSmallPlayerControls) {
-  // 		wikiaJWPlayerSmallPlayerControls.register();
-  // 	}
-  // 	if (options.useWirewax !== false) {
-  // 		FandomWirewaxPlugin.register();
-  // 	}
-  // 	loadCallbacks.forEach(function (callback) {
-  // 		callback();
-  // 	});
-  // };
-
   script.async = true;
   script.src = playerURL || getDefaultPlayerUrl();
 
@@ -38,16 +22,14 @@ function createScriptTag(elementId, playerURL) {
       playlist: 'https://cdn.jwplayer.com/v2/media/dWVV3F7S',
       plugins: {}
     });
-  }; // insert script node just after player element
-  // console.log(playerElement.nextSibling);
-  // playerElement.parentNode.insertBefore(script, playerElement.nextSibling);
-
+  };
 
   document.getElementsByTagName('head')[0].appendChild(script);
 }
 
 var JwPlayerWrapper = function () {
   useEffect(function () {
+    // TODO: check if jwplayer is already loaded
     createScriptTag('fandom-video-player', getDefaultPlayerUrl());
   }, []);
   return /*#__PURE__*/React.createElement("div", {
