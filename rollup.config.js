@@ -1,14 +1,23 @@
 import { babel } from '@rollup/plugin-babel';
 import typescript from '@rollup/plugin-typescript';
 import resolve from '@rollup/plugin-node-resolve';
+import { terser } from 'rollup-plugin-terser';
+
+const devMode = (process.env.NODE_ENV === 'development');
+console.log(`${ devMode ? 'development' : 'production' } mode bundle`);
 
 export default {
     input: 'src/main.ts',
     output: {
       file: 'dist/bundle.js',
-      compact: true,
+      compact: devMode ? false : true,
       format: 'es'
     },
+    watch: {
+      include: './src/**',
+      clearScreen: false
+    },
+    sourcemap: devMode ? 'inline' : false,
     plugins: [
       babel({ 
         babelHelpers: 'bundled',
@@ -17,7 +26,8 @@ export default {
         include: ["src/**/*.(ts|tsx|js)"]
       }),
       typescript(),
-      resolve()
+      resolve(),
+      terser()
     ],
     external: ['react']
 };
