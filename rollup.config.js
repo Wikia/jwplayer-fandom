@@ -1,6 +1,8 @@
 import { babel } from '@rollup/plugin-babel';
 import typescript from '@rollup/plugin-typescript';
 import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
 import { terser } from 'rollup-plugin-terser';
 
 const devMode = (process.env.NODE_ENV === 'development');
@@ -11,6 +13,7 @@ export default {
     output: {
       file: 'dist/bundle.js',
       compact: devMode ? false : true,
+      plugins: devMode ? [] : [terser()],
       format: 'es'
     },
     watch: {
@@ -27,6 +30,8 @@ export default {
       }),
       typescript(),
       resolve(),
+      json(),
+      commonjs(),
     ],
     external: ['react']
 };

@@ -1,16 +1,17 @@
 {
 	"include": ["src/**/*"],
-	"exclude": ["node_modules", "src/old", "src/locales", "scripts"],
+	"exclude": ["node_modules", "src/old", "src/locales", "scripts", "dist"],
 	"compilerOptions": {
 		"lib": ["es5", "es6", "es7", "es2017", "dom"],
 		"target": "es5",
 		"jsx": "react",
-		"allowJs": true,
+		// "allowJs": true,
 		"checkJs": false,
 		"allowSyntheticDefaultImports": true,
 		"baseUrl": "./",
 		"typeRoots": ["node_modules/@types"],
-		"moduleResolution": "node"
+		"moduleResolution": "node",
+		"resolveJsonModule": true
 	// 	"paths": {
 	// 		"*": ["node_modules", "src/*"]
 	// 	},
