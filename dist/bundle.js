@@ -1673,12 +1673,12 @@ var IconSoundOff_1 = IconSoundOff;
 var UnmuteButtonWrapper = styled.div.withConfig({
   displayName: "UnmuteButton__UnmuteButtonWrapper",
   componentId: "sc-cng6xn-0"
-})(templateObject_1$5 || (templateObject_1$5 = __makeTemplateObject(["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    padding: 5px 8px;\n    cursor: pointer;\n    height: 31px;\n    box-sizing: border-box;\n    color: ", ";\n    font-size: ", ";\n    font-weight: ", ";\n"], ["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    padding: 5px 8px;\n    cursor: pointer;\n    height: 31px;\n    box-sizing: border-box;\n    color: ", ";\n    font-size: ", ";\n    font-weight: ", ";\n"])), WDSVariables.wdsColorDarkBlueGray, WDSVariables.wdsFontSizeXs, WDSVariables.wdsFontWeightBold);
+})(templateObject_1$6 || (templateObject_1$6 = __makeTemplateObject(["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    padding: 5px 8px;\n    cursor: pointer;\n    height: 31px;\n    box-sizing: border-box;\n    color: ", ";\n    font-size: ", ";\n    font-weight: ", ";\n"], ["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    padding: 5px 8px;\n    cursor: pointer;\n    height: 31px;\n    box-sizing: border-box;\n    color: ", ";\n    font-size: ", ";\n    font-weight: ", ";\n"])), WDSVariables.wdsColorDarkBlueGray, WDSVariables.wdsFontSizeXs, WDSVariables.wdsFontWeightBold);
 
 var UnmuteButton = function () {
   return /*#__PURE__*/React$2.createElement(UnmuteButtonWrapper, null, /*#__PURE__*/React$2.createElement(IconSoundOff_1, null), "test test test");
 };
-var templateObject_1$5;
+var templateObject_1$6;
 
 var React = React$2;
 
@@ -1714,17 +1714,17 @@ var IconCrossSmall_1 = IconCrossSmall;
 var CloseWrapper = styled.div.withConfig({
   displayName: "CloseButton__CloseWrapper",
   componentId: "sc-ofquqz-0"
-})(templateObject_1$4 || (templateObject_1$4 = __makeTemplateObject(["\n\n"], ["\n\n"])));
+})(templateObject_1$5 || (templateObject_1$5 = __makeTemplateObject(["\n\n"], ["\n\n"])));
 
 var CloseButton = function () {
   return /*#__PURE__*/React$2.createElement(CloseWrapper, null, /*#__PURE__*/React$2.createElement(IconCrossSmall_1, null));
 };
-var templateObject_1$4;
+var templateObject_1$5;
 
 var ThumbDownWrapper = styled.div.withConfig({
   displayName: "ThumbDownButton__ThumbDownWrapper",
   componentId: "sc-xmrg1q-0"
-})(templateObject_1$3 || (templateObject_1$3 = __makeTemplateObject(["\n    align-items: center;\n    border-radius: 50%;\n    cursor: pointer;\n    display: flex;\n    flex-shrink: 0;\n    height: 22px;\n    justify-content: center;\n    margin-left: 12px;\n    width: 22px;\n    background-color: ", ";\n"], ["\n    align-items: center;\n    border-radius: 50%;\n    cursor: pointer;\n    display: flex;\n    flex-shrink: 0;\n    height: 22px;\n    justify-content: center;\n    margin-left: 12px;\n    width: 22px;\n    background-color: ", ";\n"])), WDSVariables.wdsColorAlert);
+})(templateObject_1$4 || (templateObject_1$4 = __makeTemplateObject(["\n    align-items: center;\n    border-radius: 50%;\n    cursor: pointer;\n    display: flex;\n    flex-shrink: 0;\n    height: 22px;\n    justify-content: center;\n    margin-left: 12px;\n    width: 22px;\n    background-color: ", ";\n"], ["\n    align-items: center;\n    border-radius: 50%;\n    cursor: pointer;\n    display: flex;\n    flex-shrink: 0;\n    height: 22px;\n    justify-content: center;\n    margin-left: 12px;\n    width: 22px;\n    background-color: ", ";\n"])), WDSVariables.wdsColorAlert);
 
 var ThumbDownButton = function () {
   return /*#__PURE__*/React$2.createElement(ThumbDownWrapper, null, /*#__PURE__*/React$2.createElement("svg", {
@@ -1739,12 +1739,12 @@ var ThumbDownButton = function () {
     d: "M10.47 7.497H7.956v1.397c0 .977-.587 2.402-1.537 2.96-.14.057-.28.113-.42.113a.84.84 0 0 1-.838-.838V9.004L2.927 6.323v-5.14l.866-.42A5.035 5.035 0 0 1 6 .234h3.91c.755 0 1.398.615 1.398 1.37l.56 4.44v.03c0 .81-.616 1.424-1.398 1.424zm-8.38-.56H.412c-.168 0-.28-.11-.28-.28V.515c0-.168.112-.28.28-.28H2.09c.167 0 .28.112.28.28V6.66c0 .167-.113.28-.28.28z"
   }))));
 };
-var templateObject_1$3;
+var templateObject_1$4;
 
 var ThumbUpWrapper = styled.div.withConfig({
   displayName: "ThumbUpButton__ThumbUpWrapper",
   componentId: "sc-1fo8131-0"
-})(templateObject_1$2 || (templateObject_1$2 = __makeTemplateObject(["\n    align-items: center;\n    border-radius: 50%;\n    cursor: pointer;\n    display: flex;\n    flex-shrink: 0;\n    height: 22px;\n    justify-content: center;\n    margin-left: 12px;\n    width: 22px;\n    background-color: ", ";\n"], ["\n    align-items: center;\n    border-radius: 50%;\n    cursor: pointer;\n    display: flex;\n    flex-shrink: 0;\n    height: 22px;\n    justify-content: center;\n    margin-left: 12px;\n    width: 22px;\n    background-color: ", ";\n"])), WDSVariables.wdsColorSuccess);
+})(templateObject_1$3 || (templateObject_1$3 = __makeTemplateObject(["\n    align-items: center;\n    border-radius: 50%;\n    cursor: pointer;\n    display: flex;\n    flex-shrink: 0;\n    height: 22px;\n    justify-content: center;\n    margin-left: 12px;\n    width: 22px;\n    background-color: ", ";\n"], ["\n    align-items: center;\n    border-radius: 50%;\n    cursor: pointer;\n    display: flex;\n    flex-shrink: 0;\n    height: 22px;\n    justify-content: center;\n    margin-left: 12px;\n    width: 22px;\n    background-color: ", ";\n"])), WDSVariables.wdsColorSuccess);
 
 var ThumbUpButton = function () {
   return /*#__PURE__*/React$2.createElement(ThumbUpWrapper, null, /*#__PURE__*/React$2.createElement("svg", {
@@ -1759,17 +1759,39 @@ var ThumbUpButton = function () {
     d: "M11.103 4.503H8.59V3.106c0-.977-.587-2.402-1.537-2.96-.14-.057-.28-.113-.42-.113a.84.84 0 0 0-.837.838v2.125L3.56 5.677v5.14l.866.42c.67.334 1.453.53 2.207.53h3.91c.756 0 1.398-.615 1.398-1.37l.56-4.44v-.03c0-.81-.615-1.424-1.397-1.424zm-8.38.56H1.045c-.168 0-.28.11-.28.28v6.144c0 .168.112.28.28.28h1.676c.168 0 .28-.112.28-.28V5.34c0-.166-.112-.28-.28-.28z"
   }))));
 };
-var templateObject_1$2;
+var templateObject_1$3;
 
 var UserFeedbackWrapper = styled.div.withConfig({
   displayName: "UserFeedback__UserFeedbackWrapper",
   componentId: "sc-1qufyzf-0"
-})(templateObject_1$1 || (templateObject_1$1 = __makeTemplateObject(["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    font-size: 14px;\n    max-width: 90%;\n    padding: 5px 8px;\n    display: flex;\n    height: 34px;\n    box-sizing: border-box;\n    color: ", ";\n"], ["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    font-size: 14px;\n    max-width: 90%;\n    padding: 5px 8px;\n    display: flex;\n    height: 34px;\n    box-sizing: border-box;\n    color: ", ";\n"])), WDSVariables.wdsColorDarkBlueGray);
+})(templateObject_1$2 || (templateObject_1$2 = __makeTemplateObject(["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    font-size: 14px;\n    max-width: 90%;\n    padding: 5px 8px;\n    display: flex;\n    height: 34px;\n    box-sizing: border-box;\n    color: ", ";\n"], ["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    font-size: 14px;\n    max-width: 90%;\n    padding: 5px 8px;\n    display: flex;\n    height: 34px;\n    box-sizing: border-box;\n    color: ", ";\n"])), WDSVariables.wdsColorDarkBlueGray);
 
 var UserFeedback = function () {
   return /*#__PURE__*/React$2.createElement(UserFeedbackWrapper, null, /*#__PURE__*/React$2.createElement(CloseButton, null), "Do you like this video?", /*#__PURE__*/React$2.createElement(ThumbUpButton, null), /*#__PURE__*/React$2.createElement(ThumbDownButton, null));
 };
-var templateObject_1$1;
+var templateObject_1$2;
+
+var VideoDetailsWrapper = styled.div.withConfig({
+  displayName: "VideoDetails__VideoDetailsWrapper",
+  componentId: "sc-e6es9p-0"
+})(templateObject_1$1 || (templateObject_1$1 = __makeTemplateObject(["\n    -webkit-font-smoothing: antialiased;\n    background-color: #000;\n    font-weight: 700;\n    padding: 10px 12px;\n"], ["\n    -webkit-font-smoothing: antialiased;\n    background-color: #000;\n    font-weight: 700;\n    padding: 10px 12px;\n"])));
+var VideoLabel = styled.div.withConfig({
+  displayName: "VideoDetails__VideoLabel",
+  componentId: "sc-e6es9p-1"
+})(templateObject_2$1 || (templateObject_2$1 = __makeTemplateObject(["\n    color: #999;\n    font-size: 12px;\n    opacity: .5;\n    text-transform: uppercase;\n"], ["\n    color: #999;\n    font-size: 12px;\n    opacity: .5;\n    text-transform: uppercase;\n"])));
+var VideoTime = styled.span.withConfig({
+  displayName: "VideoDetails__VideoTime",
+  componentId: "sc-e6es9p-2"
+})(templateObject_3$1 || (templateObject_3$1 = __makeTemplateObject(["\n    border: 0;\n    font: normal normal normal 100% inherit;\n    margin: 0;\n    padding: 0;\n    vertical-align: baseline;\n"], ["\n    border: 0;\n    font: normal normal normal 100% inherit;\n    margin: 0;\n    padding: 0;\n    vertical-align: baseline;\n"])));
+var VideoTitle = styled.div.withConfig({
+  displayName: "VideoDetails__VideoTitle",
+  componentId: "sc-e6es9p-3"
+})(templateObject_4$1 || (templateObject_4$1 = __makeTemplateObject(["\n    color: ", ";\n    font-size: 14px;\n"], ["\n    color: ", ";\n    font-size: 14px;\n"])), WDSVariables.wdsColorWhite);
+
+var VideoDetails = function () {
+  return /*#__PURE__*/React$2.createElement(VideoDetailsWrapper, null, /*#__PURE__*/React$2.createElement(VideoLabel, null, "Watch", /*#__PURE__*/React$2.createElement(VideoTime, null, "04:06")), /*#__PURE__*/React$2.createElement(VideoTitle, null, "How Luke Skywalker Became \"The Last Jedi\""));
+};
+var templateObject_1$1, templateObject_2$1, templateObject_3$1, templateObject_4$1;
 
 // Source: https://usehooks.com/useOnScreen/
 function useOnScreen(ref, rootMargin) {
@@ -1817,7 +1839,7 @@ var DesktopArticleVideoWrapper = styled.div.withConfig({
   displayName: "DesktopArticleVideoPlayer__DesktopArticleVideoWrapper",
   componentId: "sc-7j5an3-2"
 })(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n    ", "\n"], ["\n    ", "\n"])), function (props) {
-  return !props.onScreen && Ae(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n            width: 300px;\n            position: fixed; \n            bottom: 0;\n        "], ["\n            width: 300px;\n            position: fixed; \n            bottom: 0;\n        "])));
+  return !props.onScreen && Ae(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n            bottom: 18px;\n            left: auto;\n            position: fixed;\n            right: 18px;\n            top: auto;\n            -webkit-transition: right .4s,bottom .4s,width .4s;\n            transition: right .4s,bottom .4s,width .4s;\n            width: 300px;\n        "], ["\n            bottom: 18px;\n            left: auto;\n            position: fixed;\n            right: 18px;\n            top: auto;\n            -webkit-transition: right .4s,bottom .4s,width .4s;\n            transition: right .4s,bottom .4s,width .4s;\n            width: 300px;\n        "])));
 });
 
 var DesktopArticleVideoPlayer = function () {
@@ -1827,7 +1849,10 @@ var DesktopArticleVideoPlayer = function () {
     ref: ref
   }, /*#__PURE__*/React$2.createElement(DesktopArticleVideoWrapper, {
     onScreen: onScreen
-  }, onScreen && /*#__PURE__*/React$2.createElement(UserActionTopBar, null, /*#__PURE__*/React$2.createElement(UnmuteButton, null), /*#__PURE__*/React$2.createElement(UserFeedback, null)), /*#__PURE__*/React$2.createElement(JwPlayerWrapper, null)));
+  }, /*#__PURE__*/React$2.createElement(UserActionTopBar, null, onScreen ? /*#__PURE__*/React$2.createElement(React$2.Fragment, null, /*#__PURE__*/React$2.createElement(UnmuteButton, null), /*#__PURE__*/React$2.createElement(UserFeedback, null)) :
+  /*#__PURE__*/
+  // TODO: close icon on right
+  React$2.createElement("div", null)), /*#__PURE__*/React$2.createElement(JwPlayerWrapper, null), !onScreen && /*#__PURE__*/React$2.createElement(VideoDetails, null)));
 };
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4;
 

@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import UnmuteButton  from 'src/players/DesktopArticleVideoPlayer/UnmuteButton';
 import UserFeedback from 'src/players/DesktopArticleVideoPlayer/UserFeedback/UserFeedback';
 import JwPlayerWrapper from 'src/players/shared/JwPlayerWrapper';
+import VideoDetails from 'src/players/DesktopArticleVideoPlayer/VideoDetails';
 import useOnScreen from 'src/utils/useOnScreen';
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
@@ -29,9 +30,14 @@ const DesktopArticleVideoWrapper = styled.div<Props>`
     ${(props) =>
         !props.onScreen &&
         css`
+            bottom: 18px;
+            left: auto;
+            position: fixed;
+            right: 18px;
+            top: auto;
+            -webkit-transition: right .4s,bottom .4s,width .4s;
+            transition: right .4s,bottom .4s,width .4s;
             width: 300px;
-            position: fixed; 
-            bottom: 0;
         `}
 `;
 
@@ -42,13 +48,21 @@ const DesktopArticleVideoPlayer = () => {
     return (
         <DesktopArticleVideoTopPlaceholder ref={ref}>
             <DesktopArticleVideoWrapper onScreen={onScreen}>
-                { onScreen && (
-                    <UserActionTopBar>
-                        <UnmuteButton />
-                        <UserFeedback />
-                    </UserActionTopBar>
-                )}
+                <UserActionTopBar>
+                    { onScreen ? (
+                        <>
+                            <UnmuteButton />
+                            <UserFeedback />
+                        </>
+                    ):(
+                        // TODO: close icon on right
+                        <div></div>
+                    )}
+                </UserActionTopBar>
                 <JwPlayerWrapper />
+                { !onScreen && (
+                    <VideoDetails />
+                )}
             </DesktopArticleVideoWrapper>
         </DesktopArticleVideoTopPlaceholder>
     );
