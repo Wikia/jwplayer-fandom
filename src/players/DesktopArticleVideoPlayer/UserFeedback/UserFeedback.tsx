@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
-import CloseButton from 'src/players/DesktopArticleVideoPlayer/OnScreenVideoPlayer/UserFeedback/CloseButton';
-import ThumbDownButton from 'src/players/DesktopArticleVideoPlayer/OnScreenVideoPlayer/UserFeedback/ThumbDownButton';
-import ThumbUpButton from 'src/players/DesktopArticleVideoPlayer/OnScreenVideoPlayer/UserFeedback/ThumbUpButton';
+import CloseButton from 'src/players/DesktopArticleVideoPlayer/UserFeedback/CloseButton';
+import ThumbDownButton from 'src/players/DesktopArticleVideoPlayer/UserFeedback/ThumbDownButton';
+import ThumbUpButton from 'src/players/DesktopArticleVideoPlayer/UserFeedback/ThumbUpButton';
 
 const UserFeedbackWrapper = styled.div`
     align-items: center;

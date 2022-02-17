@@ -51,7 +51,9 @@ const JwPlayerWrapper = () => {
 	}, []);
 
     return (
-		<div id="fandom-video-player" />
+		<div>
+			<div id="fandom-video-player" />
+		</div>
 	);
 };
 
