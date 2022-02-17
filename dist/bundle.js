@@ -1,4 +1,4 @@
-import React$2, { useEffect, useRef, useDebugValue, useContext, createElement } from 'react';
+import React$2, { useEffect, useRef, useDebugValue, useContext, createElement, useState } from 'react';
 
 // fandom-jw-plugin.js
 console.log("FandomPlugin loaded"); // Utilities
@@ -1673,12 +1673,12 @@ var IconSoundOff_1 = IconSoundOff;
 var UnmuteButtonWrapper = styled.div.withConfig({
   displayName: "UnmuteButton__UnmuteButtonWrapper",
   componentId: "sc-e2zg9u-0"
-})(templateObject_1$5 || (templateObject_1$5 = __makeTemplateObject(["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    padding: 5px 8px;\n    cursor: pointer;\n    height: 31px;\n    box-sizing: border-box;\n    color: ", ";\n    font-size: ", ";\n    font-weight: ", ";\n"], ["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    padding: 5px 8px;\n    cursor: pointer;\n    height: 31px;\n    box-sizing: border-box;\n    color: ", ";\n    font-size: ", ";\n    font-weight: ", ";\n"])), WDSVariables.wdsColorDarkBlueGray, WDSVariables.wdsFontSizeXs, WDSVariables.wdsFontWeightBold);
+})(templateObject_1$6 || (templateObject_1$6 = __makeTemplateObject(["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    padding: 5px 8px;\n    cursor: pointer;\n    height: 31px;\n    box-sizing: border-box;\n    color: ", ";\n    font-size: ", ";\n    font-weight: ", ";\n"], ["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    padding: 5px 8px;\n    cursor: pointer;\n    height: 31px;\n    box-sizing: border-box;\n    color: ", ";\n    font-size: ", ";\n    font-weight: ", ";\n"])), WDSVariables.wdsColorDarkBlueGray, WDSVariables.wdsFontSizeXs, WDSVariables.wdsFontWeightBold);
 
 var UnmuteButton = function () {
   return /*#__PURE__*/React$2.createElement(UnmuteButtonWrapper, null, /*#__PURE__*/React$2.createElement(IconSoundOff_1, null), "test test test");
 };
-var templateObject_1$5;
+var templateObject_1$6;
 
 var React = React$2;
 
@@ -1714,17 +1714,17 @@ var IconCrossSmall_1 = IconCrossSmall;
 var CloseWrapper = styled.div.withConfig({
   displayName: "CloseButton__CloseWrapper",
   componentId: "sc-2b8oaz-0"
-})(templateObject_1$4 || (templateObject_1$4 = __makeTemplateObject(["\n\n"], ["\n\n"])));
+})(templateObject_1$5 || (templateObject_1$5 = __makeTemplateObject(["\n\n"], ["\n\n"])));
 
 var CloseButton = function () {
   return /*#__PURE__*/React$2.createElement(CloseWrapper, null, /*#__PURE__*/React$2.createElement(IconCrossSmall_1, null));
 };
-var templateObject_1$4;
+var templateObject_1$5;
 
 var ThumbDownWrapper = styled.div.withConfig({
   displayName: "ThumbDownButton__ThumbDownWrapper",
   componentId: "sc-1mrw6fe-0"
-})(templateObject_1$3 || (templateObject_1$3 = __makeTemplateObject(["\n    align-items: center;\n    border-radius: 50%;\n    cursor: pointer;\n    display: flex;\n    flex-shrink: 0;\n    height: 22px;\n    justify-content: center;\n    margin-left: 12px;\n    width: 22px;\n    background-color: ", ";\n"], ["\n    align-items: center;\n    border-radius: 50%;\n    cursor: pointer;\n    display: flex;\n    flex-shrink: 0;\n    height: 22px;\n    justify-content: center;\n    margin-left: 12px;\n    width: 22px;\n    background-color: ", ";\n"])), WDSVariables.wdsColorAlert);
+})(templateObject_1$4 || (templateObject_1$4 = __makeTemplateObject(["\n    align-items: center;\n    border-radius: 50%;\n    cursor: pointer;\n    display: flex;\n    flex-shrink: 0;\n    height: 22px;\n    justify-content: center;\n    margin-left: 12px;\n    width: 22px;\n    background-color: ", ";\n"], ["\n    align-items: center;\n    border-radius: 50%;\n    cursor: pointer;\n    display: flex;\n    flex-shrink: 0;\n    height: 22px;\n    justify-content: center;\n    margin-left: 12px;\n    width: 22px;\n    background-color: ", ";\n"])), WDSVariables.wdsColorAlert);
 
 var ThumbDownButton = function () {
   return /*#__PURE__*/React$2.createElement(ThumbDownWrapper, null, /*#__PURE__*/React$2.createElement("svg", {
@@ -1734,17 +1734,17 @@ var ThumbDownButton = function () {
     xmlns: "http://www.w3.org/2000/svg"
   }, /*#__PURE__*/React$2.createElement("g", {
     fill: "#FFF",
-    "fill-rule": "evenodd"
+    fillRule: "evenodd"
   }, /*#__PURE__*/React$2.createElement("path", {
     d: "M10.47 7.497H7.956v1.397c0 .977-.587 2.402-1.537 2.96-.14.057-.28.113-.42.113a.84.84 0 0 1-.838-.838V9.004L2.927 6.323v-5.14l.866-.42A5.035 5.035 0 0 1 6 .234h3.91c.755 0 1.398.615 1.398 1.37l.56 4.44v.03c0 .81-.616 1.424-1.398 1.424zm-8.38-.56H.412c-.168 0-.28-.11-.28-.28V.515c0-.168.112-.28.28-.28H2.09c.167 0 .28.112.28.28V6.66c0 .167-.113.28-.28.28z"
   }))));
 };
-var templateObject_1$3;
+var templateObject_1$4;
 
 var ThumbUpWrapper = styled.div.withConfig({
   displayName: "ThumbUpButton__ThumbUpWrapper",
   componentId: "sc-1mgjths-0"
-})(templateObject_1$2 || (templateObject_1$2 = __makeTemplateObject(["\n    align-items: center;\n    border-radius: 50%;\n    cursor: pointer;\n    display: flex;\n    flex-shrink: 0;\n    height: 22px;\n    justify-content: center;\n    margin-left: 12px;\n    width: 22px;\n    background-color: ", ";\n"], ["\n    align-items: center;\n    border-radius: 50%;\n    cursor: pointer;\n    display: flex;\n    flex-shrink: 0;\n    height: 22px;\n    justify-content: center;\n    margin-left: 12px;\n    width: 22px;\n    background-color: ", ";\n"])), WDSVariables.wdsColorSuccess);
+})(templateObject_1$3 || (templateObject_1$3 = __makeTemplateObject(["\n    align-items: center;\n    border-radius: 50%;\n    cursor: pointer;\n    display: flex;\n    flex-shrink: 0;\n    height: 22px;\n    justify-content: center;\n    margin-left: 12px;\n    width: 22px;\n    background-color: ", ";\n"], ["\n    align-items: center;\n    border-radius: 50%;\n    cursor: pointer;\n    display: flex;\n    flex-shrink: 0;\n    height: 22px;\n    justify-content: center;\n    margin-left: 12px;\n    width: 22px;\n    background-color: ", ";\n"])), WDSVariables.wdsColorSuccess);
 
 var ThumbUpButton = function () {
   return /*#__PURE__*/React$2.createElement(ThumbUpWrapper, null, /*#__PURE__*/React$2.createElement("svg", {
@@ -1754,39 +1754,88 @@ var ThumbUpButton = function () {
     xmlns: "http://www.w3.org/2000/svg"
   }, /*#__PURE__*/React$2.createElement("g", {
     fill: "#FFF",
-    "fill-rule": "evenodd"
+    fillRule: "evenodd"
   }, /*#__PURE__*/React$2.createElement("path", {
     d: "M11.103 4.503H8.59V3.106c0-.977-.587-2.402-1.537-2.96-.14-.057-.28-.113-.42-.113a.84.84 0 0 0-.837.838v2.125L3.56 5.677v5.14l.866.42c.67.334 1.453.53 2.207.53h3.91c.756 0 1.398-.615 1.398-1.37l.56-4.44v-.03c0-.81-.615-1.424-1.397-1.424zm-8.38.56H1.045c-.168 0-.28.11-.28.28v6.144c0 .168.112.28.28.28h1.676c.168 0 .28-.112.28-.28V5.34c0-.166-.112-.28-.28-.28z"
   }))));
 };
-var templateObject_1$2;
+var templateObject_1$3;
 
 var UserFeedbackWrapper = styled.div.withConfig({
   displayName: "UserFeedback__UserFeedbackWrapper",
   componentId: "sc-1p4reeb-0"
-})(templateObject_1$1 || (templateObject_1$1 = __makeTemplateObject(["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    font-size: 14px;\n    max-width: 90%;\n    padding: 5px 8px;\n    display: flex;\n    height: 34px;\n    box-sizing: border-box;\n    color: ", ";\n"], ["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    font-size: 14px;\n    max-width: 90%;\n    padding: 5px 8px;\n    display: flex;\n    height: 34px;\n    box-sizing: border-box;\n    color: ", ";\n"])), WDSVariables.wdsColorDarkBlueGray);
+})(templateObject_1$2 || (templateObject_1$2 = __makeTemplateObject(["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    font-size: 14px;\n    max-width: 90%;\n    padding: 5px 8px;\n    display: flex;\n    height: 34px;\n    box-sizing: border-box;\n    color: ", ";\n"], ["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    font-size: 14px;\n    max-width: 90%;\n    padding: 5px 8px;\n    display: flex;\n    height: 34px;\n    box-sizing: border-box;\n    color: ", ";\n"])), WDSVariables.wdsColorDarkBlueGray);
 
 var UserFeedback = function () {
   return /*#__PURE__*/React$2.createElement(UserFeedbackWrapper, null, /*#__PURE__*/React$2.createElement(CloseButton, null), "Do you like this video?", /*#__PURE__*/React$2.createElement(ThumbUpButton, null), /*#__PURE__*/React$2.createElement(ThumbDownButton, null));
 };
-var templateObject_1$1;
+var templateObject_1$2;
 
 var UserActionTopBar = styled.div.withConfig({
   displayName: "OnScreenVideoPlayer__UserActionTopBar",
   componentId: "sc-d0w3lw-0"
-})(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    padding: 5px 8px;\n    position: absolute;\n    top: 6px;\n    z-index: 2;\n    display: flex;\n    justify-content: space-between;\n    width: 100%;\n"], ["\n    padding: 5px 8px;\n    position: absolute;\n    top: 6px;\n    z-index: 2;\n    display: flex;\n    justify-content: space-between;\n    width: 100%;\n"])));
+})(templateObject_1$1 || (templateObject_1$1 = __makeTemplateObject(["\n    padding: 5px 8px;\n    position: absolute;\n    top: 6px;\n    z-index: 2;\n    display: flex;\n    justify-content: space-between;\n    width: 100%;\n"], ["\n    padding: 5px 8px;\n    position: absolute;\n    top: 6px;\n    z-index: 2;\n    display: flex;\n    justify-content: space-between;\n    width: 100%;\n"])));
 
 var OnScreenVideoPlayer = function () {
   return /*#__PURE__*/React$2.createElement(React$2.Fragment, null, /*#__PURE__*/React$2.createElement(UserActionTopBar, null, /*#__PURE__*/React$2.createElement(UnmuteButton, null), /*#__PURE__*/React$2.createElement(UserFeedback, null)), /*#__PURE__*/React$2.createElement(JwPlayerWrapper, null));
 };
-var templateObject_1;
+var templateObject_1$1;
 
-var DesktopArticleVideoPlayer = function () {
+var OffScreenVideoPlayer = function () {
   return (
     /*#__PURE__*/
-    // TODO: is visible on screen?
-    React$2.createElement(OnScreenVideoPlayer, null)
+    // TODO: resize and sticy to corner
+    React$2.createElement(JwPlayerWrapper, null) // TODO: Description box
+
   );
 };
+
+// Source: https://usehooks.com/useOnScreen/
+function useOnScreen(ref, rootMargin) {
+  if (rootMargin === void 0) {
+    rootMargin = '0px';
+  } // State and setter for storing whether element is visible
+
+
+  var _a = useState(false),
+      isIntersecting = _a[0],
+      setIntersecting = _a[1];
+
+  useEffect(function () {
+    var observer = new IntersectionObserver(function (_a) {
+      var entry = _a[0]; // Update our state when observer callback fires
+
+      if (ref.current) {
+        setIntersecting(entry.isIntersecting);
+      }
+    }, {
+      rootMargin: rootMargin
+    });
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return function () {
+      observer.disconnect();
+    };
+  }, []); // Empty array ensures that effect is only run on mount and unmount
+
+  return isIntersecting;
+}
+
+var DesktopArticleVideoPlayerWrapper = styled.div.withConfig({
+  displayName: "DesktopArticleVideoPlayer__DesktopArticleVideoPlayerWrapper",
+  componentId: "sc-7j5an3-0"
+})(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\nheight: 500px;\nwidth: 500px;\nbackground-color: black;\n"], ["\nheight: 500px;\nwidth: 500px;\nbackground-color: black;\n"])));
+
+var DesktopArticleVideoPlayer = function () {
+  var ref = useRef(null);
+  var onScreen = useOnScreen(ref);
+  return /*#__PURE__*/React$2.createElement(DesktopArticleVideoPlayerWrapper, {
+    ref: ref
+  }, onScreen ? /*#__PURE__*/React$2.createElement(OnScreenVideoPlayer, null) : /*#__PURE__*/React$2.createElement(OffScreenVideoPlayer, null));
+};
+var templateObject_1;
 
 export { DesktopArticleVideoPlayer, VideoPlayer };
