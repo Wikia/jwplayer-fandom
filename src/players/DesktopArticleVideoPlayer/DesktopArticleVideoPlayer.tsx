@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import UnmuteButton  from 'src/players/DesktopArticleVideoPlayer/UnmuteButton';
 import UserFeedback from 'src/players/DesktopArticleVideoPlayer/UserFeedback/UserFeedback';
 import JwPlayerWrapper from 'src/players/shared/JwPlayerWrapper';
 import VideoDetails from 'src/players/DesktopArticleVideoPlayer/VideoDetails';
 import useOnScreen from 'src/utils/useOnScreen';
+import PlayerWrapper from '../shared/PlayerWrapper';
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
     height: 500px;
@@ -46,25 +47,27 @@ const DesktopArticleVideoPlayer = () => {
 	const onScreen = useOnScreen(ref);
 
     return (
-        <DesktopArticleVideoTopPlaceholder ref={ref}>
-            <DesktopArticleVideoWrapper onScreen={onScreen}>
-                <UserActionTopBar>
-                    { onScreen ? (
-                        <>
-                            <UnmuteButton />
-                            <UserFeedback />
-                        </>
-                    ):(
-                        // TODO: close icon on right
-                        <div></div>
+        <PlayerWrapper>
+            <DesktopArticleVideoTopPlaceholder ref={ref}>
+                <DesktopArticleVideoWrapper onScreen={onScreen}>
+                    <UserActionTopBar>
+                        { onScreen ? (
+                            <>
+                                <UnmuteButton />
+                                <UserFeedback />
+                            </>
+                        ):(
+                            // TODO: close icon on right
+                            <div></div>
+                        )}
+                    </UserActionTopBar>
+                    <JwPlayerWrapper />
+                    { !onScreen && (
+                        <VideoDetails />
                     )}
-                </UserActionTopBar>
-                <JwPlayerWrapper />
-                { !onScreen && (
-                    <VideoDetails />
-                )}
-            </DesktopArticleVideoWrapper>
-        </DesktopArticleVideoTopPlaceholder>
+                </DesktopArticleVideoWrapper>
+            </DesktopArticleVideoTopPlaceholder>
+        </PlayerWrapper>
     );
 }
 

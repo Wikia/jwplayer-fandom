@@ -1,6 +1,6 @@
 // export type FeaturedVideoApi = (targetContainer: string, playerURL: string) => void;
-export type JWPlayerApi = (target?: string) => PlayerFunctions;
-export type PlayerFunctions = {
+export type JWPlayerApi = (target?: string) => Player;
+export type Player = {
 	playToggle: () => null;
 	pause(): () => null;
 	play(): () => null;
@@ -10,6 +10,6 @@ export type PlayerFunctions = {
 	on: (name: string, handler: (event?: string) => void) => null;
 	getState: () => string;
 	getMute(): () => boolean;
-	setup(options: object): PlayerFunctions;
+	setup(options: object): Player;
 	registerPlugin(name: string, version: string, plugin: object)
 };

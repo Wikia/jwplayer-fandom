@@ -1,4 +1,4 @@
-import React$2, { useEffect, useRef, useDebugValue, useContext, createElement, useState } from 'react';
+import React$2, { useContext, useEffect, useRef, useDebugValue, createElement, useState } from 'react';
 
 // fandom-jw-plugin.js
 console.log("FandomPlugin loaded"); // Utilities
@@ -207,6 +207,11 @@ class FandomWirewaxPlugin {
   };
 }
 
+var PlayerContext = /*#__PURE__*/React$2.createContext({
+  player: null,
+  setPlayer: function (playerInstance) {}
+});
+
 /**
  * gets the android player if user is on an android device browser
  */
@@ -214,42 +219,44 @@ class FandomWirewaxPlugin {
 function getDefaultPlayerUrl() {
   return !!navigator.userAgent.match(/android/i) ? 'https://cdn.jwplayer.com/libraries/MFqndUHM.js' : 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
 }
-/**
- * adds script tag
- * @param elementId
- * @param playerURL
- */
-
-
-function createScriptTag(elementId, playerURL) {
-  var script = document.createElement('script');
-  script.async = true;
-  script.src = playerURL || getDefaultPlayerUrl();
-
-  script.onload = function () {
-    var registerPlugin = window.jwplayer().registerPlugin;
-    registerPlugin("wirewax", "8.0", FandomWirewaxPlugin);
-    window.jwplayer(elementId).setup({
-      playlist: 'https://cdn.jwplayer.com/v2/media/dWVV3F7S',
-      plugins: {
-        fandomWirewax: {}
-      }
-    }).on('ready', function (event) {
-      new FandomWirewaxPlugin(elementId, {
-        player: window.jwplayer(elementId),
-        ready: event
-      });
-    });
-  };
-
-  document.getElementsByTagName('head')[0].appendChild(script);
-}
 
 var JwPlayerWrapper = function () {
+  var setPlayer = useContext(PlayerContext).setPlayer;
   useEffect(function () {
     // TODO: check if jwplayer is already loaded
-    createScriptTag('fandom-video-player', getDefaultPlayerUrl());
+    initPlayer('fandom-video-player', getDefaultPlayerUrl());
   }, []);
+  /**
+   * adds script tag
+   * @param elementId
+   * @param playerURL
+   */
+
+  function initPlayer(elementId, playerURL) {
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = playerURL || getDefaultPlayerUrl();
+
+    script.onload = function () {
+      var registerPlugin = window.jwplayer().registerPlugin;
+      registerPlugin("wirewax", "8.0", FandomWirewaxPlugin);
+      var playerInstance = window.jwplayer(elementId).setup({
+        playlist: 'https://cdn.jwplayer.com/v2/media/dWVV3F7S',
+        plugins: {
+          fandomWirewax: {}
+        }
+      }).on('ready', function (event) {
+        new FandomWirewaxPlugin(elementId, {
+          player: window.jwplayer(elementId),
+          ready: event
+        });
+      });
+      setPlayer(playerInstance);
+    };
+
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
   return /*#__PURE__*/React$2.createElement("div", null, /*#__PURE__*/React$2.createElement("div", {
     id: "fandom-video-player"
   }));
@@ -1676,6 +1683,8 @@ var UnmuteButtonWrapper = styled.div.withConfig({
 })(templateObject_1$6 || (templateObject_1$6 = __makeTemplateObject(["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    padding: 5px 8px;\n    cursor: pointer;\n    height: 31px;\n    box-sizing: border-box;\n    color: ", ";\n    font-size: ", ";\n    font-weight: ", ";\n"], ["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    padding: 5px 8px;\n    cursor: pointer;\n    height: 31px;\n    box-sizing: border-box;\n    color: ", ";\n    font-size: ", ";\n    font-weight: ", ";\n"])), WDSVariables.wdsColorDarkBlueGray, WDSVariables.wdsFontSizeXs, WDSVariables.wdsFontWeightBold);
 
 var UnmuteButton = function () {
+  var player = useContext(PlayerContext).player;
+  console.log("==========================================", player === null || player === void 0 ? void 0 : player.getConfig());
   return /*#__PURE__*/React$2.createElement(UnmuteButtonWrapper, null, /*#__PURE__*/React$2.createElement(IconSoundOff_1, null), "test test test");
 };
 var templateObject_1$6;
@@ -1827,6 +1836,25 @@ function useOnScreen(ref, rootMargin) {
   return isIntersecting;
 }
 
+var PlayerWrapper = function (_a) {
+  var children = _a.children;
+
+  var _b = useState(null),
+      jwPlayer = _b[0],
+      setJwPlayer = _b[1];
+
+  var setPlayer = function (player) {
+    setJwPlayer(player);
+  };
+
+  return /*#__PURE__*/React$2.createElement(PlayerContext.Provider, {
+    value: {
+      player: jwPlayer,
+      setPlayer: setPlayer
+    }
+  }, children);
+};
+
 var DesktopArticleVideoTopPlaceholder = styled.div.withConfig({
   displayName: "DesktopArticleVideoPlayer__DesktopArticleVideoTopPlaceholder",
   componentId: "sc-7j5an3-0"
@@ -1845,14 +1873,14 @@ var DesktopArticleVideoWrapper = styled.div.withConfig({
 var DesktopArticleVideoPlayer = function () {
   var ref = useRef(null);
   var onScreen = useOnScreen(ref);
-  return /*#__PURE__*/React$2.createElement(DesktopArticleVideoTopPlaceholder, {
+  return /*#__PURE__*/React$2.createElement(PlayerWrapper, null, /*#__PURE__*/React$2.createElement(DesktopArticleVideoTopPlaceholder, {
     ref: ref
   }, /*#__PURE__*/React$2.createElement(DesktopArticleVideoWrapper, {
     onScreen: onScreen
   }, /*#__PURE__*/React$2.createElement(UserActionTopBar, null, onScreen ? /*#__PURE__*/React$2.createElement(React$2.Fragment, null, /*#__PURE__*/React$2.createElement(UnmuteButton, null), /*#__PURE__*/React$2.createElement(UserFeedback, null)) :
   /*#__PURE__*/
   // TODO: close icon on right
-  React$2.createElement("div", null)), /*#__PURE__*/React$2.createElement(JwPlayerWrapper, null), !onScreen && /*#__PURE__*/React$2.createElement(VideoDetails, null)));
+  React$2.createElement("div", null)), /*#__PURE__*/React$2.createElement(JwPlayerWrapper, null), !onScreen && /*#__PURE__*/React$2.createElement(VideoDetails, null))));
 };
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4;
 
