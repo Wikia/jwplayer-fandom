@@ -1680,12 +1680,26 @@ var IconSoundOff_1 = IconSoundOff;
 var UnmuteButtonWrapper = styled.div.withConfig({
   displayName: "UnmuteButton__UnmuteButtonWrapper",
   componentId: "sc-cng6xn-0"
-})(templateObject_1$6 || (templateObject_1$6 = __makeTemplateObject(["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    padding: 5px 8px;\n    cursor: pointer;\n    height: 31px;\n    box-sizing: border-box;\n    color: ", ";\n    font-size: ", ";\n    font-weight: ", ";\n"], ["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    padding: 5px 8px;\n    cursor: pointer;\n    height: 31px;\n    box-sizing: border-box;\n    color: ", ";\n    font-size: ", ";\n    font-weight: ", ";\n"])), WDSVariables.wdsColorDarkBlueGray, WDSVariables.wdsFontSizeXs, WDSVariables.wdsFontWeightBold);
+})(templateObject_1$6 || (templateObject_1$6 = __makeTemplateObject(["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    padding: 5px 8px;\n    cursor: pointer;\n    height: 31px;\n    box-sizing: border-box;\n    color: ", ";\n    font-size: ", ";\n    font-weight: ", ";\n    visibility: ", "\n"], ["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    padding: 5px 8px;\n    cursor: pointer;\n    height: 31px;\n    box-sizing: border-box;\n    color: ", ";\n    font-size: ", ";\n    font-weight: ", ";\n    visibility: ", "\n"])), WDSVariables.wdsColorDarkBlueGray, WDSVariables.wdsFontSizeXs, WDSVariables.wdsFontWeightBold, function (props) {
+  return props.muted ? 'visible' : 'hidden';
+});
 
 var UnmuteButton = function () {
   var player = useContext(PlayerContext).player;
-  console.log("==========================================", player === null || player === void 0 ? void 0 : player.getConfig());
-  return /*#__PURE__*/React$2.createElement(UnmuteButtonWrapper, null, /*#__PURE__*/React$2.createElement(IconSoundOff_1, null), "test test test");
+
+  var _a = useState(true),
+      muted = _a[0],
+      setMuted = _a[1];
+
+  var unmute = function () {
+    player === null || player === void 0 ? void 0 : player.setMute(false);
+    setMuted(false);
+  };
+
+  return /*#__PURE__*/React$2.createElement(UnmuteButtonWrapper, {
+    onClick: unmute,
+    muted: muted
+  }, /*#__PURE__*/React$2.createElement(IconSoundOff_1, null), "Play Sound");
 };
 var templateObject_1$6;
 

@@ -11,5 +11,5 @@ export type Player = {
 	getState: () => string;
 	getMute(): () => boolean;
 	setup(options: object): Player;
-	registerPlugin(name: string, version: string, plugin: object)
+	registerPlugin(name: string, version: string, plugin: object);
 };

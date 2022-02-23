@@ -1,6 +1,6 @@
 {
-	"include": ["src/**/*"],
-	"exclude": ["node_modules", "src/old", "src/locales", "scripts", "dist"],
+	"include": ["src/**/*", "old"],
+	"exclude": ["node_modules", "old", "src/locales", "scripts", "dist"],
 	"compilerOptions": {
 		"lib": ["es5", "es6", "es7", "es2017", "dom"],
 		"target": "es5",
