@@ -1,4 +1,4 @@
-let wikiaJWPlayeri18n = {
+export const wikiaJWPlayeri18n = {
 	de: {
 		admessage: 'Die Werbung endet in xx Sekunden',
 		autoplayVideos: 'Automatische Wiedergabe',

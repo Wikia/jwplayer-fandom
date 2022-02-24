@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import IconSoundOff from '@fandom-frontend/react-common/dist/icons/IconSoundOff';
 import { PlayerContext } from 'src/players/shared/PlayerContext';

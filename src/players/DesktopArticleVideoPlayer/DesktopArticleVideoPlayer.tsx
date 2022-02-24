@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef } from 'react';
 import styled, { css } from 'styled-components';
 import UnmuteButton from 'src/players/DesktopArticleVideoPlayer/UnmuteButton';
 import UserFeedback from 'src/players/DesktopArticleVideoPlayer/UserFeedback/UserFeedback';
@@ -6,7 +6,6 @@ import JwPlayerWrapper from 'src/players/shared/JwPlayerWrapper';
 import VideoDetails from 'src/players/DesktopArticleVideoPlayer/VideoDetails';
 import useOnScreen from 'src/utils/useOnScreen';
 import PlayerWrapper from '../shared/PlayerWrapper';
-import { PlayerContext } from 'src/players/shared/PlayerContext';
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
 	height: 500px;

@@ -1,5 +1,5 @@
 // Source: https://usehooks.com/useOnScreen/
-import { useState, useEffect, MutableRefObject, useRef, useCallback } from 'react';
+import { useState, useEffect, MutableRefObject } from 'react';
 
 export default function useOnScreen<T extends Element>(ref: MutableRefObject<T>, rootMargin = '0px'): boolean {
 	// State and setter for storing whether element is visible
