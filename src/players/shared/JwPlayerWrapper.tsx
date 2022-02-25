@@ -12,11 +12,11 @@ declare let window: WindowJWPlayer;
 /**
  * gets the android player if user is on an android device browser
  */
-function getDefaultPlayerUrl() {
+const getDefaultPlayerUrl = () => {
 	return navigator.userAgent.match(/android/i)
 		? 'https://cdn.jwplayer.com/libraries/MFqndUHM.js'
 		: 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
-}
+};
 
 const JwPlayerWrapper = () => {
 	const { setPlayer } = useContext(PlayerContext);
@@ -26,12 +26,7 @@ const JwPlayerWrapper = () => {
 		initPlayer('fandom-video-player', getDefaultPlayerUrl());
 	}, []);
 
-	/**
-	 * adds script tag
-	 * @param elementId
-	 * @param playerURL
-	 */
-	function initPlayer(elementId, playerURL) {
+	function initPlayer(elementId: string, playerURL?: string) {
 		const script = document.createElement('script');
 
 		script.async = true;

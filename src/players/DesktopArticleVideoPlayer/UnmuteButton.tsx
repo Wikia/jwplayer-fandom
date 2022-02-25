@@ -26,6 +26,7 @@ const UnmuteButton = () => {
 	const { player } = useContext(PlayerContext);
 	const [muted, setMuted] = useState(true);
 	const unmute = () => {
+		console.log(player);
 		player?.setMute(false);
 		setMuted(false);
 	};

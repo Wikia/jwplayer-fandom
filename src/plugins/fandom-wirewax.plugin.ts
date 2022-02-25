@@ -1,9 +1,15 @@
-// fandom-jw-plugin.js
+import { CreateWirewaxEmbedder, Player, Embedder, WirewaxPluginOptions } from 'src/types';
+
+interface WindowWirewax extends Window {
+	createWirewaxEmbedder?: CreateWirewaxEmbedder;
+}
+
+declare let window: WindowWirewax;
 
 console.log('FandomPlugin loaded');
 
 // Utilities
-const fetchWIREWAXVidId = async (mediaid) => {
+const fetchWIREWAXVidId = async (mediaid: string): Promise<string> => {
 	if (!mediaid) {
 		throw new TypeError('No JW media id is specified.');
 	}
@@ -14,7 +20,7 @@ const fetchWIREWAXVidId = async (mediaid) => {
 		throw new Error('No vidId is mapped with this mediaid');
 	}
 
-	const vidId = await response.json();
+	const vidId: string = (await response.json()) as string;
 
 	return vidId;
 };
@@ -40,12 +46,22 @@ const injectEmbedderSDK = () => {
 };
 
 class FandomWirewaxPlugin {
-	constructor(rootId, options) {
+	isPlayerRegistered: boolean;
+	rootId: string;
+	options: Record<string, unknown>;
+	player: Player;
+	autoPlay: boolean;
+	embedder: Embedder;
+	vidId: string;
+	container: HTMLElement;
+	animationId: number;
+	setWIREWAXCurrentTime: () => void;
+
+	constructor(rootId: string, options: WirewaxPluginOptions) {
 		this.isPlayerRegistered = false;
 		this.rootId = rootId;
 		this.options = options;
 		this.player = options.player;
-
 		this.autoPlay = true;
 
 		this.player.on('playlistItem', () => {
@@ -65,7 +81,7 @@ class FandomWirewaxPlugin {
 
 			// validate interaction
 			fetchWIREWAXVidId(mediaId)
-				.then((vidId) => {
+				.then((vidId: string) => {
 					this.vidId = vidId;
 
 					// Inject SDK
@@ -81,9 +97,9 @@ class FandomWirewaxPlugin {
 		return this;
 	}
 
-	on(event, callback) {
-		// ...
-	}
+	// on(event, callback) {
+	// 	// ...
+	// }
 
 	async setupEmbedder() {
 		if (!this.embedder) {
@@ -175,7 +191,7 @@ class FandomWirewaxPlugin {
 		}
 	};
 
-	JWSeekHandler = (event) => {
+	JWSeekHandler = (event: Record<string, number>) => {
 		console.log('JW -> WIREWAX: seek');
 
 		try {
@@ -205,25 +221,25 @@ class FandomWirewaxPlugin {
 		}
 	};
 
-	WirewaxSeekedHandler = ({ seekTo }) => {
+	WirewaxSeekedHandler = (event: Record<string, number>) => {
 		console.log('WIREWAX -> JW: seek');
 
 		try {
-			this.player.seek(seekTo);
+			this.player.seek(event.seekTo);
 		} catch (err) {
 			console.log(err);
 		}
 	};
 
-	WirewaxHotspotClickHandler = (event) => {
+	WirewaxHotspotClickHandler = (event: string) => {
 		console.log('hotspot click', { event });
 	};
 
-	WirewaxOverlayShowHandler = (event) => {
+	WirewaxOverlayShowHandler = (event: string) => {
 		console.log('overlay open', { event });
 	};
 
-	WirewaxOverlayHideHandler = (event) => {
+	WirewaxOverlayHideHandler = (event: string) => {
 		console.log('overlay close', { event });
 	};
 }

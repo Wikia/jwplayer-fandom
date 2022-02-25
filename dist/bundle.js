@@ -1,106 +1,287 @@
 import React$2, { useContext, useEffect, useRef, useDebugValue, createElement, useState } from 'react';
 
-// fandom-jw-plugin.js
-console.log("FandomPlugin loaded"); // Utilities
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
 
-const fetchWIREWAXVidId = async mediaid => {
-  if (!mediaid) {
-    throw new TypeError("No JW media id is specified.");
-  }
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
 
-  const response = await fetch(`https://edge-player.wirewax.com/jwPlayerData/${mediaid}.txt`);
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
 
-  if (response.status !== 200) {
-    throw new Error("No vidId is mapped with this mediaid");
-  }
+function __awaiter(thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
 
-  const vidId = await response.json();
-  return vidId;
+function __generator(thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+}
+
+function __makeTemplateObject(cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+}
+
+console.log('FandomPlugin loaded'); // Utilities
+
+var fetchWIREWAXVidId = function (mediaid) {
+  return __awaiter(void 0, void 0, void 0, function () {
+    var response, vidId;
+    return __generator(this, function (_a) {
+      switch (_a.label) {
+        case 0:
+          if (!mediaid) {
+            throw new TypeError('No JW media id is specified.');
+          }
+
+          return [4
+          /*yield*/
+          , fetch("https://edge-player.wirewax.com/jwPlayerData/".concat(mediaid, ".txt"))];
+
+        case 1:
+          response = _a.sent();
+
+          if (response.status !== 200) {
+            throw new Error('No vidId is mapped with this mediaid');
+          }
+
+          return [4
+          /*yield*/
+          , response.json()];
+
+        case 2:
+          vidId = _a.sent();
+          return [2
+          /*return*/
+          , vidId];
+      }
+    });
+  });
 };
 
-const injectEmbedderSDK = () => {
+var injectEmbedderSDK = function () {
   if (window.createWirewaxEmbedder) {
-    console.warn("Embedder SDK is already loaded");
+    console.warn('Embedder SDK is already loaded');
     return;
   }
 
-  const fandomSDKUrl = "https://edge-assets-wirewax.wikia-services.com/creativeData/sdk-fandom/wirewax-embedder-sdk.js";
-  console.log("inject WIREWAX embedder SDK fandom build", fandomSDKUrl);
-  return new Promise((resolve, reject) => {
-    const script = document.createElement("script");
+  var fandomSDKUrl = 'https://edge-assets-wirewax.wikia-services.com/creativeData/sdk-fandom/wirewax-embedder-sdk.js';
+  console.log('inject WIREWAX embedder SDK fandom build', fandomSDKUrl);
+  return new Promise(function (resolve, reject) {
+    var script = document.createElement('script');
     script.src = fandomSDKUrl;
-    script.addEventListener("load", resolve);
-    script.addEventListener("error", e => reject(e.error));
+    script.addEventListener('load', resolve);
+    script.addEventListener('error', function (e) {
+      return reject(e.error);
+    });
     document.head.appendChild(script);
   });
 };
 
-class FandomWirewaxPlugin {
-  constructor(rootId, options) {
+var FandomWirewaxPlugin =
+/** @class */
+function () {
+  function FandomWirewaxPlugin(rootId, options) {
+    var _this = this; // ES6
+
+
+    this.JWPlayHandler = function () {
+      console.log('JW -> WIREWAX: play');
+
+      _this.startTimeUpdate();
+
+      try {
+        _this.embedder.play();
+      } catch (error) {
+        console.warn(error);
+      }
+    };
+
+    this.JWPauseHandler = function () {
+      console.log('JW -> WIREWAX: pause');
+
+      _this.stopTimeUpdate();
+
+      try {
+        _this.embedder.pause();
+      } catch (error) {
+        console.warn(error);
+      }
+    };
+
+    this.JWSeekHandler = function (event) {
+      console.log('JW -> WIREWAX: seek');
+
+      try {
+        _this.embedder.setCurrentTime(event.offset);
+      } catch (error) {
+        console.warn(error);
+      }
+    };
+
+    this.WirewaxPlayHandler = function () {
+      console.log('WIREWAX -> JW: play');
+
+      try {
+        _this.player.play();
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    this.WirewaxPauseHandler = function () {
+      console.log('WIREWAX -> JW: pause');
+
+      try {
+        _this.player.pause();
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    this.WirewaxSeekedHandler = function (event) {
+      console.log('WIREWAX -> JW: seek');
+
+      try {
+        _this.player.seek(event.seekTo);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    this.WirewaxHotspotClickHandler = function (event) {
+      console.log('hotspot click', {
+        event: event
+      });
+    };
+
+    this.WirewaxOverlayShowHandler = function (event) {
+      console.log('overlay open', {
+        event: event
+      });
+    };
+
+    this.WirewaxOverlayHideHandler = function (event) {
+      console.log('overlay close', {
+        event: event
+      });
+    };
+
     this.isPlayerRegistered = false;
     this.rootId = rootId;
     this.options = options;
     this.player = options.player;
     this.autoPlay = true;
-    this.player.on("playlistItem", () => {
-      if (this.embedder) {
-        this.stopTimeUpdate(); // Dispose pre video interaction
+    this.player.on('playlistItem', function () {
+      if (_this.embedder) {
+        _this.stopTimeUpdate(); // Dispose pre video interaction
+
 
         try {
-          this.embedder.dispose();
+          _this.embedder.dispose();
         } catch (error) {
           console.log(error);
         }
       } // Search JW media id
 
 
-      const mediaId = this.player.getConfig().playlistItem.mediaid || this.player.getConfig().playlistItem.videoId; // validate interaction
+      var mediaId = _this.player.getConfig().playlistItem.mediaid || _this.player.getConfig().playlistItem.videoId; // validate interaction
 
-      fetchWIREWAXVidId(mediaId).then(vidId => {
-        this.vidId = vidId; // Inject SDK
+
+      fetchWIREWAXVidId(mediaId).then(function (vidId) {
+        _this.vidId = vidId; // Inject SDK
 
         return injectEmbedderSDK();
-      }).then(() => this.setupEmbedder()).then(() => this.registerEvents()).catch(error => {
+      }).then(function () {
+        return _this.setupEmbedder();
+      }).then(function () {
+        return _this.registerEvents();
+      }).catch(function (error) {
         console.warn(error);
       });
     });
     return this;
-  }
-
-  on(event, callback) {// ...
-  }
-
-  async setupEmbedder() {
-    if (!this.embedder) {
-      // Create a container
-      this.container = document.createElement("div");
-      this.container.classList.add("vjs-wirewax-container");
-      this.container.setAttribute("style", "position: absolute; height: 100%; width: 100%; top: 0; pointer-events: none");
-      this.player.getContainer().appendChild(this.container); // Initialize embedder
-
-      this.embedder = window.createWirewaxEmbedder();
-    } // Create video-less WIREWAX player
+  } // on(event, callback) {
+  // 	// ...
+  // }
 
 
-    this.embedder.createEl(this.container, {
-      isPlugin: true,
-      videoId: this.vidId,
-      rootId: this.rootId
+  FandomWirewaxPlugin.prototype.setupEmbedder = function () {
+    return __awaiter(this, void 0, void 0, function () {
+      return __generator(this, function (_a) {
+        if (!this.embedder) {
+          // Create a container
+          this.container = document.createElement('div');
+          this.container.classList.add('vjs-wirewax-container');
+          this.container.setAttribute('style', 'position: absolute; height: 100%; width: 100%; top: 0; pointer-events: none');
+          this.player.getContainer().appendChild(this.container); // Initialize embedder
+
+          this.embedder = window.createWirewaxEmbedder();
+        } // Create video-less WIREWAX player
+
+
+        this.embedder.createEl(this.container, {
+          isPlugin: true,
+          videoId: this.vidId,
+          rootId: this.rootId
+        });
+        return [2
+        /*return*/
+        , this.embedder.ready()];
+      });
     });
-    return this.embedder.ready();
-  }
+  };
 
-  registerEvents() {
-    // Custom time sync handler
-    const HTML5VideoEl = this.player.getConfig().mediaElement;
+  FandomWirewaxPlugin.prototype.registerEvents = function () {
+    var _this = this; // Custom time sync handler
 
-    this.setWIREWAXCurrentTime = () => {
-      this.embedder.setCurrentTime(HTML5VideoEl.currentTime);
-      this.animationId = window.requestAnimationFrame(this.setWIREWAXCurrentTime);
+
+    var HTML5VideoEl = this.player.getConfig().mediaElement;
+
+    this.setWIREWAXCurrentTime = function () {
+      _this.embedder.setCurrentTime(HTML5VideoEl.currentTime);
+
+      _this.animationId = window.requestAnimationFrame(_this.setWIREWAXCurrentTime);
     }; // Handle the delay caused by injecting script
 
 
-    const isPlaying = this.player.getState() === "playing";
+    var isPlaying = this.player.getState() === 'playing';
 
     if (isPlaying || this.autoPlay) {
       this.startTimeUpdate();
@@ -109,116 +290,40 @@ class FandomWirewaxPlugin {
 
     if (this.isPlayerRegistered) return; // Bind WIREWAX to JW player events
 
-    this.player.on("play", this.JWPlayHandler);
-    this.player.on("pause", this.JWPauseHandler);
-    this.player.on("seek", this.JWSeekHandler); // Bind JW to WIREWAX events
+    this.player.on('play', this.JWPlayHandler);
+    this.player.on('pause', this.JWPauseHandler);
+    this.player.on('seek', this.JWSeekHandler); // Bind JW to WIREWAX events
 
-    this.embedder.on("play", this.WirewaxPlayHandler);
-    this.embedder.on("pause", this.WirewaxPauseHandler);
-    this.embedder.on("seeked", this.WirewaxSeekedHandler);
-    this.embedder.on("overlayshow", this.WirewaxOverlayShowHandler);
-    this.embedder.on("overlayhide", this.WirewaxOverlayHideHandler);
-    this.embedder.on("hotspotclick", this.WirewaxHotspotClickHandler);
+    this.embedder.on('play', this.WirewaxPlayHandler);
+    this.embedder.on('pause', this.WirewaxPauseHandler);
+    this.embedder.on('seeked', this.WirewaxSeekedHandler);
+    this.embedder.on('overlayshow', this.WirewaxOverlayShowHandler);
+    this.embedder.on('overlayhide', this.WirewaxOverlayHideHandler);
+    this.embedder.on('hotspotclick', this.WirewaxHotspotClickHandler);
     this.isPlayerRegistered = true;
-  }
+  };
 
-  startTimeUpdate() {
+  FandomWirewaxPlugin.prototype.startTimeUpdate = function () {
     window.cancelAnimationFrame(this.animationId);
     this.animationId = window.requestAnimationFrame(this.setWIREWAXCurrentTime);
-  }
+  };
 
-  stopTimeUpdate() {
+  FandomWirewaxPlugin.prototype.stopTimeUpdate = function () {
     window.cancelAnimationFrame(this.animationId);
-  } // ES6
-
-
-  JWPlayHandler = () => {
-    console.log("JW -> WIREWAX: play");
-    this.startTimeUpdate();
-
-    try {
-      this.embedder.play();
-    } catch (error) {
-      console.warn(error);
-    }
   };
-  JWPauseHandler = () => {
-    console.log("JW -> WIREWAX: pause");
-    this.stopTimeUpdate();
 
-    try {
-      this.embedder.pause();
-    } catch (error) {
-      console.warn(error);
-    }
-  };
-  JWSeekHandler = event => {
-    console.log("JW -> WIREWAX: seek");
+  return FandomWirewaxPlugin;
+}();
 
-    try {
-      this.embedder.setCurrentTime(event.offset);
-    } catch (error) {
-      console.warn(error);
-    }
-  };
-  WirewaxPlayHandler = () => {
-    console.log("WIREWAX -> JW: play");
-
-    try {
-      this.player.play();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  WirewaxPauseHandler = () => {
-    console.log("WIREWAX -> JW: pause");
-
-    try {
-      this.player.pause();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  WirewaxSeekedHandler = ({
-    seekTo
-  }) => {
-    console.log("WIREWAX -> JW: seek");
-
-    try {
-      this.player.seek(seekTo);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  WirewaxHotspotClickHandler = event => {
-    console.log("hotspot click", {
-      event
-    });
-  };
-  WirewaxOverlayShowHandler = event => {
-    console.log("overlay open", {
-      event
-    });
-  };
-  WirewaxOverlayHideHandler = event => {
-    console.log("overlay close", {
-      event
-    });
-  };
-}
-
-var PlayerContext = /*#__PURE__*/React$2.createContext({
-  player: null,
-  setPlayer: function (playerInstance) {}
-});
+var PlayerContext = /*#__PURE__*/React$2.createContext(null);
 
 /**
  * gets the android player if user is on an android device browser
  */
 
-function getDefaultPlayerUrl() {
-  return !!navigator.userAgent.match(/android/i) ? 'https://cdn.jwplayer.com/libraries/MFqndUHM.js' : 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
-}
+var getDefaultPlayerUrl = function () {
+  return navigator.userAgent.match(/android/i) ? 'https://cdn.jwplayer.com/libraries/MFqndUHM.js' : 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
+};
 
 var JwPlayerWrapper = function () {
   var setPlayer = useContext(PlayerContext).setPlayer;
@@ -226,11 +331,6 @@ var JwPlayerWrapper = function () {
     // TODO: check if jwplayer is already loaded
     initPlayer('fandom-video-player', getDefaultPlayerUrl());
   }, []);
-  /**
-   * adds script tag
-   * @param elementId
-   * @param playerURL
-   */
 
   function initPlayer(elementId, playerURL) {
     var script = document.createElement('script');
@@ -239,7 +339,7 @@ var JwPlayerWrapper = function () {
 
     script.onload = function () {
       var registerPlugin = window.jwplayer().registerPlugin;
-      registerPlugin("wirewax", "8.0", FandomWirewaxPlugin);
+      registerPlugin('wirewax', '8.0', FandomWirewaxPlugin);
       var playerInstance = window.jwplayer(elementId).setup({
         playlist: 'https://cdn.jwplayer.com/v2/media/dWVV3F7S',
         plugins: {
@@ -265,26 +365,6 @@ var JwPlayerWrapper = function () {
 var VideoPlayer = function () {
   return /*#__PURE__*/React$2.createElement(JwPlayerWrapper, null);
 };
-
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-
-function __makeTemplateObject(cooked, raw) {
-    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
-    return cooked;
-}
 
 var reactIs$1 = {exports: {}};
 
@@ -1680,7 +1760,7 @@ var IconSoundOff_1 = IconSoundOff;
 var UnmuteButtonWrapper = styled.div.withConfig({
   displayName: "UnmuteButton__UnmuteButtonWrapper",
   componentId: "sc-cng6xn-0"
-})(templateObject_1$6 || (templateObject_1$6 = __makeTemplateObject(["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    padding: 5px 8px;\n    cursor: pointer;\n    height: 31px;\n    box-sizing: border-box;\n    color: ", ";\n    font-size: ", ";\n    font-weight: ", ";\n    visibility: ", "\n"], ["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    padding: 5px 8px;\n    cursor: pointer;\n    height: 31px;\n    box-sizing: border-box;\n    color: ", ";\n    font-size: ", ";\n    font-weight: ", ";\n    visibility: ", "\n"])), WDSVariables.wdsColorDarkBlueGray, WDSVariables.wdsFontSizeXs, WDSVariables.wdsFontWeightBold, function (props) {
+})(templateObject_1$6 || (templateObject_1$6 = __makeTemplateObject(["\n\talign-items: center;\n\tbackground-color: rgba(255, 255, 255, 0.9);\n\tborder-radius: 2px;\n\tpadding: 5px 8px;\n\tcursor: pointer;\n\theight: 31px;\n\tbox-sizing: border-box;\n\tcolor: ", ";\n\tfont-size: ", ";\n\tfont-weight: ", ";\n\tvisibility: ", ";\n"], ["\n\talign-items: center;\n\tbackground-color: rgba(255, 255, 255, 0.9);\n\tborder-radius: 2px;\n\tpadding: 5px 8px;\n\tcursor: pointer;\n\theight: 31px;\n\tbox-sizing: border-box;\n\tcolor: ", ";\n\tfont-size: ", ";\n\tfont-weight: ", ";\n\tvisibility: ", ";\n"])), WDSVariables.wdsColorDarkBlueGray, WDSVariables.wdsFontSizeXs, WDSVariables.wdsFontWeightBold, function (props) {
   return props.muted ? 'visible' : 'hidden';
 });
 
@@ -1692,6 +1772,7 @@ var UnmuteButton = function () {
       setMuted = _a[1];
 
   var unmute = function () {
+    console.log(player);
     player === null || player === void 0 ? void 0 : player.setMute(false);
     setMuted(false);
   };
@@ -1737,7 +1818,7 @@ var IconCrossSmall_1 = IconCrossSmall;
 var CloseWrapper = styled.div.withConfig({
   displayName: "CloseButton__CloseWrapper",
   componentId: "sc-ofquqz-0"
-})(templateObject_1$5 || (templateObject_1$5 = __makeTemplateObject(["\n\n"], ["\n\n"])));
+})(templateObject_1$5 || (templateObject_1$5 = __makeTemplateObject([""], [""])));
 
 var CloseButton = function () {
   return /*#__PURE__*/React$2.createElement(CloseWrapper, null, /*#__PURE__*/React$2.createElement(IconCrossSmall_1, null));
@@ -1747,7 +1828,7 @@ var templateObject_1$5;
 var ThumbDownWrapper = styled.div.withConfig({
   displayName: "ThumbDownButton__ThumbDownWrapper",
   componentId: "sc-xmrg1q-0"
-})(templateObject_1$4 || (templateObject_1$4 = __makeTemplateObject(["\n    align-items: center;\n    border-radius: 50%;\n    cursor: pointer;\n    display: flex;\n    flex-shrink: 0;\n    height: 22px;\n    justify-content: center;\n    margin-left: 12px;\n    width: 22px;\n    background-color: ", ";\n"], ["\n    align-items: center;\n    border-radius: 50%;\n    cursor: pointer;\n    display: flex;\n    flex-shrink: 0;\n    height: 22px;\n    justify-content: center;\n    margin-left: 12px;\n    width: 22px;\n    background-color: ", ";\n"])), WDSVariables.wdsColorAlert);
+})(templateObject_1$4 || (templateObject_1$4 = __makeTemplateObject(["\n\talign-items: center;\n\tborder-radius: 50%;\n\tcursor: pointer;\n\tdisplay: flex;\n\tflex-shrink: 0;\n\theight: 22px;\n\tjustify-content: center;\n\tmargin-left: 12px;\n\twidth: 22px;\n\tbackground-color: ", ";\n"], ["\n\talign-items: center;\n\tborder-radius: 50%;\n\tcursor: pointer;\n\tdisplay: flex;\n\tflex-shrink: 0;\n\theight: 22px;\n\tjustify-content: center;\n\tmargin-left: 12px;\n\twidth: 22px;\n\tbackground-color: ", ";\n"])), WDSVariables.wdsColorAlert);
 
 var ThumbDownButton = function () {
   return /*#__PURE__*/React$2.createElement(ThumbDownWrapper, null, /*#__PURE__*/React$2.createElement("svg", {
@@ -1767,7 +1848,7 @@ var templateObject_1$4;
 var ThumbUpWrapper = styled.div.withConfig({
   displayName: "ThumbUpButton__ThumbUpWrapper",
   componentId: "sc-1fo8131-0"
-})(templateObject_1$3 || (templateObject_1$3 = __makeTemplateObject(["\n    align-items: center;\n    border-radius: 50%;\n    cursor: pointer;\n    display: flex;\n    flex-shrink: 0;\n    height: 22px;\n    justify-content: center;\n    margin-left: 12px;\n    width: 22px;\n    background-color: ", ";\n"], ["\n    align-items: center;\n    border-radius: 50%;\n    cursor: pointer;\n    display: flex;\n    flex-shrink: 0;\n    height: 22px;\n    justify-content: center;\n    margin-left: 12px;\n    width: 22px;\n    background-color: ", ";\n"])), WDSVariables.wdsColorSuccess);
+})(templateObject_1$3 || (templateObject_1$3 = __makeTemplateObject(["\n\talign-items: center;\n\tborder-radius: 50%;\n\tcursor: pointer;\n\tdisplay: flex;\n\tflex-shrink: 0;\n\theight: 22px;\n\tjustify-content: center;\n\tmargin-left: 12px;\n\twidth: 22px;\n\tbackground-color: ", ";\n"], ["\n\talign-items: center;\n\tborder-radius: 50%;\n\tcursor: pointer;\n\tdisplay: flex;\n\tflex-shrink: 0;\n\theight: 22px;\n\tjustify-content: center;\n\tmargin-left: 12px;\n\twidth: 22px;\n\tbackground-color: ", ";\n"])), WDSVariables.wdsColorSuccess);
 
 var ThumbUpButton = function () {
   return /*#__PURE__*/React$2.createElement(ThumbUpWrapper, null, /*#__PURE__*/React$2.createElement("svg", {
@@ -1787,7 +1868,7 @@ var templateObject_1$3;
 var UserFeedbackWrapper = styled.div.withConfig({
   displayName: "UserFeedback__UserFeedbackWrapper",
   componentId: "sc-1qufyzf-0"
-})(templateObject_1$2 || (templateObject_1$2 = __makeTemplateObject(["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    font-size: 14px;\n    max-width: 90%;\n    padding: 5px 8px;\n    display: flex;\n    height: 34px;\n    box-sizing: border-box;\n    color: ", ";\n"], ["\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 2px;\n    font-size: 14px;\n    max-width: 90%;\n    padding: 5px 8px;\n    display: flex;\n    height: 34px;\n    box-sizing: border-box;\n    color: ", ";\n"])), WDSVariables.wdsColorDarkBlueGray);
+})(templateObject_1$2 || (templateObject_1$2 = __makeTemplateObject(["\n\talign-items: center;\n\tbackground-color: rgba(255, 255, 255, 0.9);\n\tborder-radius: 2px;\n\tfont-size: 14px;\n\tmax-width: 90%;\n\tpadding: 5px 8px;\n\tdisplay: flex;\n\theight: 34px;\n\tbox-sizing: border-box;\n\tcolor: ", ";\n"], ["\n\talign-items: center;\n\tbackground-color: rgba(255, 255, 255, 0.9);\n\tborder-radius: 2px;\n\tfont-size: 14px;\n\tmax-width: 90%;\n\tpadding: 5px 8px;\n\tdisplay: flex;\n\theight: 34px;\n\tbox-sizing: border-box;\n\tcolor: ", ";\n"])), WDSVariables.wdsColorDarkBlueGray);
 
 var UserFeedback = function () {
   return /*#__PURE__*/React$2.createElement(UserFeedbackWrapper, null, /*#__PURE__*/React$2.createElement(CloseButton, null), "Do you like this video?", /*#__PURE__*/React$2.createElement(ThumbUpButton, null), /*#__PURE__*/React$2.createElement(ThumbDownButton, null));
@@ -1797,19 +1878,19 @@ var templateObject_1$2;
 var VideoDetailsWrapper = styled.div.withConfig({
   displayName: "VideoDetails__VideoDetailsWrapper",
   componentId: "sc-e6es9p-0"
-})(templateObject_1$1 || (templateObject_1$1 = __makeTemplateObject(["\n    -webkit-font-smoothing: antialiased;\n    background-color: #000;\n    font-weight: 700;\n    padding: 10px 12px;\n"], ["\n    -webkit-font-smoothing: antialiased;\n    background-color: #000;\n    font-weight: 700;\n    padding: 10px 12px;\n"])));
+})(templateObject_1$1 || (templateObject_1$1 = __makeTemplateObject(["\n\t-webkit-font-smoothing: antialiased;\n\tbackground-color: #000;\n\tfont-weight: 700;\n\tpadding: 10px 12px;\n"], ["\n\t-webkit-font-smoothing: antialiased;\n\tbackground-color: #000;\n\tfont-weight: 700;\n\tpadding: 10px 12px;\n"])));
 var VideoLabel = styled.div.withConfig({
   displayName: "VideoDetails__VideoLabel",
   componentId: "sc-e6es9p-1"
-})(templateObject_2$1 || (templateObject_2$1 = __makeTemplateObject(["\n    color: #999;\n    font-size: 12px;\n    opacity: .5;\n    text-transform: uppercase;\n"], ["\n    color: #999;\n    font-size: 12px;\n    opacity: .5;\n    text-transform: uppercase;\n"])));
+})(templateObject_2$1 || (templateObject_2$1 = __makeTemplateObject(["\n\tcolor: #999;\n\tfont-size: 12px;\n\topacity: 0.5;\n\ttext-transform: uppercase;\n"], ["\n\tcolor: #999;\n\tfont-size: 12px;\n\topacity: 0.5;\n\ttext-transform: uppercase;\n"])));
 var VideoTime = styled.span.withConfig({
   displayName: "VideoDetails__VideoTime",
   componentId: "sc-e6es9p-2"
-})(templateObject_3$1 || (templateObject_3$1 = __makeTemplateObject(["\n    border: 0;\n    font: normal normal normal 100% inherit;\n    margin: 0;\n    padding: 0;\n    vertical-align: baseline;\n"], ["\n    border: 0;\n    font: normal normal normal 100% inherit;\n    margin: 0;\n    padding: 0;\n    vertical-align: baseline;\n"])));
+})(templateObject_3$1 || (templateObject_3$1 = __makeTemplateObject(["\n\tborder: 0;\n\tfont: normal normal normal 100% inherit;\n\tmargin: 0;\n\tpadding: 0;\n\tvertical-align: baseline;\n"], ["\n\tborder: 0;\n\tfont: normal normal normal 100% inherit;\n\tmargin: 0;\n\tpadding: 0;\n\tvertical-align: baseline;\n"])));
 var VideoTitle = styled.div.withConfig({
   displayName: "VideoDetails__VideoTitle",
   componentId: "sc-e6es9p-3"
-})(templateObject_4$1 || (templateObject_4$1 = __makeTemplateObject(["\n    color: ", ";\n    font-size: 14px;\n"], ["\n    color: ", ";\n    font-size: 14px;\n"])), WDSVariables.wdsColorWhite);
+})(templateObject_4$1 || (templateObject_4$1 = __makeTemplateObject(["\n\tcolor: ", ";\n\tfont-size: 14px;\n"], ["\n\tcolor: ", ";\n\tfont-size: 14px;\n"])), WDSVariables.wdsColorWhite);
 
 var VideoDetails = function () {
   return /*#__PURE__*/React$2.createElement(VideoDetailsWrapper, null, /*#__PURE__*/React$2.createElement(VideoLabel, null, "Watch", /*#__PURE__*/React$2.createElement(VideoTime, null, "04:06")), /*#__PURE__*/React$2.createElement(VideoTitle, null, "How Luke Skywalker Became \"The Last Jedi\""));
@@ -1872,16 +1953,16 @@ var PlayerWrapper = function (_a) {
 var DesktopArticleVideoTopPlaceholder = styled.div.withConfig({
   displayName: "DesktopArticleVideoPlayer__DesktopArticleVideoTopPlaceholder",
   componentId: "sc-7j5an3-0"
-})(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    height: 500px;\n    width: 500px;\n    background-color: black;\n"], ["\n    height: 500px;\n    width: 500px;\n    background-color: black;\n"])));
+})(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n\theight: 500px;\n\twidth: 500px;\n\tbackground-color: black;\n"], ["\n\theight: 500px;\n\twidth: 500px;\n\tbackground-color: black;\n"])));
 var UserActionTopBar = styled.div.withConfig({
   displayName: "DesktopArticleVideoPlayer__UserActionTopBar",
   componentId: "sc-7j5an3-1"
-})(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    padding: 5px 8px;\n    position: absolute;\n    top: 6px;\n    z-index: 2;\n    display: flex;\n    justify-content: space-between;\n    width: 100%;\n"], ["\n    padding: 5px 8px;\n    position: absolute;\n    top: 6px;\n    z-index: 2;\n    display: flex;\n    justify-content: space-between;\n    width: 100%;\n"])));
+})(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n\tpadding: 5px 8px;\n\tposition: absolute;\n\ttop: 6px;\n\tz-index: 2;\n\tdisplay: flex;\n\tjustify-content: space-between;\n\twidth: 100%;\n"], ["\n\tpadding: 5px 8px;\n\tposition: absolute;\n\ttop: 6px;\n\tz-index: 2;\n\tdisplay: flex;\n\tjustify-content: space-between;\n\twidth: 100%;\n"])));
 var DesktopArticleVideoWrapper = styled.div.withConfig({
   displayName: "DesktopArticleVideoPlayer__DesktopArticleVideoWrapper",
   componentId: "sc-7j5an3-2"
-})(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n    ", "\n"], ["\n    ", "\n"])), function (props) {
-  return !props.onScreen && Ae(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n            bottom: 18px;\n            left: auto;\n            position: fixed;\n            right: 18px;\n            top: auto;\n            -webkit-transition: right .4s,bottom .4s,width .4s;\n            transition: right .4s,bottom .4s,width .4s;\n            width: 300px;\n        "], ["\n            bottom: 18px;\n            left: auto;\n            position: fixed;\n            right: 18px;\n            top: auto;\n            -webkit-transition: right .4s,bottom .4s,width .4s;\n            transition: right .4s,bottom .4s,width .4s;\n            width: 300px;\n        "])));
+})(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n\t", "\n"], ["\n\t", "\n"])), function (props) {
+  return !props.onScreen && Ae(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n\t\t\tbottom: 18px;\n\t\t\tleft: auto;\n\t\t\tposition: fixed;\n\t\t\tright: 18px;\n\t\t\ttop: auto;\n\t\t\t-webkit-transition: right 0.4s, bottom 0.4s, width 0.4s;\n\t\t\ttransition: right 0.4s, bottom 0.4s, width 0.4s;\n\t\t\twidth: 300px;\n\t\t"], ["\n\t\t\tbottom: 18px;\n\t\t\tleft: auto;\n\t\t\tposition: fixed;\n\t\t\tright: 18px;\n\t\t\ttop: auto;\n\t\t\t-webkit-transition: right 0.4s, bottom 0.4s, width 0.4s;\n\t\t\ttransition: right 0.4s, bottom 0.4s, width 0.4s;\n\t\t\twidth: 300px;\n\t\t"])));
 });
 
 var DesktopArticleVideoPlayer = function () {
