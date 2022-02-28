@@ -1,5 +1,5 @@
 import React from 'react';
-import { Player } from 'src/types';
+import { Player } from 'types';
 
 interface PlayerContextInterface {
 	player: Player;

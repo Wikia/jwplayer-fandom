@@ -3,7 +3,6 @@ import typescript from '@rollup/plugin-typescript';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
-import eslint from '@rollup/plugin-eslint';
 import { terser } from 'rollup-plugin-terser';
 
 const devMode = (process.env.NODE_ENV === 'development');
@@ -33,7 +32,6 @@ export default {
       resolve(),
       json(),
       commonjs(),
-      eslint(),
     ],
     external: ['react']
 };

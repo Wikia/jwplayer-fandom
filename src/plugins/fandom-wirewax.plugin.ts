@@ -1,4 +1,4 @@
-import { CreateWirewaxEmbedder, Player, Embedder, WirewaxPluginOptions } from 'src/types';
+import { CreateWirewaxEmbedder, Player, Embedder, WirewaxPluginOptions } from 'types';
 
 interface WindowWirewax extends Window {
 	createWirewaxEmbedder?: CreateWirewaxEmbedder;

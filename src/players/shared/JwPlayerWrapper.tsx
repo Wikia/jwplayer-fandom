@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
-import { JWPlayerApi } from 'src/types';
-import FandomWirewaxPlugin from 'src/plugins/fandom-wirewax.plugin';
-import { PlayerContext } from 'src/players/shared/PlayerContext';
+import { JWPlayerApi } from 'types';
+import FandomWirewaxPlugin from 'plugins/fandom-wirewax.plugin';
+import { PlayerContext } from 'players/shared/PlayerContext';
 
 interface WindowJWPlayer extends Window {
 	jwplayer?: JWPlayerApi;

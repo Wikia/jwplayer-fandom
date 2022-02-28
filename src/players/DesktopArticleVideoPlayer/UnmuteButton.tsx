@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import IconSoundOff from '@fandom-frontend/react-common/dist/icons/IconSoundOff';
-import { PlayerContext } from 'src/players/shared/PlayerContext';
+import { PlayerContext } from 'players/shared/PlayerContext';
 
 interface Props {
 	muted: boolean;
