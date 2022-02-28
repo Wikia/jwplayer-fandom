@@ -70,5 +70,5 @@ const DesktopArticleVideoPlayer = () => {
 		</PlayerWrapper>
 	);
 };
-test;
+
 export default DesktopArticleVideoPlayer;
