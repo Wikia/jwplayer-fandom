@@ -18,7 +18,7 @@ const getDefaultPlayerUrl = () => {
 		: 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
 };
 
-const JwPlayerWrapper = () => {
+const JwPlayerWrapper: React.FC = () => {
 	const { setPlayer } = useContext(PlayerContext);
 
 	useEffect(() => {

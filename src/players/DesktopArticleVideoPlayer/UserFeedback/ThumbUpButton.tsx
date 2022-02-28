@@ -15,7 +15,7 @@ const ThumbUpWrapper = styled.div`
 	background-color: ${WDSVariables.wdsColorSuccess};
 `;
 
-const ThumbUpButton = () => (
+const ThumbUpButton: React.FC = () => (
 	<ThumbUpWrapper>
 		<svg width="13" height="12" viewBox="0 0 13 12" xmlns="http://www.w3.org/2000/svg">
 			<g fill="#FFF" fillRule="evenodd">

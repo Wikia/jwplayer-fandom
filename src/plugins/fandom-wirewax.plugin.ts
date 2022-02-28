@@ -101,7 +101,7 @@ class FandomWirewaxPlugin {
 	// 	// ...
 	// }
 
-	async setupEmbedder() {
+	async setupEmbedder(): Promise<void> {
 		if (!this.embedder) {
 			// Create a container
 			this.container = document.createElement('div');
@@ -126,7 +126,7 @@ class FandomWirewaxPlugin {
 		return this.embedder.ready();
 	}
 
-	registerEvents() {
+	registerEvents(): void {
 		// Custom time sync handler
 		const HTML5VideoEl = this.player.getConfig().mediaElement;
 		this.setWIREWAXCurrentTime = () => {
@@ -159,17 +159,17 @@ class FandomWirewaxPlugin {
 		this.isPlayerRegistered = true;
 	}
 
-	startTimeUpdate() {
+	startTimeUpdate(): void {
 		window.cancelAnimationFrame(this.animationId);
 		this.animationId = window.requestAnimationFrame(this.setWIREWAXCurrentTime);
 	}
 
-	stopTimeUpdate() {
+	stopTimeUpdate(): void {
 		window.cancelAnimationFrame(this.animationId);
 	}
 
 	// ES6
-	JWPlayHandler = () => {
+	JWPlayHandler: () => void = () => {
 		console.log('JW -> WIREWAX: play');
 		this.startTimeUpdate();
 
@@ -180,7 +180,7 @@ class FandomWirewaxPlugin {
 		}
 	};
 
-	JWPauseHandler = () => {
+	JWPauseHandler: () => void = () => {
 		console.log('JW -> WIREWAX: pause');
 		this.stopTimeUpdate();
 
@@ -191,7 +191,7 @@ class FandomWirewaxPlugin {
 		}
 	};
 
-	JWSeekHandler = (event: Record<string, number>) => {
+	JWSeekHandler: (event: Record<string, number>) => void = (event) => {
 		console.log('JW -> WIREWAX: seek');
 
 		try {
@@ -201,7 +201,7 @@ class FandomWirewaxPlugin {
 		}
 	};
 
-	WirewaxPlayHandler = () => {
+	WirewaxPlayHandler: () => void = () => {
 		console.log('WIREWAX -> JW: play');
 
 		try {
@@ -211,7 +211,7 @@ class FandomWirewaxPlugin {
 		}
 	};
 
-	WirewaxPauseHandler = () => {
+	WirewaxPauseHandler: () => void = () => {
 		console.log('WIREWAX -> JW: pause');
 
 		try {
@@ -221,7 +221,7 @@ class FandomWirewaxPlugin {
 		}
 	};
 
-	WirewaxSeekedHandler = (event: Record<string, number>) => {
+	WirewaxSeekedHandler: (event: Record<string, number>) => void = (event) => {
 		console.log('WIREWAX -> JW: seek');
 
 		try {
@@ -231,15 +231,15 @@ class FandomWirewaxPlugin {
 		}
 	};
 
-	WirewaxHotspotClickHandler = (event: string) => {
+	WirewaxHotspotClickHandler: (event: string) => void = (event) => {
 		console.log('hotspot click', { event });
 	};
 
-	WirewaxOverlayShowHandler = (event: string) => {
+	WirewaxOverlayShowHandler: (event: string) => void = (event) => {
 		console.log('overlay open', { event });
 	};
 
-	WirewaxOverlayHideHandler = (event: string) => {
+	WirewaxOverlayHideHandler: (event: string) => void = (event) => {
 		console.log('overlay close', { event });
 	};
 }

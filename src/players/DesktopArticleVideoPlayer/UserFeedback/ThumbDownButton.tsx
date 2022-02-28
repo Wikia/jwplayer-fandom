@@ -15,7 +15,7 @@ const ThumbDownWrapper = styled.div`
 	background-color: ${WDSVariables.wdsColorAlert};
 `;
 
-const ThumbDownButton = () => (
+const ThumbDownButton: React.FC = () => (
 	<ThumbDownWrapper>
 		<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
 			<g fill="#FFF" fillRule="evenodd">

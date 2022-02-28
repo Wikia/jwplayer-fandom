@@ -5,7 +5,7 @@ import IconCrossSmall from '@fandom-frontend/react-common/dist/icons/IconCrossSm
 
 const CloseWrapper = styled.div``;
 
-const CloseButton = () => (
+const CloseButton: React.FC = () => (
 	<CloseWrapper>
 		<IconCrossSmall />
 	</CloseWrapper>

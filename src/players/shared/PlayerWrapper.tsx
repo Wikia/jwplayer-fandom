@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { PlayerContext } from 'players/shared/PlayerContext';
 import { Player } from 'types';
 
-const PlayerWrapper = ({ children }) => {
+const PlayerWrapper: React.FC = ({ children }) => {
 	const [jwPlayer, setJwPlayer] = useState<Player>(null);
 
 	const setPlayer = (player: Player) => {

@@ -29,7 +29,7 @@ const VideoTitle = styled.div`
 	font-size: 14px;
 `;
 
-const VideoDetails = () => (
+const VideoDetails: React.FC = () => (
 	<VideoDetailsWrapper>
 		<VideoLabel>
 			Watch

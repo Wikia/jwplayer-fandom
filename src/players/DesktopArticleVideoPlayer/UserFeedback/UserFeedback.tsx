@@ -18,7 +18,7 @@ const UserFeedbackWrapper = styled.div`
 	color: ${WDSVariables.wdsColorDarkBlueGray};
 `;
 
-const UserFeedback = () => (
+const UserFeedback: React.FC = () => (
 	<UserFeedbackWrapper>
 		<CloseButton />
 		Do you like this video?

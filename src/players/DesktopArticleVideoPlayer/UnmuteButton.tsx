@@ -22,7 +22,7 @@ const UnmuteButtonWrapper = styled.div<Props>`
 	visibility: ${(props) => (props.muted ? 'visible' : 'hidden')};
 `;
 
-const UnmuteButton = () => {
+const UnmuteButton: React.FC = () => {
 	const { player } = useContext(PlayerContext);
 	const [muted, setMuted] = useState(true);
 	const unmute = () => {

@@ -43,7 +43,7 @@ const DesktopArticleVideoWrapper = styled.div<Props>`
 		`}
 `;
 
-const DesktopArticleVideoPlayer = () => {
+const DesktopArticleVideoPlayer: React.FC = () => {
 	const ref = useRef<HTMLDivElement>(null);
 	const onScreen = useOnScreen(ref);
 
