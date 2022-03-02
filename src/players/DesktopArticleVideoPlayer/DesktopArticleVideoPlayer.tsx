@@ -1,13 +1,12 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { communicationService, ofType } from 'utils/communication';
+import React, { useRef } from 'react';
 import styled, { css } from 'styled-components';
 import UnmuteButton from 'players/DesktopArticleVideoPlayer/UnmuteButton';
 import UserFeedback from 'players/DesktopArticleVideoPlayer/UserFeedback/UserFeedback';
 import JwPlayerWrapper from 'players/shared/JwPlayerWrapper';
 import VideoDetails from 'players/DesktopArticleVideoPlayer/VideoDetails';
 import useOnScreen from 'utils/useOnScreen';
-import { race, timer } from 'rxjs';
-import { first } from 'rxjs/operators';
+
+import AdWrapper from 'players/shared/AdWrapper';
 
 import PlayerWrapper from '../shared/PlayerWrapper';
 
@@ -23,28 +22,13 @@ const UserActionTopBar = styled.div`
 	width: 100%;
 `;
 
-const adEngineTimeout = 2000;
-
-const waitForAdEngine = () => {
-	// to prevent prettier reformatting this line and then spitting out errors
-	// prettier-ignore
-	const adEngineConfigured$ = communicationService.action$.pipe(ofType('[AdEngine] Configured'), first());
-	const adEngineTimeout$ = timer(adEngineTimeout);
-
-	return race(adEngineConfigured$, adEngineTimeout$).toPromise();
-};
-
-const listenSetupJWPlayer = (callback) => {
-	communicationService.action$.pipe(ofType('[Ad Engine] Setup JWPlayer'), first()).subscribe(callback);
-};
-
 interface Props {
-	onScreen: boolean;
+	visibleOnScreen: boolean;
 }
 
 const DesktopArticleVideoWrapper = styled.div<Props>`
 	${(props) =>
-		!props.onScreen &&
+		!props.visibleOnScreen &&
 		css`
 			bottom: 18px;
 			left: auto;
@@ -60,35 +44,12 @@ const DesktopArticleVideoWrapper = styled.div<Props>`
 const DesktopArticleVideoPlayer: React.FC = () => {
 	const ref = useRef<HTMLDivElement>(null);
 	const onScreen = useOnScreen(ref);
-	const [adComplete, setAdComplete] = useState(false);
 
-	useEffect(() => {
-		setTimeout(() => {
-			communicationService.dispatch({ type: '[AdEngine OptIn] set opt in' });
-		}, 2000);
-		setTimeout(() => {
-			communicationService.dispatch({ type: '[AdEngine] Configured' });
-		}, 2000);
-		setTimeout(() => {
-			communicationService.dispatch({ type: '[Ad Engine] Setup JWPlayer' });
-		}, 2000);
-	}, []);
-
-	useEffect(() => {
-		communicationService.action$.pipe(ofType('[AdEngine OptIn] set opt in'), first()).subscribe(() => {
-			waitForAdEngine().then(() => {
-				listenSetupJWPlayer(function () {
-					setAdComplete(true);
-				});
-			});
-		});
-	}, []);
-
-	if (adComplete) {
-		return (
+	return (
+		<AdWrapper>
 			<PlayerWrapper>
 				<DesktopArticleVideoTopPlaceholder ref={ref}>
-					<DesktopArticleVideoWrapper onScreen={onScreen}>
+					<DesktopArticleVideoWrapper visibleOnScreen={onScreen}>
 						<UserActionTopBar>
 							{onScreen ? (
 								<>
@@ -106,10 +67,8 @@ const DesktopArticleVideoPlayer: React.FC = () => {
 					</DesktopArticleVideoWrapper>
 				</DesktopArticleVideoTopPlaceholder>
 			</PlayerWrapper>
-		);
-	}
-
-	return null;
+		</AdWrapper>
+	);
 };
 
 export default DesktopArticleVideoPlayer;

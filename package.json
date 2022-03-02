@@ -7,7 +7,8 @@
  "scripts": {
   "build": "yarn run create-dist && rollup -c",
   "build-dev": "yarn run create-dist && rollup -c --environment NODE_ENV:development",
-  "watch": "yarn run create-dist && rollup -c --watch --environment NODE_ENV:development",
+  "watch": "yarn run create-dist && rollup -c --watch",
+  "watch-dev": "yarn run create-dist && rollup -c --watch --environment NODE_ENV:development",
   "create-dist": "rm -rf dist && mkdir -p dist",
   "lint": "npm-run-all --continue-on-error --parallel lint:prettier lint:eslint",
   "lint:prettier:src": "prettier --write src",

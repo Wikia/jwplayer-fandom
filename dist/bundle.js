@@ -3946,20 +3946,11 @@ var PlayerWrapper = function (_a) {
   }, children);
 };
 
-var DesktopArticleVideoTopPlaceholder = styled.div.withConfig({
-  displayName: "DesktopArticleVideoPlayer__DesktopArticleVideoTopPlaceholder",
-  componentId: "sc-7j5an3-0"
-})(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n\tbackground-color: black;\n"], ["\n\tbackground-color: black;\n"])));
-var UserActionTopBar = styled.div.withConfig({
-  displayName: "DesktopArticleVideoPlayer__UserActionTopBar",
-  componentId: "sc-7j5an3-1"
-})(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n\tpadding: 5px 8px;\n\tposition: absolute;\n\ttop: 6px;\n\tz-index: 2;\n\twidth: 100%;\n"], ["\n\tpadding: 5px 8px;\n\tposition: absolute;\n\ttop: 6px;\n\tz-index: 2;\n\twidth: 100%;\n"])));
-var adEngineTimeout = 2000;
-
 var waitForAdEngine = function () {
   // to prevent prettier reformatting this line and then spitting out errors
   // prettier-ignore
   var adEngineConfigured$ = communicationService.action$.pipe(ofType('[AdEngine] Configured'), first());
+  var adEngineTimeout = 2000;
   var adEngineTimeout$ = timer(adEngineTimeout);
   return race(adEngineConfigured$, adEngineTimeout$).toPromise();
 };
@@ -3968,60 +3959,61 @@ var listenSetupJWPlayer = function (callback) {
   communicationService.action$.pipe(ofType('[Ad Engine] Setup JWPlayer'), first()).subscribe(callback);
 };
 
+var AdWrapper = function (_a) {
+  var children = _a.children;
+
+  var _b = useState(false),
+      adComplete = _b[0],
+      setAdComplete = _b[1];
+
+  useEffect(function () {
+    if (process.env.NODE_ENV !== 'development') {
+      communicationService.action$.pipe(ofType('[AdEngine OptIn] set opt in'), first()).subscribe(function () {
+        waitForAdEngine().then(function () {
+          listenSetupJWPlayer(function () {
+            setAdComplete(true);
+          });
+        });
+      });
+    } else {
+      setAdComplete(true);
+    }
+  }, []);
+
+  if (adComplete) {
+    return /*#__PURE__*/React$2.createElement(React$2.Fragment, null, children);
+  }
+
+  return null;
+};
+
+var DesktopArticleVideoTopPlaceholder = styled.div.withConfig({
+  displayName: "DesktopArticleVideoPlayer__DesktopArticleVideoTopPlaceholder",
+  componentId: "sc-7j5an3-0"
+})(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n\tbackground-color: black;\n"], ["\n\tbackground-color: black;\n"])));
+var UserActionTopBar = styled.div.withConfig({
+  displayName: "DesktopArticleVideoPlayer__UserActionTopBar",
+  componentId: "sc-7j5an3-1"
+})(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n\tpadding: 5px 8px;\n\tposition: absolute;\n\ttop: 6px;\n\tz-index: 2;\n\twidth: 100%;\n"], ["\n\tpadding: 5px 8px;\n\tposition: absolute;\n\ttop: 6px;\n\tz-index: 2;\n\twidth: 100%;\n"])));
+
 var DesktopArticleVideoWrapper = styled.div.withConfig({
   displayName: "DesktopArticleVideoPlayer__DesktopArticleVideoWrapper",
   componentId: "sc-7j5an3-2"
 })(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n\t", "\n"], ["\n\t", "\n"])), function (props) {
-  return !props.onScreen && Ae(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n\t\t\tbottom: 18px;\n\t\t\tleft: auto;\n\t\t\tposition: fixed;\n\t\t\tright: 18px;\n\t\t\ttop: auto;\n\t\t\t-webkit-transition: right 0.4s, bottom 0.4s, width 0.4s;\n\t\t\ttransition: right 0.4s, bottom 0.4s, width 0.4s;\n\t\t\twidth: 300px;\n\t\t"], ["\n\t\t\tbottom: 18px;\n\t\t\tleft: auto;\n\t\t\tposition: fixed;\n\t\t\tright: 18px;\n\t\t\ttop: auto;\n\t\t\t-webkit-transition: right 0.4s, bottom 0.4s, width 0.4s;\n\t\t\ttransition: right 0.4s, bottom 0.4s, width 0.4s;\n\t\t\twidth: 300px;\n\t\t"])));
+  return !props.visibleOnScreen && Ae(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n\t\t\tbottom: 18px;\n\t\t\tleft: auto;\n\t\t\tposition: fixed;\n\t\t\tright: 18px;\n\t\t\ttop: auto;\n\t\t\t-webkit-transition: right 0.4s, bottom 0.4s, width 0.4s;\n\t\t\ttransition: right 0.4s, bottom 0.4s, width 0.4s;\n\t\t\twidth: 300px;\n\t\t"], ["\n\t\t\tbottom: 18px;\n\t\t\tleft: auto;\n\t\t\tposition: fixed;\n\t\t\tright: 18px;\n\t\t\ttop: auto;\n\t\t\t-webkit-transition: right 0.4s, bottom 0.4s, width 0.4s;\n\t\t\ttransition: right 0.4s, bottom 0.4s, width 0.4s;\n\t\t\twidth: 300px;\n\t\t"])));
 });
 
 var DesktopArticleVideoPlayer = function () {
   var ref = useRef(null);
   var onScreen = useOnScreen(ref);
-
-  var _a = useState(false),
-      adComplete = _a[0],
-      setAdComplete = _a[1];
-
-  useEffect(function () {
-    setTimeout(function () {
-      communicationService.dispatch({
-        type: '[AdEngine OptIn] set opt in'
-      });
-    }, 2000);
-    setTimeout(function () {
-      communicationService.dispatch({
-        type: '[AdEngine] Configured'
-      });
-    }, 2000);
-    setTimeout(function () {
-      communicationService.dispatch({
-        type: '[Ad Engine] Setup JWPlayer'
-      });
-    }, 2000);
-  }, []);
-  useEffect(function () {
-    communicationService.action$.pipe(ofType('[AdEngine OptIn] set opt in'), first()).subscribe(function () {
-      waitForAdEngine().then(function () {
-        listenSetupJWPlayer(function () {
-          setAdComplete(true);
-        });
-      });
-    });
-  }, []);
-
-  if (adComplete) {
-    return /*#__PURE__*/React$2.createElement(PlayerWrapper, null, /*#__PURE__*/React$2.createElement(DesktopArticleVideoTopPlaceholder, {
-      ref: ref
-    }, /*#__PURE__*/React$2.createElement(DesktopArticleVideoWrapper, {
-      onScreen: onScreen
-    }, /*#__PURE__*/React$2.createElement(UserActionTopBar, null, onScreen ? /*#__PURE__*/React$2.createElement(React$2.Fragment, null, /*#__PURE__*/React$2.createElement(UnmuteButton, null), /*#__PURE__*/React$2.createElement(UserFeedback, null)) :
-    /*#__PURE__*/
-    // TODO: close icon on right
-    React$2.createElement("div", null)), /*#__PURE__*/React$2.createElement(JwPlayerWrapper, null), !onScreen && /*#__PURE__*/React$2.createElement(VideoDetails, null))));
-  }
-
-  return null;
+  return /*#__PURE__*/React$2.createElement(AdWrapper, null, /*#__PURE__*/React$2.createElement(PlayerWrapper, null, /*#__PURE__*/React$2.createElement(DesktopArticleVideoTopPlaceholder, {
+    ref: ref
+  }, /*#__PURE__*/React$2.createElement(DesktopArticleVideoWrapper, {
+    visibleOnScreen: onScreen
+  }, /*#__PURE__*/React$2.createElement(UserActionTopBar, null, onScreen ? /*#__PURE__*/React$2.createElement(React$2.Fragment, null, /*#__PURE__*/React$2.createElement(UnmuteButton, null), /*#__PURE__*/React$2.createElement(UserFeedback, null)) :
+  /*#__PURE__*/
+  // TODO: close icon on right
+  React$2.createElement("div", null)), /*#__PURE__*/React$2.createElement(JwPlayerWrapper, null), !onScreen && /*#__PURE__*/React$2.createElement(VideoDetails, null)))));
 };
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4;
 
