@@ -1,7 +1,8 @@
 {
-  "include": ["src/**/*", "src/*.d.ts", "tests/**/*", "scripts/**/*"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/*.d.ts"],
   "exclude": ["node_modules", "old/**/*", "src/locales/**/*", "dist/**/*"],
   "compilerOptions": {
+    "outDir": "dist",
     "lib": ["es5", "es6", "es7", "es2017", "dom"],
     "module": "es2020",
     "target": "es5",

@@ -9,6 +9,10 @@ interface Props {
 }
 
 const UnmuteButtonWrapper = styled.div<Props>`
+	position: absolute;
+	top: 6px;
+	left: 6px;
+	z-index: 2;
 	align-items: center;
 	background-color: rgba(255, 255, 255, 0.9);
 	border-radius: 2px;

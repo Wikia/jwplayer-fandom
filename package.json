@@ -95,6 +95,8 @@
  "dependencies": {
   "@fandom-frontend/design-system": "9.0.0",
   "@fandom-frontend/react-common": "6.35.0",
+  "@wikia/post-quecast": "2.0.1",
+  "rxjs": "7.5.4",
   "styled-components": "^5.3.3"
  }
 }

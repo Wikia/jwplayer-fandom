@@ -6,6 +6,10 @@ import ThumbDownButton from 'players/DesktopArticleVideoPlayer/UserFeedback/Thum
 import ThumbUpButton from 'players/DesktopArticleVideoPlayer/UserFeedback/ThumbUpButton';
 
 const UserFeedbackWrapper = styled.div`
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	z-index: 2;
 	align-items: center;
 	background-color: rgba(255, 255, 255, 0.9);
 	border-radius: 2px;
