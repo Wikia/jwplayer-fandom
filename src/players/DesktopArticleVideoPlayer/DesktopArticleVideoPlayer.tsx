@@ -5,13 +5,13 @@ import UserFeedback from 'players/DesktopArticleVideoPlayer/UserFeedback/UserFee
 import JwPlayerWrapper from 'players/shared/JwPlayerWrapper';
 import VideoDetails from 'players/DesktopArticleVideoPlayer/VideoDetails';
 import useOnScreen from 'utils/useOnScreen';
-
-import AdWrapper from 'players/shared/AdWrapper';
-
-import PlayerWrapper from '../shared/PlayerWrapper';
+import useAdComplete from 'utils/useAdComplete';
+import PlayerWrapper from 'players/shared/PlayerWrapper';
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
 	background-color: black;
+	width: 100%;
+	height: 100%;
 `;
 
 const UserActionTopBar = styled.div`
@@ -43,12 +43,13 @@ const DesktopArticleVideoWrapper = styled.div<Props>`
 
 const DesktopArticleVideoPlayer: React.FC = () => {
 	const ref = useRef<HTMLDivElement>(null);
+	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(ref);
 
 	return (
-		<AdWrapper>
-			<PlayerWrapper>
-				<DesktopArticleVideoTopPlaceholder ref={ref}>
+		<PlayerWrapper>
+			<DesktopArticleVideoTopPlaceholder ref={ref}>
+				{adComplete && (
 					<DesktopArticleVideoWrapper visibleOnScreen={onScreen}>
 						<UserActionTopBar>
 							{onScreen ? (
@@ -65,9 +66,9 @@ const DesktopArticleVideoPlayer: React.FC = () => {
 						<JwPlayerWrapper />
 						{!onScreen && <VideoDetails />}
 					</DesktopArticleVideoWrapper>
-				</DesktopArticleVideoTopPlaceholder>
-			</PlayerWrapper>
-		</AdWrapper>
+				)}
+			</DesktopArticleVideoTopPlaceholder>
+		</PlayerWrapper>
 	);
 };
 
