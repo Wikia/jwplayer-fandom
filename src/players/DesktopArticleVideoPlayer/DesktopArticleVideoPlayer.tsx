@@ -10,16 +10,15 @@ import PlayerWrapper from 'players/shared/PlayerWrapper';
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
 	background-color: black;
-	position: relative;
 	width: 100%;
 	height: 100%;
 `;
 
-interface Props {
+interface DesktopArticleVideoWrapperProps {
 	visibleOnScreen: boolean;
 }
 
-const DesktopArticleVideoWrapper = styled.div<Props>`
+const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
 	${(props) =>
 		!props.visibleOnScreen &&
 		css`
@@ -34,6 +33,16 @@ const DesktopArticleVideoWrapper = styled.div<Props>`
 		`}
 `;
 
+interface TopBarProps {
+	visible: boolean;
+}
+
+const TopBar = styled.div<TopBarProps>`
+	width: 100%;
+	position: relative;
+	display: ${(props) => (props.visible ? 'block' : 'none')};
+`;
+
 const DesktopArticleVideoPlayer: React.FC = () => {
 	const ref = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
@@ -44,13 +53,11 @@ const DesktopArticleVideoPlayer: React.FC = () => {
 			<DesktopArticleVideoTopPlaceholder ref={ref}>
 				{adComplete && (
 					<DesktopArticleVideoWrapper visibleOnScreen={onScreen}>
-						{onScreen && (
-							<>
-								{/* Default muted, once unmuted do not show again */}
-								<UnmuteButton />
-								<UserFeedback />
-							</>
-						)}
+						<TopBar visible={onScreen}>
+							{/* Default muted, once unmuted do not show again */}
+							<UnmuteButton />
+							<UserFeedback />
+						</TopBar>
 						<JwPlayerWrapper />
 						{!onScreen && <VideoDetails />}
 					</DesktopArticleVideoWrapper>

@@ -16,6 +16,7 @@ export type Player = {
 	setFullscreen: () => null;
 	getPlaylistItem: () => { title: string };
 	on: (name: string, handler: (event?: string | Record<string, number> | Record<string, string>) => void) => null;
+	off: (name: string, handler: (event?: string | Record<string, number> | Record<string, string>) => void) => null;
 	getState: () => string;
 	getMute: () => boolean;
 	setup(options: PlayerConfig): Player;
