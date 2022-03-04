@@ -23,7 +23,6 @@ const UnmuteButtonWrapper = styled.div<Props>`
 	color: ${WDSVariables.wdsColorDarkBlueGray};
 	font-size: ${WDSVariables.wdsFontSizeXs};
 	font-weight: ${WDSVariables.wdsFontWeightBold};
-	visibility: ${(props) => (props.muted ? 'visible' : 'hidden')};
 `;
 
 const UnmuteButton: React.FC = () => {
@@ -34,6 +33,9 @@ const UnmuteButton: React.FC = () => {
 		player?.setMute(false);
 		setMuted(false);
 	};
+
+	if (!muted) return null;
+
 	return (
 		<UnmuteButtonWrapper onClick={unmute} muted={muted}>
 			<IconSoundOff />

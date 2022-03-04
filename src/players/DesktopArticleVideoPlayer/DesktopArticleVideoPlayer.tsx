@@ -10,16 +10,9 @@ import PlayerWrapper from 'players/shared/PlayerWrapper';
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
 	background-color: black;
+	position: relative;
 	width: 100%;
 	height: 100%;
-`;
-
-const UserActionTopBar = styled.div`
-	padding: 5px 8px;
-	position: absolute;
-	top: 6px;
-	z-index: 2;
-	width: 100%;
 `;
 
 interface Props {
@@ -51,18 +44,13 @@ const DesktopArticleVideoPlayer: React.FC = () => {
 			<DesktopArticleVideoTopPlaceholder ref={ref}>
 				{adComplete && (
 					<DesktopArticleVideoWrapper visibleOnScreen={onScreen}>
-						<UserActionTopBar>
-							{onScreen ? (
-								<>
-									{/* Default muted, once unmuted do not show again */}
-									<UnmuteButton />
-									<UserFeedback />
-								</>
-							) : (
-								// TODO: close icon on right
-								<div></div>
-							)}
-						</UserActionTopBar>
+						{onScreen && (
+							<>
+								{/* Default muted, once unmuted do not show again */}
+								<UnmuteButton />
+								<UserFeedback />
+							</>
+						)}
 						<JwPlayerWrapper />
 						{!onScreen && <VideoDetails />}
 					</DesktopArticleVideoWrapper>
