@@ -25,7 +25,7 @@ const UserFeedbackWrapper = styled.div`
 
 const UserFeedback: React.FC = () => {
 	const [visible, setVisible] = useState(false);
-	// const [dismissed, setDismissed] = useState(false);
+	const [dismissed, setDismissed] = useState(false);
 	const { player } = useContext(PlayerContext);
 
 	useEffect(() => {
@@ -46,7 +46,6 @@ const UserFeedback: React.FC = () => {
 	};
 
 	const handlePlay = (event: { position: number }) => {
-		console.log('ooooooooooo');
 		if (event.position > 5) {
 			setVisible(true);
 		} else {
@@ -54,14 +53,14 @@ const UserFeedback: React.FC = () => {
 		}
 	};
 
-	if (!visible) return null;
+	if (!visible || dismissed) return null;
 
 	return (
 		<UserFeedbackWrapper>
-			<CloseButton />
+			<CloseButton dismissed={() => setDismissed(true)} />
 			Do you like this video?
-			<ThumbUpButton />
-			<ThumbDownButton />
+			<ThumbUpButton dismissed={() => setDismissed(true)} />
+			<ThumbDownButton dismissed={() => setDismissed(true)} />
 		</UserFeedbackWrapper>
 	);
 };

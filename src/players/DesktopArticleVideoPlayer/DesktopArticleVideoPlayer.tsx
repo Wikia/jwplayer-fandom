@@ -54,7 +54,6 @@ const DesktopArticleVideoPlayer: React.FC = () => {
 				{adComplete && (
 					<DesktopArticleVideoWrapper visibleOnScreen={onScreen}>
 						<TopBar visible={onScreen}>
-							{/* Default muted, once unmuted do not show again */}
 							<UnmuteButton />
 							<UserFeedback />
 						</TopBar>
