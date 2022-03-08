@@ -1,4 +1,13 @@
-import { CreateWirewaxEmbedder, Player, Embedder, WirewaxPluginOptions } from 'types';
+import {
+	CreateWirewaxEmbedder,
+	Player,
+	Embedder,
+	WirewaxPluginOptions,
+	OverlayShowEmbedderEventData,
+	OverlayHideEmbedderEventData,
+	HotspotClickEmbedderEventData,
+	SeekedEmbedderEventData,
+} from 'types';
 
 interface WindowWirewax extends Window {
 	createWirewaxEmbedder?: CreateWirewaxEmbedder;
@@ -221,8 +230,8 @@ class FandomWirewaxPlugin {
 		}
 	};
 
-	WirewaxSeekedHandler: (event: Record<string, number>) => void = (event) => {
-		console.log('WIREWAX -> JW: seek');
+	WirewaxSeekedHandler: (event: SeekedEmbedderEventData) => void = (event) => {
+		console.log('WIREWAX -> JW: seek', event);
 
 		try {
 			this.player.seek(event.seekTo);
@@ -231,15 +240,15 @@ class FandomWirewaxPlugin {
 		}
 	};
 
-	WirewaxHotspotClickHandler: (event: string) => void = (event) => {
+	WirewaxHotspotClickHandler: (event: HotspotClickEmbedderEventData) => void = (event) => {
 		console.log('hotspot click', { event });
 	};
 
-	WirewaxOverlayShowHandler: (event: string) => void = (event) => {
+	WirewaxOverlayShowHandler: (event: OverlayShowEmbedderEventData) => void = (event) => {
 		console.log('overlay open', { event });
 	};
 
-	WirewaxOverlayHideHandler: (event: string) => void = (event) => {
+	WirewaxOverlayHideHandler: (event: OverlayHideEmbedderEventData) => void = (event) => {
 		console.log('overlay close', { event });
 	};
 }

@@ -13,35 +13,40 @@ export type PlaylistItem = {
 	duration?: number;
 };
 
-interface OnPlaylistItem {
+interface PlaylistItemPlayerEventData {
 	index?: number;
 	item: PlaylistItem;
 }
 
-interface OnPlay {
+interface PlayPlayerEventData {
 	oldState?: string;
 	viewable?: number;
 	playReason?: string;
 }
 
-interface OnPause {
+interface PausePlayerEventData {
 	oldState?: string;
 	viewable?: number;
 	pauseReason?: string;
 }
 
-interface OnTime {
+interface TimePlayerEventData {
 	duration?: number;
 	postion?: number;
 	viewable?: number;
 }
 
-interface OnReady {
+interface ReadyPlayerEventData {
 	setupTime?: number;
 	viewable?: number;
 }
 
-type JwEventData = OnPlay | OnPause | OnTime | OnReady | OnPlaylistItem;
+type JwEventData =
+	| PlayPlayerEventData
+	| PausePlayerEventData
+	| TimePlayerEventData
+	| ReadyPlayerEventData
+	| PlaylistItemPlayerEventData;
 type JwEventHandler = (event?: JwEventData) => void;
 
 export type Player = {
@@ -66,6 +71,41 @@ export type WirewaxPluginOptions = {
 	player: Player;
 	ready: JwEventData;
 };
+
+interface SeekedEmbedderEventData {
+	seekTo: number;
+}
+
+interface OverlayShowEmbedderEventData {
+	customRef: string;
+	hotspotName: string;
+	overlayId: number;
+	spriteId: number;
+}
+
+interface OverlayHideEmbedderEventData {
+	customRef: string;
+	hotspotName: string;
+	overlayId: number;
+	spriteId: number;
+}
+
+interface HotspotClickEmbedderEventData {
+	action: string;
+	actionRef: string;
+	customRef: string;
+	hotspotName: string;
+	spriteId: number;
+}
+
+type EmbedderEventData =
+	| SeekedEmbedderEventData
+	| OverlayShowEmbedderEventData
+	| OverlayHideEmbedderEventData
+	| HotspotClickEmbedderEventData
+	| undefined;
+type EmbedderEventHandler = (event?: EmbedderEventData) => void;
+
 export type Embedder = {
 	createEl: (
 		container: HTMLElement,
@@ -79,6 +119,6 @@ export type Embedder = {
 	setCurrentTime: (number) => void;
 	ready: () => void;
 	play: () => void;
-	on: (name: string, handler: (event?: string | Record<string, number> | Record<string, string>) => void) => null;
+	on: (name: string, handler: EmbedderEventHandler) => null;
 	pause: () => void;
 };

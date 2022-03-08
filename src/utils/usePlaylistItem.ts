@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
-import { PlaylistItem, OnPlaylistItem } from 'types';
+import { PlaylistItem, PlaylistItemPlayerEventData } from 'types';
 import { PlayerContext } from 'players/shared/PlayerContext';
 
 export default function usePlaylistItem(): PlaylistItem {
@@ -11,12 +11,12 @@ export default function usePlaylistItem(): PlaylistItem {
 			setPlaylistItem(player?.getPlaylistItem());
 		}
 
-		player?.on('playlistItem', (event: OnPlaylistItem) => {
+		player?.on('playlistItem', (event: PlaylistItemPlayerEventData) => {
 			setPlaylistItem(event.item);
 		});
 
 		return () => {
-			player?.off('playlistItem', (event: OnPlaylistItem) => {
+			player?.off('playlistItem', (event: PlaylistItemPlayerEventData) => {
 				setPlaylistItem(event.item);
 			});
 		};
