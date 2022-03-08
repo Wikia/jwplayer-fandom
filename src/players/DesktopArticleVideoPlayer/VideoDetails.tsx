@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
+import usePlaylistItem from 'utils/usePlaylistItem';
+import { formatTime } from 'utils/formatTime';
 
 const VideoDetailsWrapper = styled.div`
 	-webkit-font-smoothing: antialiased;
@@ -29,14 +31,18 @@ const VideoTitle = styled.div`
 	font-size: 14px;
 `;
 
-const VideoDetails: React.FC = () => (
-	<VideoDetailsWrapper>
-		<VideoLabel>
-			Watch
-			<VideoTime>04:06</VideoTime>
-		</VideoLabel>
-		<VideoTitle>How Luke Skywalker Became "The Last Jedi"</VideoTitle>
-	</VideoDetailsWrapper>
-);
+const VideoDetails: React.FC = () => {
+	const { duration, title } = usePlaylistItem();
+
+	return (
+		<VideoDetailsWrapper>
+			<VideoLabel>
+				Watch
+				<VideoTime>{formatTime(duration)}</VideoTime>
+			</VideoLabel>
+			<VideoTitle>{title}</VideoTitle>
+		</VideoDetailsWrapper>
+	);
+};
 
 export default VideoDetails;
