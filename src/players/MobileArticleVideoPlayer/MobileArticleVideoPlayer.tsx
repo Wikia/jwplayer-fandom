@@ -4,6 +4,7 @@ import JwPlayerWrapper from 'players/shared/JwPlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'utils/useAdComplete';
 import PlayerWrapper from 'players/shared/PlayerWrapper';
+import VideoDetails from 'players/MobileArticleVideoPlayer/VideoDetails';
 
 const MobileArticleVideoTopPlaceholder = styled.div`
 	background-color: black;
@@ -37,6 +38,7 @@ const MobileArticleVideoPlayer: React.FC = () => {
 				{adComplete && (
 					<MobileArticleVideoWrapper visibleOnScreen={onScreen}>
 						<JwPlayerWrapper />
+						<VideoDetails />
 					</MobileArticleVideoWrapper>
 				)}
 			</MobileArticleVideoTopPlaceholder>

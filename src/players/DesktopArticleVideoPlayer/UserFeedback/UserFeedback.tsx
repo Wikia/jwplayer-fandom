@@ -29,23 +29,23 @@ const UserFeedback: React.FC = () => {
 	const { player } = useContext(PlayerContext);
 
 	useEffect(() => {
-		player?.on('play', (event: { position: number }) => handlePlay(event));
+		player?.on('play', (event) => handlePlay(event));
 		player?.on('pause', () => setVisible(false));
 
 		return () => {
-			player?.off('play', (event: { position: number }) => handlePlay(event));
+			player?.off('play', (event) => handlePlay(event));
 			player?.off('pause', () => setVisible(false));
 		};
 	}, [player]);
 
-	const setVisibleTimeCheck = (event: { position: number }) => {
+	const setVisibleTimeCheck = (event) => {
 		if (event.position > 5 && player.getState() === 'playing') {
 			player?.off('time', setVisibleTimeCheck);
 			setVisible(true);
 		}
 	};
 
-	const handlePlay = (event: { position: number }) => {
+	const handlePlay = (event) => {
 		if (event.position > 5) {
 			setVisible(true);
 		} else {
