@@ -21,7 +21,6 @@ const OffScreenOverlayWrapper = styled.div<OffScreenOverlayWrapperProps>`
 
 const OffScreenOverlay: React.FC = () => {
 	const playing = usePlaying();
-	console.log('playing', playing);
 
 	return (
 		<OffScreenOverlayWrapper playing={playing}>

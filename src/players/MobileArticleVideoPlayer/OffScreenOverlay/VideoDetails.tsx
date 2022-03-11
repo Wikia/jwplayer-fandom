@@ -9,7 +9,8 @@ interface VideoDetailsWrapperProps {
 }
 
 const VideoDetailsWrapper = styled.div<VideoDetailsWrapperProps>`
-	background-color: ${WDSVariables.wdsColorWhite};
+	transition: transform 0.3s;
+	background: transparent;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -20,11 +21,10 @@ const VideoDetailsWrapper = styled.div<VideoDetailsWrapperProps>`
 	width: 100%;
 
 	${(props) =>
-		props.collapsed &&
+		!props.collapsed &&
 		css`
-			transform: translate(0, -100%);
-			transition: transform 0.3s;
-			background: transparent;
+			background-color: ${WDSVariables.wdsColorWhite};
+			transform: translate(0, 100%);
 		`}
 `;
 
@@ -60,7 +60,7 @@ const VideoDetails: React.FC<VideoDetailsProps> = ({ playing }) => {
 	if (!(duration && title)) return null;
 
 	return (
-		<VideoDetailsWrapper collapsed={playing}>
+		<VideoDetailsWrapper collapsed={!playing}>
 			<VideoTitle>{title}</VideoTitle>
 			<VideoDuration>{formatTime(duration)}</VideoDuration>
 		</VideoDetailsWrapper>
