@@ -7,6 +7,7 @@ export type PlayerConfig = {
 	plugins?: Record<string, unknown>;
 	playlistItem?: { mediaid: string; videoId: string };
 	mediaElement?: HTMLVideoElement;
+	autostart?: boolean;
 };
 export type PlaylistItem = {
 	title?: string;

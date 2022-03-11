@@ -7,7 +7,7 @@ export default function usePlaylistItem(): PlaylistItem {
 	const [playlistItem, setPlaylistItem] = useState<PlaylistItem>({ title: undefined, duration: undefined });
 
 	useEffect(() => {
-		if (player?.getState() === 'playing') {
+		if (player?.getState() === 'playing' || player?.getConfig().autostart) {
 			setPlaylistItem(player?.getPlaylistItem());
 		}
 

@@ -1,10 +1,10 @@
 import React, { useRef } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import JwPlayerWrapper from 'players/shared/JwPlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'utils/useAdComplete';
 import PlayerWrapper from 'players/shared/PlayerWrapper';
-import VideoDetails from 'players/MobileArticleVideoPlayer/VideoDetails';
+import OffScreenOverlay from 'players/MobileArticleVideoPlayer/OffScreenOverlay/OffScreenOverlay';
 
 const MobileArticleVideoTopPlaceholder = styled.div`
 	background-color: black;
@@ -19,7 +19,7 @@ interface MobileArticleVideoWrapperProps {
 const MobileArticleVideoWrapper = styled.div<MobileArticleVideoWrapperProps>`
 	${(props) =>
 		!props.visibleOnScreen &&
-		css`
+		`
 			box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
 			position: fixed;
 			top: 55px;
@@ -38,7 +38,7 @@ const MobileArticleVideoPlayer: React.FC = () => {
 				{adComplete && (
 					<MobileArticleVideoWrapper visibleOnScreen={onScreen}>
 						<JwPlayerWrapper />
-						<VideoDetails />
+						{!onScreen && <OffScreenOverlay />}
 					</MobileArticleVideoWrapper>
 				)}
 			</MobileArticleVideoTopPlaceholder>
