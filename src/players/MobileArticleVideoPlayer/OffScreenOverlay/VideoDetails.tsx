@@ -55,9 +55,11 @@ interface VideoDetailsProps {
 }
 
 const VideoDetails: React.FC<VideoDetailsProps> = ({ playing }) => {
-	const { duration, title } = usePlaylistItem();
+	const playlistItem = usePlaylistItem();
 
-	if (!(duration && title)) return null;
+	if (!playlistItem) return null;
+
+	const { duration, title } = playlistItem;
 
 	return (
 		<VideoDetailsWrapper collapsed={!playing}>

@@ -10,8 +10,8 @@ export type PlayerConfig = {
 	autostart?: boolean;
 };
 export type PlaylistItem = {
-	title?: string;
-	duration?: number;
+	title: string;
+	duration: number;
 };
 
 interface PlaylistItemPlayerEventData {

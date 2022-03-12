@@ -4168,12 +4168,10 @@ var VideoDuration = styled.span.withConfig({
 
 var VideoDetails = function (_a) {
   var playing = _a.playing;
-
-  var _b = usePlaylistItem(),
-      duration = _b.duration,
-      title = _b.title;
-
-  if (!(duration && title)) return null;
+  var playlistItem = usePlaylistItem();
+  if (!playlistItem) return null;
+  var duration = playlistItem.duration,
+      title = playlistItem.title;
   return /*#__PURE__*/React$2.createElement(VideoDetailsWrapper, {
     collapsed: !playing
   }, /*#__PURE__*/React$2.createElement(VideoTitle, null, title), /*#__PURE__*/React$2.createElement(VideoDuration, null, formatTime(duration)));
