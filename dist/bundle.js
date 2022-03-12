@@ -4154,13 +4154,15 @@ function usePlaying() {
 var VideoDetailsWrapper = styled.div.withConfig({
   displayName: "VideoDetails__VideoDetailsWrapper",
   componentId: "sc-1vgogfw-0"
-})(templateObject_2$1 || (templateObject_2$1 = __makeTemplateObject(["\n\ttransition: transform 0.3s;\n\tbackground: transparent;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: space-between;\n\tpadding: 13px 12px 15px;\n\tposition: absolute;\n\tbottom: 0;\n\tleft: 0;\n\twidth: 100%;\n\n\t", "\n"], ["\n\ttransition: transform 0.3s;\n\tbackground: transparent;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: space-between;\n\tpadding: 13px 12px 15px;\n\tposition: absolute;\n\tbottom: 0;\n\tleft: 0;\n\twidth: 100%;\n\n\t", "\n"])), function (props) {
+})(templateObject_2$1 || (templateObject_2$1 = __makeTemplateObject(["\n\tbox-sizing: border-box;\n\ttransition: transform 0.3s;\n\tbackground: transparent;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: space-between;\n\tpadding: 13px 12px 15px;\n\tposition: absolute;\n\tbottom: 0;\n\tleft: 0;\n\twidth: 100%;\n\n\t", "\n"], ["\n\tbox-sizing: border-box;\n\ttransition: transform 0.3s;\n\tbackground: transparent;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: space-between;\n\tpadding: 13px 12px 15px;\n\tposition: absolute;\n\tbottom: 0;\n\tleft: 0;\n\twidth: 100%;\n\n\t", "\n"])), function (props) {
   return !props.collapsed && Ae(templateObject_1$2 || (templateObject_1$2 = __makeTemplateObject(["\n\t\t\tbackground-color: ", ";\n\t\t\ttransform: translate(0, 100%);\n\t\t"], ["\n\t\t\tbackground-color: ", ";\n\t\t\ttransform: translate(0, 100%);\n\t\t"])), WDSVariables.wdsColorWhite);
 });
 var VideoTitle = styled.h2.withConfig({
   displayName: "VideoDetails__VideoTitle",
   componentId: "sc-1vgogfw-1"
-})(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n\tline-height: 1.14em;\n\tmargin-right: 6px;\n\tmargin-top: 4px;\n\n\tcolor: ", ";\n\tfont-size: ", ";\n\tfont-weight: ", ";\n"], ["\n\tline-height: 1.14em;\n\tmargin-right: 6px;\n\tmargin-top: 4px;\n\n\tcolor: ", ";\n\tfont-size: ", ";\n\tfont-weight: ", ";\n"])), WDSVariables.wdsColorBlack, WDSVariables.wdsFontSizeBase, WDSVariables.wdsFontWeightMedium);
+})(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n\tline-height: 1.14em;\n\tmargin-right: 6px;\n\tmargin-top: 4px;\n\n\tcolor: ", ";\n\tfont-size: ", ";\n\tfont-weight: ", ";\n"], ["\n\tline-height: 1.14em;\n\tmargin-right: 6px;\n\tmargin-top: 4px;\n\n\tcolor: ", ";\n\tfont-size: ", ";\n\tfont-weight: ", ";\n"])), function (props) {
+  return props.collapsed ? WDSVariables.wdsColorWhite : WDSVariables.wdsColorBlack;
+}, WDSVariables.wdsFontSizeBase, WDSVariables.wdsFontWeightMedium);
 var VideoDuration = styled.span.withConfig({
   displayName: "VideoDetails__VideoDuration",
   componentId: "sc-1vgogfw-2"
@@ -4174,7 +4176,9 @@ var VideoDetails = function (_a) {
       title = playlistItem.title;
   return /*#__PURE__*/React$2.createElement(VideoDetailsWrapper, {
     collapsed: !playing
-  }, /*#__PURE__*/React$2.createElement(VideoTitle, null, title), /*#__PURE__*/React$2.createElement(VideoDuration, null, formatTime(duration)));
+  }, /*#__PURE__*/React$2.createElement(VideoTitle, {
+    collapsed: !playing
+  }, title), /*#__PURE__*/React$2.createElement(VideoDuration, null, formatTime(duration)));
 };
 var templateObject_1$2, templateObject_2$1, templateObject_3, templateObject_4;
 
@@ -4187,6 +4191,14 @@ var OffScreenOverlayWrapper = styled.div.withConfig({
 
 var OffScreenOverlay = function () {
   var playing = usePlaying();
+  var controlbar = document.querySelector('.jw-controlbar');
+
+  if (!playing) {
+    if (controlbar) controlbar.style.visibility = 'hidden';
+  } else {
+    if (controlbar) controlbar.style.visibility = 'visible';
+  }
+
   return /*#__PURE__*/React$2.createElement(OffScreenOverlayWrapper, {
     playing: playing
   }, /*#__PURE__*/React$2.createElement(VideoDetails, {

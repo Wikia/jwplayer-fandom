@@ -21,6 +21,13 @@ const OffScreenOverlayWrapper = styled.div<OffScreenOverlayWrapperProps>`
 
 const OffScreenOverlay: React.FC = () => {
 	const playing = usePlaying();
+	const controlbar = document.querySelector<HTMLElement>('.jw-controlbar');
+
+	if (!playing) {
+		if (controlbar) controlbar.style.visibility = 'hidden';
+	} else {
+		if (controlbar) controlbar.style.visibility = 'visible';
+	}
 
 	return (
 		<OffScreenOverlayWrapper playing={playing}>

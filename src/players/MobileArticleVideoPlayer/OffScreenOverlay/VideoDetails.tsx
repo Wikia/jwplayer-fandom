@@ -9,6 +9,7 @@ interface VideoDetailsWrapperProps {
 }
 
 const VideoDetailsWrapper = styled.div<VideoDetailsWrapperProps>`
+	box-sizing: border-box;
 	transition: transform 0.3s;
 	background: transparent;
 	display: flex;
@@ -28,12 +29,16 @@ const VideoDetailsWrapper = styled.div<VideoDetailsWrapperProps>`
 		`}
 `;
 
-const VideoTitle = styled.h2`
+interface VideoTitleProps {
+	collapsed: boolean;
+}
+
+const VideoTitle = styled.h2<VideoTitleProps>`
 	line-height: 1.14em;
 	margin-right: 6px;
 	margin-top: 4px;
 
-	color: ${WDSVariables.wdsColorBlack};
+	color: ${(props) => (props.collapsed ? WDSVariables.wdsColorWhite : WDSVariables.wdsColorBlack)};
 	font-size: ${WDSVariables.wdsFontSizeBase};
 	font-weight: ${WDSVariables.wdsFontWeightMedium};
 `;
@@ -63,7 +68,7 @@ const VideoDetails: React.FC<VideoDetailsProps> = ({ playing }) => {
 
 	return (
 		<VideoDetailsWrapper collapsed={!playing}>
-			<VideoTitle>{title}</VideoTitle>
+			<VideoTitle collapsed={!playing}>{title}</VideoTitle>
 			<VideoDuration>{formatTime(duration)}</VideoDuration>
 		</VideoDetailsWrapper>
 	);
