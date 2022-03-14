@@ -8,11 +8,11 @@ const CloseWrapper = styled.div`
 `;
 
 interface CloseButtonProps {
-	dismissed: () => void;
+	dismiss: () => void;
 }
 
-const CloseButton: React.FC<CloseButtonProps> = ({ dismissed }) => (
-	<CloseWrapper onClick={dismissed}>
+const CloseButton: React.FC<CloseButtonProps> = ({ dismiss }) => (
+	<CloseWrapper onClick={dismiss}>
 		<IconCrossSmall />
 	</CloseWrapper>
 );

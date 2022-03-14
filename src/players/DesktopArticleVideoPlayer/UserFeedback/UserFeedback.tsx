@@ -57,10 +57,10 @@ const UserFeedback: React.FC = () => {
 
 	return (
 		<UserFeedbackWrapper>
-			<CloseButton dismissed={() => setDismissed(true)} />
+			<CloseButton dismiss={() => setDismissed(true)} />
 			Do you like this video?
-			<ThumbUpButton dismissed={() => setDismissed(true)} />
-			<ThumbDownButton dismissed={() => setDismissed(true)} />
+			<ThumbUpButton dismiss={() => setDismissed(true)} />
+			<ThumbDownButton dismiss={() => setDismissed(true)} />
 		</UserFeedbackWrapper>
 	);
 };

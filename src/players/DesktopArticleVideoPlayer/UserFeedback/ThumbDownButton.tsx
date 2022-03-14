@@ -16,13 +16,13 @@ const ThumbDownWrapper = styled.div`
 `;
 
 interface ThumbDownButtonProps {
-	dismissed: () => void;
+	dismiss: () => void;
 }
 
-const ThumbDownButton: React.FC<ThumbDownButtonProps> = ({ dismissed }) => {
+const ThumbDownButton: React.FC<ThumbDownButtonProps> = ({ dismiss }) => {
 	const thumbDownFeedback = () => {
 		// TODO: figure out tracking, potentially see: unified-platform/node_modules/jwplayer-fandom/src/tracking.js
-		dismissed();
+		dismiss();
 	};
 
 	return (

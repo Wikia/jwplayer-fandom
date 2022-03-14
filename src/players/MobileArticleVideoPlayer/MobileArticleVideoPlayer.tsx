@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import JwPlayerWrapper from 'players/shared/JwPlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
@@ -31,14 +31,15 @@ const MobileArticleVideoPlayer: React.FC = () => {
 	const ref = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(ref);
+	const [dismissed, setDismissed] = useState(false);
 
 	return (
 		<PlayerWrapper>
 			<MobileArticleVideoTopPlaceholder ref={ref}>
 				{adComplete && (
-					<MobileArticleVideoWrapper visibleOnScreen={onScreen}>
+					<MobileArticleVideoWrapper visibleOnScreen={onScreen || dismissed}>
 						<JwPlayerWrapper />
-						{!onScreen && <OffScreenOverlay />}
+						{!onScreen && !dismissed && <OffScreenOverlay dismiss={() => setDismissed(true)} />}
 					</MobileArticleVideoWrapper>
 				)}
 			</MobileArticleVideoTopPlaceholder>

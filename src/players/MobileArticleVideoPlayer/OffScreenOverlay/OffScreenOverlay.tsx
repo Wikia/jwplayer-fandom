@@ -3,6 +3,7 @@ import React from 'react';
 import usePlaying from 'utils/usePlaying';
 import styled from 'styled-components';
 import VideoDetails from 'players/MobileArticleVideoPlayer/OffScreenOverlay/VideoDetails';
+import CloseButton from 'players/MobileArticleVideoPlayer/OffScreenOverlay/CloseButton';
 
 interface OffScreenOverlayWrapperProps {
 	playing: boolean;
@@ -19,7 +20,11 @@ const OffScreenOverlayWrapper = styled.div<OffScreenOverlayWrapperProps>`
 	z-index: 5;
 `;
 
-const OffScreenOverlay: React.FC = () => {
+interface OffScreenOverlayProps {
+	dismiss: () => void;
+}
+
+const OffScreenOverlay: React.FC<OffScreenOverlayProps> = ({ dismiss }) => {
 	const playing = usePlaying();
 	const controlbar = document.querySelector<HTMLElement>('.jw-controlbar');
 
@@ -31,6 +36,7 @@ const OffScreenOverlay: React.FC = () => {
 
 	return (
 		<OffScreenOverlayWrapper playing={playing}>
+			<CloseButton dismiss={dismiss} />
 			<VideoDetails playing={playing} />
 		</OffScreenOverlayWrapper>
 	);

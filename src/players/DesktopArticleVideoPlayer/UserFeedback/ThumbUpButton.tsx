@@ -16,14 +16,13 @@ const ThumbUpWrapper = styled.div`
 `;
 
 interface ThumbUpButtonProps {
-	dismissed: () => void;
+	dismiss: () => void;
 }
 
-const ThumbUpButton: React.FC<ThumbUpButtonProps> = ({ dismissed }) => {
+const ThumbUpButton: React.FC<ThumbUpButtonProps> = ({ dismiss }) => {
 	const thumbUpFeedback = () => {
 		// TODO: figure out tracking, potentially see: unified-platform/node_modules/jwplayer-fandom/src/tracking.js
-		console.log('yo');
-		dismissed();
+		dismiss();
 	};
 
 	return (
