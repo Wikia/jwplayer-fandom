@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import styled, { css } from 'styled-components';
 import UnmuteButton from 'players/DesktopArticleVideoPlayer/UnmuteButton';
-import UserFeedback from 'players/DesktopArticleVideoPlayer/UserFeedback/UserFeedback';
 import JwPlayerWrapper from 'players/shared/JwPlayerWrapper';
 import VideoDetails from 'players/DesktopArticleVideoPlayer/VideoDetails';
 import useOnScreen from 'utils/useOnScreen';
@@ -55,7 +54,6 @@ const DesktopArticleVideoPlayer: React.FC = () => {
 					<DesktopArticleVideoWrapper visibleOnScreen={onScreen}>
 						<TopBar visible={onScreen}>
 							<UnmuteButton />
-							<UserFeedback />
 						</TopBar>
 						<JwPlayerWrapper />
 						{!onScreen && <VideoDetails />}
