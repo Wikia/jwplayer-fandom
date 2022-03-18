@@ -24,6 +24,11 @@ const VideoTime = styled.span`
 	margin: 0;
 	padding: 0;
 	vertical-align: baseline;
+
+	&:before {
+		content: '•';
+		padding: 0px 2px;
+	}
 `;
 
 const VideoTitle = styled.div`
