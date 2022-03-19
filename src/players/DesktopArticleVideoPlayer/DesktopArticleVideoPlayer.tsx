@@ -6,6 +6,7 @@ import VideoDetails from 'players/DesktopArticleVideoPlayer/VideoDetails';
 import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'utils/useAdComplete';
 import PlayerWrapper from 'players/shared/PlayerWrapper';
+import { PlaylistItem } from 'types';
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
 	background-color: black;
@@ -42,7 +43,11 @@ const TopBar = styled.div<TopBarProps>`
 	display: ${(props) => (props.visible ? 'block' : 'none')};
 `;
 
-const DesktopArticleVideoPlayer: React.FC = () => {
+interface DesktopArticleVideoPlayerProps {
+	playlist: string | PlaylistItem[];
+}
+
+const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ playlist }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(ref);
@@ -55,7 +60,7 @@ const DesktopArticleVideoPlayer: React.FC = () => {
 						<TopBar visible={onScreen}>
 							<UnmuteButton />
 						</TopBar>
-						<JwPlayerWrapper />
+						<JwPlayerWrapper playlist={playlist} />
 						{!onScreen && <VideoDetails />}
 					</DesktopArticleVideoWrapper>
 				)}

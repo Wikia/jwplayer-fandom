@@ -5,6 +5,7 @@ import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'utils/useAdComplete';
 import PlayerWrapper from 'players/shared/PlayerWrapper';
 import OffScreenOverlay from 'players/MobileArticleVideoPlayer/OffScreenOverlay/OffScreenOverlay';
+import { PlaylistItem } from 'types';
 
 const MobileArticleVideoTopPlaceholder = styled.div`
 	background-color: black;
@@ -27,7 +28,11 @@ const MobileArticleVideoWrapper = styled.div<MobileArticleVideoWrapperProps>`
 		`}
 `;
 
-const MobileArticleVideoPlayer: React.FC = () => {
+interface MobileArticleVideoPlayerProps {
+	playlist: string | PlaylistItem[];
+}
+
+const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({ playlist }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(ref);
@@ -38,7 +43,7 @@ const MobileArticleVideoPlayer: React.FC = () => {
 			<MobileArticleVideoTopPlaceholder ref={ref}>
 				{adComplete && (
 					<MobileArticleVideoWrapper visibleOnScreen={onScreen || dismissed}>
-						<JwPlayerWrapper />
+						<JwPlayerWrapper playlist={playlist} />
 						{!onScreen && !dismissed && <OffScreenOverlay dismiss={() => setDismissed(true)} />}
 					</MobileArticleVideoWrapper>
 				)}

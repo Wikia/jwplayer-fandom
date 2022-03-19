@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { JWPlayerApi } from 'types';
 import FandomWirewaxPlugin from 'plugins/fandom-wirewax.plugin';
 import { PlayerContext } from 'players/shared/PlayerContext';
+import { PlaylistItem } from 'types';
 
 interface WindowJWPlayer extends Window {
 	jwplayer?: JWPlayerApi;
@@ -18,7 +19,11 @@ const getDefaultPlayerUrl = () => {
 		: 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
 };
 
-const JwPlayerWrapper: React.FC = () => {
+interface JwPlayerWrapperProps {
+	playlist: string | PlaylistItem[];
+}
+
+const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist }) => {
 	const { setPlayer } = useContext(PlayerContext);
 
 	useEffect(() => {
@@ -38,7 +43,7 @@ const JwPlayerWrapper: React.FC = () => {
 			const playerInstance = window
 				.jwplayer(elementId)
 				.setup({
-					playlist: 'https://cdn.jwplayer.com/v2/media/dWVV3F7S',
+					playlist: playlist,
 					plugins: { fandomWirewax: {} },
 				})
 				.on('ready', (event) => {
