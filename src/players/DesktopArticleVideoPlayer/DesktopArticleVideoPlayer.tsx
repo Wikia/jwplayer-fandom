@@ -51,7 +51,7 @@ const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ p
 	const ref = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(ref);
-
+	console.log('PLAYLIST:', playlist);
 	return (
 		<PlayerWrapper>
 			<DesktopArticleVideoTopPlaceholder ref={ref}>

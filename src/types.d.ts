@@ -14,7 +14,7 @@ export type Playlist = PlaylistItem | PlaylistItem[] | string | string[];
 
 export type PlaylistItem = {
 	title: string;
-	duration?: number;
+	duration: number;
 	mediaid?: string;
 	file?: string;
 	image?: string;
