@@ -6,7 +6,7 @@ import VideoDetails from 'players/DesktopArticleVideoPlayer/VideoDetails';
 import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'utils/useAdComplete';
 import PlayerWrapper from 'players/shared/PlayerWrapper';
-import { PlaylistItem } from 'types';
+import { Playlist } from 'types';
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
 	background-color: black;
@@ -44,7 +44,7 @@ const TopBar = styled.div<TopBarProps>`
 `;
 
 interface DesktopArticleVideoPlayerProps {
-	playlist: string | PlaylistItem[];
+	playlist: Playlist;
 }
 
 const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ playlist }) => {

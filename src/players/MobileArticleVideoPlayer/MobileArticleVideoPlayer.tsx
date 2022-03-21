@@ -5,7 +5,7 @@ import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'utils/useAdComplete';
 import PlayerWrapper from 'players/shared/PlayerWrapper';
 import OffScreenOverlay from 'players/MobileArticleVideoPlayer/OffScreenOverlay/OffScreenOverlay';
-import { PlaylistItem } from 'types';
+import { Playlist } from 'types';
 
 const MobileArticleVideoTopPlaceholder = styled.div`
 	background-color: black;
@@ -29,7 +29,7 @@ const MobileArticleVideoWrapper = styled.div<MobileArticleVideoWrapperProps>`
 `;
 
 interface MobileArticleVideoPlayerProps {
-	playlist: string | PlaylistItem[];
+	playlist: Playlist;
 }
 
 const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({ playlist }) => {

@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { JWPlayerApi } from 'types';
 import FandomWirewaxPlugin from 'plugins/fandom-wirewax.plugin';
 import { PlayerContext } from 'players/shared/PlayerContext';
-import { PlaylistItem } from 'types';
+import { Playlist } from 'types';
 
 interface WindowJWPlayer extends Window {
 	jwplayer?: JWPlayerApi;
@@ -20,7 +20,7 @@ const getDefaultPlayerUrl = () => {
 };
 
 interface JwPlayerWrapperProps {
-	playlist: string | PlaylistItem[];
+	playlist: Playlist;
 }
 
 const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist }) => {

@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
-import { PlaylistItem } from 'types';
+import { Playlist } from 'types';
 
 import PlayerWrapper from 'players/shared/PlayerWrapper';
 
 import JwPlayerWrapper from './shared/JwPlayerWrapper';
 
 interface VideoPlayerProps {
-	playlist: string | PlaylistItem[];
+	playlist: Playlist;
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ playlist }) => {
