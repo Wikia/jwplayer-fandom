@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from 'react';
 import { PlaylistItem, PlaylistItemPlayerEventData } from 'types';
 import { PlayerContext } from 'players/shared/PlayerContext';
 
-export default function usePlaylistItem(): string {
+export default function usePlaylistItem(): PlaylistItem {
 	const { player } = useContext(PlayerContext);
 	const [playlistItem, setPlaylistItem] = useState<PlaylistItem>({ title: undefined, duration: undefined });
 
