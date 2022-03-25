@@ -2,7 +2,7 @@
  "name": "jwplayer-fandom",
  "version": "1.12.1",
  "description": "JWPlayer for Fandom",
- "main": "dist/bundle.js",
+ "main": "dist/main.js",
  "install-peers": "install-peers",
  "scripts": {
   "build": "yarn run create-dist && rollup -c",

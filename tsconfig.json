@@ -3,6 +3,8 @@
   "exclude": ["node_modules", "old/**/*", "src/locales/**/*", "dist/**/*"],
   "compilerOptions": {
     "outDir": "dist",
+    "declaration": true,
+    "declarationDir": "./dts",
     "lib": ["es5", "es6", "es7", "es2017", "dom"],
     "module": "es2020",
     "target": "es5",

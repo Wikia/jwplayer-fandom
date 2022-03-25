@@ -1,20 +1,24 @@
 module.exports = {
-	extends: [
-		"@fandom-frontend/eslint-config",
-		"@fandom-frontend/eslint-config/react",
-		"@fandom-frontend/eslint-config/typescript",
-    	"prettier"
-	],
+	extends: ['@fandom-frontend/eslint-config', '@fandom-frontend/eslint-config/react', 'prettier'],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		ecmaVersion: 2020,
-		sourceType: "module",
+		sourceType: 'module',
 		ecmaFeatures: {
 			jsx: true,
 		},
-		project: './tsconfig.json',
 	},
 	settings: {
-		react: { version: "detect" },
+		react: { version: 'detect' },
 	},
+	overrides: [
+		{
+			files: ['*.ts', '*.tsx'],
+			extends: ['@fandom-frontend/eslint-config/typescript'],
+
+			parserOptions: {
+				project: ['./tsconfig.json'],
+			},
+		},
+	],
 };
