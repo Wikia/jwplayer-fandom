@@ -1,5 +1,12 @@
 module.exports = {
-	extends: ['@fandom-frontend/eslint-config', '@fandom-frontend/eslint-config/react', 'prettier'],
+	extends: [
+		'eslint:recommended',
+		'plugin:@typescript-eslint/eslint-recommended',
+		'plugin:@typescript-eslint/recommended',
+		'@fandom-frontend/eslint-config',
+		'@fandom-frontend/eslint-config/react',
+		'prettier',
+	],
 	parser: '@typescript-eslint/parser',
 	plugins: ['@typescript-eslint'],
 	overrides: [

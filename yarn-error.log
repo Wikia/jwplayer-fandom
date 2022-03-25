@@ -14,24 +14,30 @@ Platform:
   darwin x64
 
 Trace: 
-  SyntaxError: /Users/wleaverton/dev/jwplayer-fandom/package.json: Unexpected token } in JSON at position 2901
-      at JSON.parse (<anonymous>)
-      at /Users/wleaverton/.nvm/versions/node/v16.9.1/lib/node_modules/yarn/lib/cli.js:1625:59
-      at Generator.next (<anonymous>)
-      at step (/Users/wleaverton/.nvm/versions/node/v16.9.1/lib/node_modules/yarn/lib/cli.js:310:30)
-      at /Users/wleaverton/.nvm/versions/node/v16.9.1/lib/node_modules/yarn/lib/cli.js:321:13
+  Error: https://artifactory.wikia-inc.com/artifactory/api/npm/wikia-npm/@fandom-frontend%2fdesign-system: Request "https://artifactory.wikia-inc.com/artifactory/api/npm/wikia-npm/@fandom-frontend%2fdesign-system" returned a 403
+      at Request.params.callback [as _callback] (/Users/wleaverton/.nvm/versions/node/v16.9.1/lib/node_modules/yarn/lib/cli.js:67038:18)
+      at Request.self.callback (/Users/wleaverton/.nvm/versions/node/v16.9.1/lib/node_modules/yarn/lib/cli.js:140883:22)
+      at Request.emit (node:events:394:28)
+      at Request.<anonymous> (/Users/wleaverton/.nvm/versions/node/v16.9.1/lib/node_modules/yarn/lib/cli.js:141855:10)
+      at Request.emit (node:events:394:28)
+      at IncomingMessage.<anonymous> (/Users/wleaverton/.nvm/versions/node/v16.9.1/lib/node_modules/yarn/lib/cli.js:141777:12)
+      at Object.onceWrapper (node:events:513:28)
+      at IncomingMessage.emit (node:events:406:35)
+      at endReadableNT (node:internal/streams/readable:1343:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
 
 npm manifest: 
   {
    "name": "jwplayer-fandom",
    "version": "1.12.1",
    "description": "JWPlayer for Fandom",
-   "main": "dist/bundle.js",
+   "main": "dist/main.js",
    "install-peers": "install-peers",
    "scripts": {
     "build": "yarn run create-dist && rollup -c",
     "build-dev": "yarn run create-dist && rollup -c --environment NODE_ENV:development",
-    "watch": "yarn run create-dist && rollup -c --watch --environment NODE_ENV:development",
+    "watch": "yarn run create-dist && rollup -c --watch",
+    "watch-dev": "yarn run create-dist && rollup -c --watch --environment NODE_ENV:development",
     "create-dist": "rm -rf dist && mkdir -p dist",
     "lint": "npm-run-all --continue-on-error --parallel lint:prettier lint:eslint",
     "lint:prettier:src": "prettier --write src",
@@ -41,7 +47,8 @@ npm manifest:
     "lint:eslint:src": "eslint --cache --fix src",
     "lint:eslint:scripts": "eslint --cache --fix scripts",
     "lint:eslint:tests": "eslint --cache --fix tests",
-    "lint:eslint": "npm-run-all --continue-on-error --parallel lint:eslint:src"
+    "lint:eslint": "npm-run-all --continue-on-error --parallel lint:eslint:src",
+    "prepare": "husky install"
    },
    "lint-staged": {
     "src/**/*.(ts|tsx|js)": [
@@ -67,7 +74,9 @@ npm manifest:
     ],
     "tests/**/*.json": [
      "prettier --write"
-    ]
+    ],
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
    },
    "publishConfig": {
     "registry": "https://artifactory.wikia-inc.com/artifactory/api/npm/wikia-npm/"
@@ -95,9 +104,12 @@ npm manifest:
     "@rollup/plugin-typescript": "8.3.0",
     "@types/react": "17.0.39",
     "@types/styled-components": "^5.1.18",
+    "@typescript-eslint/eslint-plugin": "5.16.0",
+    "@typescript-eslint/parser": "5.16.0",
     "babel-plugin-styled-components": "^2.0.2",
     "eslint": "^7.0.0",
     "eslint-config-prettier": "8.4.0",
+    "husky": ">=6",
     "lint-staged": "12.3.4",
     "npm-run-all": "4.1.5",
     "prettier": "2.5.1",
@@ -107,14 +119,16 @@ npm manifest:
     "typescript": "^4.5.4"
    },
    "peerDependencies": {
-    "react": "react@^16.14.0 || ^17.0.2",
-    "react-dom": "^16.14.0 || ^17.0.2",
-    "react-i18next": "^11.7.1",
     "i18next": "^19.7.0",
+    "react": "^16.14.0 || ^17.0.2",
+    "react-dom": "^16.14.0 || ^17.0.2",
+    "react-i18next": "^11.7.1"
    },
    "dependencies": {
     "@fandom-frontend/design-system": "9.0.0",
     "@fandom-frontend/react-common": "6.35.0",
+    "@wikia/post-quecast": "2.0.1",
+    "rxjs": "7.5.4",
     "styled-components": "^5.3.3"
    }
   }
