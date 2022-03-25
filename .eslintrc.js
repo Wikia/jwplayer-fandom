@@ -15,7 +15,6 @@ module.exports = {
 		{
 			files: ['*.ts', '*.tsx'],
 			extends: ['@fandom-frontend/eslint-config/typescript'],
-
 			parserOptions: {
 				project: ['./tsconfig.json'],
 			},
