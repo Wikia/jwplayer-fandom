@@ -130,3 +130,7 @@ export type Embedder = {
 	on: (name: string, handler: EmbedderEventHandler) => null;
 	pause: () => void;
 };
+
+export interface VideoPlayerProps {
+	playlist: Playlist;
+}
