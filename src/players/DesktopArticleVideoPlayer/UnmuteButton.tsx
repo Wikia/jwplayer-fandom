@@ -5,7 +5,7 @@ import IconSoundOff from '@fandom-frontend/react-common/dist/icons/IconSoundOff'
 import { PlayerContext } from 'players/shared/PlayerContext';
 
 interface Props {
-	muted: boolean;
+	muted: string;
 }
 
 const UnmuteButtonWrapper = styled.div<Props>`
