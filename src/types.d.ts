@@ -80,25 +80,25 @@ export type WirewaxPluginOptions = {
 	ready: JwEventData;
 };
 
-interface SeekedEmbedderEventData {
+export interface SeekedEmbedderEventData {
 	seekTo: number;
 }
 
-interface OverlayShowEmbedderEventData {
+export interface OverlayShowEmbedderEventData {
 	customRef: string;
 	hotspotName: string;
 	overlayId: number;
 	spriteId: number;
 }
 
-interface OverlayHideEmbedderEventData {
+export interface OverlayHideEmbedderEventData {
 	customRef: string;
 	hotspotName: string;
 	overlayId: number;
 	spriteId: number;
 }
 
-interface HotspotClickEmbedderEventData {
+export interface HotspotClickEmbedderEventData {
 	action: string;
 	actionRef: string;
 	customRef: string;

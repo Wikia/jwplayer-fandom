@@ -7,7 +7,7 @@ import {
 	OverlayHideEmbedderEventData,
 	HotspotClickEmbedderEventData,
 	SeekedEmbedderEventData,
-} from 'types';
+} from '../types';
 
 interface WindowWirewax extends Window {
 	createWirewaxEmbedder?: CreateWirewaxEmbedder;

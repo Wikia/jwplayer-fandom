@@ -1,18 +1,16 @@
-import { Player as Player$1, Embedder as Embedder$1, WirewaxPluginOptions as WirewaxPluginOptions$1, SeekedEmbedderEventData as SeekedEmbedderEventData$1, HotspotClickEmbedderEventData as HotspotClickEmbedderEventData$1, OverlayShowEmbedderEventData as OverlayShowEmbedderEventData$1, OverlayHideEmbedderEventData as OverlayHideEmbedderEventData$1 } from 'types';
-
 declare class FandomWirewaxPlugin {
 	isPlayerRegistered: boolean;
 	rootId: string;
 	options: Record<string, unknown>;
-	player: Player$1;
+	player: Player;
 	autoPlay: boolean;
-	embedder: Embedder$1;
+	embedder: Embedder;
 	vidId: string;
 	container: HTMLElement;
 	animationId: number;
 	setWIREWAXCurrentTime: () => void;
 
-	constructor(rootId: string, options: WirewaxPluginOptions$1) {
+	constructor(rootId: string, options: WirewaxPluginOptions) {
 		this.isPlayerRegistered = false;
 		this.rootId = rootId;
 		this.options = options;
@@ -176,7 +174,7 @@ declare class FandomWirewaxPlugin {
 		}
 	};
 
-	WirewaxSeekedHandler: (event: SeekedEmbedderEventData$1) => void = (event) => {
+	WirewaxSeekedHandler: (event: SeekedEmbedderEventData) => void = (event) => {
 		console.log('WIREWAX -> JW: seek', event);
 
 		try {
@@ -186,15 +184,15 @@ declare class FandomWirewaxPlugin {
 		}
 	};
 
-	WirewaxHotspotClickHandler: (event: HotspotClickEmbedderEventData$1) => void = (event) => {
+	WirewaxHotspotClickHandler: (event: HotspotClickEmbedderEventData) => void = (event) => {
 		console.log('hotspot click', { event });
 	};
 
-	WirewaxOverlayShowHandler: (event: OverlayShowEmbedderEventData$1) => void = (event) => {
+	WirewaxOverlayShowHandler: (event: OverlayShowEmbedderEventData) => void = (event) => {
 		console.log('overlay open', { event });
 	};
 
-	WirewaxOverlayHideHandler: (event: OverlayHideEmbedderEventData$1) => void = (event) => {
+	WirewaxOverlayHideHandler: (event: OverlayHideEmbedderEventData) => void = (event) => {
 		console.log('overlay close', { event });
 	};
 }
@@ -329,10 +327,8 @@ type Embedder = {
 	on: (name: string, handler: EmbedderEventHandler) => null;
 	pause: () => void;
 };
-
-
 interface VideoPlayerProps {
 	playlist: Playlist;
 }
 
-export { CreateWirewaxEmbedder, Embedder, JWPlayerApi, Player, PlayerConfig, Playlist, PlaylistItem, VideoPlayerProps, WirewaxPluginOptions };
+export { CreateWirewaxEmbedder, Embedder, HotspotClickEmbedderEventData, JWPlayerApi, OverlayHideEmbedderEventData, OverlayShowEmbedderEventData, Player, PlayerConfig, Playlist, PlaylistItem, SeekedEmbedderEventData, VideoPlayerProps, WirewaxPluginOptions };

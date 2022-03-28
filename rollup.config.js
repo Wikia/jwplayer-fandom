@@ -6,23 +6,34 @@ import json from '@rollup/plugin-json';
 import { terser } from 'rollup-plugin-terser';
 import dts from 'rollup-plugin-dts';
 
-const devMode = process.env.NODE_ENV === 'development';
-console.log(`${devMode ? 'development' : 'production'} mode bundle`);
-
 const config = [
 	{
 		input: 'src/main.ts',
-		output: {
-			file: 'dist/main.js',
-			compact: devMode ? false : true,
-			plugins: devMode ? [] : [terser()],
-			format: 'es',
-		},
+		output: [
+			{
+				file: 'dist/bundle.esm.js',
+				compact: true,
+				plugins: [terser()],
+				format: 'es',
+				globals: {
+					react: 'React',
+				},
+			},
+			{
+				name: 'jwplayer-fandom',
+				file: 'dist/bundle.umd.js',
+				compact: true,
+				plugins: [terser()],
+				format: 'umd',
+				globals: {
+					react: 'React',
+				},
+			},
+		],
 		watch: {
 			include: './src/**',
 			clearScreen: false,
 		},
-		sourcemap: devMode ? 'inline' : false,
 		plugins: [
 			babel({
 				babelHelpers: 'bundled',
@@ -35,7 +46,7 @@ const config = [
 			json(),
 			commonjs(),
 		],
-		external: ['react'],
+		external: ['react', 'react-dom', 'react-i18next', 'react-i18next'],
 	},
 	{
 		input: './src/types.d.ts',
