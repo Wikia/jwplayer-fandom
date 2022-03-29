@@ -1,9 +1,8 @@
 import React from 'react';
-// import usePlaylistItem from 'utils/usePlaylistItem';
 import usePlaying from 'utils/usePlaying';
 import styled from 'styled-components';
 import VideoDetails from 'players/MobileArticleVideoPlayer/OffScreenOverlay/VideoDetails';
-import CloseButton from 'players/MobileArticleVideoPlayer/OffScreenOverlay/CloseButton';
+import CloseButton from 'players/shared/CloseButton';
 
 interface OffScreenOverlayWrapperProps {
 	playing: boolean;

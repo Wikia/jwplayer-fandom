@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import IconCrossTiny from '@fandom-frontend/react-common/dist/icons/IconCrossTiny';
+import { PlayerContext } from 'players/shared/PlayerContext';
 
 const CloseWrapper = styled.div`
 	cursor: pointer;
@@ -15,6 +16,7 @@ const CloseWrapper = styled.div`
 	position: absolute;
 	right: 0;
 	top: 0;
+	z-index: 2;
 `;
 
 const CrossIcon = styled(IconCrossTiny)`
@@ -25,10 +27,18 @@ interface CloseButtonProps {
 	dismiss: () => void;
 }
 
-const CloseButton: React.FC<CloseButtonProps> = ({ dismiss }) => (
-	<CloseWrapper onClick={dismiss}>
-		<CrossIcon />
-	</CloseWrapper>
-);
+const CloseButton: React.FC<CloseButtonProps> = ({ dismiss }) => {
+	const { player } = useContext(PlayerContext);
+	const onClickClose = () => {
+		player.pause();
+		dismiss();
+	};
+
+	return (
+		<CloseWrapper onClick={onClickClose}>
+			<CrossIcon />
+		</CloseWrapper>
+	);
+};
 
 export default CloseButton;

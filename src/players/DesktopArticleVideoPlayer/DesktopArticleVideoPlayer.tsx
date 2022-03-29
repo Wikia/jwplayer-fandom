@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import UnmuteButton from 'players/DesktopArticleVideoPlayer/UnmuteButton';
 import JwPlayerWrapper from 'players/shared/JwPlayerWrapper';
@@ -7,6 +7,7 @@ import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'utils/useAdComplete';
 import PlayerWrapper from 'players/shared/PlayerWrapper';
 import { Playlist } from 'types';
+import CloseButton from 'players/shared/CloseButton';
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
 	background-color: black;
@@ -33,14 +34,9 @@ const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
 		`}
 `;
 
-interface TopBarProps {
-	visible: boolean;
-}
-
-const TopBar = styled.div<TopBarProps>`
+const TopBar = styled.div`
 	width: 100%;
 	position: relative;
-	display: ${(props) => (props.visible ? 'block' : 'none')};
 `;
 
 interface DesktopArticleVideoPlayerProps {
@@ -51,15 +47,19 @@ const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ p
 	const ref = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(ref);
+	const [dismissed, setDismissed] = useState(false);
 
 	return (
 		<PlayerWrapper>
 			<DesktopArticleVideoTopPlaceholder ref={ref}>
 				{adComplete && (
-					<DesktopArticleVideoWrapper visibleOnScreen={onScreen}>
-						<TopBar visible={onScreen}>
-							<UnmuteButton />
-						</TopBar>
+					<DesktopArticleVideoWrapper visibleOnScreen={onScreen || dismissed}>
+						{!(dismissed || onScreen) && (
+							<TopBar>
+								<UnmuteButton />
+								<CloseButton dismiss={() => setDismissed(true)} />
+							</TopBar>
+						)}
 						<JwPlayerWrapper playlist={playlist} />
 						{!onScreen && <VideoDetails />}
 					</DesktopArticleVideoWrapper>
