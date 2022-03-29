@@ -9,20 +9,31 @@ interface Props {
 }
 
 const UnmuteButtonWrapper = styled.div<Props>`
+	align-items: center;
+	background-color: rgba(255, 255, 255, 0.9);
+	border-radius: 2px;
+	color: ${WDSVariables.wdsColorDarkBlueGray};
+	cursor: pointer;
+	font-size: ${WDSVariables.wdsFontSizeXs};
+	font-weight: ${WDSVariables.wdsFontWeightBold};
+	max-width: 90%;
+	padding: 5px 8px;
 	position: absolute;
 	top: 6px;
 	left: 6px;
 	z-index: 2;
-	align-items: center;
-	background-color: rgba(255, 255, 255, 0.9);
-	border-radius: 2px;
-	padding: 5px 8px;
-	cursor: pointer;
 	height: 31px;
 	box-sizing: border-box;
-	color: ${WDSVariables.wdsColorDarkBlueGray};
-	font-size: ${WDSVariables.wdsFontSizeXs};
-	font-weight: ${WDSVariables.wdsFontWeightBold};
+	display: flex;
+`;
+
+const StyledSoundIcon = styled(IconSoundOff)`
+	fill: ${WDSVariables.wdsColorDarkBlueGray};
+	flex-shrink: 0;
+	height: 14px;
+	margin-right: 6px;
+	min-width: 14px;
+	width: 14px;
 `;
 
 const UnmuteButton: React.FC = () => {
@@ -37,7 +48,7 @@ const UnmuteButton: React.FC = () => {
 
 	return (
 		<UnmuteButtonWrapper onClick={unmute} muted={muted}>
-			<IconSoundOff />
+			<StyledSoundIcon />
 			{/* TODO: use i18n */}
 			Play Sound
 		</UnmuteButtonWrapper>
