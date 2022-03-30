@@ -9,8 +9,11 @@ export default function useAdComplete(): boolean {
 
 	useEffect(() => {
 		communicationService.action$.pipe(ofType('[AdEngine OptIn] set opt in'), first()).subscribe(() => {
+			console.log('[AdEngine OptIn] set opt in');
 			waitForAdEngine().then(() => {
+				console.log('[AdEngine] Configured');
 				listenSetupJWPlayer(function () {
+					console.log('[Ad Engine] Setup JWPlayer');
 					setAdComplete(true);
 				});
 			});

@@ -46,6 +46,13 @@ interface DesktopArticleVideoPlayerProps {
 const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ playlist }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
+	console.log('=====================================================');
+	console.log('=====================================================');
+	console.log('=====================================================');
+	console.log(adComplete);
+	console.log('=====================================================');
+	console.log('=====================================================');
+	console.log('=====================================================');
 	const onScreen = useOnScreen(ref);
 	const [dismissed, setDismissed] = useState(false);
 
