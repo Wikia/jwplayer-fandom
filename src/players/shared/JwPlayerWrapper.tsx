@@ -28,7 +28,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist }) => {
 
 	useEffect(() => {
 		// TODO: check if jwplayer is already loaded
-		initPlayer('fandom-video-player', getDefaultPlayerUrl());
+		initPlayer('featured-video__player', getDefaultPlayerUrl());
 	}, []);
 
 	function initPlayer(elementId: string, playerURL?: string) {
@@ -60,7 +60,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist }) => {
 
 	return (
 		<div>
-			<div id="fandom-video-player" />
+			<div id="featured-video__player" />
 		</div>
 	);
 };
