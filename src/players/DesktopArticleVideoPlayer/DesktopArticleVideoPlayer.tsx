@@ -6,7 +6,7 @@ import VideoDetails from 'players/DesktopArticleVideoPlayer/VideoDetails';
 import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'utils/useAdComplete';
 import PlayerWrapper from 'players/shared/PlayerWrapper';
-import { AttributionData, Playlist } from 'types';
+import { Playlist } from 'types';
 import CloseButton from 'players/shared/CloseButton';
 import Attribution from 'players/DesktopArticleVideoPlayer/Attribution';
 
@@ -42,10 +42,9 @@ const TopBar = styled.div`
 
 interface DesktopArticleVideoPlayerProps {
 	playlist: Playlist;
-	attributionData?: AttributionData;
 }
 
-const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ playlist, attributionData }) => {
+const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ playlist }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(ref);
@@ -67,9 +66,7 @@ const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ p
 					</DesktopArticleVideoWrapper>
 				)}
 			</DesktopArticleVideoTopPlaceholder>
-			{attributionData?.username && attributionData?.userUrl && (
-				<Attribution username={attributionData.username} userUrl={attributionData.userUrl} />
-			)}
+			<Attribution />
 		</PlayerWrapper>
 	);
 };

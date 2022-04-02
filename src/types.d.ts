@@ -19,6 +19,8 @@ export type PlaylistItem = {
 	file?: string;
 	image?: string;
 	playlist?: PlaylistItem[];
+	username?: string;
+	userUrl?: string;
 };
 
 interface PlaylistItemPlayerEventData {
@@ -132,9 +134,4 @@ export type Embedder = {
 };
 export interface VideoPlayerProps {
 	playlist: Playlist;
-}
-
-export interface AttributionData {
-	username: string;
-	userUrl: string;
 }

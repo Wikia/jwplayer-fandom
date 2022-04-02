@@ -216,6 +216,8 @@ type PlaylistItem = {
 	file?: string;
 	image?: string;
 	playlist?: PlaylistItem[];
+	username?: string;
+	userUrl?: string;
 };
 
 interface PlaylistItemPlayerEventData {
@@ -331,9 +333,4 @@ interface VideoPlayerProps {
 	playlist: Playlist;
 }
 
-interface AttributionData {
-	username: string;
-	userUrl: string;
-}
-
-export { AttributionData, CreateWirewaxEmbedder, Embedder, HotspotClickEmbedderEventData, JWPlayerApi, OverlayHideEmbedderEventData, OverlayShowEmbedderEventData, Player, PlayerConfig, Playlist, PlaylistItem, SeekedEmbedderEventData, VideoPlayerProps, WirewaxPluginOptions };
+export { CreateWirewaxEmbedder, Embedder, HotspotClickEmbedderEventData, JWPlayerApi, OverlayHideEmbedderEventData, OverlayShowEmbedderEventData, Player, PlayerConfig, Playlist, PlaylistItem, SeekedEmbedderEventData, VideoPlayerProps, WirewaxPluginOptions };
