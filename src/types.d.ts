@@ -133,3 +133,8 @@ export type Embedder = {
 export interface VideoPlayerProps {
 	playlist: Playlist;
 }
+
+export interface AttributionData {
+	username: string;
+	userUrl: string;
+}

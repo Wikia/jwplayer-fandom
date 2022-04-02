@@ -5,7 +5,8 @@ import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'utils/useAdComplete';
 import PlayerWrapper from 'players/shared/PlayerWrapper';
 import OffScreenOverlay from 'players/MobileArticleVideoPlayer/OffScreenOverlay/OffScreenOverlay';
-import { Playlist } from 'types';
+import { Playlist, AttributionData } from 'types';
+import Attribution from 'players/MobileArticleVideoPlayer/Attribution';
 
 const MobileArticleVideoTopPlaceholder = styled.div`
 	background-color: black;
@@ -33,12 +34,14 @@ interface MobileArticleVideoPlayerProps {
 	playlist: Playlist;
 	hasPartnerSlot?: boolean;
 	isFullScreen?: boolean;
+	attributionData?: AttributionData;
 }
 
 const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
 	playlist,
 	hasPartnerSlot,
 	isFullScreen,
+	attributionData,
 }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
@@ -66,6 +69,9 @@ const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
 					</MobileArticleVideoWrapper>
 				)}
 			</MobileArticleVideoTopPlaceholder>
+			{attributionData?.username && attributionData?.userUrl && (
+				<Attribution username={attributionData.username} userUrl={attributionData.userUrl} />
+			)}
 		</PlayerWrapper>
 	);
 };

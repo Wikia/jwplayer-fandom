@@ -331,4 +331,9 @@ interface VideoPlayerProps {
 	playlist: Playlist;
 }
 
-export { CreateWirewaxEmbedder, Embedder, HotspotClickEmbedderEventData, JWPlayerApi, OverlayHideEmbedderEventData, OverlayShowEmbedderEventData, Player, PlayerConfig, Playlist, PlaylistItem, SeekedEmbedderEventData, VideoPlayerProps, WirewaxPluginOptions };
+interface AttributionData {
+	username: string;
+	userUrl: string;
+}
+
+export { AttributionData, CreateWirewaxEmbedder, Embedder, HotspotClickEmbedderEventData, JWPlayerApi, OverlayHideEmbedderEventData, OverlayShowEmbedderEventData, Player, PlayerConfig, Playlist, PlaylistItem, SeekedEmbedderEventData, VideoPlayerProps, WirewaxPluginOptions };
