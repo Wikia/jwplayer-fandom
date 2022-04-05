@@ -55,12 +55,10 @@ const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ p
 			<DesktopArticleVideoTopPlaceholder ref={ref}>
 				{adComplete && (
 					<DesktopArticleVideoWrapper visibleOnScreen={onScreen || dismissed}>
-						{!(dismissed || onScreen) && (
-							<TopBar>
-								<UnmuteButton />
-								<CloseButton dismiss={() => setDismissed(true)} />
-							</TopBar>
-						)}
+						<TopBar>
+							{onScreen && <UnmuteButton />}
+							{!(dismissed || onScreen) && <CloseButton dismiss={() => setDismissed(true)} />}
+						</TopBar>
 						<JwPlayerWrapper playlist={playlist} />
 						{!onScreen && <VideoDetails />}
 					</DesktopArticleVideoWrapper>
