@@ -37,15 +37,18 @@ const VideoTitle = styled.div`
 `;
 
 const VideoDetails: React.FC = () => {
-	const { duration, title } = usePlaylistItem();
+	const playlistItem = usePlaylistItem();
+	if (playlistItem?.duration === undefined || playlistItem?.title === undefined) return null;
+
+	if (!(playlistItem.duration || playlistItem.title)) return null;
 
 	return (
 		<VideoDetailsWrapper>
 			<VideoLabel>
 				Watch
-				<VideoTime>{formatTime(duration)}</VideoTime>
+				<VideoTime>{formatTime(playlistItem.duration)}</VideoTime>
 			</VideoLabel>
-			<VideoTitle>{title}</VideoTitle>
+			<VideoTitle>{playlistItem.title}</VideoTitle>
 		</VideoDetailsWrapper>
 	);
 };

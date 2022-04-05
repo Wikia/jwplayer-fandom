@@ -21,21 +21,22 @@ const getDefaultPlayerUrl = () => {
 
 interface JwPlayerWrapperProps {
 	playlist: Playlist;
+	playerUrl?: string;
 }
 
-const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist }) => {
+const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl }) => {
 	const { setPlayer } = useContext(PlayerContext);
 
 	useEffect(() => {
 		// TODO: check if jwplayer is already loaded
-		initPlayer('featured-video__player', getDefaultPlayerUrl());
+		initPlayer('featured-video__player', playerUrl);
 	}, []);
 
-	function initPlayer(elementId: string, playerURL?: string) {
+	function initPlayer(elementId: string, playerUrl?: string) {
 		const script = document.createElement('script');
 
 		script.async = true;
-		script.src = playerURL || getDefaultPlayerUrl();
+		script.src = playerUrl || getDefaultPlayerUrl();
 		script.onload = () => {
 			const registerPlugin = window.jwplayer().registerPlugin;
 			registerPlugin('wirewax', '8.0', FandomWirewaxPlugin);

@@ -22,13 +22,13 @@ const AttributionWrapper = styled.div`
 `;
 
 const Attribution: React.FC = () => {
-	const playlistListItem = usePlaylistItem();
-	if (playlistListItem?.username === undefined || playlistListItem?.userUrl === undefined) return null;
+	const playlistItem = usePlaylistItem();
+	if (playlistItem?.username === undefined || playlistItem?.userUrl === undefined) return null;
 
 	return (
 		<AttributionWrapper>
-			<UsernameLink href={playlistListItem.userUrl}>{playlistListItem.username}</UsernameLink>
-			<IconLink href={playlistListItem.userUrl}>
+			<UsernameLink href={playlistItem.userUrl}>{playlistItem.username}</UsernameLink>
+			<IconLink href={playlistItem.userUrl}>
 				<IconExternalTiny />
 			</IconLink>
 		</AttributionWrapper>
