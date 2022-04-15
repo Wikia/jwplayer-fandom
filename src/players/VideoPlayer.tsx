@@ -5,6 +5,8 @@ import JwPlayerWrapper from 'players/shared/JwPlayerWrapper';
 import { baseVideoPlayerTracker } from 'utils/videoTracking';
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ playlist }) => {
+	console.log('main video player');
+
 	const ref = useRef<HTMLDivElement>(null);
 	baseVideoPlayerTracker.loaded();
 

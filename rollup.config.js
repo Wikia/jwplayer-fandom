@@ -3,8 +3,13 @@ import typescript from '@rollup/plugin-typescript';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
+import { fromRollup } from '@web/dev-server-rollup';
 import { terser } from 'rollup-plugin-terser';
 import dts from 'rollup-plugin-dts';
+import rollupReplace from '@rollup/plugin-replace';
+import html from '@web/rollup-plugin-html';
+
+const replace = fromRollup(rollupReplace);
 
 const config = [
 	{
@@ -45,6 +50,11 @@ const config = [
 			resolve(),
 			json(),
 			commonjs(),
+			// replace({ include: ['src/**/*.js'], __environment__: '"development"' })
+			rollupReplace({
+				'process.env.NODE_ENV': JSON.stringify('development'),
+			})
+			// html()
 		],
 		external: ['react', 'react-dom', 'react-i18next', 'react-i18next'],
 	},
@@ -54,5 +64,6 @@ const config = [
 		plugins: [dts()],
 	},
 ];
+
 
 export default config;
