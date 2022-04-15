@@ -48,8 +48,7 @@
 			"prettier --write"
 		],
 		"*.js": "eslint --cache --fix",
-		"*.{js,css,md}": "prettier --write",
-		"!test-jw/**/*": ""
+		"*.{js,css,md}": "prettier --write"
 	},
 	"publishConfig": {
 		"registry": "https://artifactory.wikia-inc.com/artifactory/api/npm/wikia-npm/"
