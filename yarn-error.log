@@ -1,38 +1,36 @@
 Arguments: 
-  /Users/wleaverton/.nvm/versions/node/v16.9.1/bin/node /Users/wleaverton/.nvm/versions/node/v16.9.1/bin/yarn run build
+  /Users/joshrogan/.nvm/versions/node/v17.4.0/bin/node /usr/local/Cellar/yarn/1.22.17_2/libexec/bin/yarn.js add @fandom/tracking-metrics
 
 PATH: 
-  /Users/wleaverton/google-cloud-sdk/bin:/Users/wleaverton/.nvm/versions/node/v16.9.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
+  /Users/joshrogan/.nvm/versions/node/v17.4.0/bin:/Users/joshrogan/.rvm/gems/ruby-2.4.1/bin:/Users/joshrogan/.rvm/gems/ruby-2.4.1@global/bin:/Users/joshrogan/.rvm/rubies/ruby-2.4.1/bin:/Users/joshrogan/Downloads/google-cloud-sdk/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/joshrogan/.rvm/gems/ruby-2.4.1/bin:/Users/joshrogan/.rvm/gems/ruby-2.4.1@global/bin:/Users/joshrogan/.rvm/rubies/ruby-2.4.1/bin:/Users/joshrogan/Downloads/google-cloud-sdk/bin:/Users/joshrogan/.config/composer/vendor/bin:/Users/joshrogan/go/bin:/Users/joshrogan/.composer/vendor/bin:/Users/joshrogan/.local/bin:/Users/joshrogan/bin:/Users/joshrogan/.config/yarn/global/bin:/Users/joshrogan/.config/yarn/global/bin/bin:/Users/joshrogan/config/yarn/global/bin/bin:/Users/joshrogan/.yarn/bin:/Users/joshrogan/.config/yarn/global/node_modules/.bin:/Users/joshrogan/.rvm/bin:/Users/joshrogan/.config/composer/vendor/bin:/Users/joshrogan/go/bin:/Users/joshrogan/.composer/vendor/bin:/Users/joshrogan/.local/bin:/Users/joshrogan/bin:/Users/joshrogan/.config/yarn/global/bin:/Users/joshrogan/.config/yarn/global/bin/bin:/Users/joshrogan/config/yarn/global/bin/bin:/Users/joshrogan/.yarn/bin:/Users/joshrogan/.config/yarn/global/node_modules/.bin
 
 Yarn version: 
   1.22.17
 
 Node version: 
-  16.9.1
+  17.4.0
 
 Platform: 
   darwin x64
 
 Trace: 
-  SyntaxError: /Users/wleaverton/dev/jwplayer-fandom/package.json: Unexpected token } in JSON at position 3427
-      at JSON.parse (<anonymous>)
-      at /Users/wleaverton/.nvm/versions/node/v16.9.1/lib/node_modules/yarn/lib/cli.js:1625:59
-      at Generator.next (<anonymous>)
-      at step (/Users/wleaverton/.nvm/versions/node/v16.9.1/lib/node_modules/yarn/lib/cli.js:310:30)
-      at /Users/wleaverton/.nvm/versions/node/v16.9.1/lib/node_modules/yarn/lib/cli.js:321:13
+  Error: https://artifactory.wikia-inc.com/artifactory/api/npm/wikia-npm/@fandom%2ftracking-metrics: ETIMEDOUT
+      at Timeout._onTimeout (/usr/local/Cellar/yarn/1.22.17_2/libexec/lib/cli.js:141543:19)
+      at listOnTimeout (node:internal/timers:559:17)
+      at processTimers (node:internal/timers:502:7)
 
 npm manifest: 
   {
    "name": "jwplayer-fandom",
    "version": "1.12.1",
    "description": "JWPlayer for Fandom",
-   "main": "dist/main.js",
+   "main": "dist/bundle.umd.js",
+   "module": "dist/bundle.esm.js",
+   "types": "dist/main.d.ts",
    "install-peers": "install-peers",
    "scripts": {
     "build": "yarn run create-dist && rollup -c",
-    "build-dev": "yarn run create-dist && rollup -c --environment NODE_ENV:development",
     "watch": "yarn run create-dist && rollup -c --watch",
-    "watch-dev": "yarn run create-dist && rollup -c --watch --environment NODE_ENV:development",
     "create-dist": "rm -rf dist && mkdir -p dist",
     "lint": "npm-run-all --continue-on-error --parallel lint:prettier lint:eslint",
     "lint:prettier:src": "prettier --write src",
@@ -126,8 +124,7 @@ npm manifest:
     "@wikia/post-quecast": "2.0.1",
     "rxjs": "7.5.4",
     "styled-components": "^5.3.3"
-   },
-   "types": "dist/dts/main.d.ts",
+   }
   }
 
 yarn manifest: 
