@@ -123,22 +123,24 @@ declare class FandomWirewaxPlugin {
 
 	// ES6
 	JWPlayHandler: () => void = () => {
-		console.log('JW -> WIREWAX: play');
 		this.startTimeUpdate();
 
 		try {
 			this.embedder.play();
+			// TODO: reaplace with tracking
+			console.log('wirewax play');
 		} catch (error) {
 			console.warn(error);
 		}
 	};
 
 	JWPauseHandler: () => void = () => {
-		console.log('JW -> WIREWAX: pause');
 		this.stopTimeUpdate();
 
 		try {
 			this.embedder.pause();
+			// TODO: reaplace with tracking
+			console.log('wirewax pause');
 		} catch (error) {
 			console.warn(error);
 		}
@@ -155,45 +157,52 @@ declare class FandomWirewaxPlugin {
 	};
 
 	WirewaxPlayHandler: () => void = () => {
-		console.log('WIREWAX -> JW: play');
-
 		try {
-			this.player.play();
+			if (this.player.getState() !== 'playing') {
+				this.player.play();
+			}
 		} catch (err) {
 			console.log(err);
 		}
 	};
 
 	WirewaxPauseHandler: () => void = () => {
-		console.log('WIREWAX -> JW: pause');
-
 		try {
-			this.player.pause();
+			if (this.player.getState() !== 'paused') {
+				this.player.pause();
+			}
 		} catch (err) {
 			console.log(err);
 		}
 	};
 
 	WirewaxSeekedHandler: (event: SeekedEmbedderEventData) => void = (event) => {
-		console.log('WIREWAX -> JW: seek', event);
-
 		try {
-			this.player.seek(event.seekTo);
+			if (typeof event === 'number') {
+				this.player.seek(event);
+			} else if (typeof event.seekTo === 'number') {
+				this.player.seek(event.seekTo);
+			}
+			// TODO: reaplace with tracking
+			console.log('wirewax seek', { event });
 		} catch (err) {
 			console.log(err);
 		}
 	};
 
 	WirewaxHotspotClickHandler: (event: HotspotClickEmbedderEventData) => void = (event) => {
-		console.log('hotspot click', { event });
+		// TODO: reaplace with tracking
+		console.log('wirewax hotspot click', { event });
 	};
 
 	WirewaxOverlayShowHandler: (event: OverlayShowEmbedderEventData) => void = (event) => {
-		console.log('overlay open', { event });
+		// TODO: reaplace with tracking
+		console.log('wirewax overlay open', { event });
 	};
 
 	WirewaxOverlayHideHandler: (event: OverlayHideEmbedderEventData) => void = (event) => {
-		console.log('overlay close', { event });
+		// TODO: reaplace with tracking
+		console.log('wirewax overlay close', { event });
 	};
 }
 
