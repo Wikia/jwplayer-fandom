@@ -10,7 +10,6 @@ const JWEvents = {
 	SEEK: 'seek',
 	COMPLETE: 'complete',
 
-
 	// Ad Events
 	AD_LOADED: 'adLoaded',
 	AD_PLAY: 'adPlay',
@@ -21,17 +20,17 @@ const JWEvents = {
 	PLAYLIST_CHANGE: 'playlistItem',
 };
 
-  // •autostart
-  //  • external (API usage)
-  //  • interaction (click, touch, keyboard)
-  //  • playlist (due to autoadvancing)
-  //  • related-auto (auto-advancing JW Recommendations
+// •autostart
+//  • external (API usage)
+//  • interaction (click, touch, keyboard)
+//  • playlist (due to autoadvancing)
+//  • related-auto (auto-advancing JW Recommendations
 export const PLAY_REASONS = {
 	AUTOSTART: 'autostart',
 	EXTERNAL: 'external',
 	INTERACTION: 'interaction',
 	PLAYLIST: 'playlist',
 	RELATED_AUTO: 'related-auto',
-}
+};
 
 export default JWEvents;

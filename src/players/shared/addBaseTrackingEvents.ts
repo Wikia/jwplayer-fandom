@@ -1,7 +1,7 @@
-import { MutePlayerEventData, Player, PlayPlayerEventData } from "types";
-import JWEvents, { PLAY_REASONS } from "players/shared/JWEvents";
-import { jwPlayerVideoTracker, singleTrack } from "utils/videoTracking";
-import { recordVideoEvent, VIDEO_RECORD_EVENTS } from "utils/videoTimingEvents";
+import { MutePlayerEventData, Player, PlayPlayerEventData } from 'types';
+import JWEvents from 'players/shared/JWEvents';
+import { jwPlayerVideoTracker, singleTrack } from 'utils/videoTracking';
+import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
 
 export default function addBaseTrackingEvents(playerInstance: Player) {
 	const playList = playerInstance.getPlaylistItem();
@@ -22,7 +22,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 			const initialPlayEvent = 'jw-initial-play-event';
 
-			jwPlayerVideoTracker({action: playReason, label: playReason});
+			jwPlayerVideoTracker({ action: playReason, label: playReason });
 
 			// Only fire on the very first event
 			if (singleTrack(initialPlayEvent)) {
@@ -41,7 +41,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 		})
 		.on(JWEvents.MUTE, (event: MutePlayerEventData) => {
 			if (event.mute === undefined) {
-				console.warn('mute undefeind');
+				console.warn('mute undefined');
 				return;
 			}
 
