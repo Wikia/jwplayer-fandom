@@ -3,6 +3,8 @@ import { JWPlayerApi } from 'types';
 import FandomWirewaxPlugin from 'plugins/fandom-wirewax.plugin';
 import { PlayerContext } from 'players/shared/PlayerContext';
 import { Playlist } from 'types';
+import { jwPlayerVideoTracker } from 'utils/videoTracking';
+import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
 
 interface WindowJWPlayer extends Window {
 	jwplayer?: JWPlayerApi;
@@ -25,21 +27,27 @@ interface JwPlayerWrapperProps {
 }
 
 const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl }) => {
+	recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_RENDER); // TODO Find an earlier spot?
 	const { setPlayer } = useContext(PlayerContext);
 
 	useEffect(() => {
+		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_INIT_RENDER);
 		// TODO: check if jwplayer is already loaded
 		initPlayer('featured-video__player', playerUrl);
 	}, []);
 
 	function initPlayer(elementId: string, playerUrl?: string) {
+		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START);
 		const script = document.createElement('script');
+		jwPlayerVideoTracker({ label: 'video-id-here', action: 'loading-scripts' });
 
 		script.async = true;
 		script.src = playerUrl || getDefaultPlayerUrl();
 		script.onload = () => {
+			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY);
 			const registerPlugin = window.jwplayer().registerPlugin;
 			registerPlugin('wirewax', '8.0', FandomWirewaxPlugin);
+			jwPlayerVideoTracker({ label: 'video-id-here', action: 'wirewax-registered' });
 
 			const playerInstance = window
 				.jwplayer(elementId)
@@ -48,6 +56,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl }
 					plugins: { fandomWirewax: {} },
 				})
 				.on('ready', (event) => {
+					jwPlayerVideoTracker.loaded({ label: 'video-id-here' }); // TODO Send playing video id?
 					new FandomWirewaxPlugin(elementId, {
 						player: window.jwplayer(elementId),
 						ready: event,

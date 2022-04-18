@@ -1,0 +1,21 @@
+root = true
+
+[*]
+indent_style = tab
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+max_line_length = 120
+
+[**.{yaml,yml,svg,conf,sh,Jenkinsfile,JenkinsFile}]
+indent_size = 2
+indent_style = space
+
+[Jenkinsfile]
+indent_style = space
+indent_size = 2
+
+[JenkinsFile]
+indent_style = space
+indent_size = 2
