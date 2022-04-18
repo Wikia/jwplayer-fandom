@@ -9,7 +9,7 @@
 	"scripts": {
 		"build": "yarn run create-dist && rollup -c",
 		"watch": "yarn run create-dist && rollup -c --watch",
-		"app": "rm test-jw/bundle.esm.js && ln -s dist/bundle.esm.js test-jw/ && cd test-jw && yarn start",
+		"app": "rm test-jw/src/bundle.esm.js && cp dist/bundle.esm.js test-jw/src && cd test-jw && yarn start",
 		"create-dist": "rm -rf dist && mkdir -p dist",
 		"lint": "npm-run-all --continue-on-error --parallel lint:prettier lint:eslint",
 		"lint:prettier:src": "prettier --write src",

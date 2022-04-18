@@ -13,7 +13,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ playlist }) => {
 	return (
 		<PlayerWrapper>
 			<div ref={ref}>
-				<JwPlayerWrapper playlist={playlist} />;
+				<JwPlayerWrapper playlist={playlist} />
 			</div>
 		</PlayerWrapper>
 	);

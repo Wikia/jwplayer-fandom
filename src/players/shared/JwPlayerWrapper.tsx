@@ -27,10 +27,11 @@ interface JwPlayerWrapperProps {
 }
 
 const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl }) => {
-	recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_INIT); // TODO Find an earlier spot?
+	recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_RENDER); // TODO Find an earlier spot?
 	const { setPlayer } = useContext(PlayerContext);
 
 	useEffect(() => {
+		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_INIT_RENDER);
 		// TODO: check if jwplayer is already loaded
 		initPlayer('featured-video__player', playerUrl);
 	}, []);
