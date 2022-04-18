@@ -24,7 +24,7 @@ export const desktopArticleVideoPlayerTracker = trackerWithNewCategory(CATEGORIE
 export const jwPlayerVideoTracker = trackerWithNewCategory(CATEGORIES.JW_PLAYER);
 
 const mappings = new Set<string>();
-export function shouldTriggerImpression(eventName: string) {
+export function singleTrack(eventName: string) {
 	if (mappings.has(eventName)) {
 		return false;
 	}

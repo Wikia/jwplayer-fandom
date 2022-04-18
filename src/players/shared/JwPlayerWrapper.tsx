@@ -5,6 +5,8 @@ import { PlayerContext } from 'players/shared/PlayerContext';
 import { Playlist } from 'types';
 import { jwPlayerVideoTracker } from 'utils/videoTracking';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
+import JWEvents from "players/shared/JWEvents";
+import addBaseTrackingEvents from "players/shared/addBaseTrackingEvents";
 
 interface WindowJWPlayer extends Window {
 	jwplayer?: JWPlayerApi;
@@ -55,14 +57,28 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl }
 					playlist: playlist,
 					plugins: { fandomWirewax: {} },
 				})
-				.on('ready', (event) => {
+
+
+			playerInstance.on(JWEvents.READY, (event) => {
+				addBaseTrackingEvents(playerInstance);
 					jwPlayerVideoTracker.loaded({ label: 'video-id-here' }); // TODO Send playing video id?
 					new FandomWirewaxPlugin(elementId, {
 						player: window.jwplayer(elementId),
 						ready: event,
 					});
 				});
+
+			console.log('fuck', playerInstance);
+			debugger;
+
+			// Add events
+
+
+
+
 			setPlayer(playerInstance);
+
+			console.log(playerInstance);
 		};
 
 		document.getElementsByTagName('head')[0].appendChild(script);

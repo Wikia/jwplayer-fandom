@@ -51,12 +51,17 @@ interface ReadyPlayerEventData {
 	viewable?: number;
 }
 
+export interface MutePlayerEventData {
+	mute: boolean;
+}
+
 type JwEventData =
 	| PlayPlayerEventData
 	| PausePlayerEventData
 	| TimePlayerEventData
 	| ReadyPlayerEventData
-	| PlaylistItemPlayerEventData;
+	| PlaylistItemPlayerEventData
+	| MutePlayerEventData;
 type JwEventHandler = (event?: JwEventData) => void;
 
 export type Player = {
@@ -66,8 +71,8 @@ export type Player = {
 	setMute: (mute: boolean | null) => null;
 	setFullscreen: () => null;
 	getPlaylistItem: () => PlaylistItem;
-	on: (name: string, handler: JwEventHandler) => null;
-	off: (name: string, handler: JwEventHandler) => null;
+	on: (name: string, handler: JwEventHandler) => Player;
+	off: (name: string, handler: JwEventHandler) => Player;
 	getState: () => string;
 	getMute: () => boolean;
 	setup(options: PlayerConfig): Player;

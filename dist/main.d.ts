@@ -248,12 +248,17 @@ interface ReadyPlayerEventData {
 	viewable?: number;
 }
 
+interface MutePlayerEventData {
+	mute: boolean;
+}
+
 type JwEventData =
 	| PlayPlayerEventData
 	| PausePlayerEventData
 	| TimePlayerEventData
 	| ReadyPlayerEventData
-	| PlaylistItemPlayerEventData;
+	| PlaylistItemPlayerEventData
+	| MutePlayerEventData;
 type JwEventHandler = (event?: JwEventData) => void;
 
 type Player = {
@@ -263,8 +268,8 @@ type Player = {
 	setMute: (mute: boolean | null) => null;
 	setFullscreen: () => null;
 	getPlaylistItem: () => PlaylistItem;
-	on: (name: string, handler: JwEventHandler) => null;
-	off: (name: string, handler: JwEventHandler) => null;
+	on: (name: string, handler: JwEventHandler) => Player;
+	off: (name: string, handler: JwEventHandler) => Player;
 	getState: () => string;
 	getMute: () => boolean;
 	setup(options: PlayerConfig): Player;
@@ -333,4 +338,4 @@ interface VideoPlayerProps {
 	playlist: Playlist;
 }
 
-export { CreateWirewaxEmbedder, Embedder, HotspotClickEmbedderEventData, JWPlayerApi, OverlayHideEmbedderEventData, OverlayShowEmbedderEventData, Player, PlayerConfig, Playlist, PlaylistItem, SeekedEmbedderEventData, VideoPlayerProps, WirewaxPluginOptions };
+export { CreateWirewaxEmbedder, Embedder, HotspotClickEmbedderEventData, JWPlayerApi, MutePlayerEventData, OverlayHideEmbedderEventData, OverlayShowEmbedderEventData, Player, PlayerConfig, Playlist, PlaylistItem, SeekedEmbedderEventData, VideoPlayerProps, WirewaxPluginOptions };
