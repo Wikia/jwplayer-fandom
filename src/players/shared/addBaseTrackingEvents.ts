@@ -62,7 +62,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 					category: VIDEO_TIME_CATEGORY,
 					action: VIDEO_TIME_ACTION,
 					label: 'video-quartile-25',
-					value: 0.25,
+					value: event.duration,
 				});
 			}
 
@@ -71,7 +71,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 					category: VIDEO_TIME_CATEGORY,
 					action: VIDEO_TIME_ACTION,
 					label: 'video-quartile-50',
-					value: 0.5,
+					value: event.duration,
 				});
 			}
 
@@ -80,7 +80,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 					category: VIDEO_TIME_CATEGORY,
 					action: VIDEO_TIME_ACTION,
 					label: 'video-quartile-75',
-					value: 0.75,
+					value: event.duration,
 				});
 			}
 		})
@@ -202,7 +202,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 					category: AD_TIME_CATEGORY,
 					action: AD_ACTION,
 					label: 'ad-quartile-25',
-					value: 0.25,
+					value: event.duration,
 				});
 			}
 
@@ -211,7 +211,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 					category: AD_TIME_CATEGORY,
 					action: AD_ACTION,
 					label: 'ad-quartile-50',
-					value: 0.5,
+					value: event.duration,
 				});
 			}
 
@@ -220,7 +220,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 					category: AD_TIME_CATEGORY,
 					action: AD_ACTION,
 					label: 'ad-quartile-75',
-					value: 0.75,
+					value: event.duration,
 				});
 			}
 		});
