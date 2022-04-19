@@ -7,7 +7,7 @@ import PlayerWrapper from 'players/shared/PlayerWrapper';
 import OffScreenOverlay from 'players/MobileArticleVideoPlayer/OffScreenOverlay/OffScreenOverlay';
 import { Playlist } from 'types';
 import Attribution from 'players/MobileArticleVideoPlayer/Attribution';
-import { shouldTriggerImpression, mobileArticleVideoPlayerTracker } from 'utils/videoTracking';
+import { singleTrack } from 'utils/videoTracking';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
 
 const MobileArticleVideoTopPlaceholder = styled.div`
@@ -60,7 +60,7 @@ const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
 	};
 
 	useEffect(() => {
-		mobileArticleVideoPlayerTracker.loaded();
+		// mobileArticleVideoPlayerTracker.loaded();
 	}, []);
 
 	useEffect(() => {
@@ -68,21 +68,21 @@ const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
 			return;
 		}
 
-		if (!adComplete && shouldTriggerImpression('ad-mobile-video-player-impression')) {
-			mobileArticleVideoPlayerTracker.impression({ label: 'ad' }); // todo figure out label
+		if (!adComplete && singleTrack('ad-mobile-video-player-impression')) {
+			// mobileArticleVideoPlayerTracker.impression({ label: 'ad' }); // todo figure out label
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_AD);
 			return;
 		}
 
-		if (shouldTriggerImpression('mobile-video-player-impression')) {
-			mobileArticleVideoPlayerTracker.impression({ label: 'post-ad' }); // todo figure out label
+		if (singleTrack('mobile-video-player-impression')) {
+			// mobileArticleVideoPlayerTracker.impression({ label: 'post-ad' }); // todo figure out label
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_VIDEO);
 			return;
 		}
 	}, [onScreen, adComplete]);
 
 	return (
-		<PlayerWrapper>
+		<PlayerWrapper playerName="mobile-article-video">
 			<MobileArticleVideoTopPlaceholder ref={ref}>
 				{adComplete && (
 					<MobileArticleVideoWrapper visibleOnScreen={onScreen || dismissed} topPosition={getTopPosition()}>

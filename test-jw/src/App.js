@@ -1,4 +1,4 @@
-import { VideoPlayer } from './bundle.esm'
+import { VideoPlayer } from './bundle.esm.js'
 
 function App() {
   return (

@@ -257,12 +257,60 @@ interface ReadyPlayerEventData {
 	viewable?: number;
 }
 
+interface MutePlayerEventData {
+	mute: boolean;
+}
+
+interface OnAdTimeEventData {
+	client: string;
+	creativetype: string;
+	duration: number;
+	position: number;
+	sequence: number;
+	tag: string;
+	viewable: number;
+}
+
+interface OnVideoTimeEventData {
+	duration: number;
+	position: number;
+	viewable: number;
+}
+
+interface OnErrorEventData {
+	code: number;
+	message: string;
+	type: string;
+}
+
+interface OnVolumeEventData {
+	volume: number;
+}
+
+interface FullScreenEventData {
+	fullscreen: boolean;
+}
+
+interface SeekEventData {
+	currentTime: number;
+	duration: number;
+	position: number;
+	offset: number;
+}
+
 type JwEventData =
 	| PlayPlayerEventData
 	| PausePlayerEventData
 	| TimePlayerEventData
 	| ReadyPlayerEventData
-	| PlaylistItemPlayerEventData;
+	| PlaylistItemPlayerEventData
+	| MutePlayerEventData
+	| OnVideoTimeEventData
+	| OnErrorEventData
+	| OnVolumeEventData
+	| FullScreenEventData
+	| SeekEventData
+	| OnAdTimeEventData;
 type JwEventHandler = (event?: JwEventData) => void;
 
 type Player = {
@@ -272,8 +320,8 @@ type Player = {
 	setMute: (mute: boolean | null) => null;
 	setFullscreen: () => null;
 	getPlaylistItem: () => PlaylistItem;
-	on: (name: string, handler: JwEventHandler) => null;
-	off: (name: string, handler: JwEventHandler) => null;
+	on: (name: string, handler: JwEventHandler) => Player;
+	off: (name: string, handler: JwEventHandler) => Player;
 	getState: () => string;
 	getMute: () => boolean;
 	setup(options: PlayerConfig): Player;
@@ -342,4 +390,4 @@ interface VideoPlayerProps {
 	playlist: Playlist;
 }
 
-export { CreateWirewaxEmbedder, Embedder, HotspotClickEmbedderEventData, JWPlayerApi, OverlayHideEmbedderEventData, OverlayShowEmbedderEventData, Player, PlayerConfig, Playlist, PlaylistItem, SeekedEmbedderEventData, VideoPlayerProps, WirewaxPluginOptions };
+export { CreateWirewaxEmbedder, Embedder, FullScreenEventData, HotspotClickEmbedderEventData, JWPlayerApi, MutePlayerEventData, OnAdTimeEventData, OnErrorEventData, OnVideoTimeEventData, OnVolumeEventData, OverlayHideEmbedderEventData, OverlayShowEmbedderEventData, Player, PlayerConfig, Playlist, PlaylistItem, SeekEventData, SeekedEmbedderEventData, VideoPlayerProps, WirewaxPluginOptions };
