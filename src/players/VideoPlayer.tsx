@@ -5,13 +5,11 @@ import JwPlayerWrapper from 'players/shared/JwPlayerWrapper';
 import { baseVideoPlayerTracker } from 'utils/videoTracking';
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ playlist }) => {
-	console.log('main video player update Joshy 123 345');
-
 	const ref = useRef<HTMLDivElement>(null);
 	baseVideoPlayerTracker.loaded();
 
 	return (
-		<PlayerWrapper>
+		<PlayerWrapper playerName={'base-player'}>
 			<div ref={ref}>
 				<JwPlayerWrapper playlist={playlist} />
 			</div>

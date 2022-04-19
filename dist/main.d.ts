@@ -252,13 +252,58 @@ interface MutePlayerEventData {
 	mute: boolean;
 }
 
+interface OnAdTimeEventData {
+	client: string;
+	creativetype: string;
+	duration: number;
+	position: number;
+	sequence: number;
+	tag: string;
+	viewable: number;
+}
+
+interface OnVideoTimeEventData {
+	duration: number;
+	position: number;
+	viewable: number;
+}
+
+interface OnErrorEventData {
+	code: number;
+	message: string;
+	sourceError: Object|null;
+	type: string;
+}
+
+interface OnVolumeEventData {
+	volume: number;
+}
+
+interface FullScreenEventData {
+	fullscreen: boolean;
+}
+
+interface SeekEventData {
+	currentTime: number;
+	duration: number;
+	position: number;
+	seekRange: object;
+	offset: number;
+}
+
 type JwEventData =
 	| PlayPlayerEventData
 	| PausePlayerEventData
 	| TimePlayerEventData
 	| ReadyPlayerEventData
 	| PlaylistItemPlayerEventData
-	| MutePlayerEventData;
+	| MutePlayerEventData
+	| OnVideoTimeEventData
+	| OnErrorEventData
+	| OnVolumeEventData
+	| FullScreenEventData
+	| SeekEventData
+	| OnAdTimeEventData;
 type JwEventHandler = (event?: JwEventData) => void;
 
 type Player = {
@@ -338,4 +383,4 @@ interface VideoPlayerProps {
 	playlist: Playlist;
 }
 
-export { CreateWirewaxEmbedder, Embedder, HotspotClickEmbedderEventData, JWPlayerApi, MutePlayerEventData, OverlayHideEmbedderEventData, OverlayShowEmbedderEventData, Player, PlayerConfig, Playlist, PlaylistItem, SeekedEmbedderEventData, VideoPlayerProps, WirewaxPluginOptions };
+export { CreateWirewaxEmbedder, Embedder, FullScreenEventData, HotspotClickEmbedderEventData, JWPlayerApi, MutePlayerEventData, OnAdTimeEventData, OnErrorEventData, OnVideoTimeEventData, OnVolumeEventData, OverlayHideEmbedderEventData, OverlayShowEmbedderEventData, Player, PlayerConfig, Playlist, PlaylistItem, SeekEventData, SeekedEmbedderEventData, VideoPlayerProps, WirewaxPluginOptions };

@@ -51,7 +51,7 @@ const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ p
 	const [dismissed, setDismissed] = useState(false);
 
 	return (
-		<PlayerWrapper>
+		<PlayerWrapper playerName="desktop-article-video">
 			<DesktopArticleVideoTopPlaceholder ref={ref}>
 				{adComplete && (
 					<DesktopArticleVideoWrapper visibleOnScreen={onScreen || dismissed}>

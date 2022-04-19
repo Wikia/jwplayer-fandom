@@ -55,13 +55,56 @@ export interface MutePlayerEventData {
 	mute: boolean;
 }
 
+export interface OnAdTimeEventData {
+	client: string;
+	creativetype: string;
+	duration: number;
+	position: number;
+	sequence: number;
+	tag: string;
+	viewable: number;
+}
+
+export interface OnVideoTimeEventData {
+	duration: number;
+	position: number;
+	viewable: number;
+}
+
+export interface OnErrorEventData {
+	code: number;
+	message: string;
+	type: string;
+}
+
+export interface OnVolumeEventData {
+	volume: number;
+}
+
+export interface FullScreenEventData {
+	fullscreen: boolean;
+}
+
+export interface SeekEventData {
+	currentTime: number;
+	duration: number;
+	position: number;
+	offset: number;
+}
+
 type JwEventData =
 	| PlayPlayerEventData
 	| PausePlayerEventData
 	| TimePlayerEventData
 	| ReadyPlayerEventData
 	| PlaylistItemPlayerEventData
-	| MutePlayerEventData;
+	| MutePlayerEventData
+	| OnVideoTimeEventData
+	| OnErrorEventData
+	| OnVolumeEventData
+	| FullScreenEventData
+	| SeekEventData
+	| OnAdTimeEventData;
 type JwEventHandler = (event?: JwEventData) => void;
 
 export type Player = {
