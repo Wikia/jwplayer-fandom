@@ -29,7 +29,6 @@ interface JwPlayerWrapperProps {
 }
 
 const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl }) => {
-	recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_RENDER); // TODO Find an earlier spot?
 	const { setPlayer } = useContext(PlayerContext);
 
 	useEffect(() => {
@@ -57,6 +56,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl }
 			});
 
 			playerInstance.on(JWEvents.READY, (event) => {
+				recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_READY);
 				// only add the events after the player is ready
 				jwPlayerVideoTracker.loaded();
 				addBaseTrackingEvents(playerInstance);

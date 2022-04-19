@@ -32,7 +32,6 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 	// Add events
 	playerInstance
 		.on(JWEvents.PLAY, (event: PlayPlayerEventData) => {
-			console.log(event);
 			if (!event.playReason) {
 				console.warn('No play reason');
 				return;
