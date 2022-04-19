@@ -28,13 +28,13 @@ interface PlaylistItemPlayerEventData {
 	item: PlaylistItem;
 }
 
-interface PlayPlayerEventData {
+export interface PlayPlayerEventData {
 	oldState?: string;
 	viewable?: number;
 	playReason?: string;
 }
 
-interface PausePlayerEventData {
+export interface PausePlayerEventData {
 	oldState?: string;
 	viewable?: number;
 	pauseReason?: string;

@@ -18,12 +18,14 @@ export const CATEGORIES = {
 	MOBILE_ARTICLE_VIDEO_PLAYER: 'FandomVideoPlayer: mobile-article-video-', // mobile skin
 	DESKTOP_ARTICLE_VIDEO_PLAYER: 'FandomVideoPlayer: desktop-article-video-', // desktop skin
 	JW_PLAYER: 'FandomVideoPlayer: ', // Generic Events
+	// WIREWAX: 'wirewax',
 };
 
 export const baseVideoPlayerTracker = trackerWithNewCategory(CATEGORIES.BASE_VIDEO_PLAYER);
 export const mobileArticleVideoPlayerTracker = trackerWithNewCategory(CATEGORIES.MOBILE_ARTICLE_VIDEO_PLAYER);
 export const desktopArticleVideoPlayerTracker = trackerWithNewCategory(CATEGORIES.DESKTOP_ARTICLE_VIDEO_PLAYER);
 export const jwPlayerVideoTracker = trackerWithNewCategory(CATEGORIES.JW_PLAYER);
+// export const wirewaxTracker = trackerWithNewCategory(CATEGORIES.WIREWAX);
 
 export function withPlayerName(trackingFunction: ModuleTrackingFunction, playerName: string) {
 	return trackingFunction.extend({
