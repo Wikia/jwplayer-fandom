@@ -214,6 +214,7 @@ type PlayerConfig = {
 	playlistItem?: { mediaid: string; videoId: string };
 	mediaElement?: HTMLVideoElement;
 	autostart?: boolean;
+	pid?: string;
 };
 
 type Playlist = PlaylistItem | PlaylistItem[] | string | string[];
@@ -227,6 +228,7 @@ type PlaylistItem = {
 	playlist?: PlaylistItem[];
 	username?: string;
 	userUrl?: string;
+	pubdate?: number;
 };
 
 interface PlaylistItemPlayerEventData {
@@ -332,7 +334,9 @@ type Player = {
 	getVolume: () => number;
 	getPosition: () => number;
 	getCurrentQuality: () => number;
+	getPlaylistIndex: () => number;
 	getViewable: () => number;
+	getDuration: () => number;
 };
 type CreateWirewaxEmbedder = () => Embedder;
 type WirewaxPluginOptions = {

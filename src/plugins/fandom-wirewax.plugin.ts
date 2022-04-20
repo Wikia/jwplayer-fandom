@@ -11,6 +11,7 @@ import {
 
 interface WindowWirewax extends Window {
 	createWirewaxEmbedder?: CreateWirewaxEmbedder;
+	currentPlaylistItemWirewax: boolean;
 }
 
 declare let window: WindowWirewax;
@@ -24,10 +25,13 @@ const fetchWIREWAXVidId = async (mediaid: string): Promise<string> => {
 	const response = await fetch(`https://edge-player.wirewax.com/jwPlayerData/${mediaid}.txt`);
 
 	if (response.status !== 200) {
+		window.currentPlaylistItemWirewax = false;
 		throw new Error('No vidId is mapped with this mediaid');
 	}
 
 	const vidId: string = (await response.json()) as string;
+
+	window.currentPlaylistItemWirewax = true;
 
 	return vidId;
 };

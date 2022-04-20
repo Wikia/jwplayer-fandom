@@ -6,6 +6,13 @@ import {
 	getIsCurrentlyViewable,
 	getPlayHeadPosition,
 	getVideoVolume,
+	getPlaylistPosition,
+	getDuration,
+	getPlayerId,
+	getAssetTitle,
+	getAssetId,
+	getPublishDate,
+	getIsInteractable,
 } from 'utils/globalJWInterface';
 
 // https://docs.google.com/spreadsheets/d/1jEn61uIP8dYE8KQP3nrMG3nePFArgxrs3Q4lxTcArZQ/edit#gid=1564524057
@@ -79,7 +86,19 @@ function addRunTimeParams(trackingParams: TrackData): TrackData {
 	trackDataObject[PROPERTY_NAMES.VIDEO_PLAYHEAD_POSITION] = getPlayHeadPosition();
 	trackDataObject[PROPERTY_NAMES.VIDEO_IS_VIEWABLE] = getIsCurrentlyViewable();
 
-	// ... TODO add them all here
+	// Warren
+	trackDataObject[PROPERTY_NAMES.VIDEO_PLAYLIST_POSITION] = getPlaylistPosition();
+	trackDataObject[PROPERTY_NAMES.VIDEO_IS_INTERACTABLE] = getIsInteractable();
+	trackDataObject[PROPERTY_NAMES.VIDEO_ASSET_TITLE] = getAssetTitle();
+	trackDataObject[PROPERTY_NAMES.VIDEO_ASSET_ID] = getAssetId();
+	trackDataObject[PROPERTY_NAMES.VIDEO_PUBLISH_DATE] = getPublishDate();
+	trackDataObject[PROPERTY_NAMES.VIDEO_DURATION] = getDuration();
+	trackDataObject[PROPERTY_NAMES.VIDEO_PLAYER] = getPlayerId();
+
+	// TO BE ADDED LATER
+	// trackDataObject[PROPERTY_NAMES.VIDEO_COLLECTION] = getCollection();
+	// trackDataObject[PROPERTY_NAMES.VIDEO_SERIES_NAME] = getSeriesName()
+	// trackDataObject[PROPERTY_NAMES.VIDEO_SERIES_ID] = getSeriesId();
 
 	return trackDataObject;
 }

@@ -7,6 +7,7 @@ import { Player } from 'types';
 
 export interface WindowWithJWPlayer {
 	jwplayer: () => Player;
+	currentPlaylistItemWirewax: boolean;
 }
 
 declare let window: WindowWithJWPlayer;
@@ -47,4 +48,32 @@ export const getCurrentQuality = withTryCatchDefault(() => {
 
 export const getIsCurrentlyViewable = withTryCatchDefault(() => {
 	return !!window.jwplayer().getViewable();
+});
+
+export const getPlaylistPosition = withTryCatchDefault(() => {
+	return window.jwplayer().getPlaylistIndex() + 1;
+});
+
+export const getDuration = withTryCatchDefault(() => {
+	return window.jwplayer().getDuration();
+});
+
+export const getPlayerId = withTryCatchDefault(() => {
+	return window.jwplayer().getConfig().pid;
+});
+
+export const getAssetTitle = withTryCatchDefault(() => {
+	return window.jwplayer().getPlaylistItem().title;
+});
+
+export const getAssetId = withTryCatchDefault(() => {
+	return window.jwplayer().getPlaylistItem().mediaid;
+});
+
+export const getPublishDate = withTryCatchDefault(() => {
+	window.jwplayer().getPlaylistItem().pubdate;
+});
+
+export const getIsInteractable = withTryCatchDefault(() => {
+	return window.currentPlaylistItemWirewax;
 });
