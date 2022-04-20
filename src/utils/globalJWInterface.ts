@@ -77,3 +77,7 @@ export const getPublishDate = withTryCatchDefault(() => {
 export const getIsInteractable = withTryCatchDefault(() => {
 	return window.currentPlaylistItemWirewax;
 });
+
+export const getJWAdBlockState = withTryCatchDefault(() => {
+	return window.jwplayer().getAdBlock();
+});

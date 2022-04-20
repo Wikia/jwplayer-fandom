@@ -13,40 +13,37 @@ import {
 	getAssetId,
 	getPublishDate,
 	getIsInteractable,
+	getJWAdBlockState,
 } from 'utils/globalJWInterface';
 import addGlobalProps from 'utils/videoTrackingGlobalProps';
 
 // https://docs.google.com/spreadsheets/d/1jEn61uIP8dYE8KQP3nrMG3nePFArgxrs3Q4lxTcArZQ/edit#gid=1564524057
 export const PROPERTY_NAMES = {
-	// Base
-	EVENT_NAME: 'event_name',
-
-	VIDEO_AUTO_PLAY_STATE: 'video_autoplay_state', // done
-	VIDEO_PLAYLIST_ID: 'video_playlist_id', // done
-	VIDEO_PLACEMENT: 'video_placement',
-
-	// WARREN
-	VIDEO_PLAYLIST_POSITION: 'video_playlist_position',
-	VIDEO_COLLECTION: 'video_collection',
+	// Ready
+	VIDEO_ASSET_ID: 'video_asset_id',
+	VIDEO_ASSET_TITLE: 'video_asset_title',
+	VIDEO_AUTO_PLAY_STATE: 'video_autoplay_state',
+	VIDEO_CURRENT_QUALITY: 'video_current_quality',
+	VIDEO_DURATION: 'video_duration',
 	VIDEO_IS_INTERACTABLE: 'video_is_interactable',
+	VIDEO_IS_VIEWABLE: 'video_player_is_viewable',
+	VIDEO_JW_AD_BLOCK_STATE: 'video_jw_adblock_state',
 	VIDEO_PLAYER: 'video_player',
+	VIDEO_PLAYHEAD_POSITION: 'video_playhead_position',
+	VIDEO_PLAYLIST_ID: 'video_playlist_id',
+	VIDEO_PLAYLIST_POSITION: 'video_playlist_position',
+	VIDEO_PUBLISH_DATE: 'video_publish_date',
+	VIDEO_VOLUME_LEVEL: 'video_volume_level',
+
+	// TODO - Not yet implemented
+	VIDEO_STREAM_ID: 'video_stream_id',
+	VIDEO_QUALITY_MANIFEST: 'video_quality_manifest',
+	VIDEO_IS_EMBEDDED: 'video_is_embedded',
+	VIDEO_PLACEMENT: 'video_placement',
+	VIDEO_COLLECTION: 'video_collection',
 	VIDEO_SERIES_NAME: 'video_series_name',
 	VIDEO_SERIES_ID: 'video_series_id',
-	VIDEO_ASSET_TITLE: 'video_asset_title',
-	VIDEO_ASSET_ID: 'video_asset_id',
-	VIDEO_VOLUME_LEVEL: 'video_volume_level', // done
-	VIDEO_PUBLISH_DATE: 'video_publish_date',
-	VIDEO_DURATION: 'video_duration',
-
-	// JOSH
-	VIDEO_PLAYHEAD_POSITION: 'video_playhead_position', // done
-	VIDEO_JW_AD_BLOCK_STATE: 'video_jw_adblock_state',
-	VIDEO_IS_EMBEDDED: 'video_is_embedded',
-	VIDEO_QUALITY_MANIFEST: 'video_quality_manifest',
-	VIDEO_CURRENT_QUALITY: 'video_current_quality', // done
 	VIDEO_VIEW_STATE: 'video_view_state',
-	VIDEO_IS_VIEWABLE: 'video_player_is_viewable', // done
-	VIDEO_STREAM_ID: 'video_stream_id',
 
 	// GA
 	GA_VISITOR_ID: 'ga_visitor_id',
@@ -79,17 +76,12 @@ export const PROPERTY_NAMES = {
 function addRunTimeParams(trackingParams: TrackData): TrackData {
 	const trackDataObject: TrackData = { ...addGlobalProps(), ...trackingParams };
 
-	// Add Global Runtime props
-
 	trackDataObject[PROPERTY_NAMES.VIDEO_AUTO_PLAY_STATE] = getAutoPlayState();
 	trackDataObject[PROPERTY_NAMES.VIDEO_VOLUME_LEVEL] = getVideoVolume();
-
-	// Josh
 	trackDataObject[PROPERTY_NAMES.VIDEO_CURRENT_QUALITY] = getCurrentQuality();
 	trackDataObject[PROPERTY_NAMES.VIDEO_PLAYHEAD_POSITION] = getPlayHeadPosition();
 	trackDataObject[PROPERTY_NAMES.VIDEO_IS_VIEWABLE] = getIsCurrentlyViewable();
-
-	// Warren
+	trackDataObject[PROPERTY_NAMES.VIDEO_JW_AD_BLOCK_STATE] = getJWAdBlockState();
 	trackDataObject[PROPERTY_NAMES.VIDEO_PLAYLIST_POSITION] = getPlaylistPosition();
 	trackDataObject[PROPERTY_NAMES.VIDEO_IS_INTERACTABLE] = getIsInteractable();
 	trackDataObject[PROPERTY_NAMES.VIDEO_ASSET_TITLE] = getAssetTitle();

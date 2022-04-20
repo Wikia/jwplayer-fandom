@@ -131,6 +131,7 @@ export type Player = {
 	getPlaylistIndex: () => number;
 	getViewable: () => number;
 	getDuration: () => number;
+	getAdBlock: () => boolean;
 };
 export type CreateWirewaxEmbedder = () => Embedder;
 export type WirewaxPluginOptions = {
