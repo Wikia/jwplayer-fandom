@@ -1,6 +1,5 @@
 import trackerFactoryDataLayer, { ModuleTrackingFunction } from '@fandom/tracking-metrics/tracking/';
 import { TrackData } from '@fandom/tracking-metrics/tracking/dataLayer';
-import { Player } from 'types';
 import {
 	getAutoPlayState,
 	getCurrentQuality,
@@ -8,10 +7,6 @@ import {
 	getPlayHeadPosition,
 	getVideoVolume,
 } from 'utils/globalJWInterface';
-
-export interface WindowWithJWPlayer {
-	jwplayer: Player;
-}
 
 // https://docs.google.com/spreadsheets/d/1jEn61uIP8dYE8KQP3nrMG3nePFArgxrs3Q4lxTcArZQ/edit#gid=1564524057
 export const PROPERTY_NAMES = {
@@ -42,7 +37,7 @@ export const PROPERTY_NAMES = {
 	VIDEO_QUALITY_MANIFEST: 'video_quality_manifest',
 	VIDEO_CURRENT_QUALITY: 'video_current_quality', // done
 	VIDEO_VIEW_STATE: 'video_view_state',
-	VIDEO_IS_VIEWABLE: 'video_player_is_viewable', //
+	VIDEO_IS_VIEWABLE: 'video_player_is_viewable', // done
 	VIDEO_STREAM_ID: 'video_stream_id',
 
 	// GA

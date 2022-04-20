@@ -329,6 +329,10 @@ type Player = {
 	getConfig: () => PlayerConfig;
 	getContainer: () => HTMLElement;
 	seek: (seekTo: number) => void;
+	getVolume: () => number;
+	getPosition: () => number;
+	getCurrentQuality: () => number;
+	getViewable: () => number;
 };
 type CreateWirewaxEmbedder = () => Embedder;
 type WirewaxPluginOptions = {

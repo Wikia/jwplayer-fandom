@@ -12,13 +12,15 @@ export interface WindowWithJWPlayer {
 declare let window: WindowWithJWPlayer;
 
 // Ensure all of these oeprations are safe
-const withTryCatchDefault = (func: () => any, fallback = '') => {
-	try {
-		return func();
-	} catch (e) {
-		return fallback;
-	}
-};
+const withTryCatchDefault =
+	(func: () => any, fallback = '') =>
+	() => {
+		try {
+			return func();
+		} catch (e) {
+			return fallback;
+		}
+	};
 
 export const getAutoPlayState = withTryCatchDefault(() => {
 	return window.jwplayer().getConfig().autostart;
