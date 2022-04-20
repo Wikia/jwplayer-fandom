@@ -15,6 +15,8 @@ export const PROPERTY_NAMES = {
 	VIDEO_AUTO_PLAY_STATE: 'video_autoplay_state', // done
 	VIDEO_PLAYLIST_ID: 'video_playlist_id', // done
 	VIDEO_PLACEMENT: 'video_placement',
+
+	// WARREN
 	VIDEO_PLAYLIST_POSITION: 'video_playlist_position',
 	VIDEO_COLLECTION: 'video_collection',
 	VIDEO_IS_INTERACTABLE: 'video_is_interactable',
@@ -26,6 +28,8 @@ export const PROPERTY_NAMES = {
 	VIDEO_VOLUME_LEVEL: 'video_volume_level', // done
 	VIDEO_PUBLISH_DATE: 'video_publish_date',
 	VIDEO_DURATION: 'video_duration',
+
+	// JOSH
 	VIDEO_PLAYHEAD_POSITION: 'video_playhead_position',
 	VIDEO_JW_AD_BLOCK_STATE: 'video_jw_adblock_state',
 	VIDEO_IS_EMBEDDED: 'video_is_embedded',
