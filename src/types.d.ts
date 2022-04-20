@@ -123,6 +123,7 @@ export type Player = {
 	getConfig: () => PlayerConfig;
 	getContainer: () => HTMLElement;
 	seek: (seekTo: number) => void;
+	getVolume: () => string;
 };
 export type CreateWirewaxEmbedder = () => Embedder;
 export type WirewaxPluginOptions = {

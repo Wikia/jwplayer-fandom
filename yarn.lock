@@ -1161,10 +1161,10 @@
     react-select "^5.2.1"
     styled-components "^5.0.1"
 
-"@fandom/tracking-metrics@0.0.10":
-  version "0.0.10"
-  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/tracking-metrics/-/@fandom/tracking-metrics-0.0.10.tgz#a471ffddf3df57c9f05c8966bfc7a2e52da1b533"
-  integrity sha512-q7t7d7v6LlPIYl95C4hXoGsD9WblGEV13OXF+IiI6Ky9L9ulwF8l2MZWhtGXrYWuXrFHWI2QBzl0EZm8e/3Stw==
+"@fandom/tracking-metrics@0.0.12":
+  version "0.0.12"
+  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/tracking-metrics/-/@fandom/tracking-metrics-0.0.12.tgz#f9035c56f293444bc06524ea4681bbb0b8bd4adb"
+  integrity sha512-qK6peM+9SgHKR6886mOCfbrBFNO595u6ARO/uQ7h5nURAZqbLqlN+vmCgZf6cHHywVrelwZRXrha43I8et0iGg==
 
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"
