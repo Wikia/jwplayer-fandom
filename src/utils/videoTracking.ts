@@ -1,7 +1,7 @@
 import trackerFactoryDataLayer, { ModuleTrackingFunction } from '@fandom/tracking-metrics/tracking/';
 import { TrackData } from '@fandom/tracking-metrics/tracking/dataLayer';
 import { Player } from 'types';
-import { getAutoPlayState, getVideoVolume } from 'utils/globalJWInterface';
+import { getAutoPlayState, getCurrentQuality, getPlayHeadPosition, getVideoVolume } from 'utils/globalJWInterface';
 
 export interface WindowWithJWPlayer {
 	jwplayer: Player;
@@ -30,11 +30,11 @@ export const PROPERTY_NAMES = {
 	VIDEO_DURATION: 'video_duration',
 
 	// JOSH
-	VIDEO_PLAYHEAD_POSITION: 'video_playhead_position',
+	VIDEO_PLAYHEAD_POSITION: 'video_playhead_position', //
 	VIDEO_JW_AD_BLOCK_STATE: 'video_jw_adblock_state',
 	VIDEO_IS_EMBEDDED: 'video_is_embedded',
 	VIDEO_QUALITY_MANIFEST: 'video_quality_manifest',
-	VIDEO_CURRENT_QUALITY: 'video_current_quality',
+	VIDEO_CURRENT_QUALITY: 'video_current_quality', //
 	VIDEO_VIEW_STATE: 'video_view_state',
 	VIDEO_IS_VIEWABLE: 'video_player_is_viewable',
 	VIDEO_STREAM_ID: 'video_stream_id',
@@ -72,6 +72,11 @@ function addRunTimeParams(trackingParams: TrackData): TrackData {
 
 	trackDataObject[PROPERTY_NAMES.VIDEO_AUTO_PLAY_STATE] = getAutoPlayState();
 	trackDataObject[PROPERTY_NAMES.VIDEO_VOLUME_LEVEL] = getVideoVolume();
+
+	// Josh
+	trackDataObject[PROPERTY_NAMES.VIDEO_CURRENT_QUALITY] = getCurrentQuality();
+	trackDataObject[PROPERTY_NAMES.VIDEO_PLAYHEAD_POSITION] = getPlayHeadPosition();
+
 	// ... TODO add them all here
 
 	return trackDataObject;

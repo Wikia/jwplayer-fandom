@@ -34,3 +34,11 @@ export const getVideoVolume = withTryCatchDefault(() => {
 });
 
 // Continue with all functions here to enable everything in PROPERTY_NAMES
+
+export const getPlayHeadPosition = withTryCatchDefault(() => {
+	return window.jwplayer().getPosition();
+});
+
+export const getCurrentQuality = withTryCatchDefault(() => {
+	return window.jwplayer().getCurrentQuality();
+});
