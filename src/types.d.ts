@@ -126,6 +126,7 @@ export type Player = {
 	getVolume: () => number;
 	getPosition: () => number;
 	getCurrentQuality: () => number;
+	getViewable: () => number;
 };
 export type CreateWirewaxEmbedder = () => Embedder;
 export type WirewaxPluginOptions = {

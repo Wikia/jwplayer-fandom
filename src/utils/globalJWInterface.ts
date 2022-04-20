@@ -42,3 +42,7 @@ export const getPlayHeadPosition = withTryCatchDefault(() => {
 export const getCurrentQuality = withTryCatchDefault(() => {
 	return window.jwplayer().getCurrentQuality();
 });
+
+export const getIsCurrentlyViewable = withTryCatchDefault(() => {
+	return !!window.jwplayer().getViewable();
+});
