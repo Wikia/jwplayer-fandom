@@ -1,4 +1,4 @@
-import record from '@fandom/tracking-metrics/timing/timings';
+import { recordOnce, recordMultiple } from '@fandom/tracking-metrics/timing/timings';
 
 const PREFIX = 'jw-player-';
 
@@ -13,5 +13,9 @@ export const VIDEO_RECORD_EVENTS = {
 };
 
 export function recordVideoEvent(event: string) {
-	record(PREFIX + event);
+	recordOnce(PREFIX + event);
+}
+
+export function recordMultipleVideoEvent(event: string) {
+	recordMultiple(PREFIX + event);
 }

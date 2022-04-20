@@ -8,17 +8,10 @@ import {
 	PausePlayerEventData,
 	Player,
 	PlayPlayerEventData,
-	SeekEventData,
 } from 'types';
 import JWEvents from 'players/shared/JWEvents';
-import { CONTROLS_CATEGORY, jwPlayerVideoTracker, singleTrack } from 'utils/videoTracking';
-import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
-
-const AD_TIME_CATEGORY = 'ad';
-const AD_ACTION = 'ad-playing';
-
-const VIDEO_TIME_CATEGORY = 'video';
-const VIDEO_TIME_ACTION = 'playing';
+import { jwPlayerVideoTracker, singleTrack } from 'utils/videoTracking';
+import { recordMultipleVideoEvent, recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
 
 export default function addBaseTrackingEvents(playerInstance: Player) {
 	const playList = playerInstance.getPlaylistItem();
@@ -26,7 +19,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 	// Add MediaId to the dataLayer object to be used later
 	const tracker = jwPlayerVideoTracker.extend({
-		mediaId: mediaId,
+		_mediaId: mediaId,
 	});
 
 	// Add events
@@ -41,61 +34,50 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 			const initialPlayEvent = 'jw-initial-play-event';
 
-			tracker({ action: 'play', label: playReason });
+			// tracker({ action: 'play', label: playReason });
 
 			if (playReason === 'interaction') {
-				tracker.click({
-					category: CONTROLS_CATEGORY,
-					label: 'play',
+				tracker({
+					event_name: 'video_resume',
 				});
 			}
 
+			recordMultipleVideoEvent('playing-video-time');
 			// Only fire on the very first event
 			if (singleTrack(initialPlayEvent)) {
-				tracker({ action: 'play', label: playReason });
+				tracker({ event: 'video_content_start' });
 				recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_VIDEO);
 			}
 		})
 		.on(JWEvents.TIME, (event: OnVideoTimeEventData) => {
 			if (event.position >= event.duration * 0.25 && singleTrack('jw-player-video-25' + mediaId)) {
 				tracker({
-					category: VIDEO_TIME_CATEGORY,
-					action: VIDEO_TIME_ACTION,
-					label: 'video-quartile-25',
-					value: event.duration,
+					event_name: 'video_content_quartile_25',
 				});
 			}
 
 			if (event.position >= event.duration * 0.5 && singleTrack('jw-player-video-50' + mediaId)) {
 				tracker({
-					category: VIDEO_TIME_CATEGORY,
-					action: VIDEO_TIME_ACTION,
-					label: 'video-quartile-50',
-					value: event.duration,
+					event_name: 'video_content_quartile_50',
 				});
 			}
 
 			if (event.position >= event.duration * 0.75 && singleTrack('jw-player-video-75' + mediaId)) {
 				tracker({
-					category: VIDEO_TIME_CATEGORY,
-					action: VIDEO_TIME_ACTION,
-					label: 'video-quartile-75',
-					value: event.duration,
+					event_name: 'video_content_quartile_75',
 				});
 			}
 		})
 		.on(JWEvents.COMPLETE, () => {
 			tracker({
-				category: 'video',
-				action: 'completed',
+				event_name: 'video_content_completed',
 			});
 		})
 		// Controls
 		.on(JWEvents.PAUSE, (event: PausePlayerEventData) => {
 			if (event.pauseReason === 'interaction') {
-				tracker.click({
-					category: CONTROLS_CATEGORY,
-					label: 'pause',
+				tracker({
+					event_name: 'video_pause',
 				});
 			}
 		})
@@ -107,53 +89,47 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 			if (event.mute === false) {
 				tracker.click({
-					category: CONTROLS_CATEGORY,
-					label: 'unmute',
+					event_name: 'video_volume_change',
+					_label: 'unmute',
 				});
 				return;
 			}
 
 			if (event.mute === true) {
 				tracker.click({
-					category: CONTROLS_CATEGORY,
-					label: 'mute',
+					event_name: 'video_volume_change',
+					_label: 'mute',
 				});
 			}
 		})
 		.on(JWEvents.VOLUME, (event: OnVolumeEventData) => {
 			tracker({
-				category: CONTROLS_CATEGORY,
-				action: 'volume-change',
-				label: `volume-level-${event.volume}`,
+				event_name: 'video_volume_change',
 				value: event.volume,
 			});
 		})
 		.on(JWEvents.NEXT, () => {
 			tracker.click({
-				category: CONTROLS_CATEGORY,
-				label: 'next-video',
+				event_name: 'video_select_next',
 			});
 		})
 
 		.on(JWEvents.FLOAT, () => {
 			tracker.click({
-				category: CONTROLS_CATEGORY,
-				label: 'picture-in-picture',
+				event_name: 'video_pip',
 			});
 		})
 
 		.on(JWEvents.FULLSCREEN, (event: FullScreenEventData) => {
 			tracker.click({
-				category: CONTROLS_CATEGORY,
-				label: `full-screen-${event.fullscreen}`,
+				event_name: 'video_fullscreen_toggle',
+				_label: `full-screen-${event.fullscreen}`,
 			});
 		})
 
-		.on(JWEvents.SEEK, (event: SeekEventData) => {
+		.on(JWEvents.SEEK, () => {
 			tracker.click({
-				category: CONTROLS_CATEGORY,
-				label: `seek | ${event.position} | ${event.offset}`,
-				value: event.offset,
+				event_name: 'video_seek',
 			});
 		})
 
@@ -162,9 +138,8 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 			console.warn(event);
 
 			tracker({
-				action: 'error',
-				category: `${event.code} | ${event.message.slice(0, 20)}`,
-				label: 'jw-player-error',
+				event_name: 'video_player_error',
+				_error_info: `${event.code} | ${event.message.slice(0, 20)}`,
 			});
 		})
 
@@ -174,53 +149,35 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 		// })
 		.on(JWEvents.AD_LOADED, () => {
 			tracker({
-				category: AD_TIME_CATEGORY,
-				action: 'ad-loaded',
-				label: 'ad-quartile-0',
-				value: 0,
+				event_name: 'video_ad_loaded',
 			});
 		})
 		.on(JWEvents.AD_STARTED, () => {
 			tracker({
-				category: AD_TIME_CATEGORY,
-				action: 'ad-started',
-				label: 'ad-quartile-0',
-				value: 0,
+				event_name: 'video_ad_started',
 			});
 		})
 		.on(JWEvents.AD_FINISHED, () => {
 			tracker({
-				category: AD_TIME_CATEGORY,
-				action: 'ad-completed',
-				label: 'ad-quartile-100',
-				value: 1,
+				event_name: 'video_ad_completed',
 			});
 		})
 		.on(JWEvents.AD_TIME, (event: OnAdTimeEventData) => {
 			if (event.position >= event.duration * 0.25 && singleTrack('jw-player-ad-25')) {
 				tracker({
-					category: AD_TIME_CATEGORY,
-					action: AD_ACTION,
-					label: 'ad-quartile-25',
-					value: event.duration,
+					event_name: 'video_ad_quartile_25',
 				});
 			}
 
 			if (event.position >= event.duration * 0.5 && singleTrack('jw-player-ad-50')) {
 				tracker({
-					category: AD_TIME_CATEGORY,
-					action: AD_ACTION,
-					label: 'ad-quartile-50',
-					value: event.duration,
+					event_name: 'video_ad_quartile_50',
 				});
 			}
 
 			if (event.position >= event.duration * 0.75 && singleTrack('jw-player-ad-75')) {
 				tracker({
-					category: AD_TIME_CATEGORY,
-					action: AD_ACTION,
-					label: 'ad-quartile-75',
-					value: event.duration,
+					event_name: 'video_ad_quartile_75',
 				});
 			}
 		});

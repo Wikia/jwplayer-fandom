@@ -40,11 +40,12 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl }
 	const initPlayer = (elementId: string, playerUrl?: string) => {
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START);
 		const script = document.createElement('script');
-		jwPlayerVideoTracker({ label: 'video-id-here', action: 'loading-scripts' });
+		jwPlayerVideoTracker({ event_name: 'video_player_start_load' });
 
 		script.async = true;
 		script.src = playerUrl || getDefaultPlayerUrl();
 		script.onload = () => {
+			jwPlayerVideoTracker({ event_name: 'video_player_load' });
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY);
 			const registerPlugin = window.jwplayer().registerPlugin;
 			registerPlugin('wirewax', '8.0', FandomWirewaxPlugin);
@@ -58,7 +59,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl }
 			playerInstance.on(JWEvents.READY, (event) => {
 				recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_READY);
 				// only add the events after the player is ready
-				jwPlayerVideoTracker.loaded();
+				jwPlayerVideoTracker({ event_name: 'video_player_ready' });
 				addBaseTrackingEvents(playerInstance);
 				new FandomWirewaxPlugin(elementId, {
 					player: window.jwplayer(elementId),
