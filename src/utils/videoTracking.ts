@@ -120,7 +120,7 @@ export const EVENT_CATEGORIES = {
 export const jwPlayerPlaybackTracker = trackerWithNewCategory(EVENT_CATEGORIES.PLAYBACK);
 export const jwPlayerAdTracker = trackerWithNewCategory(EVENT_CATEGORIES.AD);
 export const jwPlayerContentTracker = trackerWithNewCategory(EVENT_CATEGORIES.CONTENT);
-export const jwPlayerWireWaxTracker = trackerWithNewCategory(EVENT_CATEGORIES.WIREWAX);
+export const jwPlayerWirewaxTracker = trackerWithNewCategory(EVENT_CATEGORIES.WIREWAX);
 
 const mappings = new Set<string>();
 export function singleTrack(eventName: string) {

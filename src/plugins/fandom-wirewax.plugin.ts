@@ -1,5 +1,4 @@
-import { jwPlayerWireWaxTracker } from 'utils/videoTracking';
-import { ModuleTrackingFunction } from '@fandom/tracking-metrics/tracking/';
+import { jwPlayerWirewaxTracker } from 'utils/videoTracking';
 
 import {
 	CreateWirewaxEmbedder,
@@ -78,7 +77,6 @@ class FandomWirewaxPlugin {
 	container: HTMLElement;
 	animationId: number;
 	setWIREWAXCurrentTime: () => void;
-	tracker: ModuleTrackingFunction;
 
 	constructor(rootId: string, options: WirewaxPluginOptions) {
 		this.isPlayerRegistered = false;
@@ -101,9 +99,6 @@ class FandomWirewaxPlugin {
 
 			// Search JW media id
 			const mediaId = this.player.getConfig().playlistItem.mediaid || this.player.getConfig().playlistItem.videoId;
-			this.tracker = jwPlayerWireWaxTracker.extend({
-				mediaId: mediaId,
-			});
 
 			// validate interaction
 			fetchWIREWAXVidId(mediaId)
@@ -200,9 +195,8 @@ class FandomWirewaxPlugin {
 
 		try {
 			this.embedder.play();
-			this.tracker({
+			jwPlayerWirewaxTracker({
 				action: PLAY_ACTION,
-				value: event,
 			});
 		} catch (error) {
 			console.warn(error);
@@ -214,9 +208,8 @@ class FandomWirewaxPlugin {
 
 		try {
 			this.embedder.pause();
-			this.tracker({
+			jwPlayerWirewaxTracker({
 				action: PAUSE_ACTION,
-				value: event,
 			});
 		} catch (error) {
 			console.warn(error);
@@ -265,24 +258,21 @@ class FandomWirewaxPlugin {
 		}
 	};
 
-	WirewaxHotspotClickHandler: (event: HotspotClickEmbedderEventData) => void = (event) => {
-		this.tracker({
+	WirewaxHotspotClickHandler: (event: HotspotClickEmbedderEventData) => void = () => {
+		jwPlayerWirewaxTracker({
 			action: HOTSPOT_CLICK_ACTION,
-			value: event,
 		});
 	};
 
-	WirewaxOverlayShowHandler: (event: OverlayShowEmbedderEventData) => void = (event) => {
-		this.tracker({
+	WirewaxOverlayShowHandler: (event: OverlayShowEmbedderEventData) => void = () => {
+		jwPlayerWirewaxTracker({
 			action: OVERLAY_SHOW_ACTION,
-			value: event,
 		});
 	};
 
-	WirewaxOverlayHideHandler: (event: OverlayHideEmbedderEventData) => void = (event) => {
-		this.tracker({
+	WirewaxOverlayHideHandler: (event: OverlayHideEmbedderEventData) => void = () => {
+		jwPlayerWirewaxTracker({
 			action: OVERLAY_HIDE_ACTION,
-			value: event,
 		});
 	};
 }
