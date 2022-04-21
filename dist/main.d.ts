@@ -34,7 +34,7 @@ declare class FandomWirewaxPlugin {
 
 			// Search JW media id
 			const mediaId = this.player.getConfig().playlistItem.mediaid || this.player.getConfig().playlistItem.videoId;
-			this.tracker =  jwPlayerVideoTracker.extend({
+			this.tracker = jwPlayerVideoTracker.extend({
 				mediaId: mediaId,
 			});
 
