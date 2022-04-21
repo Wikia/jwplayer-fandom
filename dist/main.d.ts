@@ -190,19 +190,19 @@ declare class FandomWirewaxPlugin {
 		}
 	};
 
-	WirewaxHotspotClickHandler: (event: HotspotClickEmbedderEventData) => void = (event) => {
+	WirewaxHotspotClickHandler: (event: HotspotClickEmbedderEventData) => void = () => {
 		jwPlayerWirewaxTracker({
 			action: HOTSPOT_CLICK_ACTION,
 		});
 	};
 
-	WirewaxOverlayShowHandler: (event: OverlayShowEmbedderEventData) => void = (event) => {
+	WirewaxOverlayShowHandler: (event: OverlayShowEmbedderEventData) => void = () => {
 		jwPlayerWirewaxTracker({
 			action: OVERLAY_SHOW_ACTION,
 		});
 	};
 
-	WirewaxOverlayHideHandler: (event: OverlayHideEmbedderEventData) => void = (event) => {
+	WirewaxOverlayHideHandler: (event: OverlayHideEmbedderEventData) => void = () => {
 		jwPlayerWirewaxTracker({
 			action: OVERLAY_HIDE_ACTION,
 		});
