@@ -1,3 +1,6 @@
+import { jwPlayerVideoTracker } from 'utils/videoTracking';
+import { ModuleTrackingFunction } from '@fandom/tracking-metrics/tracking/';
+
 import {
 	CreateWirewaxEmbedder,
 	Player,
@@ -7,6 +10,8 @@ import {
 	OverlayHideEmbedderEventData,
 	HotspotClickEmbedderEventData,
 	SeekedEmbedderEventData,
+	PausePlayerEventData,
+	PlayPlayerEventData,
 } from '../types';
 
 interface WindowWirewax extends Window {
@@ -15,6 +20,13 @@ interface WindowWirewax extends Window {
 }
 
 declare let window: WindowWirewax;
+
+const WIREWAX_CATEGORY = 'wirewax';
+const HOTSPOT_CLICK_ACTION = 'hotspotclick';
+const OVERLAY_SHOW_ACTION = 'overlayshow';
+const OVERLAY_HIDE_ACTION = 'overlayhide';
+const PAUSE_ACTION = 'pause';
+const PLAY_ACTION = 'play';
 
 // Utilities
 const fetchWIREWAXVidId = async (mediaid: string): Promise<string> => {
@@ -67,6 +79,7 @@ class FandomWirewaxPlugin {
 	container: HTMLElement;
 	animationId: number;
 	setWIREWAXCurrentTime: () => void;
+	tracker: ModuleTrackingFunction;
 
 	constructor(rootId: string, options: WirewaxPluginOptions) {
 		this.isPlayerRegistered = false;
@@ -89,6 +102,9 @@ class FandomWirewaxPlugin {
 
 			// Search JW media id
 			const mediaId = this.player.getConfig().playlistItem.mediaid || this.player.getConfig().playlistItem.videoId;
+			this.tracker = jwPlayerVideoTracker.extend({
+				mediaId: mediaId,
+			});
 
 			// validate interaction
 			fetchWIREWAXVidId(mediaId)
@@ -180,25 +196,31 @@ class FandomWirewaxPlugin {
 	}
 
 	// ES6
-	JWPlayHandler: () => void = () => {
+	JWPlayHandler: (event: PlayPlayerEventData) => void = () => {
 		this.startTimeUpdate();
 
 		try {
 			this.embedder.play();
-			// TODO: reaplace with tracking
-			console.log('wirewax play');
+			this.tracker({
+				category: WIREWAX_CATEGORY,
+				action: PLAY_ACTION,
+				value: event,
+			});
 		} catch (error) {
 			console.warn(error);
 		}
 	};
 
-	JWPauseHandler: () => void = () => {
+	JWPauseHandler: (event: PausePlayerEventData) => void = () => {
 		this.stopTimeUpdate();
 
 		try {
 			this.embedder.pause();
-			// TODO: reaplace with tracking
-			console.log('wirewax pause');
+			this.tracker({
+				category: WIREWAX_CATEGORY,
+				action: PAUSE_ACTION,
+				value: event,
+			});
 		} catch (error) {
 			console.warn(error);
 		}
@@ -241,26 +263,33 @@ class FandomWirewaxPlugin {
 			} else if (typeof event.seekTo === 'number') {
 				this.player.seek(event.seekTo);
 			}
-			// TODO: reaplace with tracking
-			console.log('wirewax seek', { event });
 		} catch (err) {
 			console.log(err);
 		}
 	};
 
 	WirewaxHotspotClickHandler: (event: HotspotClickEmbedderEventData) => void = (event) => {
-		// TODO: reaplace with tracking
-		console.log('wirewax hotspot click', { event });
+		this.tracker({
+			category: WIREWAX_CATEGORY,
+			action: HOTSPOT_CLICK_ACTION,
+			value: event,
+		});
 	};
 
 	WirewaxOverlayShowHandler: (event: OverlayShowEmbedderEventData) => void = (event) => {
-		// TODO: reaplace with tracking
-		console.log('wirewax overlay open', { event });
+		this.tracker({
+			category: WIREWAX_CATEGORY,
+			action: OVERLAY_SHOW_ACTION,
+			value: event,
+		});
 	};
 
 	WirewaxOverlayHideHandler: (event: OverlayHideEmbedderEventData) => void = (event) => {
-		// TODO: reaplace with tracking
-		console.log('wirewax overlay close', { event });
+		this.tracker({
+			category: WIREWAX_CATEGORY,
+			action: OVERLAY_HIDE_ACTION,
+			value: event,
+		});
 	};
 }
 

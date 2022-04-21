@@ -1,3 +1,5 @@
+import { ModuleTrackingFunction } from '@fandom/tracking-metrics/tracking/';
+
 declare class FandomWirewaxPlugin {
 	isPlayerRegistered: boolean;
 	rootId: string;
@@ -9,6 +11,7 @@ declare class FandomWirewaxPlugin {
 	container: HTMLElement;
 	animationId: number;
 	setWIREWAXCurrentTime: () => void;
+	tracker: ModuleTrackingFunction;
 
 	constructor(rootId: string, options: WirewaxPluginOptions) {
 		this.isPlayerRegistered = false;
@@ -31,6 +34,9 @@ declare class FandomWirewaxPlugin {
 
 			// Search JW media id
 			const mediaId = this.player.getConfig().playlistItem.mediaid || this.player.getConfig().playlistItem.videoId;
+			this.tracker = jwPlayerVideoTracker.extend({
+				mediaId: mediaId,
+			});
 
 			// validate interaction
 			fetchWIREWAXVidId(mediaId)
@@ -122,25 +128,31 @@ declare class FandomWirewaxPlugin {
 	}
 
 	// ES6
-	JWPlayHandler: () => void = () => {
+	JWPlayHandler: (event: PlayPlayerEventData) => void = () => {
 		this.startTimeUpdate();
 
 		try {
 			this.embedder.play();
-			// TODO: reaplace with tracking
-			console.log('wirewax play');
+			this.tracker({
+				category: WIREWAX_CATEGORY,
+				action: PLAY_ACTION,
+				value: event,
+			});
 		} catch (error) {
 			console.warn(error);
 		}
 	};
 
-	JWPauseHandler: () => void = () => {
+	JWPauseHandler: (event: PausePlayerEventData) => void = () => {
 		this.stopTimeUpdate();
 
 		try {
 			this.embedder.pause();
-			// TODO: reaplace with tracking
-			console.log('wirewax pause');
+			this.tracker({
+				category: WIREWAX_CATEGORY,
+				action: PAUSE_ACTION,
+				value: event,
+			});
 		} catch (error) {
 			console.warn(error);
 		}
@@ -183,26 +195,33 @@ declare class FandomWirewaxPlugin {
 			} else if (typeof event.seekTo === 'number') {
 				this.player.seek(event.seekTo);
 			}
-			// TODO: reaplace with tracking
-			console.log('wirewax seek', { event });
 		} catch (err) {
 			console.log(err);
 		}
 	};
 
 	WirewaxHotspotClickHandler: (event: HotspotClickEmbedderEventData) => void = (event) => {
-		// TODO: reaplace with tracking
-		console.log('wirewax hotspot click', { event });
+		this.tracker({
+			category: WIREWAX_CATEGORY,
+			action: HOTSPOT_CLICK_ACTION,
+			value: event,
+		});
 	};
 
 	WirewaxOverlayShowHandler: (event: OverlayShowEmbedderEventData) => void = (event) => {
-		// TODO: reaplace with tracking
-		console.log('wirewax overlay open', { event });
+		this.tracker({
+			category: WIREWAX_CATEGORY,
+			action: OVERLAY_SHOW_ACTION,
+			value: event,
+		});
 	};
 
 	WirewaxOverlayHideHandler: (event: OverlayHideEmbedderEventData) => void = (event) => {
-		// TODO: reaplace with tracking
-		console.log('wirewax overlay close', { event });
+		this.tracker({
+			category: WIREWAX_CATEGORY,
+			action: OVERLAY_HIDE_ACTION,
+			value: event,
+		});
 	};
 }
 
@@ -399,4 +418,4 @@ interface VideoPlayerProps {
 	playlist: Playlist;
 }
 
-export { CreateWirewaxEmbedder, Embedder, FullScreenEventData, HotspotClickEmbedderEventData, JWPlayerApi, MutePlayerEventData, OnAdTimeEventData, OnErrorEventData, OnVideoTimeEventData, OnVolumeEventData, OverlayHideEmbedderEventData, OverlayShowEmbedderEventData, Player, PlayerConfig, Playlist, PlaylistItem, SeekEventData, SeekedEmbedderEventData, VideoPlayerProps, WirewaxPluginOptions };
+export { CreateWirewaxEmbedder, Embedder, FullScreenEventData, HotspotClickEmbedderEventData, JWPlayerApi, MutePlayerEventData, OnAdTimeEventData, OnErrorEventData, OnVideoTimeEventData, OnVolumeEventData, OverlayHideEmbedderEventData, OverlayShowEmbedderEventData, PausePlayerEventData, PlayPlayerEventData, Player, PlayerConfig, Playlist, PlaylistItem, SeekEventData, SeekedEmbedderEventData, VideoPlayerProps, WirewaxPluginOptions };
