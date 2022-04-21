@@ -6,4 +6,4 @@ dev
 *.iml
 .eslintcache
 yarn-error.log
-
+dist
