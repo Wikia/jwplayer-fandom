@@ -8,6 +8,7 @@ export type PlayerConfig = {
 	playlistItem?: { mediaid: string; videoId: string };
 	mediaElement?: HTMLVideoElement;
 	autostart?: boolean;
+	pid?: string;
 };
 
 export type Playlist = PlaylistItem | PlaylistItem[] | string | string[];
@@ -21,6 +22,7 @@ export type PlaylistItem = {
 	playlist?: PlaylistItem[];
 	username?: string;
 	userUrl?: string;
+	pubdate?: number;
 };
 
 interface PlaylistItemPlayerEventData {
@@ -107,6 +109,14 @@ type JwEventData =
 	| OnAdTimeEventData;
 type JwEventHandler = (event?: JwEventData) => void;
 
+interface BasePluginInterface {
+	on: (name: string, handler: JwEventHandler) => Player;
+}
+
+interface Plugins {
+	sharing: BasePluginInterface;
+}
+
 export type Player = {
 	playToggle: () => null;
 	pause: () => null;
@@ -123,6 +133,14 @@ export type Player = {
 	getConfig: () => PlayerConfig;
 	getContainer: () => HTMLElement;
 	seek: (seekTo: number) => void;
+	getVolume: () => number;
+	getPosition: () => number;
+	getCurrentQuality: () => number;
+	getPlaylistIndex: () => number;
+	getViewable: () => number;
+	getDuration: () => number;
+	getAdBlock: () => boolean;
+	plugins: Plugins;
 };
 export type CreateWirewaxEmbedder = () => Embedder;
 export type WirewaxPluginOptions = {

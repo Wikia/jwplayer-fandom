@@ -1,5 +1,5 @@
 {
-	"name": "jwplayer-fandom",
+	"name": "@fandom/jwplayer-fandom",
 	"version": "1.12.1",
 	"description": "JWPlayer for Fandom",
 	"main": "dist/bundle.umd.js",
@@ -8,11 +8,12 @@
 	"install-peers": "install-peers",
 	"scripts": {
 		"build": "yarn run create-dist && rollup -c",
-		"watch": "yarn run create-dist && rollup -c --watch",
-		"app": "rm test-jw/src/bundle.esm.js && cp dist/bundle.esm.js test-jw/src && cd test-jw && yarn start",
+		"watch": "yarn run create-dist && NODE_ENV=development rollup -c --watch",
+		"app": "cp dist/bundle.esm.js test-jw/src && cd test-jw && yarn start",
 		"create-dist": "rm -rf dist && mkdir -p dist",
 		"cp:loop": " while true; do cp dist/bundle.esm.js test-jw/src; sleep 10; done",
-		"lint": "npm-run-all --continue-on-error --parallel lint:prettier lint:eslint",
+		"lint": "yarn eslint src && yarn prettier --check src",
+		"lint:fix": "npm-run-all --continue-on-error --parallel lint:prettier lint:eslint",
 		"lint:prettier:src": "prettier --write src",
 		"lint:prettier:scripts": "prettier --write scripts",
 		"lint:prettier:tests": "prettier --write tests",
@@ -21,7 +22,8 @@
 		"lint:eslint:scripts": "eslint --cache --fix scripts",
 		"lint:eslint:tests": "eslint --cache --fix tests",
 		"lint:eslint": "npm-run-all --continue-on-error --parallel lint:eslint:src",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"test": "echo 'No Tests yet'"
 	},
 	"lint-staged": {
 		"src/**/*.(ts|tsx|js)": [
@@ -95,14 +97,14 @@
 	},
 	"peerDependencies": {
 		"i18next": "^19.7.0",
-		"react": "^16.14.0 || ^17.0.2",
+		"react": "^16.14.0 || ^17.0.2 || ^18.0.0",
 		"react-dom": "^16.14.0 || ^17.0.2",
 		"react-i18next": "^11.7.1"
 	},
 	"dependencies": {
 		"@fandom-frontend/design-system": "9.0.0",
 		"@fandom-frontend/react-common": "6.35.0",
-		"@fandom/tracking-metrics": "0.0.10",
+		"@fandom/tracking-metrics": "0.0.14",
 		"@wikia/post-quecast": "2.0.1",
 		"rxjs": "7.5.4",
 		"styled-components": "^5.3.3"

@@ -1,5 +1,3 @@
-import { ModuleTrackingFunction } from '@fandom/tracking-metrics/tracking/';
-
 declare class FandomWirewaxPlugin {
 	isPlayerRegistered: boolean;
 	rootId: string;
@@ -11,7 +9,6 @@ declare class FandomWirewaxPlugin {
 	container: HTMLElement;
 	animationId: number;
 	setWIREWAXCurrentTime: () => void;
-	tracker: ModuleTrackingFunction;
 
 	constructor(rootId: string, options: WirewaxPluginOptions) {
 		this.isPlayerRegistered = false;
@@ -34,9 +31,6 @@ declare class FandomWirewaxPlugin {
 
 			// Search JW media id
 			const mediaId = this.player.getConfig().playlistItem.mediaid || this.player.getConfig().playlistItem.videoId;
-			this.tracker = jwPlayerVideoTracker.extend({
-				mediaId: mediaId,
-			});
 
 			// validate interaction
 			fetchWIREWAXVidId(mediaId)
@@ -49,7 +43,8 @@ declare class FandomWirewaxPlugin {
 				.then(() => this.setupEmbedder())
 				.then(() => this.registerEvents())
 				.catch((error) => {
-					console.warn(error);
+					// silent for now - this is expected for non WW videos
+					console.debug('Not a valid WireWax video', error);
 				});
 		});
 
@@ -133,10 +128,8 @@ declare class FandomWirewaxPlugin {
 
 		try {
 			this.embedder.play();
-			this.tracker({
-				category: WIREWAX_CATEGORY,
+			jwPlayerWirewaxTracker({
 				action: PLAY_ACTION,
-				value: event,
 			});
 		} catch (error) {
 			console.warn(error);
@@ -148,10 +141,8 @@ declare class FandomWirewaxPlugin {
 
 		try {
 			this.embedder.pause();
-			this.tracker({
-				category: WIREWAX_CATEGORY,
+			jwPlayerWirewaxTracker({
 				action: PAUSE_ACTION,
-				value: event,
 			});
 		} catch (error) {
 			console.warn(error);
@@ -200,27 +191,21 @@ declare class FandomWirewaxPlugin {
 		}
 	};
 
-	WirewaxHotspotClickHandler: (event: HotspotClickEmbedderEventData) => void = (event) => {
-		this.tracker({
-			category: WIREWAX_CATEGORY,
+	WirewaxHotspotClickHandler: (event: HotspotClickEmbedderEventData) => void = () => {
+		jwPlayerWirewaxTracker({
 			action: HOTSPOT_CLICK_ACTION,
-			value: event,
 		});
 	};
 
-	WirewaxOverlayShowHandler: (event: OverlayShowEmbedderEventData) => void = (event) => {
-		this.tracker({
-			category: WIREWAX_CATEGORY,
+	WirewaxOverlayShowHandler: (event: OverlayShowEmbedderEventData) => void = () => {
+		jwPlayerWirewaxTracker({
 			action: OVERLAY_SHOW_ACTION,
-			value: event,
 		});
 	};
 
-	WirewaxOverlayHideHandler: (event: OverlayHideEmbedderEventData) => void = (event) => {
-		this.tracker({
-			category: WIREWAX_CATEGORY,
+	WirewaxOverlayHideHandler: (event: OverlayHideEmbedderEventData) => void = () => {
+		jwPlayerWirewaxTracker({
 			action: OVERLAY_HIDE_ACTION,
-			value: event,
 		});
 	};
 }
@@ -233,6 +218,7 @@ type PlayerConfig = {
 	playlistItem?: { mediaid: string; videoId: string };
 	mediaElement?: HTMLVideoElement;
 	autostart?: boolean;
+	pid?: string;
 };
 
 type Playlist = PlaylistItem | PlaylistItem[] | string | string[];
@@ -246,6 +232,7 @@ type PlaylistItem = {
 	playlist?: PlaylistItem[];
 	username?: string;
 	userUrl?: string;
+	pubdate?: number;
 };
 
 interface PlaylistItemPlayerEventData {
@@ -332,6 +319,14 @@ type JwEventData =
 	| OnAdTimeEventData;
 type JwEventHandler = (event?: JwEventData) => void;
 
+interface BasePluginInterface {
+	on: (name: string, handler: JwEventHandler) => Player;
+}
+
+interface Plugins {
+	sharing: BasePluginInterface;
+}
+
 type Player = {
 	playToggle: () => null;
 	pause: () => null;
@@ -348,6 +343,14 @@ type Player = {
 	getConfig: () => PlayerConfig;
 	getContainer: () => HTMLElement;
 	seek: (seekTo: number) => void;
+	getVolume: () => number;
+	getPosition: () => number;
+	getCurrentQuality: () => number;
+	getPlaylistIndex: () => number;
+	getViewable: () => number;
+	getDuration: () => number;
+	getAdBlock: () => boolean;
+	plugins: Plugins;
 };
 type CreateWirewaxEmbedder = () => Embedder;
 type WirewaxPluginOptions = {

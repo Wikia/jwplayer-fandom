@@ -1,0 +1,85 @@
+def FAILED_STAGE
+
+DOCKER_IMAGE = 'node:17-slim'
+
+pipeline {
+  agent { label 'docker-daemon' }
+  options {
+    buildDiscarder(
+      // Reduces the size of builds and artifacts kept on Jenkins
+      logRotator(
+        artifactDaysToKeepStr: '5',
+        artifactNumToKeepStr: '5',
+        daysToKeepStr: '10',
+        numToKeepStr: '25'
+      )
+    )
+    disableConcurrentBuilds()
+    timeout(time: 1200, unit: 'SECONDS')
+  }
+
+  environment {
+    GIT_COMMIT_HASH = """${sh(
+      returnStdout: true,
+      script: 'git rev-parse --short HEAD'
+    ).trim()}"""
+    NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
+    HOME = "${WORKSPACE}"
+  }
+
+  stages {
+    stage('Lint, Build, Test, Deploy') {
+      agent {
+        docker {
+          image DOCKER_IMAGE
+          label 'docker-daemon'
+          reuseNode true
+        }
+      }
+      stages {
+        stage('Add .env file') {
+          steps {
+            sh("echo 'here'")
+            script {
+              FAILED_STAGE = 'env file'
+            }
+          }
+        }
+
+        stage('install') {
+          steps {
+            sh("yarn")
+            script {
+              FAILED_STAGE = 'install'
+            }
+          }
+        }
+
+        stage('lint') {
+          steps {
+            sh("yarn lint")
+            script {
+              FAILED_STAGE = 'lint'
+            }
+          }
+        }
+        stage('test') {
+          steps {
+            sh("yarn test")
+            script {
+              FAILED_STAGE = 'test'
+            }
+          }
+        }
+        stage('build') {
+          steps {
+            sh("yarn build")
+            script {
+              FAILED_STAGE = 'build'
+            }
+          }
+        }
+      }
+    }
+  }
+}

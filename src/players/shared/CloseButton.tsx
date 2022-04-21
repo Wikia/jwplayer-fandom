@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import IconCrossTiny from '@fandom-frontend/react-common/dist/icons/IconCrossTiny';
 import { PlayerContext } from 'players/shared/PlayerContext';
+import { jwPlayerPlaybackTracker } from 'utils/videoTracking';
 
 const CloseWrapper = styled.div`
 	cursor: pointer;
@@ -30,6 +31,7 @@ interface CloseButtonProps {
 const CloseButton: React.FC<CloseButtonProps> = ({ dismiss }) => {
 	const { player } = useContext(PlayerContext);
 	const onClickClose = () => {
+		jwPlayerPlaybackTracker({ event_name: 'video_player_close' });
 		player.pause();
 		dismiss();
 	};
