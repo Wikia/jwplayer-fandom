@@ -110,19 +110,17 @@ export function trackerWithNewCategory(category: string) {
 	return baseVideoTracker.extend({ category: category });
 }
 
-export const CATEGORIES = {
-	JW_PLAYER: '', // Generic Events
-};
-
 export const EVENT_CATEGORIES = {
 	PLAYBACK: 'playback',
 	AD: 'ad',
 	CONTENT: 'content',
+	WIREWAX: 'wirewax',
 };
 
 export const jwPlayerPlaybackTracker = trackerWithNewCategory(EVENT_CATEGORIES.PLAYBACK);
 export const jwPlayerAdTracker = trackerWithNewCategory(EVENT_CATEGORIES.AD);
 export const jwPlayerContentTracker = trackerWithNewCategory(EVENT_CATEGORIES.CONTENT);
+export const jwPlayerWireWaxTracker = trackerWithNewCategory(EVENT_CATEGORIES.WIREWAX);
 
 const mappings = new Set<string>();
 export function singleTrack(eventName: string) {

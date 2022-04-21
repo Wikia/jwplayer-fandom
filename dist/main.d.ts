@@ -34,7 +34,7 @@ declare class FandomWirewaxPlugin {
 
 			// Search JW media id
 			const mediaId = this.player.getConfig().playlistItem.mediaid || this.player.getConfig().playlistItem.videoId;
-			this.tracker = jwPlayerVideoTracker.extend({
+			this.tracker = jwPlayerWireWaxTracker.extend({
 				mediaId: mediaId,
 			});
 
@@ -134,7 +134,6 @@ declare class FandomWirewaxPlugin {
 		try {
 			this.embedder.play();
 			this.tracker({
-				category: WIREWAX_CATEGORY,
 				action: PLAY_ACTION,
 				value: event,
 			});
@@ -149,7 +148,6 @@ declare class FandomWirewaxPlugin {
 		try {
 			this.embedder.pause();
 			this.tracker({
-				category: WIREWAX_CATEGORY,
 				action: PAUSE_ACTION,
 				value: event,
 			});
@@ -202,7 +200,6 @@ declare class FandomWirewaxPlugin {
 
 	WirewaxHotspotClickHandler: (event: HotspotClickEmbedderEventData) => void = (event) => {
 		this.tracker({
-			category: WIREWAX_CATEGORY,
 			action: HOTSPOT_CLICK_ACTION,
 			value: event,
 		});
@@ -210,7 +207,6 @@ declare class FandomWirewaxPlugin {
 
 	WirewaxOverlayShowHandler: (event: OverlayShowEmbedderEventData) => void = (event) => {
 		this.tracker({
-			category: WIREWAX_CATEGORY,
 			action: OVERLAY_SHOW_ACTION,
 			value: event,
 		});
@@ -218,7 +214,6 @@ declare class FandomWirewaxPlugin {
 
 	WirewaxOverlayHideHandler: (event: OverlayHideEmbedderEventData) => void = (event) => {
 		this.tracker({
-			category: WIREWAX_CATEGORY,
 			action: OVERLAY_HIDE_ACTION,
 			value: event,
 		});

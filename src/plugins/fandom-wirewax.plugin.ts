@@ -1,4 +1,4 @@
-import { jwPlayerVideoTracker } from 'utils/videoTracking';
+import { jwPlayerWireWaxTracker } from 'utils/videoTracking';
 import { ModuleTrackingFunction } from '@fandom/tracking-metrics/tracking/';
 
 import {
@@ -21,7 +21,6 @@ interface WindowWirewax extends Window {
 
 declare let window: WindowWirewax;
 
-const WIREWAX_CATEGORY = 'wirewax';
 const HOTSPOT_CLICK_ACTION = 'hotspotclick';
 const OVERLAY_SHOW_ACTION = 'overlayshow';
 const OVERLAY_HIDE_ACTION = 'overlayhide';
@@ -102,7 +101,7 @@ class FandomWirewaxPlugin {
 
 			// Search JW media id
 			const mediaId = this.player.getConfig().playlistItem.mediaid || this.player.getConfig().playlistItem.videoId;
-			this.tracker = jwPlayerVideoTracker.extend({
+			this.tracker = jwPlayerWireWaxTracker.extend({
 				mediaId: mediaId,
 			});
 
@@ -202,7 +201,6 @@ class FandomWirewaxPlugin {
 		try {
 			this.embedder.play();
 			this.tracker({
-				category: WIREWAX_CATEGORY,
 				action: PLAY_ACTION,
 				value: event,
 			});
@@ -217,7 +215,6 @@ class FandomWirewaxPlugin {
 		try {
 			this.embedder.pause();
 			this.tracker({
-				category: WIREWAX_CATEGORY,
 				action: PAUSE_ACTION,
 				value: event,
 			});
@@ -270,7 +267,6 @@ class FandomWirewaxPlugin {
 
 	WirewaxHotspotClickHandler: (event: HotspotClickEmbedderEventData) => void = (event) => {
 		this.tracker({
-			category: WIREWAX_CATEGORY,
 			action: HOTSPOT_CLICK_ACTION,
 			value: event,
 		});
@@ -278,7 +274,6 @@ class FandomWirewaxPlugin {
 
 	WirewaxOverlayShowHandler: (event: OverlayShowEmbedderEventData) => void = (event) => {
 		this.tracker({
-			category: WIREWAX_CATEGORY,
 			action: OVERLAY_SHOW_ACTION,
 			value: event,
 		});
@@ -286,7 +281,6 @@ class FandomWirewaxPlugin {
 
 	WirewaxOverlayHideHandler: (event: OverlayHideEmbedderEventData) => void = (event) => {
 		this.tracker({
-			category: WIREWAX_CATEGORY,
 			action: OVERLAY_HIDE_ACTION,
 			value: event,
 		});
