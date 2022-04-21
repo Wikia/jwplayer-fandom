@@ -27,7 +27,7 @@
 		"pub:patch": "npm version patch && rm -rf dist && yarn pub",
 		"pub:minor": "npm version minor && rm -rf dist && yarn pub",
 		"pub:major": "npm version major && rm -rf dist && yarn pub",
-		"pub": "yarn build && cd dist && npm publish"
+		"pub": "yarn build && cd dist && npm publish --tag beta"
 	},
 	"lint-staged": {
 		"src/**/*.(ts|tsx|js)": [
