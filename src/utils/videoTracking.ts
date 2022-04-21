@@ -1,4 +1,4 @@
-import trackerFactoryDataLayer, { ModuleTrackingFunction } from '@fandom/tracking-metrics/tracking/';
+import trackerFactoryDataLayer from '@fandom/tracking-metrics/tracking/';
 import { TrackData } from '@fandom/tracking-metrics/tracking/dataLayer';
 import {
 	getAutoPlayState,
@@ -107,11 +107,11 @@ const baseVideoTracker = trackerFactoryDataLayer(baseTrackParams);
 
 export function trackerWithNewCategory(category: string) {
 	// TODO Need to adjust to event_name
-	return baseVideoTracker.extend({ categoryPrefixer: (cat) => category + cat });
+	return baseVideoTracker.extend({ category: category });
 }
 
 export const CATEGORIES = {
-	JW_PLAYER: 'FandomVideoPlayer: ', // Generic Events
+	JW_PLAYER: '', // Generic Events
 };
 
 export const EVENT_CATEGORIES = {
@@ -120,13 +120,9 @@ export const EVENT_CATEGORIES = {
 	CONTENT: 'content',
 };
 
-export const jwPlayerVideoTracker = trackerWithNewCategory(CATEGORIES.JW_PLAYER);
-
-export function withPlayerName(trackingFunction: ModuleTrackingFunction, playerName: string) {
-	return trackingFunction.extend({
-		playerName: playerName,
-	});
-}
+export const jwPlayerPlaybackTracker = trackerWithNewCategory(EVENT_CATEGORIES.PLAYBACK);
+export const jwPlayerAdTracker = trackerWithNewCategory(EVENT_CATEGORIES.AD);
+export const jwPlayerContentTracker = trackerWithNewCategory(EVENT_CATEGORIES.CONTENT);
 
 const mappings = new Set<string>();
 export function singleTrack(eventName: string) {

@@ -3,7 +3,7 @@ import { JWPlayerApi } from 'types';
 import FandomWirewaxPlugin from 'plugins/fandom-wirewax.plugin';
 import { PlayerContext } from 'players/shared/PlayerContext';
 import { Playlist } from 'types';
-import { jwPlayerVideoTracker } from 'utils/videoTracking';
+import { jwPlayerPlaybackTracker } from 'utils/videoTracking';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
 import JWEvents from 'players/shared/JWEvents';
 import addBaseTrackingEvents from 'players/shared/addBaseTrackingEvents';
@@ -40,16 +40,16 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl }
 	const initPlayer = (elementId: string, playerUrl?: string) => {
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START);
 		const script = document.createElement('script');
-		jwPlayerVideoTracker({ event_name: 'video_player_start_load' });
+		jwPlayerPlaybackTracker({ event_name: 'video_player_start_load' });
 
 		script.async = true;
 		script.src = playerUrl || getDefaultPlayerUrl();
 		script.onload = () => {
-			jwPlayerVideoTracker({ event_name: 'video_player_load' });
+			jwPlayerPlaybackTracker({ event_name: 'video_player_load' });
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY);
 			const registerPlugin = window.jwplayer().registerPlugin;
 			registerPlugin('wirewax', '8.0', FandomWirewaxPlugin);
-			jwPlayerVideoTracker({ action: 'wirewax-registered' });
+			jwPlayerPlaybackTracker({ action: 'wirewax-registered' });
 
 			const playerInstance = window.jwplayer(elementId).setup({
 				playlist: playlist,
@@ -59,7 +59,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl }
 			playerInstance.on(JWEvents.READY, (event) => {
 				recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_READY);
 				// only add the events after the player is ready
-				jwPlayerVideoTracker({ event_name: 'video_player_ready' });
+				jwPlayerPlaybackTracker({ event_name: 'video_player_ready' });
 				addBaseTrackingEvents(playerInstance);
 				new FandomWirewaxPlugin(elementId, {
 					player: window.jwplayer(elementId),

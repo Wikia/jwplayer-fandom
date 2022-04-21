@@ -7,7 +7,7 @@ import { Player } from 'types';
 
 export interface WindowWithJWPlayer {
 	jwplayer: () => Player;
-	currentPlaylistItemWirewax: boolean;
+	currentPlaylistItemWirewax: boolean | null;
 }
 
 declare let window: WindowWithJWPlayer;
