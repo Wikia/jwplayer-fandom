@@ -329,6 +329,14 @@ type JwEventData =
 	| OnAdTimeEventData;
 type JwEventHandler = (event?: JwEventData) => void;
 
+interface BasePluginInterface {
+	on: (name: string, handler: JwEventHandler) => Player;
+}
+
+interface Plugins {
+	sharing: BasePluginInterface;
+}
+
 type Player = {
 	playToggle: () => null;
 	pause: () => null;
@@ -352,6 +360,7 @@ type Player = {
 	getViewable: () => number;
 	getDuration: () => number;
 	getAdBlock: () => boolean;
+	plugins: Plugins;
 };
 type CreateWirewaxEmbedder = () => Embedder;
 type WirewaxPluginOptions = {

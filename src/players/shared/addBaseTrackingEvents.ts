@@ -178,4 +178,16 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 				});
 			}
 		});
+
+	// Safety check for sharing plugin
+	if (playerInstance.plugins && playerInstance.plugins.sharing && playerInstance.plugins.sharing.on) {
+		playerInstance.plugins.sharing.on('click', (method) => {
+			jwPlayerPlaybackTracker({
+				event_name: 'video_share',
+				video_share_method: method,
+			});
+		});
+	} else {
+		console.error('Sharing plugin not configured');
+	}
 }
