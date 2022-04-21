@@ -57,7 +57,7 @@ const injectEmbedderSDK = () => {
 
 	const fandomSDKUrl = 'https://edge-assets-wirewax.wikia-services.com/creativeData/sdk-fandom/wirewax-embedder-sdk.js';
 
-	console.log('inject WIREWAX embedder SDK fandom build', fandomSDKUrl);
+	console.debug('inject WIREWAX embedder SDK fandom build', fandomSDKUrl);
 
 	return new Promise((resolve, reject) => {
 		const script = document.createElement('script');
