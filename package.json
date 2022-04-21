@@ -1,5 +1,5 @@
 {
-	"name": "jwplayer-fandom",
+	"name": "@fandom/jwplayer-fandom",
 	"version": "1.12.1",
 	"description": "JWPlayer for Fandom",
 	"main": "dist/bundle.umd.js",

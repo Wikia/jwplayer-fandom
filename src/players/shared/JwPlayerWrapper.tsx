@@ -49,7 +49,6 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl }
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY);
 			const registerPlugin = window.jwplayer().registerPlugin;
 			registerPlugin('wirewax', '8.0', FandomWirewaxPlugin);
-			jwPlayerPlaybackTracker({ action: 'wirewax-registered' });
 
 			const playerInstance = window.jwplayer(elementId).setup({
 				playlist: playlist,
