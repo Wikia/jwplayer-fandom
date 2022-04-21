@@ -22,7 +22,6 @@
 		"lint:eslint:scripts": "eslint --cache --fix scripts",
 		"lint:eslint:tests": "eslint --cache --fix tests",
 		"lint:eslint": "npm-run-all --continue-on-error --parallel lint:eslint:src",
-		"prepare": "husky install",
 		"test": "echo 'No Tests yet'",
 		"pub:patch": "npm version patch && rm -rf dist && yarn pub",
 		"pub:minor": "npm version minor && rm -rf dist && yarn pub",
@@ -102,7 +101,7 @@
 	"peerDependencies": {
 		"i18next": "^19.7.0",
 		"react": "^16.14.0 || ^17.0.2 || ^18.0.0",
-		"react-dom": "^16.14.0 || ^17.0.2",
+		"react-dom": "^16.14.0 || ^17.0.2 || ^18.0.0",
 		"react-i18next": "^11.7.1"
 	},
 	"dependencies": {
