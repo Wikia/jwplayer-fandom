@@ -111,7 +111,8 @@ class FandomWirewaxPlugin {
 				.then(() => this.setupEmbedder())
 				.then(() => this.registerEvents())
 				.catch((error) => {
-					console.warn(error);
+					// silent for now - this is expected for non WW videos
+					console.debug('Not a valid WireWax video', error);
 				});
 		});
 
