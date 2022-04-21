@@ -7,7 +7,7 @@
 	"types": "main.d.ts",
 	"install-peers": "install-peers",
 	"scripts": {
-		"build": "yarn run create-dist && rollup -c && cp package.json dist/",
+		"build": "yarn run create-dist && rollup -c && cp package.json dist/ && cd dist && npm set-script prepare ''",
 		"watch": "yarn run create-dist && NODE_ENV=development rollup -c --watch",
 		"app": "cp dist/bundle.esm.js test-jw/src && cd test-jw && yarn start",
 		"create-dist": "rm -rf dist && mkdir -p dist",
@@ -23,6 +23,7 @@
 		"lint:eslint:tests": "eslint --cache --fix tests",
 		"lint:eslint": "npm-run-all --continue-on-error --parallel lint:eslint:src",
 		"test": "echo 'No Tests yet'",
+		"prepare": "husky install",
 		"pub:patch": "npm version patch && rm -rf dist && yarn pub",
 		"pub:minor": "npm version minor && rm -rf dist && yarn pub",
 		"pub:major": "npm version major && rm -rf dist && yarn pub",
