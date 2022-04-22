@@ -17,6 +17,7 @@ import {
 	getJWViewState,
 } from 'utils/globalJWInterface';
 import addGlobalProps from 'utils/videoTrackingGlobalProps';
+import getVideoPlayerVersion from 'utils/getVideoPlayerVersion';
 
 // https://docs.google.com/spreadsheets/d/1jEn61uIP8dYE8KQP3nrMG3nePFArgxrs3Q4lxTcArZQ/edit#gid=1564524057
 export const PROPERTY_NAMES = {
@@ -129,6 +130,7 @@ function addRunTimeParams(trackingParams: TrackData): TrackData {
 
 const baseTrackParams: TrackData = {
 	event: 'video-player-event',
+	video_player_version: getVideoPlayerVersion(),
 	withRunTimeParams: addRunTimeParams,
 };
 

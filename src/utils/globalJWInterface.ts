@@ -16,6 +16,11 @@ declare let window: WindowWithJWPlayer;
 const withTryCatchDefault =
 	(func: () => any, fallback = '') =>
 	() => {
+		// JWPLayer not yet ready
+		if (typeof window === 'undefined' || !window.jwplayer || typeof window.jwplayer !== 'function') {
+			return '';
+		}
+
 		try {
 			return func();
 		} catch (e) {
@@ -87,7 +92,7 @@ export const getJWViewState = withTryCatchDefault(() => {
 		return 'pip';
 	}
 
-	if (window.jwplayer().getFullScreen()) {
+	if (window.jwplayer().getFullscreen()) {
 		return 'fullscreen';
 	}
 
