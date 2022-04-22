@@ -33,7 +33,6 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl }
 
 	useEffect(() => {
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_INIT_RENDER);
-		// TODO: check if JWPlayer is already loaded
 		initPlayer('featured-video__player', playerUrl);
 	}, []);
 
