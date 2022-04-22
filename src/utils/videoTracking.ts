@@ -1,4 +1,4 @@
-import trackerFactoryDataLayer from '@fandom/tracking-metrics/tracking/';
+import { trackerFactoryWithoutDevPrefix } from '@fandom/tracking-metrics/tracking/';
 import { TrackData } from '@fandom/tracking-metrics/tracking/dataLayer';
 import {
 	getAutoPlayState,
@@ -103,7 +103,7 @@ const baseTrackParams: TrackData = {
 	withRunTimeParams: addRunTimeParams,
 };
 
-const baseVideoTracker = trackerFactoryDataLayer(baseTrackParams);
+const baseVideoTracker = trackerFactoryWithoutDevPrefix(baseTrackParams);
 
 export function trackerWithNewCategory(category: string) {
 	// TODO Need to adjust to event_name
