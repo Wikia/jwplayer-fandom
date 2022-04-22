@@ -81,3 +81,20 @@ export const getIsInteractable = withTryCatchDefault(() => {
 export const getJWAdBlockState = withTryCatchDefault(() => {
 	return window.jwplayer().getAdBlock();
 });
+
+export const getJWViewState = withTryCatchDefault(() => {
+	if (window.jwplayer().getFloating()) {
+		return 'pip';
+	}
+
+	if (window.jwplayer().getFullScreen()) {
+		return 'fullscreen';
+	}
+
+	// TODO Add this state
+	if (document.querySelector('#check-for-the-mini-featured-player')) {
+		return 'mini';
+	}
+
+	return 'standard';
+});

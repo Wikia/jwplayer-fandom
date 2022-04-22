@@ -140,6 +140,8 @@ export type Player = {
 	getViewable: () => number;
 	getDuration: () => number;
 	getAdBlock: () => boolean;
+	getFullScreen: () => boolean;
+	getFloating: () => boolean;
 	plugins: Plugins;
 };
 export type CreateWirewaxEmbedder = () => Embedder;

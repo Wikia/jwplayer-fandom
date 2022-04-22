@@ -14,6 +14,7 @@ import {
 	getPublishDate,
 	getIsInteractable,
 	getJWAdBlockState,
+	getJWViewState,
 } from 'utils/globalJWInterface';
 import addGlobalProps from 'utils/videoTrackingGlobalProps';
 
@@ -89,11 +90,39 @@ function addRunTimeParams(trackingParams: TrackData): TrackData {
 	trackDataObject[PROPERTY_NAMES.VIDEO_PUBLISH_DATE] = getPublishDate();
 	trackDataObject[PROPERTY_NAMES.VIDEO_DURATION] = getDuration();
 	trackDataObject[PROPERTY_NAMES.VIDEO_PLAYER] = getPlayerId();
+	trackDataObject[PROPERTY_NAMES.VIDEO_VIEW_STATE] = getJWViewState();
 
 	// TO BE ADDED LATER
 	// trackDataObject[PROPERTY_NAMES.VIDEO_COLLECTION] = getCollection();
 	// trackDataObject[PROPERTY_NAMES.VIDEO_SERIES_NAME] = getSeriesName()
 	// trackDataObject[PROPERTY_NAMES.VIDEO_SERIES_ID] = getSeriesId();
+
+	// TODO Move this to GTM or Tracking library
+	try {
+		const query = new URLSearchParams();
+
+		// Delete some stuff we don't want to send to DW
+		try {
+			delete trackDataObject.withRunTimeParams;
+			delete trackDataObject.isDebug;
+		} catch (e) {
+			// ignore
+		}
+
+		const keyValues = Object.entries(trackDataObject);
+
+		keyValues.forEach((pairs: [string, any]) => {
+			query.append(pairs[0], pairs[1]);
+		});
+
+		if (navigator && typeof navigator.sendBeacon === 'function') {
+			navigator.sendBeacon('https://beacon.wikia-services.com/__track/special/video?' + query.toString());
+		} else {
+			fetch('https://beacon.wikia-services.com/__track/special/video?' + query.toString()).catch(console.error);
+		}
+	} catch (e) {
+		console.error('Error sending beacon event', e);
+	}
 
 	return trackDataObject;
 }
@@ -106,7 +135,6 @@ const baseTrackParams: TrackData = {
 const baseVideoTracker = trackerFactoryWithoutDevPrefix(baseTrackParams);
 
 export function trackerWithNewCategory(category: string) {
-	// TODO Need to adjust to event_name
 	return baseVideoTracker.extend({ category: category });
 }
 

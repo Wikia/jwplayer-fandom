@@ -21,14 +21,16 @@ export const GLOBAL_PROPS = {
 	BEACON_ID2: 'b2',
 	PAGE_VIEW_ID: 'pv_unique_id',
 	TIMESTAMP: 'timestamp', // acts as cache buster too
-	USER_ID: 'userId',
+	USER_ID: 'user_id',
 
 	// MW Specific
-	COMMUNITY_ID: 'c', // TODO Consider changing name
-	COMMUNITY_NAME: 'x', // TODO Consider changing name
+	COMMUNITY_ID: 'c',
+	COMMUNITY_NAME: 'x',
+	SKIN: 's',
+	ARTICLE_ID: 'a',
+
+	// Not in doc
 	CONTENT_LANG: 'en', // TODO consider changing name
-	SKIN: 's', // TODO Consider changing name
-	ARTICLE_ID: 'a', // TODO Consider changing name
 };
 
 function getDefaultsFromMWConfig(): TrackData {
