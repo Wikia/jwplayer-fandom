@@ -5,6 +5,7 @@ This repository contains Fandom's custom solution/wrapper for media reproduction
 **Note**:
 
 - This player has registered the `wirewax` plugin as default
+- This project is bundled up using [rollup](https://rollupjs.org/guide/en/#installation).
 
 ## Usage
 
@@ -55,9 +56,8 @@ Read more about how to implement and use them [here](https://github.com/Wikia/br
 
 ## Developing
 
-The first thing you need to do is to install the dependencies. This project is bundled up using [rollup](https://rollupjs.org/guide/en/#installation).
+The first thing you need to do is to install the dependencies & run `watch`.
 
-- Run `npm install --global rollup` or `yarn global add rollup`
 - Clone repo
 - Run `yarn install`
 - Run `yarn run watch` to watch for file changes and run project
