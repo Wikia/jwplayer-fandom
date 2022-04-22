@@ -72,6 +72,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl }
 			const script = document.createElement('script');
 			script.async = true;
 			script.src = playerUrl || getDefaultPlayerUrl();
+			script.onload = onload;
 			document.getElementsByTagName('head')[0].appendChild(script);
 		}
 	};
