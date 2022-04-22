@@ -1,13 +1,13 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "1.12.1",
+	"version": "2.0.0-beta-1",
 	"description": "JWPlayer for Fandom",
-	"main": "dist/bundle.umd.js",
-	"module": "dist/bundle.esm.js",
-	"types": "dist/main.d.ts",
+	"main": "bundle.umd.js",
+	"module": "bundle.esm.js",
+	"types": "main.d.ts",
 	"install-peers": "install-peers",
 	"scripts": {
-		"build": "yarn run create-dist && rollup -c",
+		"build": "yarn run create-dist && rollup -c && cp package.json dist/ && cd dist && npm set-script prepare ''",
 		"watch": "yarn run create-dist && NODE_ENV=development rollup -c --watch",
 		"app": "cp dist/bundle.esm.js test-jw/src && cd test-jw && yarn start",
 		"create-dist": "rm -rf dist && mkdir -p dist",
@@ -22,8 +22,12 @@
 		"lint:eslint:scripts": "eslint --cache --fix scripts",
 		"lint:eslint:tests": "eslint --cache --fix tests",
 		"lint:eslint": "npm-run-all --continue-on-error --parallel lint:eslint:src",
+		"test": "echo 'No Tests yet'",
 		"prepare": "husky install",
-		"test": "echo 'No Tests yet'"
+		"pub:patch": "npm version patch && rm -rf dist && yarn pub",
+		"pub:minor": "npm version minor && rm -rf dist && yarn pub",
+		"pub:major": "npm version major && rm -rf dist && yarn pub",
+		"pub": "yarn build && cd dist && npm publish --tag beta"
 	},
 	"lint-staged": {
 		"src/**/*.(ts|tsx|js)": [
@@ -98,7 +102,7 @@
 	"peerDependencies": {
 		"i18next": "^19.7.0",
 		"react": "^16.14.0 || ^17.0.2 || ^18.0.0",
-		"react-dom": "^16.14.0 || ^17.0.2",
+		"react-dom": "^16.14.0 || ^17.0.2 || ^18.0.0",
 		"react-i18next": "^11.7.1"
 	},
 	"dependencies": {
