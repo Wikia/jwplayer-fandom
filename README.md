@@ -66,3 +66,7 @@ The first thing you need to do is to install the dependencies. This project is b
 
 - Bump version and publish with `yarn pub:[patch|minor|major]` (e.g. `yarn pub:minor`).
 - If you don't have your artifactory credentials on `~/.npmrc` get them [here](https://fandom.atlassian.net/wiki/spaces/GEN/pages/110592255/Artifactory+-+Internal+package+repositories).
+
+## JenkinsJob
+
+See at: http://prod.jenkins.service.sjc.consul:8080/job/JWPlayer/

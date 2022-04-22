@@ -1,3 +1,5 @@
+import { jwPlayerWirewaxTracker } from 'utils/videoTracking';
+
 import {
 	CreateWirewaxEmbedder,
 	Player,
@@ -7,13 +9,22 @@ import {
 	OverlayHideEmbedderEventData,
 	HotspotClickEmbedderEventData,
 	SeekedEmbedderEventData,
+	PausePlayerEventData,
+	PlayPlayerEventData,
 } from '../types';
 
 interface WindowWirewax extends Window {
 	createWirewaxEmbedder?: CreateWirewaxEmbedder;
+	currentPlaylistItemWirewax: boolean;
 }
 
 declare let window: WindowWirewax;
+
+const HOTSPOT_CLICK_ACTION = 'hotspotclick';
+const OVERLAY_SHOW_ACTION = 'overlayshow';
+const OVERLAY_HIDE_ACTION = 'overlayhide';
+const PAUSE_ACTION = 'pause';
+const PLAY_ACTION = 'play';
 
 // Utilities
 const fetchWIREWAXVidId = async (mediaid: string): Promise<string> => {
@@ -24,10 +35,13 @@ const fetchWIREWAXVidId = async (mediaid: string): Promise<string> => {
 	const response = await fetch(`https://edge-player.wirewax.com/jwPlayerData/${mediaid}.txt`);
 
 	if (response.status !== 200) {
+		window.currentPlaylistItemWirewax = false;
 		throw new Error('No vidId is mapped with this mediaid');
 	}
 
 	const vidId: string = (await response.json()) as string;
+
+	window.currentPlaylistItemWirewax = true;
 
 	return vidId;
 };
@@ -41,7 +55,7 @@ const injectEmbedderSDK = () => {
 
 	const fandomSDKUrl = 'https://edge-assets-wirewax.wikia-services.com/creativeData/sdk-fandom/wirewax-embedder-sdk.js';
 
-	console.log('inject WIREWAX embedder SDK fandom build', fandomSDKUrl);
+	console.debug('inject WIREWAX embedder SDK fandom build', fandomSDKUrl);
 
 	return new Promise((resolve, reject) => {
 		const script = document.createElement('script');
@@ -97,7 +111,8 @@ class FandomWirewaxPlugin {
 				.then(() => this.setupEmbedder())
 				.then(() => this.registerEvents())
 				.catch((error) => {
-					console.warn(error);
+					// silent for now - this is expected for non WW videos
+					console.debug('Not a valid WireWax video', error);
 				});
 		});
 
@@ -176,25 +191,27 @@ class FandomWirewaxPlugin {
 	}
 
 	// ES6
-	JWPlayHandler: () => void = () => {
+	JWPlayHandler: (event: PlayPlayerEventData) => void = () => {
 		this.startTimeUpdate();
 
 		try {
 			this.embedder.play();
-			// TODO: reaplace with tracking
-			console.log('wirewax play');
+			jwPlayerWirewaxTracker({
+				action: PLAY_ACTION,
+			});
 		} catch (error) {
 			console.warn(error);
 		}
 	};
 
-	JWPauseHandler: () => void = () => {
+	JWPauseHandler: (event: PausePlayerEventData) => void = () => {
 		this.stopTimeUpdate();
 
 		try {
 			this.embedder.pause();
-			// TODO: reaplace with tracking
-			console.log('wirewax pause');
+			jwPlayerWirewaxTracker({
+				action: PAUSE_ACTION,
+			});
 		} catch (error) {
 			console.warn(error);
 		}
@@ -237,26 +254,27 @@ class FandomWirewaxPlugin {
 			} else if (typeof event.seekTo === 'number') {
 				this.player.seek(event.seekTo);
 			}
-			// TODO: reaplace with tracking
-			console.log('wirewax seek', { event });
 		} catch (err) {
 			console.log(err);
 		}
 	};
 
-	WirewaxHotspotClickHandler: (event: HotspotClickEmbedderEventData) => void = (event) => {
-		// TODO: reaplace with tracking
-		console.log('wirewax hotspot click', { event });
+	WirewaxHotspotClickHandler: (event: HotspotClickEmbedderEventData) => void = () => {
+		jwPlayerWirewaxTracker({
+			action: HOTSPOT_CLICK_ACTION,
+		});
 	};
 
-	WirewaxOverlayShowHandler: (event: OverlayShowEmbedderEventData) => void = (event) => {
-		// TODO: reaplace with tracking
-		console.log('wirewax overlay open', { event });
+	WirewaxOverlayShowHandler: (event: OverlayShowEmbedderEventData) => void = () => {
+		jwPlayerWirewaxTracker({
+			action: OVERLAY_SHOW_ACTION,
+		});
 	};
 
-	WirewaxOverlayHideHandler: (event: OverlayHideEmbedderEventData) => void = (event) => {
-		// TODO: reaplace with tracking
-		console.log('wirewax overlay close', { event });
+	WirewaxOverlayHideHandler: (event: OverlayHideEmbedderEventData) => void = () => {
+		jwPlayerWirewaxTracker({
+			action: OVERLAY_HIDE_ACTION,
+		});
 	};
 }
 

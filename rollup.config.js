@@ -6,6 +6,14 @@ import json from '@rollup/plugin-json';
 import { terser } from 'rollup-plugin-terser';
 import dts from 'rollup-plugin-dts';
 
+const isDev = process.env.NODE_ENV === 'development';
+const plugins = [];
+
+// Don't minify when in watch mode
+if (!isDev) {
+	plugins.push(terser());
+}
+
 const config = [
 	{
 		input: 'src/main.ts',
@@ -13,7 +21,7 @@ const config = [
 			{
 				file: 'dist/bundle.esm.js',
 				compact: true,
-				plugins: [terser()],
+				plugins: plugins,
 				format: 'es',
 				globals: {
 					react: 'React',
@@ -23,7 +31,7 @@ const config = [
 				name: 'jwplayer-fandom',
 				file: 'dist/bundle.umd.js',
 				compact: true,
-				plugins: [terser()],
+				plugins: plugins,
 				format: 'umd',
 				globals: {
 					react: 'React',

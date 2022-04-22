@@ -8,26 +8,14 @@ import {
 	PausePlayerEventData,
 	Player,
 	PlayPlayerEventData,
-	SeekEventData,
 } from 'types';
 import JWEvents from 'players/shared/JWEvents';
-import { CONTROLS_CATEGORY, jwPlayerVideoTracker, singleTrack } from 'utils/videoTracking';
-import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
-
-const AD_TIME_CATEGORY = 'ad';
-const AD_ACTION = 'ad-playing';
-
-const VIDEO_TIME_CATEGORY = 'video';
-const VIDEO_TIME_ACTION = 'playing';
+import { jwPlayerPlaybackTracker, jwPlayerAdTracker, jwPlayerContentTracker, singleTrack } from 'utils/videoTracking';
+import { getVideoStartupTime, recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
 
 export default function addBaseTrackingEvents(playerInstance: Player) {
 	const playList = playerInstance.getPlaylistItem();
 	const mediaId = playList.mediaid;
-
-	// Add MediaId to the dataLayer object to be used later
-	const tracker = jwPlayerVideoTracker.extend({
-		mediaId: mediaId,
-	});
 
 	// Add events
 	playerInstance
@@ -41,61 +29,51 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 			const initialPlayEvent = 'jw-initial-play-event';
 
-			tracker({ action: 'play', label: playReason });
-
 			if (playReason === 'interaction') {
-				tracker.click({
-					category: CONTROLS_CATEGORY,
-					label: 'play',
+				jwPlayerPlaybackTracker({
+					event_name: 'video_resume',
 				});
 			}
 
 			// Only fire on the very first event
 			if (singleTrack(initialPlayEvent)) {
-				tracker({ action: 'play', label: playReason });
-				recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_VIDEO);
+				const timeToFirstFrame = recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_VIDEO);
+				jwPlayerPlaybackTracker({
+					event: 'video_content_start',
+					video_time_to_first_frame: timeToFirstFrame,
+					video_startup_time: getVideoStartupTime(),
+				});
 			}
 		})
 		.on(JWEvents.TIME, (event: OnVideoTimeEventData) => {
 			if (event.position >= event.duration * 0.25 && singleTrack('jw-player-video-25' + mediaId)) {
-				tracker({
-					category: VIDEO_TIME_CATEGORY,
-					action: VIDEO_TIME_ACTION,
-					label: 'video-quartile-25',
-					value: event.duration,
+				jwPlayerContentTracker({
+					event_name: 'video_content_quartile_25',
 				});
 			}
 
 			if (event.position >= event.duration * 0.5 && singleTrack('jw-player-video-50' + mediaId)) {
-				tracker({
-					category: VIDEO_TIME_CATEGORY,
-					action: VIDEO_TIME_ACTION,
-					label: 'video-quartile-50',
-					value: event.duration,
+				jwPlayerContentTracker({
+					event_name: 'video_content_quartile_50',
 				});
 			}
 
 			if (event.position >= event.duration * 0.75 && singleTrack('jw-player-video-75' + mediaId)) {
-				tracker({
-					category: VIDEO_TIME_CATEGORY,
-					action: VIDEO_TIME_ACTION,
-					label: 'video-quartile-75',
-					value: event.duration,
+				jwPlayerContentTracker({
+					event_name: 'video_content_quartile_75',
 				});
 			}
 		})
 		.on(JWEvents.COMPLETE, () => {
-			tracker({
-				category: 'video',
-				action: 'completed',
+			jwPlayerContentTracker({
+				event_name: 'video_content_completed',
 			});
 		})
 		// Controls
 		.on(JWEvents.PAUSE, (event: PausePlayerEventData) => {
 			if (event.pauseReason === 'interaction') {
-				tracker.click({
-					category: CONTROLS_CATEGORY,
-					label: 'pause',
+				jwPlayerPlaybackTracker({
+					event_name: 'video_pause',
 				});
 			}
 		})
@@ -106,54 +84,48 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 			}
 
 			if (event.mute === false) {
-				tracker.click({
-					category: CONTROLS_CATEGORY,
-					label: 'unmute',
+				jwPlayerPlaybackTracker({
+					event_name: 'video_volume_change',
+					_label: 'unmute',
 				});
 				return;
 			}
 
 			if (event.mute === true) {
-				tracker.click({
-					category: CONTROLS_CATEGORY,
-					label: 'mute',
+				jwPlayerPlaybackTracker({
+					event_name: 'video_volume_change',
+					_label: 'mute',
 				});
 			}
 		})
 		.on(JWEvents.VOLUME, (event: OnVolumeEventData) => {
-			tracker({
-				category: CONTROLS_CATEGORY,
-				action: 'volume-change',
-				label: `volume-level-${event.volume}`,
+			jwPlayerPlaybackTracker({
+				event_name: 'video_volume_change',
 				value: event.volume,
 			});
 		})
 		.on(JWEvents.NEXT, () => {
-			tracker.click({
-				category: CONTROLS_CATEGORY,
-				label: 'next-video',
+			jwPlayerPlaybackTracker({
+				event_name: 'video_select_next',
 			});
 		})
 
 		.on(JWEvents.FLOAT, () => {
-			tracker.click({
-				category: CONTROLS_CATEGORY,
-				label: 'picture-in-picture',
+			jwPlayerPlaybackTracker({
+				event_name: 'video_pip',
 			});
 		})
 
 		.on(JWEvents.FULLSCREEN, (event: FullScreenEventData) => {
-			tracker.click({
-				category: CONTROLS_CATEGORY,
-				label: `full-screen-${event.fullscreen}`,
+			jwPlayerPlaybackTracker({
+				event_name: 'video_fullscreen_toggle',
+				_label: `full-screen-${event.fullscreen}`,
 			});
 		})
 
-		.on(JWEvents.SEEK, (event: SeekEventData) => {
-			tracker.click({
-				category: CONTROLS_CATEGORY,
-				label: `seek | ${event.position} | ${event.offset}`,
-				value: event.offset,
+		.on(JWEvents.SEEK, () => {
+			jwPlayerPlaybackTracker({
+				event_name: 'video_seek',
 			});
 		})
 
@@ -161,67 +133,61 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 		.on(JWEvents.ERROR, (event: OnErrorEventData) => {
 			console.warn(event);
 
-			tracker({
-				action: 'error',
-				category: `${event.code} | ${event.message.slice(0, 20)}`,
-				label: 'jw-player-error',
+			jwPlayerPlaybackTracker({
+				event_name: 'video_player_error',
+				video_player_error_code: event.code,
 			});
 		})
 
-		// Ads
+		// Ads TODO - Ask if we need this
 		// .on(JWEvents.AD_PLAY, () => {
 		// 	console.log('Ad Play');
 		// })
+
 		.on(JWEvents.AD_LOADED, () => {
-			tracker({
-				category: AD_TIME_CATEGORY,
-				action: 'ad-loaded',
-				label: 'ad-quartile-0',
-				value: 0,
+			jwPlayerAdTracker({
+				event_name: 'video_ad_loaded',
 			});
 		})
 		.on(JWEvents.AD_STARTED, () => {
-			tracker({
-				category: AD_TIME_CATEGORY,
-				action: 'ad-started',
-				label: 'ad-quartile-0',
-				value: 0,
+			jwPlayerAdTracker({
+				event_name: 'video_ad_started',
 			});
 		})
 		.on(JWEvents.AD_FINISHED, () => {
-			tracker({
-				category: AD_TIME_CATEGORY,
-				action: 'ad-completed',
-				label: 'ad-quartile-100',
-				value: 1,
+			jwPlayerAdTracker({
+				event_name: 'video_ad_completed',
 			});
 		})
 		.on(JWEvents.AD_TIME, (event: OnAdTimeEventData) => {
 			if (event.position >= event.duration * 0.25 && singleTrack('jw-player-ad-25')) {
-				tracker({
-					category: AD_TIME_CATEGORY,
-					action: AD_ACTION,
-					label: 'ad-quartile-25',
-					value: event.duration,
+				jwPlayerAdTracker({
+					event_name: 'video_ad_quartile_25',
 				});
 			}
 
 			if (event.position >= event.duration * 0.5 && singleTrack('jw-player-ad-50')) {
-				tracker({
-					category: AD_TIME_CATEGORY,
-					action: AD_ACTION,
-					label: 'ad-quartile-50',
-					value: event.duration,
+				jwPlayerAdTracker({
+					event_name: 'video_ad_quartile_50',
 				});
 			}
 
 			if (event.position >= event.duration * 0.75 && singleTrack('jw-player-ad-75')) {
-				tracker({
-					category: AD_TIME_CATEGORY,
-					action: AD_ACTION,
-					label: 'ad-quartile-75',
-					value: event.duration,
+				jwPlayerAdTracker({
+					event_name: 'video_ad_quartile_75',
 				});
 			}
 		});
+
+	// Safety check for sharing plugin
+	if (playerInstance.plugins && playerInstance.plugins.sharing && playerInstance.plugins.sharing.on) {
+		playerInstance.plugins.sharing.on('click', (method) => {
+			jwPlayerPlaybackTracker({
+				event_name: 'video_share',
+				video_share_method: method,
+			});
+		});
+	} else {
+		console.error('Sharing plugin not configured');
+	}
 }
