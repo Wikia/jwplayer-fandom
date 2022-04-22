@@ -39,12 +39,9 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl }
 
 	const initPlayer = (elementId: string, playerUrl?: string) => {
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START);
-		const script = document.createElement('script');
 		jwPlayerPlaybackTracker({ event_name: 'video_player_start_load' });
 
-		script.async = true;
-		script.src = playerUrl || getDefaultPlayerUrl();
-		script.onload = () => {
+		const onload = () => {
 			jwPlayerPlaybackTracker({ event_name: 'video_player_load' });
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY);
 			const registerPlugin = window.jwplayer().registerPlugin;
@@ -69,7 +66,14 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl }
 			setPlayer(playerInstance);
 		};
 
-		document.getElementsByTagName('head')[0].appendChild(script);
+		if (typeof window.jwplayer === 'function') {
+			onload();
+		} else {
+			const script = document.createElement('script');
+			script.async = true;
+			script.src = playerUrl || getDefaultPlayerUrl();
+			document.getElementsByTagName('head')[0].appendChild(script);
+		}
 	};
 
 	return (
