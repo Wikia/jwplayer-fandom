@@ -65,7 +65,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 			}
 
 			// 10s interval events firing
-			if (event.position < 60) {
+			if (event.position < 60 && event.position >= 10) {
 				const tenSecondBucket = Math.floor(event.position / 10);
 
 				if (singleTrack(`jw-player-heartbeat-second-${mediaId}-${tenSecondBucket}`)) {
