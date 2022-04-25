@@ -11,7 +11,7 @@ import {
 	SeekedEmbedderEventData,
 	PausePlayerEventData,
 	PlayPlayerEventData,
-} from '../types';
+} from 'types';
 
 interface WindowWirewax extends Window {
 	createWirewaxEmbedder?: CreateWirewaxEmbedder;
@@ -19,12 +19,6 @@ interface WindowWirewax extends Window {
 }
 
 declare let window: WindowWirewax;
-
-const HOTSPOT_CLICK_ACTION = 'hotspotclick';
-const OVERLAY_SHOW_ACTION = 'overlayshow';
-const OVERLAY_HIDE_ACTION = 'overlayhide';
-const PAUSE_ACTION = 'pause';
-const PLAY_ACTION = 'play';
 
 // Utilities
 const fetchWIREWAXVidId = async (mediaid: string): Promise<string> => {
@@ -196,9 +190,6 @@ class FandomWirewaxPlugin {
 
 		try {
 			this.embedder.play();
-			jwPlayerWirewaxTracker({
-				action: PLAY_ACTION,
-			});
 		} catch (error) {
 			console.warn(error);
 		}
@@ -209,9 +200,6 @@ class FandomWirewaxPlugin {
 
 		try {
 			this.embedder.pause();
-			jwPlayerWirewaxTracker({
-				action: PAUSE_ACTION,
-			});
 		} catch (error) {
 			console.warn(error);
 		}
@@ -259,21 +247,29 @@ class FandomWirewaxPlugin {
 		}
 	};
 
-	WirewaxHotspotClickHandler: (event: HotspotClickEmbedderEventData) => void = () => {
+	WirewaxHotspotClickHandler: (event: HotspotClickEmbedderEventData) => void = (event) => {
 		jwPlayerWirewaxTracker({
-			action: HOTSPOT_CLICK_ACTION,
+			event_name: 'wirewax_hotspot_click',
+			wirewax_hotspot: event.hotspotName,
+			wirewax_action: event.action,
 		});
 	};
 
-	WirewaxOverlayShowHandler: (event: OverlayShowEmbedderEventData) => void = () => {
+	WirewaxOverlayShowHandler: (event: OverlayShowEmbedderEventData) => void = (event) => {
 		jwPlayerWirewaxTracker({
-			action: OVERLAY_SHOW_ACTION,
+			event_name: 'wirewax_overlay_toggle',
+			wirewax_overlay_toggle_type: 'show',
+			wirewax_hotspot: event.hotspotName,
+			wirewax_overlay_id: event.overlayId,
 		});
 	};
 
-	WirewaxOverlayHideHandler: (event: OverlayHideEmbedderEventData) => void = () => {
+	WirewaxOverlayHideHandler: (event: OverlayHideEmbedderEventData) => void = (event) => {
 		jwPlayerWirewaxTracker({
-			action: OVERLAY_HIDE_ACTION,
+			event_name: 'wirewax_overlay_toggle',
+			wirewax_overlay_toggle_type: 'hide',
+			wirewax_hotspot: event.hotspotName,
+			wirewax_overlay_id: event.overlayId,
 		});
 	};
 }
