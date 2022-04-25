@@ -103,3 +103,24 @@ export const getJWViewState = withTryCatchDefault(() => {
 
 	return 'standard';
 });
+
+// TODO Current not possible
+export const getIsEmbed = withTryCatchDefault(() => {
+	return false;
+});
+
+export const getJWQualityManifest = withTryCatchDefault(() => {
+	return window
+		.jwplayer()
+		.getQualityLevels()
+		.map((obj) => obj.label)
+		.join(',');
+});
+
+// It reads to me like we'd generate that ourselves each time a new video is played, to tie together all the other events.' +
+// ' Something like a hash that wouldn't need to be related to anything, just as long as all events for that CURRENT video have
+// that dimension applied.
+export const getUniqueStreamId = withTryCatchDefault(() => {
+	// this should b
+	return window;
+});
