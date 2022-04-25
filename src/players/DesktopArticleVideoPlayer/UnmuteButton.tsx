@@ -21,7 +21,6 @@ const UnmuteButtonWrapper = styled.div<Props>`
 	position: absolute;
 	top: 6px;
 	left: 6px;
-	z-index: 2;
 	height: 31px;
 	box-sizing: border-box;
 	display: flex;
