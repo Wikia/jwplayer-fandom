@@ -87,11 +87,18 @@ export interface FullScreenEventData {
 	fullscreen: boolean;
 }
 
+export interface SeekRange {
+	end: number;
+	start: number;
+}
+
 export interface SeekEventData {
 	currentTime: number;
 	duration: number;
 	position: number;
 	offset: number;
+	seekRange: SeekRange;
+	type: string;
 }
 
 type JwEventData =

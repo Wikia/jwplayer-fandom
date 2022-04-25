@@ -8,6 +8,7 @@ import {
 	PausePlayerEventData,
 	Player,
 	PlayPlayerEventData,
+	SeekEventData,
 } from 'types';
 import JWEvents from 'players/shared/JWEvents';
 import { jwPlayerPlaybackTracker, jwPlayerAdTracker, jwPlayerContentTracker, singleTrack } from 'utils/videoTracking';
@@ -146,9 +147,12 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 			});
 		})
 
-		.on(JWEvents.SEEK, () => {
+		.on(JWEvents.SEEK, (seekEventData: SeekEventData) => {
 			jwPlayerPlaybackTracker({
 				event_name: 'video_seek',
+				video_seek_start_position: seekEventData.position,
+				video_seek_end_position: seekEventData.offset,
+				video_seek_method: seekEventData.type,
 			});
 		})
 
