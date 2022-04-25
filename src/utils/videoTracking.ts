@@ -15,6 +15,8 @@ import {
 	getIsInteractable,
 	getJWAdBlockState,
 	getJWViewState,
+	getIsEmbed,
+	getJWQualityManifest,
 } from 'utils/globalJWInterface';
 import addGlobalProps from 'utils/videoTrackingGlobalProps';
 import getVideoPlayerVersion from 'utils/getVideoPlayerVersion';
@@ -92,6 +94,8 @@ function addRunTimeParams(trackingParams: TrackData): TrackData {
 	trackDataObject[PROPERTY_NAMES.VIDEO_DURATION] = getDuration();
 	trackDataObject[PROPERTY_NAMES.VIDEO_PLAYER] = getPlayerId();
 	trackDataObject[PROPERTY_NAMES.VIDEO_VIEW_STATE] = getJWViewState();
+	trackDataObject[PROPERTY_NAMES.VIDEO_IS_EMBEDDED] = getIsEmbed();
+	trackDataObject[PROPERTY_NAMES.VIDEO_QUALITY_MANIFEST] = getJWQualityManifest();
 
 	// TO BE ADDED LATER
 	// trackDataObject[PROPERTY_NAMES.VIDEO_COLLECTION] = getCollection();
