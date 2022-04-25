@@ -60,6 +60,9 @@ export default function addGlobalProps(): TrackData {
 		defaultProps[GLOBAL_PROPS.BEACON_ID] = getCookieValue('wikia_beacon_id');
 		defaultProps[GLOBAL_PROPS.BEACON_ID2] = getCookieValue('_b2');
 
+		// Set sane defaults
+		defaultProps[GLOBAL_PROPS.SKIN] = 'unknown';
+
 		// If we are on MW lets add them this way
 		if (window && window.mw && window.mw.config) {
 			defaultProps = { ...defaultProps, ...getDefaultsFromMWConfig() };
