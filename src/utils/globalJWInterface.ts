@@ -96,8 +96,7 @@ export const getJWViewState = withTryCatchDefault(() => {
 		return 'fullscreen';
 	}
 
-	// TODO Add this state
-	if (document.querySelector('#check-for-the-mini-featured-player')) {
+	if (document.querySelector('.featured-video.is-collapsed')) {
 		return 'mini';
 	}
 
