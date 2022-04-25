@@ -187,19 +187,19 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 			});
 		})
 		.on(JWEvents.AD_TIME, (event: OnAdTimeEventData) => {
-			if (event.position >= event.duration * 0.25 && singleTrack('jw-player-ad-25')) {
+			if (event.position >= event.duration * 0.25 && singleTrack('jw-player-ad-25-' + mediaId)) {
 				jwPlayerAdTracker({
 					event_name: 'video_ad_quartile_25',
 				});
 			}
 
-			if (event.position >= event.duration * 0.5 && singleTrack('jw-player-ad-50')) {
+			if (event.position >= event.duration * 0.5 && singleTrack('jw-player-ad-50' + mediaId)) {
 				jwPlayerAdTracker({
 					event_name: 'video_ad_quartile_50',
 				});
 			}
 
-			if (event.position >= event.duration * 0.75 && singleTrack('jw-player-ad-75')) {
+			if (event.position >= event.duration * 0.75 && singleTrack('jw-player-ad-75' + mediaId)) {
 				jwPlayerAdTracker({
 					event_name: 'video_ad_quartile_75',
 				});

@@ -136,6 +136,7 @@ const baseTrackParams: TrackData = {
 	event: 'video-player-event',
 	video_player_version: getVideoPlayerVersion(),
 	withRunTimeParams: addRunTimeParams,
+	video_player: 'jw',
 };
 
 const baseVideoTracker = trackerFactoryWithoutDevPrefix(baseTrackParams);
