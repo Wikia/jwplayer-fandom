@@ -8,6 +8,7 @@ import {
 	PausePlayerEventData,
 	Player,
 	PlayPlayerEventData,
+	SeekEventData,
 } from 'types';
 import JWEvents from 'players/shared/JWEvents';
 import { jwPlayerPlaybackTracker, jwPlayerAdTracker, jwPlayerContentTracker, singleTrack } from 'utils/videoTracking';
@@ -39,7 +40,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 			if (singleTrack(initialPlayEvent)) {
 				const timeToFirstFrame = recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_VIDEO);
 				jwPlayerPlaybackTracker({
-					event: 'video_content_start',
+					event_name: 'video_content_start',
 					video_time_to_first_frame: timeToFirstFrame,
 					video_startup_time: getVideoStartupTime(),
 				});
@@ -62,6 +63,29 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 				jwPlayerContentTracker({
 					event_name: 'video_content_quartile_75',
 				});
+			}
+
+			// 10s interval events firing
+			if (event.position < 60 && event.position >= 10) {
+				const tenSecondBucket = Math.floor(event.position / 10);
+
+				if (singleTrack(`jw-player-heartbeat-second-${mediaId}-${tenSecondBucket}`)) {
+					jwPlayerContentTracker({
+						event_name: 'video_content_playing',
+						video_content_seconds_viewed: 10,
+					});
+				}
+			}
+
+			if (event.position > 60) {
+				const minuteBucket = Math.floor(event.position / 60);
+
+				if (singleTrack(`jw-player-heartbeat-min-${mediaId}-${minuteBucket}`)) {
+					jwPlayerContentTracker({
+						event_name: 'video_content_playing',
+						video_content_seconds_viewed: 60,
+					});
+				}
 			}
 		})
 		.on(JWEvents.COMPLETE, () => {
@@ -123,9 +147,12 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 			});
 		})
 
-		.on(JWEvents.SEEK, () => {
+		.on(JWEvents.SEEK, (seekEventData: SeekEventData) => {
 			jwPlayerPlaybackTracker({
 				event_name: 'video_seek',
+				video_seek_start_position: seekEventData.position,
+				video_seek_end_position: seekEventData.offset,
+				video_seek_method: seekEventData.type,
 			});
 		})
 
@@ -176,6 +203,29 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 				jwPlayerAdTracker({
 					event_name: 'video_ad_quartile_75',
 				});
+			}
+
+			// 10s interval events firing
+			if (event.position < 10) {
+				const oneSecondBucket = Math.floor(event.position);
+
+				if (singleTrack(`jw-player-ad-heartbeat-second-${mediaId}-${oneSecondBucket}`)) {
+					jwPlayerContentTracker({
+						event_name: 'video_ad_playing',
+						video_ad_seconds_viewed: 1,
+					});
+				}
+			}
+
+			if (event.position > 10) {
+				const tenSecondBucket = Math.floor(event.position / 10);
+
+				if (singleTrack(`jw-player-ad-heartbeat-min-${mediaId}-${tenSecondBucket}`)) {
+					jwPlayerContentTracker({
+						event_name: 'video_ad_playing',
+						video_ad_seconds_viewed: 10,
+					});
+				}
 			}
 		});
 

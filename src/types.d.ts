@@ -87,11 +87,18 @@ export interface FullScreenEventData {
 	fullscreen: boolean;
 }
 
+export interface SeekRange {
+	end: number;
+	start: number;
+}
+
 export interface SeekEventData {
 	currentTime: number;
 	duration: number;
 	position: number;
 	offset: number;
+	seekRange: SeekRange;
+	type: string;
 }
 
 type JwEventData =
@@ -117,6 +124,13 @@ interface Plugins {
 	sharing: BasePluginInterface;
 }
 
+interface QualityObject {
+	bitrate: number;
+	label: string;
+	width: number;
+	height: number;
+}
+
 export type Player = {
 	playToggle: () => null;
 	pause: () => null;
@@ -140,7 +154,10 @@ export type Player = {
 	getViewable: () => number;
 	getDuration: () => number;
 	getAdBlock: () => boolean;
+	getFullscreen: () => boolean;
+	getFloating: () => boolean;
 	plugins: Plugins;
+	getQualityLevels: () => QualityObject[];
 };
 export type CreateWirewaxEmbedder = () => Embedder;
 export type WirewaxPluginOptions = {

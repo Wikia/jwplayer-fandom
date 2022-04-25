@@ -21,14 +21,16 @@ export const GLOBAL_PROPS = {
 	BEACON_ID2: 'b2',
 	PAGE_VIEW_ID: 'pv_unique_id',
 	TIMESTAMP: 'timestamp', // acts as cache buster too
-	USER_ID: 'userId',
+	USER_ID: 'user_id',
 
 	// MW Specific
-	COMMUNITY_ID: 'c', // TODO Consider changing name
-	COMMUNITY_NAME: 'x', // TODO Consider changing name
+	COMMUNITY_ID: 'c',
+	COMMUNITY_NAME: 'x',
+	SKIN: 's',
+	ARTICLE_ID: 'a',
+
+	// Not in doc
 	CONTENT_LANG: 'en', // TODO consider changing name
-	SKIN: 's', // TODO Consider changing name
-	ARTICLE_ID: 'a', // TODO Consider changing name
 };
 
 function getDefaultsFromMWConfig(): TrackData {
@@ -57,6 +59,9 @@ export default function addGlobalProps(): TrackData {
 		defaultProps[GLOBAL_PROPS.TIMESTAMP] = Date.now().toString();
 		defaultProps[GLOBAL_PROPS.BEACON_ID] = getCookieValue('wikia_beacon_id');
 		defaultProps[GLOBAL_PROPS.BEACON_ID2] = getCookieValue('_b2');
+
+		// Set sane defaults
+		defaultProps[GLOBAL_PROPS.SKIN] = 'unknown';
 
 		// If we are on MW lets add them this way
 		if (window && window.mw && window.mw.config) {

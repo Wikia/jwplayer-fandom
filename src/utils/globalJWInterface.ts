@@ -16,6 +16,11 @@ declare let window: WindowWithJWPlayer;
 const withTryCatchDefault =
 	(func: () => any, fallback = '') =>
 	() => {
+		// JWPLayer not yet ready
+		if (typeof window === 'undefined' || !window.jwplayer || typeof window.jwplayer !== 'function') {
+			return '';
+		}
+
 		try {
 			return func();
 		} catch (e) {
@@ -80,4 +85,42 @@ export const getIsInteractable = withTryCatchDefault(() => {
 
 export const getJWAdBlockState = withTryCatchDefault(() => {
 	return window.jwplayer().getAdBlock();
+});
+
+export const getJWViewState = withTryCatchDefault(() => {
+	if (window.jwplayer().getFloating()) {
+		return 'pip';
+	}
+
+	if (window.jwplayer().getFullscreen()) {
+		return 'fullscreen';
+	}
+
+	// TODO Add this state
+	if (document.querySelector('#check-for-the-mini-featured-player')) {
+		return 'mini';
+	}
+
+	return 'standard';
+});
+
+// TODO Current not possible
+export const getIsEmbed = withTryCatchDefault(() => {
+	return false;
+});
+
+export const getJWQualityManifest = withTryCatchDefault(() => {
+	return window
+		.jwplayer()
+		.getQualityLevels()
+		.map((obj) => obj.label)
+		.join(',');
+});
+
+// It reads to me like we'd generate that ourselves each time a new video is played, to tie together all the other events.' +
+// ' Something like a hash that wouldn't need to be related to anything, just as long as all events for that CURRENT video have
+// that dimension applied.
+export const getUniqueStreamId = withTryCatchDefault(() => {
+	// this should b
+	return window;
 });
