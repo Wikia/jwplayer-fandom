@@ -57,10 +57,18 @@ export interface MutePlayerEventData {
 	mute: boolean;
 }
 
-export interface OnAdTimeEventData {
+export interface AdEvents {
+	adId: string;
+	advertiser: string;
+	adPosition: string;
+	adtitle: string;
+	duration: number;
+	creativeAdId: string;
+}
+
+export interface OnAdTimeEventData extends AdEvents {
 	client: string;
 	creativetype: string;
-	duration: number;
 	position: number;
 	sequence: number;
 	tag: string;
@@ -113,6 +121,7 @@ type JwEventData =
 	| OnVolumeEventData
 	| FullScreenEventData
 	| SeekEventData
+	| AdEvents
 	| OnAdTimeEventData;
 type JwEventHandler = (event?: JwEventData) => void;
 
