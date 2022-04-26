@@ -24,6 +24,7 @@ const UnmuteButtonWrapper = styled.div<Props>`
 	height: 31px;
 	box-sizing: border-box;
 	display: flex;
+	z-index: 3;
 `;
 
 const StyledSoundIcon = styled(IconSoundOff)`

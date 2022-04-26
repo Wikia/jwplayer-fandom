@@ -34,7 +34,7 @@ const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
 			-webkit-transition: right 0.4s, bottom 0.4s, width 0.4s;
 			transition: right 0.4s, bottom 0.4s, width 0.4s;
 			width: 300px;
-			z-index: ${WDSVariables.z2};
+			z-index: ${Number(WDSVariables.z2) + 2};
 		`}
 `;
 

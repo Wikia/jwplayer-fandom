@@ -17,7 +17,7 @@ const OffScreenOverlayWrapper = styled.div<OffScreenOverlayWrapperProps>`
 	width: 100%;
 	height: 100%;
 	pointer-events: none;
-	z-index: ${WDSVariables.z7 + 2};
+	z-index: ${Number(WDSVariables.z7) + 2};
 `;
 
 interface OffScreenOverlayProps {
