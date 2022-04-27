@@ -10,6 +10,7 @@ import { Playlist } from 'types';
 import Attribution from 'players/MobileArticleVideoPlayer/Attribution';
 import { singleTrack } from 'utils/videoTracking';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
+import usePlayerVersion from 'hooks/usePlayerVersion';
 
 const MobileArticleVideoTopPlaceholder = styled.div`
 	background-color: black;
@@ -45,6 +46,7 @@ const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
 	hasPartnerSlot,
 	isFullScreen,
 }) => {
+	usePlayerVersion();
 	const ref = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(ref);

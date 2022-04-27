@@ -10,6 +10,7 @@ import PlayerWrapper from 'players/shared/PlayerWrapper';
 import { Playlist } from 'types';
 import CloseButton from 'players/shared/CloseButton';
 import Attribution from 'players/DesktopArticleVideoPlayer/Attribution';
+import usePlayerVersion from 'hooks/usePlayerVersion';
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
 	background-color: black;
@@ -48,6 +49,7 @@ interface DesktopArticleVideoPlayerProps {
 }
 
 const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ playlist }) => {
+	usePlayerVersion();
 	const ref = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(ref);
