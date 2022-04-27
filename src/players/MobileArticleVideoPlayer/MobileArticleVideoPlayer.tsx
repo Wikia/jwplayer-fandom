@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import styled from 'styled-components';
 import JwPlayerWrapper from 'players/shared/JwPlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
@@ -29,6 +30,7 @@ const MobileArticleVideoWrapper = styled.div<MobileArticleVideoWrapperProps>`
 			position: fixed;
 			top: ${props.topPosition};
 			width: 100%;
+			z-index: ${Number(WDSVariables.z7) + 1};
 		`}
 `;
 

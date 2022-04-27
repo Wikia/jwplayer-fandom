@@ -3,6 +3,7 @@ import usePlaying from 'utils/usePlaying';
 import styled from 'styled-components';
 import VideoDetails from 'players/MobileArticleVideoPlayer/OffScreenOverlay/VideoDetails';
 import CloseButton from 'players/shared/CloseButton';
+import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 
 interface OffScreenOverlayWrapperProps {
 	playing: boolean;
@@ -16,7 +17,7 @@ const OffScreenOverlayWrapper = styled.div<OffScreenOverlayWrapperProps>`
 	width: 100%;
 	height: 100%;
 	pointer-events: none;
-	z-index: 5;
+	z-index: ${Number(WDSVariables.z7) + 2};
 `;
 
 interface OffScreenOverlayProps {

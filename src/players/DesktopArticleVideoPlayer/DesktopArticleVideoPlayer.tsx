@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import styled, { css } from 'styled-components';
 import UnmuteButton from 'players/DesktopArticleVideoPlayer/UnmuteButton';
 import JwPlayerWrapper from 'players/shared/JwPlayerWrapper';
@@ -14,6 +15,7 @@ const DesktopArticleVideoTopPlaceholder = styled.div`
 	background-color: black;
 	width: 100%;
 	height: 100%;
+	z-index: 2;
 `;
 
 interface DesktopArticleVideoWrapperProps {
@@ -32,6 +34,7 @@ const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
 			-webkit-transition: right 0.4s, bottom 0.4s, width 0.4s;
 			transition: right 0.4s, bottom 0.4s, width 0.4s;
 			width: 300px;
+			z-index: ${Number(WDSVariables.z2) + 2};
 		`}
 `;
 
