@@ -17,6 +17,7 @@ const CloseWrapper = styled.div`
 	position: absolute;
 	right: 0;
 	top: 0;
+	z-index: ${Number(WDSVariables.z7) + 1};
 `;
 
 const CrossIcon = styled(IconCrossTiny)`

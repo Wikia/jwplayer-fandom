@@ -83,4 +83,4 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl }
 	);
 };
 
-export default JwPlayerWrapper;
+export default React.memo(JwPlayerWrapper);
