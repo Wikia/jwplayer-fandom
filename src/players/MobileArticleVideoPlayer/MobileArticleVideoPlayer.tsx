@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import JwPlayerWrapper from 'players/shared/JwPlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'utils/useAdComplete';
@@ -18,20 +18,27 @@ const MobileArticleVideoTopPlaceholder = styled.div`
 `;
 
 interface MobileArticleVideoWrapperProps {
-	visibleOnScreen: boolean;
+	isScrollPlayer: boolean;
 	topPosition: string;
 }
 
 const MobileArticleVideoWrapper = styled.div<MobileArticleVideoWrapperProps>`
 	${(props) =>
-		!props.visibleOnScreen &&
-		`
-			box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
-			position: fixed;
-			top: ${props.topPosition};
-			width: 100%;
-			z-index: ${Number(WDSVariables.z7) + 1};
-		`}
+		props.isScrollPlayer
+			? css`
+					box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
+					position: fixed;
+					top: ${props.topPosition};
+					width: 100%;
+					z-index: ${Number(WDSVariables.z7) + 1};
+			  `
+			: css`
+					transform: translateZ(0);
+					-webkit-transform: translateZ(0);
+					-webkit-transition: padding 0.3s;
+					transition: padding 0.3s;
+					padding: 0;
+			  `}
 `;
 
 interface MobileArticleVideoPlayerProps {
@@ -49,6 +56,8 @@ const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
 	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(ref);
 	const [dismissed, setDismissed] = useState(false);
+	const isScrollPlayer = !(dismissed || onScreen);
+
 	const getTopPosition = () => {
 		if (isFullScreen) {
 			return '0px';
@@ -87,9 +96,9 @@ const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
 		<PlayerWrapper playerName="mobile-article-video">
 			<MobileArticleVideoTopPlaceholder ref={ref}>
 				{adComplete && (
-					<MobileArticleVideoWrapper visibleOnScreen={onScreen || dismissed} topPosition={getTopPosition()}>
+					<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer} topPosition={getTopPosition()}>
 						<JwPlayerWrapper playlist={playlist} />
-						{!onScreen && !dismissed && <OffScreenOverlay dismiss={() => setDismissed(true)} />}
+						{isScrollPlayer && <OffScreenOverlay dismiss={() => setDismissed(true)} />}
 					</MobileArticleVideoWrapper>
 				)}
 			</MobileArticleVideoTopPlaceholder>
