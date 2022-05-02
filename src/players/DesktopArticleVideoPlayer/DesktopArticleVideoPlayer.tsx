@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import UnmuteButton from 'players/DesktopArticleVideoPlayer/UnmuteButton';
 import JwPlayerWrapper from 'players/shared/JwPlayerWrapper';
 import VideoDetails from 'players/DesktopArticleVideoPlayer/VideoDetails';
@@ -14,15 +14,33 @@ import Attribution from 'players/DesktopArticleVideoPlayer/Attribution';
 const DesktopArticleVideoTopPlaceholder = styled.div`
 	background-color: black;
 	width: 100%;
-	height: 100%;
+	position: relative;
 	z-index: 2;
+`;
+
+const moveDownAnimation = (right: number, bottom: number, width: number) => keyframes`
+	from {
+		right: ${right}px;
+		bottom: ${bottom}px;
+		width: ${width}px;
+	}
+
+	to {
+		right: 18px;
+		bottom: 18px;
+		width: 300px;  
+	}
 `;
 
 interface DesktopArticleVideoWrapperProps {
 	isScrollPlayer: boolean;
+	right?: number;
+	bottom?: number;
+	width?: number;
 }
 
 const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
+	height: max-content;
 	${(props) =>
 		props.isScrollPlayer
 			? css`
@@ -33,12 +51,11 @@ const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
 					width: 300px;
 					z-index: ${Number(WDSVariables.z2) + 2};
 					position: fixed;
-					-webkit-transition: right 0.4s, bottom 0.4s, width 0.4s;
-					transition: right 0.4s, bottom 0.4s, width 0.4s;
+					animation: ${moveDownAnimation(props.right, props.bottom, props.width)} 0.4s normal forwards;
 			  `
 			: css`
 					position: absolute;
-					width: 100%;
+					width: inherit;
 					bottom: 0;
 					right: 0;
 					top: 0;
@@ -58,17 +75,28 @@ interface DesktopArticleVideoPlayerProps {
 }
 
 const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ playlist }) => {
-	const ref = useRef<HTMLDivElement>(null);
+	const placeholderRef = useRef<HTMLDivElement>(null);
+	const wrapperRef = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
-	const onScreen = useOnScreen(ref);
+	const onScreen = useOnScreen(placeholderRef);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
+	const boundingClientRect = wrapperRef.current?.getBoundingClientRect();
+	const right = boundingClientRect?.right;
+	const bottom = boundingClientRect?.bottom;
+	const width = boundingClientRect?.width;
 
 	return (
 		<PlayerWrapper playerName="desktop-article-video">
-			<DesktopArticleVideoTopPlaceholder ref={ref}>
+			<DesktopArticleVideoTopPlaceholder ref={placeholderRef}>
 				{adComplete && (
-					<DesktopArticleVideoWrapper isScrollPlayer={isScrollPlayer}>
+					<DesktopArticleVideoWrapper
+						ref={wrapperRef}
+						right={right}
+						bottom={bottom}
+						width={width}
+						isScrollPlayer={isScrollPlayer}
+					>
 						<TopBar>
 							{!isScrollPlayer && <UnmuteButton />}
 							{isScrollPlayer && <CloseButton dismiss={() => setDismissed(true)} />}
