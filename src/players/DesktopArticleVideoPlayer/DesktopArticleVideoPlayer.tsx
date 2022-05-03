@@ -12,12 +12,13 @@ import CloseButton from 'players/shared/CloseButton';
 import Attribution from 'players/DesktopArticleVideoPlayer/Attribution';
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
+	position: absolute;
 	width: 100%;
-	position: relative;
-	max-width: 858px;
 	padding-top: 56.25%;
-	margin-bottom: 18px;
-	box-sizing: border-box;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
 	z-index: 2;
 `;
 
@@ -43,7 +44,6 @@ interface DesktopArticleVideoWrapperProps {
 
 const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
 	height: max-content;
-	box-sizing: border-box;
 	${(props) =>
 		props.isScrollPlayer
 			? css`
@@ -53,7 +53,6 @@ const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
 			  `
 			: css`
 					position: absolute;
-					width: inherit;
 					bottom: 0;
 					right: 0;
 					top: 0;
@@ -75,7 +74,7 @@ interface DesktopArticleVideoPlayerProps {
 const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ playlist }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
-	const onScreen = useOnScreen(placeholderRef);
+	const onScreen = useOnScreen(placeholderRef, '0px', 0.1);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
 	const boundingClientRect = placeholderRef.current?.getBoundingClientRect();

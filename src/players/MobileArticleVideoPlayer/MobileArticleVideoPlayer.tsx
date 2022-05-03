@@ -12,9 +12,9 @@ import { singleTrack } from 'utils/videoTracking';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
 
 const MobileArticleVideoTopPlaceholder = styled.div`
-	background-color: black;
 	width: 100%;
-	height: 100%;
+	height: 56.25vw;
+	position: relative;
 `;
 
 interface MobileArticleVideoWrapperProps {
@@ -54,7 +54,7 @@ const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
 }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
-	const onScreen = useOnScreen(ref);
+	const onScreen = useOnScreen(ref, '0px', 1);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
 
