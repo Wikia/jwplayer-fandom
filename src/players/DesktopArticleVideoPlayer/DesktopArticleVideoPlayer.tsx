@@ -12,16 +12,19 @@ import CloseButton from 'players/shared/CloseButton';
 import Attribution from 'players/DesktopArticleVideoPlayer/Attribution';
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
-	background-color: black;
 	width: 100%;
 	position: relative;
+	max-width: 858px;
+	padding-top: 56.25%;
+	margin-bottom: 18px;
+	box-sizing: border-box;
 	z-index: 2;
 `;
 
-const moveDownAnimation = (right: number, bottom: number, width: number) => keyframes`
+const moveDownAnimation = (right: number, width: number) => keyframes`
 	from {
 		right: ${right}px;
-		bottom: ${bottom}px;
+		bottom: 100%;
 		width: ${width}px;
 	}
 
@@ -35,23 +38,18 @@ const moveDownAnimation = (right: number, bottom: number, width: number) => keyf
 interface DesktopArticleVideoWrapperProps {
 	isScrollPlayer: boolean;
 	right?: number;
-	bottom?: number;
 	width?: number;
 }
 
 const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
 	height: max-content;
+	box-sizing: border-box;
 	${(props) =>
 		props.isScrollPlayer
 			? css`
-					left: auto;
-					top: auto;
-					bottom: 18px;
-					right: 18px;
-					width: 300px;
 					z-index: ${Number(WDSVariables.z2) + 2};
 					position: fixed;
-					animation: ${moveDownAnimation(props.right, props.bottom, props.width)} 0.4s normal forwards;
+					animation: ${moveDownAnimation(props.right, props.width)} 0.4s normal forwards;
 			  `
 			: css`
 					position: absolute;
@@ -76,27 +74,19 @@ interface DesktopArticleVideoPlayerProps {
 
 const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ playlist }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
-	const wrapperRef = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(placeholderRef);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
-	const boundingClientRect = wrapperRef.current?.getBoundingClientRect();
+	const boundingClientRect = placeholderRef.current?.getBoundingClientRect();
 	const right = boundingClientRect?.right;
-	const bottom = boundingClientRect?.bottom;
 	const width = boundingClientRect?.width;
 
 	return (
 		<PlayerWrapper playerName="desktop-article-video">
 			<DesktopArticleVideoTopPlaceholder ref={placeholderRef}>
 				{adComplete && (
-					<DesktopArticleVideoWrapper
-						ref={wrapperRef}
-						right={right}
-						bottom={bottom}
-						width={width}
-						isScrollPlayer={isScrollPlayer}
-					>
+					<DesktopArticleVideoWrapper right={right} width={width} isScrollPlayer={isScrollPlayer}>
 						<TopBar>
 							{!isScrollPlayer && <UnmuteButton />}
 							{isScrollPlayer && <CloseButton dismiss={() => setDismissed(true)} />}
