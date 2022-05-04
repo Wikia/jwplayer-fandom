@@ -10,6 +10,7 @@ import {
 	Player,
 	PlayPlayerEventData,
 	SeekEventData,
+	ShareEventData,
 } from 'types';
 import JWEvents from 'players/shared/JWEvents';
 import { jwPlayerPlaybackTracker, jwPlayerAdTracker, jwPlayerContentTracker, singleTrack } from 'utils/videoTracking';
@@ -151,6 +152,12 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 			});
 		})
 
+		.on(JWEvents.VIEWABLE, () => {
+			jwPlayerPlaybackTracker({
+				event_name: 'video_player_viewability_state',
+			});
+		})
+
 		.on(JWEvents.FULLSCREEN, (event: FullScreenEventData) => {
 			jwPlayerPlaybackTracker({
 				event_name: 'video_fullscreen_toggle',
@@ -257,10 +264,10 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 	// Safety check for sharing plugin
 	if (playerInstance.plugins && playerInstance.plugins.sharing && playerInstance.plugins.sharing.on) {
-		playerInstance.plugins.sharing.on('click', (method) => {
+		playerInstance.plugins.sharing.on('click', (method: ShareEventData) => {
 			jwPlayerPlaybackTracker({
 				event_name: 'video_share',
-				video_share_method: method,
+				video_share_method: method.method.toString(),
 			});
 		});
 	} else {
