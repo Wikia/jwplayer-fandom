@@ -14,6 +14,7 @@ import {
 import JWEvents from 'players/shared/JWEvents';
 import { jwPlayerPlaybackTracker, jwPlayerAdTracker, jwPlayerContentTracker, singleTrack } from 'utils/videoTracking';
 import { getVideoStartupTime, recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
+import { getAssetId } from 'utils/globalJWInterface';
 
 function getAdPropsFromAdEvent(event: AdEvents) {
 	return {
@@ -27,9 +28,6 @@ function getAdPropsFromAdEvent(event: AdEvents) {
 }
 
 export default function addBaseTrackingEvents(playerInstance: Player) {
-	const playList = playerInstance.getPlaylistItem();
-	const mediaId = playList.mediaid;
-
 	// Add events
 	playerInstance
 		.on(JWEvents.PLAY, (event: PlayPlayerEventData) => {
@@ -59,6 +57,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 			}
 		})
 		.on(JWEvents.TIME, (event: OnVideoTimeEventData) => {
+			const mediaId = getAssetId();
 			if (event.position >= event.duration * 0.25 && singleTrack('jw-player-video-25' + mediaId)) {
 				jwPlayerContentTracker({
 					event_name: 'video_content_quartile_25',
@@ -205,6 +204,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 			});
 		})
 		.on(JWEvents.AD_TIME, (event: OnAdTimeEventData) => {
+			const mediaId = getAssetId();
 			console.log('ad_time', event);
 			const additionalAdProps = getAdPropsFromAdEvent(event);
 
