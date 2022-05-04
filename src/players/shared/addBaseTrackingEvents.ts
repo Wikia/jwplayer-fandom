@@ -10,10 +10,12 @@ import {
 	Player,
 	PlayPlayerEventData,
 	SeekEventData,
+	ShareEventData,
 } from 'types';
 import JWEvents from 'players/shared/JWEvents';
 import { jwPlayerPlaybackTracker, jwPlayerAdTracker, jwPlayerContentTracker, singleTrack } from 'utils/videoTracking';
 import { getVideoStartupTime, recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
+import { getAssetId } from 'utils/globalJWInterface';
 
 function getAdPropsFromAdEvent(event: AdEvents) {
 	return {
@@ -27,9 +29,6 @@ function getAdPropsFromAdEvent(event: AdEvents) {
 }
 
 export default function addBaseTrackingEvents(playerInstance: Player) {
-	const playList = playerInstance.getPlaylistItem();
-	const mediaId = playList.mediaid;
-
 	// Add events
 	playerInstance
 		.on(JWEvents.PLAY, (event: PlayPlayerEventData) => {
@@ -59,6 +58,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 			}
 		})
 		.on(JWEvents.TIME, (event: OnVideoTimeEventData) => {
+			const mediaId = getAssetId();
 			if (event.position >= event.duration * 0.25 && singleTrack('jw-player-video-25' + mediaId)) {
 				jwPlayerContentTracker({
 					event_name: 'video_content_quartile_25',
@@ -152,6 +152,12 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 			});
 		})
 
+		.on(JWEvents.VIEWABLE, () => {
+			jwPlayerPlaybackTracker({
+				event_name: 'video_player_viewability_state',
+			});
+		})
+
 		.on(JWEvents.FULLSCREEN, (event: FullScreenEventData) => {
 			jwPlayerPlaybackTracker({
 				event_name: 'video_fullscreen_toggle',
@@ -205,6 +211,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 			});
 		})
 		.on(JWEvents.AD_TIME, (event: OnAdTimeEventData) => {
+			const mediaId = getAssetId();
 			console.log('ad_time', event);
 			const additionalAdProps = getAdPropsFromAdEvent(event);
 
@@ -257,10 +264,10 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 	// Safety check for sharing plugin
 	if (playerInstance.plugins && playerInstance.plugins.sharing && playerInstance.plugins.sharing.on) {
-		playerInstance.plugins.sharing.on('click', (method) => {
+		playerInstance.plugins.sharing.on('click', (method: ShareEventData) => {
 			jwPlayerPlaybackTracker({
 				event_name: 'video_share',
-				video_share_method: method,
+				video_share_method: method.method.toString(),
 			});
 		});
 	} else {

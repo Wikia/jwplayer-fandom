@@ -109,6 +109,10 @@ export interface SeekEventData {
 	type: string;
 }
 
+export interface ShareEventData {
+	method: string;
+}
+
 type JwEventData =
 	| PlayPlayerEventData
 	| PausePlayerEventData
@@ -122,11 +126,12 @@ type JwEventData =
 	| FullScreenEventData
 	| SeekEventData
 	| AdEvents
-	| OnAdTimeEventData;
+	| OnAdTimeEventData
+	| ShareEventData;
 type JwEventHandler = (event?: JwEventData) => void;
 
 interface BasePluginInterface {
-	on: (name: string, handler: JwEventHandler) => Player;
+	on: (name: string, handler: (method: JwEventData) => void) => Player;
 }
 
 interface Plugins {

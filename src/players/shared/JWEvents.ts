@@ -10,6 +10,7 @@ const JWEvents = {
 	SEEK: 'seek',
 	COMPLETE: 'complete',
 	TIME: 'time',
+	VIEWABLE: 'viewable',
 
 	// Navigation
 	NEXT: 'nextClick',

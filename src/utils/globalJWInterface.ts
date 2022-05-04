@@ -38,6 +38,10 @@ export const getPlayListId = withTryCatchDefault(() => {
 });
 
 export const getVideoVolume = withTryCatchDefault(() => {
+	if (window.jwplayer().getMute()) {
+		return 0;
+	}
+
 	return window.jwplayer().getVolume();
 });
 
@@ -64,7 +68,7 @@ export const getDuration = withTryCatchDefault(() => {
 });
 
 export const getPlayerId = withTryCatchDefault(() => {
-	return window.jwplayer().getConfig().pid;
+	return 'jw-' + window.jwplayer().getConfig().pid;
 });
 
 export const getAssetTitle = withTryCatchDefault(() => {
@@ -76,7 +80,7 @@ export const getAssetId = withTryCatchDefault(() => {
 });
 
 export const getPublishDate = withTryCatchDefault(() => {
-	window.jwplayer().getPlaylistItem().pubdate;
+	return window.jwplayer().getPlaylistItem().pubdate;
 });
 
 export const getIsInteractable = withTryCatchDefault(() => {
