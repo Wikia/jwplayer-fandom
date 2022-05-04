@@ -1,4 +1,5 @@
 import {
+	AdEvents,
 	FullScreenEventData,
 	MutePlayerEventData,
 	OnAdTimeEventData,
@@ -13,6 +14,17 @@ import {
 import JWEvents from 'players/shared/JWEvents';
 import { jwPlayerPlaybackTracker, jwPlayerAdTracker, jwPlayerContentTracker, singleTrack } from 'utils/videoTracking';
 import { getVideoStartupTime, recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
+
+function getAdPropsFromAdEvent(event: AdEvents) {
+	return {
+		video_ad_pod_type: event.adId ?? '',
+		video_ad_pod_duration: event.duration ?? '',
+		video_ad_creative_name: event.adtitle ?? '',
+		video_ad_creative_id: event.creativeAdId ?? '',
+		video_ad_advertiser_name: event.advertiser ?? '',
+		video_ad_duration: event.duration ?? '',
+	};
+}
 
 export default function addBaseTrackingEvents(playerInstance: Player) {
 	const playList = playerInstance.getPlaylistItem();
@@ -171,36 +183,48 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 		// 	console.log('Ad Play');
 		// })
 
-		.on(JWEvents.AD_LOADED, () => {
+		.on(JWEvents.AD_LOADED, (event: AdEvents) => {
+			console.log('ads', event);
 			jwPlayerAdTracker({
 				event_name: 'video_ad_loaded',
+				...getAdPropsFromAdEvent(event),
 			});
 		})
-		.on(JWEvents.AD_STARTED, () => {
+		.on(JWEvents.AD_STARTED, (event: AdEvents) => {
+			console.log('ad_started', event);
 			jwPlayerAdTracker({
 				event_name: 'video_ad_started',
+				...getAdPropsFromAdEvent(event),
 			});
 		})
-		.on(JWEvents.AD_FINISHED, () => {
+		.on(JWEvents.AD_FINISHED, (event: AdEvents) => {
+			console.log('ad_finished', event);
 			jwPlayerAdTracker({
 				event_name: 'video_ad_completed',
+				...getAdPropsFromAdEvent(event),
 			});
 		})
 		.on(JWEvents.AD_TIME, (event: OnAdTimeEventData) => {
+			console.log('ad_time', event);
+			const additionalAdProps = getAdPropsFromAdEvent(event);
+
 			if (event.position >= event.duration * 0.25 && singleTrack('jw-player-ad-25-' + mediaId)) {
 				jwPlayerAdTracker({
+					...additionalAdProps,
 					event_name: 'video_ad_quartile_25',
 				});
 			}
 
 			if (event.position >= event.duration * 0.5 && singleTrack('jw-player-ad-50' + mediaId)) {
 				jwPlayerAdTracker({
+					...additionalAdProps,
 					event_name: 'video_ad_quartile_50',
 				});
 			}
 
 			if (event.position >= event.duration * 0.75 && singleTrack('jw-player-ad-75' + mediaId)) {
 				jwPlayerAdTracker({
+					...additionalAdProps,
 					event_name: 'video_ad_quartile_75',
 				});
 			}
@@ -211,6 +235,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 				if (singleTrack(`jw-player-ad-heartbeat-second-${mediaId}-${oneSecondBucket}`)) {
 					jwPlayerContentTracker({
+						...additionalAdProps,
 						event_name: 'video_ad_playing',
 						video_ad_seconds_viewed: 1,
 					});
@@ -222,6 +247,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 				if (singleTrack(`jw-player-ad-heartbeat-min-${mediaId}-${tenSecondBucket}`)) {
 					jwPlayerContentTracker({
+						...additionalAdProps,
 						event_name: 'video_ad_playing',
 						video_ad_seconds_viewed: 10,
 					});
