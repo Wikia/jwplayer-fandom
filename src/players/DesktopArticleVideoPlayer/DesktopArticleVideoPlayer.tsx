@@ -81,6 +81,14 @@ const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ p
 	const right = boundingClientRect?.right;
 	const width = boundingClientRect?.width;
 
+	const controlbar = document.querySelector<HTMLElement>('.jw-controlbar');
+
+	if (onScreen) {
+		if (controlbar) controlbar.style.background = 'rgba(0, 0, 0, 0.5)';
+	} else {
+		if (controlbar) controlbar.style.background = 'linear-gradient(0,#000,transparent)';
+	}
+
 	return (
 		<PlayerWrapper playerName="desktop-article-video">
 			<DesktopArticleVideoTopPlaceholder ref={placeholderRef}>
