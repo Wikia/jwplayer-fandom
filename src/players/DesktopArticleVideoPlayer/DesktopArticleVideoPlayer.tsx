@@ -7,9 +7,10 @@ import VideoDetails from 'players/DesktopArticleVideoPlayer/VideoDetails';
 import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'utils/useAdComplete';
 import PlayerWrapper from 'players/shared/PlayerWrapper';
-import { Playlist } from 'types';
+import { ArticleVideoDetails } from 'types';
 import CloseButton from 'players/shared/CloseButton';
 import Attribution from 'players/DesktopArticleVideoPlayer/Attribution';
+import { getArticleVideoConfig } from 'utils/articleVideo/articleVideoConfig';
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
 	position: absolute;
@@ -68,10 +69,10 @@ const TopBar = styled.div`
 `;
 
 interface DesktopArticleVideoPlayerProps {
-	playlist: Playlist;
+	videoDetails: ArticleVideoDetails;
 }
 
-const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ playlist }) => {
+const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.1);
@@ -98,7 +99,7 @@ const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ p
 							{!isScrollPlayer && <UnmuteButton />}
 							{isScrollPlayer && <CloseButton dismiss={() => setDismissed(true)} />}
 						</TopBar>
-						<JwPlayerWrapper playlist={playlist} />
+						<JwPlayerWrapper config={getArticleVideoConfig(videoDetails)} />
 						{isScrollPlayer && <VideoDetails />}
 					</DesktopArticleVideoWrapper>
 				)}

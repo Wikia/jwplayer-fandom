@@ -6,10 +6,11 @@ import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'utils/useAdComplete';
 import PlayerWrapper from 'players/shared/PlayerWrapper';
 import OffScreenOverlay from 'players/MobileArticleVideoPlayer/OffScreenOverlay/OffScreenOverlay';
-import { Playlist } from 'types';
+import { ArticleVideoDetails } from 'types';
 import Attribution from 'players/MobileArticleVideoPlayer/Attribution';
 import { singleTrack } from 'utils/videoTracking';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
+import { getArticleVideoConfig } from 'utils/articleVideo/articleVideoConfig';
 
 const MobileArticleVideoTopPlaceholder = styled.div`
 	width: 100%;
@@ -42,15 +43,15 @@ const MobileArticleVideoWrapper = styled.div<MobileArticleVideoWrapperProps>`
 `;
 
 interface MobileArticleVideoPlayerProps {
-	playlist: Playlist;
 	hasPartnerSlot?: boolean;
 	isFullScreen?: boolean;
+	videoDetails: ArticleVideoDetails;
 }
 
 const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
-	playlist,
 	hasPartnerSlot,
 	isFullScreen,
+	videoDetails,
 }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
@@ -97,7 +98,7 @@ const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
 			<MobileArticleVideoTopPlaceholder ref={ref}>
 				{adComplete && (
 					<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer} topPosition={getTopPosition()}>
-						<JwPlayerWrapper playlist={playlist} />
+						<JwPlayerWrapper config={getArticleVideoConfig(videoDetails)} />
 						{isScrollPlayer && <OffScreenOverlay dismiss={() => setDismissed(true)} />}
 					</MobileArticleVideoWrapper>
 				)}

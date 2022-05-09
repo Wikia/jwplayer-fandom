@@ -5,11 +5,14 @@ import JwPlayerWrapper from 'players/shared/JwPlayerWrapper';
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ playlist }) => {
 	const ref = useRef<HTMLDivElement>(null);
+	const config = {
+		playlist: playlist,
+	};
 
 	return (
 		<PlayerWrapper playerName={'base-player'}>
 			<div ref={ref}>
-				<JwPlayerWrapper playlist={playlist} />
+				<JwPlayerWrapper config={config} />
 			</div>
 		</PlayerWrapper>
 	);

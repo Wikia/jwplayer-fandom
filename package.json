@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.0.0-beta-2",
+	"version": "2.0.0-dpad-528-4",
 	"description": "JWPlayer for Fandom",
 	"main": "bundle.umd.js",
 	"module": "bundle.esm.js",
@@ -111,6 +111,7 @@
 		"@fandom-frontend/react-common": "6.35.0",
 		"@fandom/tracking-metrics": "0.0.15",
 		"@wikia/post-quecast": "2.0.1",
+		"js-cookie": "3.0.1",
 		"rxjs": "7.5.4",
 		"styled-components": "^5.3.3"
 	}
