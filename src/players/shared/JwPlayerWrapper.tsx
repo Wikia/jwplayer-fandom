@@ -26,9 +26,10 @@ const getDefaultPlayerUrl = () => {
 interface JwPlayerWrapperProps {
 	playlist: Playlist;
 	playerUrl?: string;
+	onComplete?: () => void;
 }
 
-const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl }) => {
+const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl, onComplete }) => {
 	const { setPlayer } = useContext(PlayerContext);
 
 	useEffect(() => {
@@ -60,6 +61,12 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl }
 					player: window.jwplayer(elementId),
 					ready: event,
 				});
+			});
+
+			playerInstance.on(JWEvents.COMPLETE, () => {
+				if (typeof onComplete === 'function') {
+					onComplete();
+				}
 			});
 
 			setPlayer(playerInstance);
