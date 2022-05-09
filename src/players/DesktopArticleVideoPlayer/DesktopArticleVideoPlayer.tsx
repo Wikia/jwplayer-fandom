@@ -11,6 +11,7 @@ import { ArticleVideoDetails } from 'types';
 import CloseButton from 'players/shared/CloseButton';
 import Attribution from 'players/DesktopArticleVideoPlayer/Attribution';
 import { getArticleVideoConfig } from 'utils/articleVideo/articleVideoConfig';
+import articlePlayerOnReady from 'utils/articleVideo/articlePlayerOnReady';
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
 	position: absolute;
@@ -81,7 +82,6 @@ const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ v
 	const boundingClientRect = placeholderRef.current?.getBoundingClientRect();
 	const right = boundingClientRect?.right;
 	const width = boundingClientRect?.width;
-
 	const controlbar = document.querySelector<HTMLElement>('.jw-controlbar');
 
 	if (onScreen) {
@@ -99,7 +99,10 @@ const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ v
 							{!isScrollPlayer && <UnmuteButton />}
 							{isScrollPlayer && <CloseButton dismiss={() => setDismissed(true)} />}
 						</TopBar>
-						<JwPlayerWrapper config={getArticleVideoConfig(videoDetails)} />
+						<JwPlayerWrapper
+							config={getArticleVideoConfig(videoDetails)}
+							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
+						/>
 						{isScrollPlayer && <VideoDetails />}
 					</DesktopArticleVideoWrapper>
 				)}

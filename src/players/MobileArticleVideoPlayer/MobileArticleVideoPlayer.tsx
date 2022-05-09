@@ -11,6 +11,7 @@ import Attribution from 'players/MobileArticleVideoPlayer/Attribution';
 import { singleTrack } from 'utils/videoTracking';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
 import { getArticleVideoConfig } from 'utils/articleVideo/articleVideoConfig';
+import articlePlayerOnReady from 'utils/articleVideo/articlePlayerOnReady';
 
 const MobileArticleVideoTopPlaceholder = styled.div`
 	width: 100%;
@@ -98,7 +99,10 @@ const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
 			<MobileArticleVideoTopPlaceholder ref={ref}>
 				{adComplete && (
 					<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer} topPosition={getTopPosition()}>
-						<JwPlayerWrapper config={getArticleVideoConfig(videoDetails)} />
+						<JwPlayerWrapper
+							config={getArticleVideoConfig(videoDetails)}
+							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
+						/>
 						{isScrollPlayer && <OffScreenOverlay dismiss={() => setDismissed(true)} />}
 					</MobileArticleVideoWrapper>
 				)}
