@@ -38,5 +38,21 @@ export const getArticleVideoConfig = (videoDetails) => {
 		title: videoDetails.title,
 		playlist: getModifiedPlaylist(videoDetails.playlist, videoDetails.isDedicatedForArticle),
 		lang: videoDetails.lang,
+		// TODO: replace text with i18n
+		advertising: {
+			admessage: 'testing ads',
+			autoplayadsmuted: willAutoplay() && !document.hidden,
+			client: 'googima',
+			cuetext: 'cuetext test',
+			loadVideoTimeout: 16000,
+			maxRedirects: 8,
+			requestTimeout: 11500,
+			setLocale: 'en',
+			skipmessage: 'skip ads',
+			skiptext: 'skip text',
+			truncateMacros: false,
+			vastLoadTimeout: 11000,
+			vpaidcontrols: true,
+		},
 	};
 };

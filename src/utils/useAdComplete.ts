@@ -9,7 +9,6 @@ export default function useAdComplete(): boolean {
 
 	useEffect(() => {
 		communicationService.action$.pipe(ofType('[AdEngine OptIn] set opt in'), first()).subscribe(() => {
-			console.log('******************* ad engine opt in *******************');
 			waitForAdEngine().then(() => {
 				listenSetupJWPlayer(function () {
 					setAdComplete(true);
@@ -24,13 +23,11 @@ export default function useAdComplete(): boolean {
 		const adEngineConfigured$ = communicationService.action$.pipe(ofType('[AdEngine] Configured'), first());
 		const adEngineTimeout = 2000;
 		const adEngineTimeout$ = timer(adEngineTimeout);
-		console.log('******************* ad engine configured *******************');
 
 		return race(adEngineConfigured$, adEngineTimeout$).toPromise();
 	};
 
 	const listenSetupJWPlayer = (callback) => {
-		console.log('******************* setup jw player *******************');
 		communicationService.action$.pipe(ofType('[Ad Engine] Setup JWPlayer'), first()).subscribe(callback);
 	};
 
