@@ -11,6 +11,7 @@ export default function useOnArticlePlayerReady(videoDetails, playerInstance): v
 
 	window.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', { detail: playerInstance }));
 	window[playerKey] = playerInstance;
+	console.log('******************* jwplayer player ready *******************');
 
 	communicationService.dispatch({
 		type: '[JWPlayer] Player Ready',
