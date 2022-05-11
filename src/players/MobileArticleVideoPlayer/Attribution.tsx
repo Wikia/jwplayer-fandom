@@ -24,6 +24,8 @@ const AttributionWrapper = styled.div`
 	justify-content: center;
 	margin: 0 12px;
 	padding: 6px 0;
+	height: 37px;
+	box-sizing: border-box;
 `;
 
 const Attribution: React.FC = () => {
