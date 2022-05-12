@@ -7,6 +7,9 @@ export * from './players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer';
 export { default as MobileArticleVideoPlayer } from './players/MobileArticleVideoPlayer/MobileArticleVideoPlayer';
 export * from './players/MobileArticleVideoPlayer/MobileArticleVideoPlayer';
 
+export { default as CanonicalVideoPlayer } from './players/CanonicalVideoPlayer/VideoPlayer';
+export * from './players/CanonicalVideoPlayer/VideoPlayer';
+
 // @ts-ignore
 window.__fandom_jw_player_version = process.env.VIDEO_VERSION;
 export function getVideoPlayerVersion() {
