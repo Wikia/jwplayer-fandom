@@ -1,4 +1,5 @@
 import * as articleVideoCookieService from 'utils/articleVideo/articleVideoCookies';
+import { wikiaJWPlayeri18n } from 'i18n';
 
 const isFromRecirculation = () => {
 	return window.location.search.indexOf('wikia-footer-wiki-rec') > -1;
@@ -29,6 +30,9 @@ export const getArticleVideoConfig = (videoDetails) => {
 	if (!videoDetails) return {};
 
 	const videoId = videoDetails.playlist[0].mediaid;
+	const lang = videoDetails.lang || 'en';
+	const i18n = wikiaJWPlayeri18n[lang] || wikiaJWPlayeri18n['en'];
+	const langForAds = lang.substr(0, 2);
 
 	return {
 		autostart: willAutoplay() && !document.hidden,
@@ -38,18 +42,17 @@ export const getArticleVideoConfig = (videoDetails) => {
 		title: videoDetails.title,
 		playlist: getModifiedPlaylist(videoDetails.playlist, videoDetails.isDedicatedForArticle),
 		lang: videoDetails.lang,
-		// TODO: replace text with i18n
 		advertising: {
-			admessage: 'testing ads',
+			admessage: i18n.admessage,
 			autoplayadsmuted: willAutoplay() && !document.hidden,
 			client: 'googima',
-			cuetext: 'cuetext test',
+			cuetext: i18n.cuetext,
 			loadVideoTimeout: 16000,
 			maxRedirects: 8,
 			requestTimeout: 11500,
-			setLocale: 'en',
-			skipmessage: 'skip ads',
-			skiptext: 'skip text',
+			setLocale: langForAds,
+			skipmessage: i18n.skipmessage,
+			skiptext: i18n.skiptext,
 			truncateMacros: false,
 			vastLoadTimeout: 11000,
 			vpaidcontrols: true,
