@@ -18,6 +18,10 @@ import { getVideoStartupTime, recordVideoEvent, VIDEO_RECORD_EVENTS } from 'util
 import { getAssetId } from 'utils/globalJWInterface';
 
 function getAdPropsFromAdEvent(event: AdEvents) {
+	if (!event) {
+		return {};
+	}
+
 	return {
 		video_ad_pod_type: event.adId ?? '',
 		video_ad_pod_duration: event.duration ?? '',
