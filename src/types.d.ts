@@ -62,10 +62,18 @@ export interface MutePlayerEventData {
 	mute: boolean;
 }
 
-export interface OnAdTimeEventData {
+export interface AdEvents {
+	adId: string;
+	advertiser: string;
+	adPosition: string;
+	adtitle: string;
+	duration: number;
+	creativeAdId: string;
+}
+
+export interface OnAdTimeEventData extends AdEvents {
 	client: string;
 	creativetype: string;
-	duration: number;
 	position: number;
 	sequence: number;
 	tag: string;
@@ -106,6 +114,10 @@ export interface SeekEventData {
 	type: string;
 }
 
+export interface ShareEventData {
+	method: string;
+}
+
 type JwEventData =
 	| PlayPlayerEventData
 	| PausePlayerEventData
@@ -118,11 +130,13 @@ type JwEventData =
 	| OnVolumeEventData
 	| FullScreenEventData
 	| SeekEventData
-	| OnAdTimeEventData;
+	| AdEvents
+	| OnAdTimeEventData
+	| ShareEventData;
 type JwEventHandler = (event?: JwEventData) => void;
 
 interface BasePluginInterface {
-	on: (name: string, handler: JwEventHandler) => Player;
+	on: (name: string, handler: (method: JwEventData) => void) => Player;
 }
 
 interface Plugins {
