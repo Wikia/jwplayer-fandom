@@ -261,3 +261,7 @@ export interface ArticleVideoDetails {
 	title: string;
 	videoTags: string;
 }
+
+export interface CanonicalVideoPlayerProps extends VideoPlayerProps {
+	onComplete: () => void;
+}
