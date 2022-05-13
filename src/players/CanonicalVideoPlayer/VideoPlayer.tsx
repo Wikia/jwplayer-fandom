@@ -5,12 +5,15 @@ import JwPlayerWrapper from 'players/shared/JwPlayerWrapper';
 
 const CanonicalVideoPlayer: React.FC<CanonicalVideoPlayerProps> = ({ playlist, onComplete }) => {
 	const ref = useRef<HTMLDivElement>(null);
+	const config = {
+		playlist: playlist,
+	};
 
 	return (
 		<PlayerWrapper playerName={'base-player'}>
 			<div ref={ref}>
 				<JwPlayerWrapper
-					playlist={playlist}
+					config={config}
 					playerUrl={'https://content.jwplatform.com/libraries/tcoydixg.js'}
 					onComplete={onComplete}
 				/>

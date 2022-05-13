@@ -30,7 +30,7 @@ interface JwPlayerWrapperProps {
 	onComplete?: () => void;
 }
 
-const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl, onReady, onComplete }) => {
+const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, onReady, onComplete }) => {
 	const { setPlayer } = useContext(PlayerContext);
 	const defaultConfig = {
 		plugins: { fandomWirewax: {} },
