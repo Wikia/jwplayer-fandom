@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { JWPlayerApi } from 'types';
 import FandomWirewaxPlugin from 'plugins/fandom-wirewax.plugin';
 import { PlayerContext } from 'players/shared/PlayerContext';
-import { Playlist } from 'types';
+import { PlayerConfig, Player } from 'types';
 import { jwPlayerPlaybackTracker } from 'utils/videoTracking';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
 import JWEvents from 'players/shared/JWEvents';
@@ -24,13 +24,17 @@ const getDefaultPlayerUrl = () => {
 };
 
 interface JwPlayerWrapperProps {
-	playlist: Playlist;
+	config: PlayerConfig;
 	playerUrl?: string;
+	onReady?: (playerInstance: Player) => void;
 	onComplete?: () => void;
 }
 
-const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl, onComplete }) => {
+const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, onReady, onComplete }) => {
 	const { setPlayer } = useContext(PlayerContext);
+	const defaultConfig = {
+		plugins: { fandomWirewax: {} },
+	};
 
 	useEffect(() => {
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_INIT_RENDER);
@@ -48,8 +52,8 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl, 
 			registerPlugin('wirewax', '8.0', FandomWirewaxPlugin);
 
 			const playerInstance = window.jwplayer(elementId).setup({
-				playlist: playlist,
-				plugins: { fandomWirewax: {} },
+				...defaultConfig,
+				...config,
 			});
 
 			playerInstance.on(JWEvents.READY, (event) => {
@@ -61,6 +65,10 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl, 
 					player: window.jwplayer(elementId),
 					ready: event,
 				});
+
+				if (onReady) {
+					onReady(playerInstance);
+				}
 			});
 
 			playerInstance.on(JWEvents.COMPLETE, () => {
@@ -90,4 +98,4 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ playlist, playerUrl, 
 	);
 };
 
-export default JwPlayerWrapper;
+export default React.memo(JwPlayerWrapper);

@@ -9,6 +9,11 @@ export type PlayerConfig = {
 	mediaElement?: HTMLVideoElement;
 	autostart?: boolean;
 	pid?: string;
+	image?: string;
+	mute?: boolean;
+	description?: string;
+	title?: string;
+	lang?: string;
 };
 
 export type Playlist = PlaylistItem | PlaylistItem[] | string | string[];
@@ -231,6 +236,30 @@ export type Embedder = {
 };
 export interface VideoPlayerProps {
 	playlist: Playlist;
+}
+
+interface ArticleVideoMetadata {
+	contentUrl: string;
+	description: string;
+	duration: string;
+	name: string;
+	thumbnailUrl: string;
+	uploadDate: string;
+}
+
+export interface ArticleVideoDetails {
+	description: string;
+	duration: string;
+	feed_instance_id: string;
+	impressionsPerSession: number;
+	isDedicatedForArticle: boolean;
+	kind: string;
+	lang: string;
+	mediaId: string;
+	metadata: ArticleVideoMetadata;
+	playlist: Playlist;
+	title: string;
+	videoTags: string;
 }
 
 export interface CanonicalVideoPlayerProps extends VideoPlayerProps {

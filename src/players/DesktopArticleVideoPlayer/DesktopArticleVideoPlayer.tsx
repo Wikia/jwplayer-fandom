@@ -1,41 +1,67 @@
 import React, { useRef, useState } from 'react';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import UnmuteButton from 'players/DesktopArticleVideoPlayer/UnmuteButton';
 import JwPlayerWrapper from 'players/shared/JwPlayerWrapper';
 import VideoDetails from 'players/DesktopArticleVideoPlayer/VideoDetails';
 import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'utils/useAdComplete';
 import PlayerWrapper from 'players/shared/PlayerWrapper';
-import { Playlist } from 'types';
+import { ArticleVideoDetails } from 'types';
 import CloseButton from 'players/shared/CloseButton';
 import Attribution from 'players/DesktopArticleVideoPlayer/Attribution';
+import { getArticleVideoConfig } from 'utils/articleVideo/articleVideoConfig';
+import articlePlayerOnReady from 'utils/articleVideo/articlePlayerOnReady';
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
-	background-color: black;
+	position: absolute;
 	width: 100%;
-	height: 100%;
+	padding-top: 56.25%;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
 	z-index: 2;
 `;
 
+const moveDownAnimation = (right: number, width: number) => keyframes`
+	from {
+		right: ${right}px;
+		bottom: 100%;
+		width: ${width}px;
+	}
+
+	to {
+		right: 18px;
+		bottom: 18px;
+		width: 300px;  
+	}
+`;
+
 interface DesktopArticleVideoWrapperProps {
-	visibleOnScreen: boolean;
+	isScrollPlayer: boolean;
+	right?: number;
+	width?: number;
 }
 
 const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
+	height: max-content;
 	${(props) =>
-		!props.visibleOnScreen &&
-		css`
-			bottom: 18px;
-			left: auto;
-			position: fixed;
-			right: 18px;
-			top: auto;
-			-webkit-transition: right 0.4s, bottom 0.4s, width 0.4s;
-			transition: right 0.4s, bottom 0.4s, width 0.4s;
-			width: 300px;
-			z-index: ${Number(WDSVariables.z2) + 2};
-		`}
+		props.isScrollPlayer
+			? css`
+					z-index: ${Number(WDSVariables.z2) + 2};
+					position: fixed;
+					animation: ${moveDownAnimation(props.right, props.width)} 0.4s normal forwards;
+			  `
+			: css`
+					position: absolute;
+					bottom: 0;
+					right: 0;
+					top: 0;
+					left: 0;
+					transform: translateZ(0);
+					-webkit-transform: translateZ(0);
+			  `}
 `;
 
 const TopBar = styled.div`
@@ -44,26 +70,49 @@ const TopBar = styled.div`
 `;
 
 interface DesktopArticleVideoPlayerProps {
-	playlist: Playlist;
+	videoDetails: ArticleVideoDetails;
 }
 
-const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ playlist }) => {
-	const ref = useRef<HTMLDivElement>(null);
+const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
+	const placeholderRef = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
-	const onScreen = useOnScreen(ref);
+	const onScreen = useOnScreen(placeholderRef, '0px', 0.1);
 	const [dismissed, setDismissed] = useState(false);
+	const isScrollPlayer = !(dismissed || onScreen);
+	const boundingClientRect = placeholderRef.current?.getBoundingClientRect();
+	const right = boundingClientRect?.right;
+	const width = boundingClientRect?.width;
+	const controlbar = document.querySelector<HTMLElement>('.jw-controlbar');
+	const shareIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-settings-sharing');
+	const moreVideosIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-related-btn');
+	const pipIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-icon-pip');
+
+	if (onScreen) {
+		if (controlbar) controlbar.style.background = 'rgba(0, 0, 0, 0.5)';
+		if (shareIcon) shareIcon.style.display = 'flex';
+		if (moreVideosIcon) moreVideosIcon.style.display = 'flex';
+		if (pipIcon) pipIcon.style.display = 'flex';
+	} else {
+		if (controlbar) controlbar.style.background = 'linear-gradient(0,#000,transparent)';
+		if (shareIcon) shareIcon.style.display = 'none';
+		if (moreVideosIcon) moreVideosIcon.style.display = 'none';
+		if (pipIcon) pipIcon.style.display = 'none';
+	}
 
 	return (
 		<PlayerWrapper playerName="desktop-article-video">
-			<DesktopArticleVideoTopPlaceholder ref={ref}>
+			<DesktopArticleVideoTopPlaceholder ref={placeholderRef}>
 				{adComplete && (
-					<DesktopArticleVideoWrapper visibleOnScreen={onScreen || dismissed}>
+					<DesktopArticleVideoWrapper right={right} width={width} isScrollPlayer={isScrollPlayer}>
 						<TopBar>
-							{onScreen && <UnmuteButton />}
-							{!(dismissed || onScreen) && <CloseButton dismiss={() => setDismissed(true)} />}
+							{!isScrollPlayer && <UnmuteButton />}
+							{isScrollPlayer && <CloseButton dismiss={() => setDismissed(true)} />}
 						</TopBar>
-						<JwPlayerWrapper playlist={playlist} />
-						{!onScreen && <VideoDetails />}
+						<JwPlayerWrapper
+							config={getArticleVideoConfig(videoDetails)}
+							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
+						/>
+						{isScrollPlayer && <VideoDetails />}
 					</DesktopArticleVideoWrapper>
 				)}
 			</DesktopArticleVideoTopPlaceholder>

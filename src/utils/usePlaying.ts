@@ -16,12 +16,6 @@ export default function usePlaying(): boolean {
 		player?.on('pause', () => {
 			setPlaying(false);
 		});
-
-		// TODO What is going on here?
-		return () => {
-			player?.on('play', () => setPlaying(true));
-			player?.on('pause', () => setPlaying(false));
-		};
 	}, [player]);
 
 	return playing;
