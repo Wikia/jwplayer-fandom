@@ -56,7 +56,7 @@ export const getCurrentQuality = withTryCatchDefault(() => {
 });
 
 export const getIsCurrentlyViewable = withTryCatchDefault(() => {
-	return !!window.jwplayer().getViewable();
+	return !!window.jwplayer().getViewable() ?? false;
 });
 
 export const getPlaylistPosition = withTryCatchDefault(() => {

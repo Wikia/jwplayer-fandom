@@ -1,5 +1,4 @@
 import { TrackData } from '@fandom/tracking-metrics/tracking/dataLayer';
-import getCookieValue from 'utils/getCookieValue';
 
 interface MWConfig {
 	get: (key: string) => any;
@@ -38,8 +37,6 @@ function getDefaultsFromMWConfig(): TrackData {
 	const defaultTrackData: TrackData = {};
 
 	// Add base tracking from mw
-	defaultTrackData[GLOBAL_PROPS.BEACON_ID] = config.get('beaconId');
-	defaultTrackData[GLOBAL_PROPS.BEACON_ID2] = config.get('b2');
 	defaultTrackData[GLOBAL_PROPS.PAGE_VIEW_ID] = config.get('pvUID');
 	defaultTrackData[GLOBAL_PROPS.USER_ID] = config.get('wgUserId');
 	defaultTrackData[GLOBAL_PROPS.COMMUNITY_ID] = config.get('wgCityId');
@@ -54,12 +51,6 @@ function getDefaultsFromMWConfig(): TrackData {
 export default function addGlobalProps(): TrackData {
 	try {
 		let defaultProps: TrackData = {};
-
-		// Add base ones consistent from any app
-		defaultProps[GLOBAL_PROPS.TIMESTAMP] = Date.now().toString();
-		defaultProps[GLOBAL_PROPS.BEACON_ID] = getCookieValue('wikia_beacon_id');
-		defaultProps[GLOBAL_PROPS.BEACON_ID2] = getCookieValue('_b2');
-
 		// Set sane defaults
 		defaultProps[GLOBAL_PROPS.SKIN] = 'unknown';
 
