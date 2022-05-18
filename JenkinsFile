@@ -39,7 +39,6 @@ pipeline {
       stages {
         stage('Add .env file') {
           steps {
-            sh("echo 'here'")
             script {
               FAILED_STAGE = 'env file'
             }

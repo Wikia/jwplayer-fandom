@@ -109,7 +109,7 @@
 	"dependencies": {
 		"@fandom-frontend/design-system": "9.0.0",
 		"@fandom-frontend/react-common": "6.35.0",
-		"@fandom/tracking-metrics": "0.0.15",
+		"@fandom/tracking-metrics": "0.0.16",
 		"@wikia/post-quecast": "2.0.1",
 		"js-cookie": "3.0.1",
 		"rxjs": "7.5.4",
