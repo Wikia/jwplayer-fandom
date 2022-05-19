@@ -33,7 +33,7 @@ const moveDownAnimation = (right: number, width: number) => keyframes`
 
 	to {
 		right: 18px;
-		bottom: 18px;
+		bottom: 45px;
 		width: 300px;  
 	}
 `;
