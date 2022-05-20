@@ -12,14 +12,20 @@ export const VIDEO_RECORD_EVENTS = {
 	JW_PLAYER_PLAYING_VIDEO: PREFIX + 'playing-initial-video',
 };
 
+const recordOptions = { sampleRate: 0.2 };
+
 export function recordVideoEvent(event: string) {
-	return recordOnce(event);
+	return recordOnce(event, recordOptions);
 }
 
 export function recordMultipleVideoEvent(event: string) {
-	return recordMultiple(event);
+	return recordMultiple(event, recordOptions);
 }
 
 export function getVideoStartupTime() {
-	return difference(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START, VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_VIDEO);
+	return difference(
+		VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START,
+		VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_VIDEO,
+		recordOptions,
+	);
 }
