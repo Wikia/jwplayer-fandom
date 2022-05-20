@@ -12,7 +12,7 @@ export const VIDEO_RECORD_EVENTS = {
 	JW_PLAYER_PLAYING_VIDEO: PREFIX + 'playing-initial-video',
 };
 
-const recordOptions = { sampleRate: 0.2 };
+const recordOptions = { sampleRate: 0.3 };
 
 export function recordVideoEvent(event: string) {
 	return recordOnce(event, recordOptions);
