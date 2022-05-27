@@ -7,11 +7,17 @@ import VideoDetails from 'players/DesktopArticleVideoPlayer/VideoDetails';
 import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'utils/useAdComplete';
 import PlayerWrapper from 'players/shared/PlayerWrapper';
-import { ArticleVideoDetails } from 'types';
+import { ArticleVideoDetails, CanPlayVideo } from 'types';
 import CloseButton from 'players/shared/CloseButton';
 import Attribution from 'players/DesktopArticleVideoPlayer/Attribution';
 import { getArticleVideoConfig } from 'utils/articleVideo/articleVideoConfig';
 import articlePlayerOnReady from 'utils/articleVideo/articlePlayerOnReady';
+
+interface WindowDesktopArticlePlayer extends Window {
+	canPlayVideo?: CanPlayVideo;
+}
+
+declare let window: WindowDesktopArticlePlayer;
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
 	position: absolute;
@@ -98,6 +104,8 @@ const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ v
 		if (moreVideosIcon) moreVideosIcon.style.display = 'none';
 		if (pipIcon) pipIcon.style.display = 'none';
 	}
+
+	if (!window.canPlayVideo()) return null;
 
 	return (
 		<PlayerWrapper playerName="desktop-article-video">

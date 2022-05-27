@@ -6,12 +6,18 @@ import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'utils/useAdComplete';
 import PlayerWrapper from 'players/shared/PlayerWrapper';
 import OffScreenOverlay from 'players/MobileArticleVideoPlayer/OffScreenOverlay/OffScreenOverlay';
-import { ArticleVideoDetails } from 'types';
+import { ArticleVideoDetails, CanPlayVideo } from 'types';
 import Attribution from 'players/MobileArticleVideoPlayer/Attribution';
 import { singleTrack } from 'utils/videoTracking';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
 import { getArticleVideoConfig } from 'utils/articleVideo/articleVideoConfig';
 import articlePlayerOnReady from 'utils/articleVideo/articlePlayerOnReady';
+
+interface WindowDesktopArticlePlayer extends Window {
+	canPlayVideo?: CanPlayVideo;
+}
+
+declare let window: WindowDesktopArticlePlayer;
 
 const MobileArticleVideoTopPlaceholder = styled.div`
 	width: 100%;
@@ -93,6 +99,8 @@ const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
 			return;
 		}
 	}, [onScreen, adComplete]);
+
+	if (!window.canPlayVideo()) return null;
 
 	return (
 		<PlayerWrapper playerName="mobile-article-video">
