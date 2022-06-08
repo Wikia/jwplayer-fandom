@@ -1,6 +1,7 @@
 import { communicationService } from 'utils/communication';
 import { setVideoSeenInSession } from 'utils/articleVideo/articleVideoSession';
 import { willAutoplay, willMute } from 'utils/articleVideo/articleVideoConfig';
+import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
 
 export default function useOnArticlePlayerReady(videoDetails, playerInstance): void {
 	const playerKey = 'aeJWPlayerKey';
@@ -11,6 +12,8 @@ export default function useOnArticlePlayerReady(videoDetails, playerInstance): v
 
 	window.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', { detail: playerInstance }));
 	window[playerKey] = playerInstance;
+
+	recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_PLAYER_READY_DISPATCH);
 
 	communicationService.dispatch({
 		type: '[JWPlayer] Player Ready',
@@ -27,12 +30,4 @@ export default function useOnArticlePlayerReady(videoDetails, playerInstance): v
 			videoId: videoDetails.playlist[0].mediaid,
 		},
 	});
-
-	// player.on('autoplayToggle', function (data) {
-	//     articleVideoCookieService.setAutoplay(data.enabled ? '1' : '0');
-	// });
-
-	// player.on('captionsSelected', function (data) {
-	//     articleVideoCookieService.setCaptions(data.selectedLang);
-	// });
 }
