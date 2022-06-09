@@ -10,6 +10,13 @@ export const VIDEO_RECORD_EVENTS = {
 	JW_PLAYER_READY: PREFIX + 'ready',
 	JW_PLAYER_PLAYING_AD: PREFIX + 'playing-ad',
 	JW_PLAYER_PLAYING_VIDEO: PREFIX + 'playing-initial-video',
+	JW_PLAYER_AD_ENG_OPT_IN_LISTEN_START: PREFIX + 'ad-eng-opt-in-listen-start',
+	JW_PLAYER_AD_ENG_OPT_IN_MESSAGE_RECIEVED: PREFIX + 'ad-eng-opt-in-message-recieved',
+	JW_PLAYER_AD_ENG_CONFIG_LISTEN_START: PREFIX + 'ad-eng-config-listen-start',
+	JW_PLAYER_AD_ENG_CONFIG_MESSAGE_RECIEVED: PREFIX + 'ad-eng-config-message-recieved',
+	JW_PLAYER_AD_ENG_SETUP_JW_LISTEN_START: PREFIX + 'ad-eng-setup-jw-listen-start',
+	JW_PLAYER_AD_ENG_SETUP_JW_MESSAGE_RECIEVED: PREFIX + 'ad-eng-setup-jw-message-recieved',
+	JW_PLAYER_AD_ENG_PLAYER_READY_DISPATCH: PREFIX + 'ad-eng-player-ready-dispatch',
 };
 
 const recordOptions = { sampleRate: 0.3 };

@@ -3,14 +3,21 @@ import { useState, useEffect } from 'react';
 import { communicationService, ofType } from 'utils/communication';
 import { race, timer } from 'rxjs';
 import { first } from 'rxjs/operators';
+import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
 
 export default function useAdComplete(): boolean {
 	const [adComplete, setAdComplete] = useState(false);
 
 	useEffect(() => {
+		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_OPT_IN_LISTEN_START);
 		communicationService.action$.pipe(ofType('[AdEngine OptIn] set opt in'), first()).subscribe(() => {
+			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_OPT_IN_MESSAGE_RECIEVED);
+			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_CONFIG_LISTEN_START);
 			waitForAdEngine().then(() => {
+				recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_CONFIG_MESSAGE_RECIEVED);
+				recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_SETUP_JW_LISTEN_START);
 				listenSetupJWPlayer(function () {
+					recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_SETUP_JW_MESSAGE_RECIEVED);
 					setAdComplete(true);
 				});
 			});
