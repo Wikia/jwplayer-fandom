@@ -1,10 +1,12 @@
 import React from 'react';
-import { Player } from 'types';
+import { Player, PlayerConfig } from 'types';
 
 interface PlayerContextInterface {
 	player: Player;
 	setPlayer: (playerInstance) => void;
 	playerName: string;
+	config: PlayerConfig;
+	setConfig: (playerConfig) => void;
 }
 
 export const PlayerContext = React.createContext<PlayerContextInterface | null>(null);
