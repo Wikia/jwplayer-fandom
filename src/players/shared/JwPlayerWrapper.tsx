@@ -24,14 +24,14 @@ const getDefaultPlayerUrl = () => {
 };
 
 interface JwPlayerWrapperProps {
-	config: PlayerConfig;
+	config?: PlayerConfig;
 	playerUrl?: string;
 	onReady?: (playerInstance: Player) => void;
 	onComplete?: () => void;
 }
 
 const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, onReady, onComplete }) => {
-	const { setPlayer } = useContext(PlayerContext);
+	const { setPlayer, setConfig } = useContext(PlayerContext);
 	const defaultConfig = {
 		plugins: { fandomWirewax: {} },
 	};
@@ -50,6 +50,8 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, on
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY);
 			const registerPlugin = window.jwplayer().registerPlugin;
 			registerPlugin('wirewax', '8.0', FandomWirewaxPlugin);
+
+			setConfig(config);
 
 			const playerInstance = window.jwplayer(elementId).setup({
 				...defaultConfig,

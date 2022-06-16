@@ -177,6 +177,7 @@ export type Player = {
 	getFloating: () => boolean;
 	plugins: Plugins;
 	getQualityLevels: () => QualityObject[];
+	load: (playlist: string | Playlist) => null;
 };
 export type CreateWirewaxEmbedder = () => Embedder;
 export type WirewaxPluginOptions = {
@@ -262,6 +263,7 @@ export interface ArticleVideoDetails {
 	videoTags: string;
 }
 
-export interface CanonicalVideoPlayerProps extends VideoPlayerProps {
+export interface CanonicalVideoPlayerProps {
+	currentVideo: string;
 	onComplete: () => void;
 }

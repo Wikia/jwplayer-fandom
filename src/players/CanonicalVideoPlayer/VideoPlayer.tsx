@@ -1,25 +1,25 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { CanonicalVideoPlayerProps } from 'types';
-import PlayerWrapper from 'players/shared/PlayerWrapper';
 import JwPlayerWrapper from 'players/shared/JwPlayerWrapper';
+import { PlayerContext } from 'players/shared/PlayerContext';
 
-const CanonicalVideoPlayer: React.FC<CanonicalVideoPlayerProps> = ({ playlist, onComplete }) => {
-	const ref = useRef<HTMLDivElement>(null);
-	const config = {
-		playlist: playlist,
-	};
+const VideoPlayer: React.FC<CanonicalVideoPlayerProps> = ({ currentVideo, onComplete }) => {
+	const { player, config } = useContext(PlayerContext);
+	const playerConfig = config || { playlist: currentVideo };
+	useEffect(() => {
+		if (player !== null) {
+			player.load(currentVideo);
+			player.play();
+		}
+	}, [currentVideo]);
 
 	return (
-		<PlayerWrapper playerName={'base-player'}>
-			<div ref={ref}>
-				<JwPlayerWrapper
-					config={config}
-					playerUrl={'https://content.jwplatform.com/libraries/tcoydixg.js'}
-					onComplete={onComplete}
-				/>
-			</div>
-		</PlayerWrapper>
+		<JwPlayerWrapper
+			config={playerConfig}
+			playerUrl={'https://content.jwplatform.com/libraries/tcoydixg.js'}
+			onComplete={onComplete}
+		/>
 	);
 };
 
-export default CanonicalVideoPlayer;
+export default VideoPlayer;
