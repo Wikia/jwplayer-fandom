@@ -49,6 +49,10 @@ export const PROPERTY_NAMES = {
 	VIDEO_SERIES_ID: 'video_series_id',
 	VIDEO_VIEW_STATE: 'video_view_state',
 
+	VIDEO_PLAYLIST_TYPE: 'video_playlist_type',
+	VIDEO_TARGETING_MODEL: 'video_targeting_model',
+	VIDEO_SPONSOR: 'video_sponsor',
+
 	// GA
 	GA_VISITOR_ID: 'ga_visitor_id',
 
@@ -96,6 +100,11 @@ function addRunTimeParams(trackingParams: TrackData): TrackData {
 	trackDataObject[PROPERTY_NAMES.VIDEO_VIEW_STATE] = getJWViewState();
 	trackDataObject[PROPERTY_NAMES.VIDEO_IS_EMBEDDED] = getIsEmbed();
 	trackDataObject[PROPERTY_NAMES.VIDEO_QUALITY_MANIFEST] = getJWQualityManifest();
+
+	// Check for targeting type
+	trackDataObject[PROPERTY_NAMES.VIDEO_TARGETING_MODEL] = ''; // TODO
+	// trackDataObject[PROPERTY_NAMES.VIDEO_PLAYLIST_TYPE] = ''; // TODO
+	trackDataObject[PROPERTY_NAMES.VIDEO_SPONSOR] = ''; // TODO
 
 	// TO BE ADDED LATER
 	// trackDataObject[PROPERTY_NAMES.VIDEO_COLLECTION] = getCollection();

@@ -4,32 +4,18 @@
  * lead to bugs when working with an imperative API such as window.JWPlayer
  */
 import { Player } from 'types';
+import withTryCatchDefault from "utils/withTryCatchDefault";
 
-export interface WindowWithJWPlayer {
+export interface WindowWithJWPlayer extends Window {
 	jwplayer: () => Player;
 	currentPlaylistItemWirewax: boolean | null;
+	__isDedicatedForArticle: boolean;
 }
 
 declare let window: WindowWithJWPlayer;
 
-// Ensure all of these oeprations are safe
-const withTryCatchDefault =
-	(func: () => any, fallback = '') =>
-	() => {
-		// JWPLayer not yet ready
-		if (typeof window === 'undefined' || !window.jwplayer || typeof window.jwplayer !== 'function') {
-			return '';
-		}
-
-		try {
-			return func();
-		} catch (e) {
-			return fallback;
-		}
-	};
-
 export const getAutoPlayState = withTryCatchDefault(() => {
-	return window.jwplayer().getConfig().autostart;
+	return !!window.jwplayer().getConfig().autostart;
 });
 
 // TODO ENSURE this is the Playlist and not the video id
@@ -44,8 +30,6 @@ export const getVideoVolume = withTryCatchDefault(() => {
 
 	return window.jwplayer().getVolume();
 });
-
-// Continue with all functions here to enable everything in PROPERTY_NAMES
 
 export const getPlayHeadPosition = withTryCatchDefault(() => {
 	return window.jwplayer().getPosition();

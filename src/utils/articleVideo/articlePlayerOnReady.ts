@@ -2,14 +2,18 @@ import { communicationService } from 'utils/communication';
 import { setVideoSeenInSession } from 'utils/articleVideo/articleVideoSession';
 import { willAutoplay, willMute } from 'utils/articleVideo/articleVideoConfig';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
+import { WindowWithJWPlayer } from "utils/globalJWInterface";
+
+declare let window: WindowWithJWPlayer;
 
 export default function useOnArticlePlayerReady(videoDetails, playerInstance): void {
 	const playerKey = 'aeJWPlayerKey';
 
 	if (!videoDetails.isDedicatedForArticle) {
-		setVideoSeenInSession();
+		setVideoSeenInSession()
 	}
 
+	window.__isDedicatedForArticle = !!videoDetails.isDedicatedForArticle;
 	window.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', { detail: playerInstance }));
 	window[playerKey] = playerInstance;
 

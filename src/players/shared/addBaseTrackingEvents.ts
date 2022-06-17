@@ -207,6 +207,9 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 				...getAdPropsFromAdEvent(event),
 			});
 		})
+		.on(JWEvents.AD_BREAK_START, (event : AdEvents) => {
+			console.log('ad-break-start', event);
+		})
 		.on(JWEvents.AD_FINISHED, (event: AdEvents) => {
 			console.log('ad_finished', event);
 			jwPlayerAdTracker({
