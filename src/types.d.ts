@@ -266,4 +266,20 @@ export interface ArticleVideoDetails {
 export interface CanonicalVideoPlayerProps {
 	currentVideo: string;
 	onComplete: () => void;
+	isMobile: boolean;
+}
+
+export interface JwPlayerWrapperProps {
+	config?: PlayerConfig;
+	playerUrl?: string;
+	onReady?: (playerInstance: Player) => void;
+	onComplete?: () => void;
+}
+
+export interface LoadableVideoPlayerWrapperProps {
+	currentVideo: string;
+	config?: PlayerConfig;
+	playerUrl?: string;
+	onReady?: (playerInstance: Player) => void;
+	onComplete?: () => void;
 }
