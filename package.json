@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.0.0-beta-12",
+	"version": "2.0.0-beta-debuggin-2",
 	"description": "JWPlayer for Fandom",
 	"main": "bundle.umd.js",
 	"module": "bundle.esm.js",
@@ -109,7 +109,7 @@
 	"dependencies": {
 		"@fandom-frontend/design-system": "9.0.0",
 		"@fandom-frontend/react-common": "6.35.0",
-		"@fandom/tracking-metrics": "0.0.18",
+		"@fandom/tracking-metrics": "0.0.18-alpha-2",
 		"@wikia/post-quecast": "2.0.1",
 		"js-cookie": "3.0.1",
 		"rxjs": "7.5.4",
