@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { JWPlayerApi, PlaylistItem } from 'types';
+import { JWPlayerApi } from 'types';
 import FandomWirewaxPlugin from 'plugins/fandom-wirewax.plugin';
 import { PlayerContext } from 'players/shared/PlayerContext';
 import { JwPlayerWrapperProps } from 'types';
@@ -7,7 +7,6 @@ import { jwPlayerPlaybackTracker } from 'utils/videoTracking';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
 import JWEvents from 'players/shared/JWEvents';
 import addBaseTrackingEvents from 'players/shared/addBaseTrackingEvents';
-import slugify from 'utils/slugify';
 
 interface WindowJWPlayer extends Window {
 	jwplayer?: JWPlayerApi;
@@ -71,11 +70,6 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, on
 				if (typeof onComplete === 'function') {
 					onComplete();
 				}
-			});
-
-			playerInstance.setPlaylistItemCallback((item: PlaylistItem) => {
-				item.link = `https://www.fandom.com/newvideopage/${item.mediaid}/${slugify(item.title)}`;
-				return;
 			});
 
 			setPlayer(playerInstance);

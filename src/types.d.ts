@@ -28,7 +28,6 @@ export type PlaylistItem = {
 	username?: string;
 	userUrl?: string;
 	pubdate?: number;
-	link?: string;
 };
 
 interface PlaylistItemPlayerEventData {
@@ -151,11 +150,6 @@ interface QualityObject {
 	height: number;
 }
 
-interface PlaylistItemCallbackData {
-	item?: PlaylistItem;
-	index?: number;
-}
-
 export type Player = {
 	playToggle: () => null;
 	pause: () => null;
@@ -184,7 +178,6 @@ export type Player = {
 	plugins: Plugins;
 	getQualityLevels: () => QualityObject[];
 	load: (playlist: string | Playlist) => null;
-	setPlaylistItemCallback: (PlaylistItemCallbackData) => void;
 };
 export type CreateWirewaxEmbedder = () => Embedder;
 export type WirewaxPluginOptions = {
