@@ -273,7 +273,6 @@ export interface ArticleVideoDetails {
 export interface CanonicalVideoPlayerProps {
 	currentVideo: string;
 	onComplete: () => void;
-	isMobile: boolean;
 }
 
 export interface JwPlayerWrapperProps {
