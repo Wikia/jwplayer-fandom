@@ -274,3 +274,18 @@ export interface CanonicalVideoPlayerProps {
 	currentVideo: string;
 	onComplete: () => void;
 }
+
+export interface JwPlayerWrapperProps {
+	config?: PlayerConfig;
+	playerUrl?: string;
+	onReady?: (playerInstance: Player) => void;
+	onComplete?: () => void;
+}
+
+export interface LoadableVideoPlayerWrapperProps {
+	currentVideo: string;
+	config?: PlayerConfig;
+	playerUrl?: string;
+	onReady?: (playerInstance: Player) => void;
+	onComplete?: () => void;
+}
