@@ -1,11 +1,12 @@
 import React, { useEffect, useContext } from 'react';
-import { CanonicalVideoPlayerProps } from 'types';
+import { LoadableVideoPlayerWrapperProps } from 'types';
 import JwPlayerWrapper from 'players/shared/JwPlayerWrapper';
 import { PlayerContext } from 'players/shared/PlayerContext';
 
-const VideoPlayer: React.FC<CanonicalVideoPlayerProps> = ({ currentVideo, onComplete }) => {
+const LoadableVideoPlayerWrapper: React.FC<LoadableVideoPlayerWrapperProps> = ({ currentVideo, onComplete }) => {
 	const { player, config } = useContext(PlayerContext);
 	const playerConfig = config || { playlist: currentVideo };
+
 	useEffect(() => {
 		if (player !== null) {
 			player.load(currentVideo);
@@ -22,4 +23,4 @@ const VideoPlayer: React.FC<CanonicalVideoPlayerProps> = ({ currentVideo, onComp
 	);
 };
 
-export default VideoPlayer;
+export default LoadableVideoPlayerWrapper;

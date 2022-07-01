@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { JWPlayerApi } from 'types';
 import FandomWirewaxPlugin from 'plugins/fandom-wirewax.plugin';
 import { PlayerContext } from 'players/shared/PlayerContext';
-import { PlayerConfig, Player } from 'types';
+import { JwPlayerWrapperProps } from 'types';
 import { jwPlayerPlaybackTracker } from 'utils/videoTracking';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'utils/videoTimingEvents';
 import JWEvents from 'players/shared/JWEvents';
@@ -22,13 +22,6 @@ const getDefaultPlayerUrl = () => {
 		? 'https://cdn.jwplayer.com/libraries/MFqndUHM.js'
 		: 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
 };
-
-interface JwPlayerWrapperProps {
-	config?: PlayerConfig;
-	playerUrl?: string;
-	onReady?: (playerInstance: Player) => void;
-	onComplete?: () => void;
-}
 
 const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, onReady, onComplete }) => {
 	const { setPlayer, setConfig } = useContext(PlayerContext);
