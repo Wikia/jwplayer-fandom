@@ -33,11 +33,6 @@ const TwitchEmbedPlayer: React.FC<TwitchEmbedProps> = ({ height, width, parentDo
 		}
 	}, [twitchPlayerScriptLoaded]);
 
-	useEffect(() => {
-		// Mute the player at that start
-		twitchPlayer.setVolume(0);
-	}, [twitchPlayer]);
-
 	return (
 		<div>
 			<div id={'fandom-twitch-player'} />
