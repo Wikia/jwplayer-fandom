@@ -276,8 +276,19 @@ export interface CanonicalVideoPlayerProps {
 }
 
 export interface TwitchEmbedProps {
+	/** Height of the embedded window, in pixels.
+	 * Can be expressed as a percentage, by passing a string like 100%.
+	 * Recommended minimum: 300. */
 	height: string;
+	/** Width of the embedded window, in pixels.
+	 * Can be expressed as a percentage, by passing a string like 50%.
+	 * Recommended minimum: 400. */
 	width: string;
+	/** Required when the player is instantiated from subdomains
+	 * like starwars.fandom.com. This is not needed so much, if it's
+	 * instantiated from fandom.com for example.
+	 *
+	 * Example of this param would be ['starwars.fandom.com'] */
 	parentDomains: string[];
 }
 

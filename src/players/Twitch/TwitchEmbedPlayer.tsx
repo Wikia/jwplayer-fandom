@@ -13,6 +13,7 @@ const TwitchEmbedPlayer: React.FC<TwitchEmbedProps> = ({ height, width, parentDo
 		width,
 		channel: fandomTwitchChannel,
 		parent: parentDomains,
+		muted: true,
 	};
 
 	useEffect(() => {
@@ -20,7 +21,7 @@ const TwitchEmbedPlayer: React.FC<TwitchEmbedProps> = ({ height, width, parentDo
 		script.setAttribute('src', twitchEmbedLinkURL);
 		script.addEventListener('load', () => {
 			setTwitchPlayerScriptLoaded(true);
-			console.log('Twitch player script loaded.');
+			console.debug('Twitch player script loaded.');
 		});
 		document.body.appendChild(script);
 	}, []);
