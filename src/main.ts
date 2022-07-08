@@ -10,6 +10,9 @@ export * from './players/MobileArticleVideoPlayer/MobileArticleVideoPlayer';
 export { default as CanonicalVideoPlayer } from './players/CanonicalVideoPlayer/CanonicalVideoPlayer';
 export * from './players/CanonicalVideoPlayer/CanonicalVideoPlayer';
 
+export { default as TwitchEmbedPlayer } from './players/Twitch/TwitchEmbedPlayer';
+export * from './players/Twitch/TwitchEmbedPlayer';
+
 // @ts-ignore
 window.__fandom_jw_player_version = process.env.VIDEO_VERSION;
 export function getVideoPlayerVersion() {

@@ -113,6 +113,7 @@
 		"@wikia/post-quecast": "2.0.1",
 		"js-cookie": "3.0.1",
 		"rxjs": "7.5.4",
-		"styled-components": "^5.3.3"
+		"styled-components": "^5.3.3",
+		"twitch-player": "2.0.2"
 	}
 }

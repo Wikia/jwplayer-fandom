@@ -275,6 +275,12 @@ export interface CanonicalVideoPlayerProps {
 	onComplete: () => void;
 }
 
+export interface TwitchEmbedProps {
+	height: string;
+	width: string;
+	parentDomains: string[];
+}
+
 export interface JwPlayerWrapperProps {
 	config?: PlayerConfig;
 	playerUrl?: string;
