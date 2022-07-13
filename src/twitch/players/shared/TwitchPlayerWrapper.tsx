@@ -1,12 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { TwitchApi } from 'twitch/types';
 import { PlayerContext } from 'twitch/players/shared/PlayerContext';
-// import { JwPlayerWrapperProps } from 'jwplayer/types';
-// import { jwPlayerPlaybackTracker } from 'jwplayer/utils/videoTracking';
-// import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
-// import JWEvents from 'jwplayer/players/shared/JWEvents';
-// import addBaseTrackingEvents from 'jwplayer/players/shared/addBaseTrackingEvents';
-// import slugify from 'jwplayer/utils/slugify';
 
 interface WindowTwitch extends Window {
 	Twitch?: TwitchApi;

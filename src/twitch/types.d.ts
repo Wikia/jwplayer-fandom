@@ -14,5 +14,3 @@ export type Player = (
 	width: number,
 	parent?: string[],
 ) => PlayerInstance;
-
-// export type Embed = () =>
