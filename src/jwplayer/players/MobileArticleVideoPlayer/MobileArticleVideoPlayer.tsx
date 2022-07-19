@@ -95,7 +95,7 @@ const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
 	}, [onScreen, adComplete]);
 
 	return (
-		<PlayerWrapper playerName="mobile-article-video">
+		<PlayerWrapper playerName="jw-mobile-article-video">
 			<MobileArticleVideoTopPlaceholder ref={ref}>
 				{adComplete && (
 					<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer} topPosition={getTopPosition()}>

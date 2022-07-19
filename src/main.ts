@@ -10,8 +10,11 @@ export * from './jwplayer/players/MobileArticleVideoPlayer/MobileArticleVideoPla
 export { default as JWCanonicalVideoPlayer } from './jwplayer/players/CanonicalVideoPlayer/CanonicalVideoPlayer';
 export * from './jwplayer/players/CanonicalVideoPlayer/CanonicalVideoPlayer';
 
-export { default as TwitchDesktopArticleVideoPlayer } from './twitch/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer';
-export * from './twitch/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer';
+export { default as TwitchDesktopArticleVideoPlayer } from './twitch/players/DesktopArticleVideoPlayer';
+export * from './twitch/players/DesktopArticleVideoPlayer';
+
+export { default as TwitchMobileArticleVideoPlayer } from './twitch/players/MobileArticleVideoPlayer';
+export * from './twitch/players/MobileArticleVideoPlayer';
 
 // @ts-ignore
 window.__fandom_jw_player_version = process.env.VIDEO_VERSION;
