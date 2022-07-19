@@ -1,6 +1,22 @@
 import React, { useEffect, useContext } from 'react';
 import { TwitchApi } from 'twitch/types';
 import { PlayerContext } from 'twitch/players/shared/PlayerContext';
+import styled from 'styled-components';
+
+const TwitchPlayerTarget = styled.div`
+	iframe {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+	}
+`;
+
+const TwitchPlayerTargetWrapper = styled.div`
+	padding-top: 56.25%;
+	position: relative;
+	height: 0;
+`;
 
 interface WindowTwitch extends Window {
 	Twitch?: TwitchApi;
@@ -11,8 +27,8 @@ declare let window: WindowTwitch;
 const TwitchPlayerWrapper: React.FC = () => {
 	const { setPlayer } = useContext(PlayerContext);
 	const defaultOptions = {
-		width: 600,
-		height: 400,
+		width: '100%',
+		height: '100%',
 		channel: 'fandom',
 	};
 
@@ -37,7 +53,11 @@ const TwitchPlayerWrapper: React.FC = () => {
 		}
 	};
 
-	return <div id="twitch-video__player" />;
+	return (
+		<TwitchPlayerTargetWrapper>
+			<TwitchPlayerTarget id="twitch-video__player" />
+		</TwitchPlayerTargetWrapper>
+	);
 };
 
 export default React.memo(TwitchPlayerWrapper);

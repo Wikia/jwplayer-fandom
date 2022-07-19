@@ -3,7 +3,7 @@ import { CanonicalVideoPlayerProps } from 'jwplayer/types';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import LoadableVideoPlayerWrapper from 'jwplayer/players/shared/LoadableVideoPlayerWrapper';
 import styled, { css } from 'styled-components';
-import useOnScreen from 'jwplayer/utils/useOnScreen';
+import useOnScreen from 'utils/useOnScreen';
 
 const CanonicalVideoTopPlaceholder = styled.div`
 	width: 100%;

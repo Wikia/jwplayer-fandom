@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import styled, { css } from 'styled-components';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
-import useOnScreen from 'jwplayer/utils/useOnScreen';
+import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'jwplayer/utils/useAdComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import OffScreenOverlay from 'jwplayer/players/MobileArticleVideoPlayer/OffScreenOverlay/OffScreenOverlay';
