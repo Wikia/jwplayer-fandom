@@ -82,7 +82,7 @@ const DesktopArticleVideoPlayer: React.FC = () => {
 							{!isScrollPlayer && <UnmuteButton />}
 							{isScrollPlayer && <CloseButton dismiss={() => setDismissed(true)} />}
 						</TopBar> */}
-					<TwitchPlayerWrapper />
+					<TwitchPlayerWrapper deviceType={'desktop'} />
 				</DesktopArticleVideoWrapper>
 			</DesktopArticleVideoTopPlaceholder>
 		</PlayerWrapper>

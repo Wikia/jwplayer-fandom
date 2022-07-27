@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { TwitchApi } from 'twitch/types';
 import { PlayerContext } from 'twitch/players/shared/PlayerContext';
 import styled from 'styled-components';
+import { trackTwitchInit, TwitchPlayerTrackingProps } from 'twitch/players/shared/twitchTrackingEvents';
 
 const TwitchPlayerTarget = styled.div`
 	iframe {
@@ -24,7 +25,7 @@ interface WindowTwitch extends Window {
 
 declare let window: WindowTwitch;
 
-const TwitchPlayerWrapper: React.FC = () => {
+const TwitchPlayerWrapper: React.FC<TwitchPlayerTrackingProps> = ({ deviceType }) => {
 	const { setPlayer } = useContext(PlayerContext);
 	const defaultOptions = {
 		width: '100%',
@@ -34,10 +35,12 @@ const TwitchPlayerWrapper: React.FC = () => {
 
 	useEffect(() => {
 		initPlayer('twitch-video__player');
+		trackTwitchInit({ deviceType });
 	}, []);
 
 	const initPlayer = (elementId: string) => {
 		const onload = () => {
+			console.log('onload');
 			const player = new window.Twitch.Player(elementId, defaultOptions);
 			setPlayer(player);
 		};

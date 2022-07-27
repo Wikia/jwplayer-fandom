@@ -62,7 +62,7 @@ const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({ has
 		<PlayerWrapper playerName="twitch-mobile-article-video">
 			<MobileArticleVideoTopPlaceholder ref={ref}>
 				<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer} topPosition={getTopPosition()}>
-					<TwitchPlayerWrapper />
+					<TwitchPlayerWrapper deviceType={'mobile'} />
 				</MobileArticleVideoWrapper>
 			</MobileArticleVideoTopPlaceholder>
 		</PlayerWrapper>
