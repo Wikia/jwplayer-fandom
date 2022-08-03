@@ -6,7 +6,7 @@ import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'jwplayer/utils/useAdComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import OffScreenOverlay from 'jwplayer/players/MobileArticleVideoPlayer/OffScreenOverlay/OffScreenOverlay';
-import { ArticleVideoDetails } from 'jwplayer/types';
+import { MobileArticleVideoPlayerProps } from 'jwplayer/types';
 import Attribution from 'jwplayer/players/MobileArticleVideoPlayer/Attribution';
 import { singleTrack } from 'jwplayer/utils/videoTracking';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
@@ -42,12 +42,6 @@ const MobileArticleVideoWrapper = styled.div<MobileArticleVideoWrapperProps>`
 					padding: 0;
 			  `}
 `;
-
-interface MobileArticleVideoPlayerProps {
-	hasPartnerSlot?: boolean;
-	isFullScreen?: boolean;
-	videoDetails: ArticleVideoDetails;
-}
 
 const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
 	hasPartnerSlot,

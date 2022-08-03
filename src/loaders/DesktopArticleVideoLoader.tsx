@@ -12,4 +12,5 @@ const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps> = ({ v
 	// Default to JW Player
 	return <JWDesktopArticleVideoPlayer videoDetails={videoDetails} />;
 };
+
 export default DesktopArticleVideoLoader;

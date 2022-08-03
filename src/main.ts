@@ -19,6 +19,9 @@ export * from 'twitch/players/MobileArticleVideoPlayer';
 export { default as DesktopArticleVideoLoader } from 'loaders/DesktopArticleVideoLoader';
 export * from 'loaders/DesktopArticleVideoLoader';
 
+export { default as MobileArticleVideoLoader } from 'loaders/MobileArticleVideoLoader';
+export * from 'loaders/MobileArticleVideoLoader';
+
 // @ts-ignore
 window.__fandom_jw_player_version = process.env.VIDEO_VERSION;
 export function getVideoPlayerVersion() {
