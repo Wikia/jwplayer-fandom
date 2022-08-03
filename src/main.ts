@@ -22,6 +22,9 @@ export * from 'loaders/DesktopArticleVideoLoader';
 export { default as MobileArticleVideoLoader } from 'loaders/MobileArticleVideoLoader';
 export * from 'loaders/MobileArticleVideoLoader';
 
+export { default as CanonicalVideoLoader } from 'loaders/CanonicalVideoLoader';
+export * from 'loaders/CanonicalVideoLoader';
+
 // @ts-ignore
 window.__fandom_jw_player_version = process.env.VIDEO_VERSION;
 export function getVideoPlayerVersion() {
