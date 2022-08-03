@@ -289,3 +289,7 @@ export interface LoadableVideoPlayerWrapperProps {
 	onReady?: (playerInstance: Player) => void;
 	onComplete?: () => void;
 }
+
+export interface DesktopArticleVideoPlayerProps {
+	videoDetails: ArticleVideoDetails;
+}
