@@ -1,18 +1,12 @@
 import React from 'react';
 import JWDesktopArticleVideoPlayer from 'jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer';
-import TwitchDesktopArticleVideoPlayer from 'twitch/players/DesktopArticleVideoPlayer';
 import { DesktopArticleVideoLoaderProps } from 'loaders/types';
-import { checkTwitchTakeover } from 'loaders/utils/CheckTwitchTakeover';
 import checkIfUserInGeo from 'utils/experiments/checkIfUserInGeo';
 import isUserAnon from 'utils/experiments/checkUserAnon';
 import checkUserDevice, { UserDeviceType } from 'utils/experiments/checkUserDevice';
 import { jwPlayerExperimentTracker } from 'jwplayer/utils/videoTracking';
 
 const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps> = ({ videoDetails }) => {
-	if (checkTwitchTakeover()) {
-		return <TwitchDesktopArticleVideoPlayer />;
-	}
-
 	// Disable video load if:
 	if (
 		// - user is in the US
