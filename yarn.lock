@@ -1161,6 +1161,14 @@
     react-select "^5.2.1"
     styled-components "^5.0.1"
 
+"@fandom/context@0.6.2":
+  version "0.6.2"
+  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/context/-/@fandom/context-0.6.2.tgz#54037825118c1c4a32a0ddfdb7da0340c455a892"
+  integrity sha512-P7CF/rFegU+7Nfdz53v62ER34OlP46HPKAOBPi99JLQVSEPnuABr+IXQOZmcUcZPiz7p7mj0utUhaVbEgyyP8A==
+  dependencies:
+    lodash "^4.17.21"
+    lodash-es "^4.17.21"
+
 "@fandom/tracking-metrics@0.0.18-alpha-2":
   version "0.0.18-alpha-2"
   resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/tracking-metrics/-/@fandom/tracking-metrics-0.0.18-alpha-2.tgz#178f0b1a82ba0a44ce9a75401790ad26421ece87"
@@ -3028,6 +3036,11 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
+lodash-es@^4.17.21:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
+  integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
+
 lodash.clone@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.clone/-/lodash.clone-4.5.0.tgz#195870450f5a13192478df4bc3d23d2dea1907b6"
@@ -3058,7 +3071,7 @@ lodash.uniqueid@^4.0.1:
   resolved "https://registry.yarnpkg.com/lodash.uniqueid/-/lodash.uniqueid-4.0.1.tgz#3268f26a7c88e4f4b1758d679271814e31fa5b26"
   integrity sha1-MmjyanyI5PSxdY1nknGBTjH6WyY=
 
-lodash@^4.17.11:
+lodash@^4.17.11, lodash@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==

@@ -125,12 +125,14 @@ export const EVENT_CATEGORIES = {
 	AD: 'ad',
 	CONTENT: 'content',
 	WIREWAX: 'wirewax',
+	EXPERIMENT: 'experiment',
 };
 
 export const jwPlayerPlaybackTracker = trackerWithNewCategory(EVENT_CATEGORIES.PLAYBACK);
 export const jwPlayerAdTracker = trackerWithNewCategory(EVENT_CATEGORIES.AD);
 export const jwPlayerContentTracker = trackerWithNewCategory(EVENT_CATEGORIES.CONTENT);
 export const jwPlayerWirewaxTracker = trackerWithNewCategory(EVENT_CATEGORIES.WIREWAX);
+export const jwPlayerExperimentTracker = trackerWithNewCategory(EVENT_CATEGORIES.EXPERIMENT);
 
 console.log(jwPlayerContentTracker);
 
