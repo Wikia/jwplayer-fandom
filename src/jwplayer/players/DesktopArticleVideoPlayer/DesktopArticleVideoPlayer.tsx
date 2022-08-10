@@ -7,7 +7,7 @@ import VideoDetails from 'jwplayer/players/DesktopArticleVideoPlayer/VideoDetail
 import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'jwplayer/utils/useAdComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
-import { ArticleVideoDetails } from 'jwplayer/types';
+import { DesktopArticleVideoPlayerProps } from 'jwplayer/types';
 import CloseButton from 'jwplayer/players/shared/CloseButton';
 import Attribution from 'jwplayer/players/DesktopArticleVideoPlayer/Attribution';
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
@@ -68,10 +68,6 @@ const TopBar = styled.div`
 	width: 100%;
 	position: relative;
 `;
-
-interface DesktopArticleVideoPlayerProps {
-	videoDetails: ArticleVideoDetails;
-}
 
 const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
