@@ -14,7 +14,7 @@ const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps> = ({ v
 		// - user is anon
 		isUserAnon() &&
 		// - user is desktop or mobile
-		[UserDeviceType.Desktop, UserDeviceType.Mobile].includes(checkUserDevice())
+		UserDeviceType.Desktop === checkUserDevice()
 	) {
 		jwPlayerExperimentTracker.singleTrack('video_load_disabled');
 		return null;
