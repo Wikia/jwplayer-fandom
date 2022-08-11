@@ -3,7 +3,6 @@ import JWDesktopArticleVideoPlayer from 'jwplayer/players/DesktopArticleVideoPla
 import { DesktopArticleVideoLoaderProps } from 'loaders/types';
 import checkIfUserInGeo from 'utils/experiments/checkIfUserInGeo';
 import isUserAnon from 'utils/experiments/checkUserAnon';
-import checkUserDevice, { UserDeviceType } from 'utils/experiments/checkUserDevice';
 import { jwPlayerExperimentTracker } from 'jwplayer/utils/videoTracking';
 
 const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps> = ({ videoDetails }) => {
@@ -12,11 +11,9 @@ const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps> = ({ v
 		// - user is in the US
 		checkIfUserInGeo(['US']) &&
 		// - user is anon
-		isUserAnon() &&
-		// - user is desktop or mobile
-		UserDeviceType.Desktop === checkUserDevice()
+		isUserAnon()
 	) {
-		jwPlayerExperimentTracker.singleTrack('video_load_disabled');
+		jwPlayerExperimentTracker.singleTrack('no-video-experiment');
 		return null;
 	}
 
