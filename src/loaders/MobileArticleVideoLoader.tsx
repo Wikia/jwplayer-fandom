@@ -1,5 +1,4 @@
-import React from 'react';
-import JWMobileArticleVideoPlayer from 'jwplayer/players/MobileArticleVideoPlayer/MobileArticleVideoPlayer';
+import React, { useEffect, useState } from 'react';
 import { MobileArticleVideoLoaderProps } from 'loaders/types';
 
 const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> = ({
@@ -7,14 +6,29 @@ const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> = ({
 	isFullScreen,
 	videoDetails,
 }) => {
-	// Default to JW Player
-	return (
-		<JWMobileArticleVideoPlayer
-			hasPartnerSlot={hasPartnerSlot}
-			videoDetails={videoDetails}
-			isFullScreen={isFullScreen}
-		/>
-	);
+	const [player, setPlayer] = useState(undefined);
+
+	useEffect(() => {
+		if (!player) {
+			getPlayer();
+		}
+	}, []);
+
+	const getPlayer = async () => {
+		// By default set the base player
+		import('jwplayer/players/MobileArticleVideoPlayer/MobileArticleVideoPlayer').then(
+			({ default: JWMobileArticleVideoPlayer }) =>
+				setPlayer(
+					<JWMobileArticleVideoPlayer
+						hasPartnerSlot={hasPartnerSlot}
+						videoDetails={videoDetails}
+						isFullScreen={isFullScreen}
+					/>,
+				),
+		);
+	};
+
+	return player;
 };
 
 export default MobileArticleVideoLoader;

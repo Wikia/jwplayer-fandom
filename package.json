@@ -1,9 +1,9 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.0.0-beta-17",
+	"version": "2.0.0-beta-17-code-splitting-2",
 	"description": "JWPlayer for Fandom",
-	"main": "bundle.umd.js",
-	"module": "bundle.esm.js",
+	"main": "index.js",
+	"module": "index.js",
 	"types": "main.d.ts",
 	"install-peers": "install-peers",
 	"scripts": {
