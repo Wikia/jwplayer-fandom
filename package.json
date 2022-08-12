@@ -1,12 +1,12 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.0.0-beta-17-code-splitting-2",
+	"version": "2.0.0-beta-17-code-splitting-4",
 	"description": "JWPlayer for Fandom",
 	"exports": {
-		".": "./dist/main.js",
-		"./DesktopArticleVideoLoader" : "./dist/DesktopArticleVideoLoader.js", 
-		"./MobileArticleVideoLoader" : "./dist/MobileArticleVideoLoader.js", 
-		"./CanonicalVideoLoader" : "./dist/CanonicalVideoLoader.js"
+		".": "./main.js",
+		"./DesktopArticleVideoLoader" : "./DesktopArticleVideoLoader.js", 
+		"./MobileArticleVideoLoader" : "./MobileArticleVideoLoader.js", 
+		"./CanonicalVideoLoader" : "./CanonicalVideoLoader.js"
 	},
 	"types": "main.d.ts",
 	"install-peers": "install-peers",

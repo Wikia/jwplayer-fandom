@@ -1325,7 +1325,7 @@
     lodash "^4.17.21"
     lodash-es "^4.17.21"
 
-"@fandom/jwplayer-fandom@link:..":
+"@fandom/jwplayer-fandom@link:../dist":
   version "0.0.0"
   uid ""
 
