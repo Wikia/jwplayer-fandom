@@ -20,9 +20,9 @@ if (!isDev) {
 const config = [
 	{
 		input: {
-			index: 'src/main.ts',
-			DesktopVideoArticleLoader: 'src/loaders/DesktopArticleVideoLoader.tsx',
-			MobileVideoArticleLoader: 'src/loaders/MobileArticleVideoLoader.tsx',
+			main: 'src/main.ts',
+			DesktopArticleVideoLoader: 'src/loaders/DesktopArticleVideoLoader.tsx',
+			MobileArticleVideoLoader: 'src/loaders/MobileArticleVideoLoader.tsx',
 			CanonicalVideoLoader: 'src/loaders/CanonicalVideoLoader.tsx',
 		},
 		output: [
