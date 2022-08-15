@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { CanonicalVideoLoaderProps } from 'loaders/types';
+import { setVersionWindowVar } from 'loaders/utils/GetVersion';
 
-const CanonicalVideoLoader: React.FC<CanonicalVideoLoaderProps> = ({ currentVideo, onComplete }) => {
+export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
+
+export const CanonicalVideoLoader: React.FC<CanonicalVideoLoaderProps> = ({ currentVideo, onComplete }) => {
 	const [player, setPlayer] = useState(undefined);
 
 	useEffect(() => {
 		if (!player) {
 			getPlayer();
 		}
+
+		setVersionWindowVar();
 	}, []);
 
 	const getPlayer = async () => {

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { MobileArticleVideoLoaderProps } from 'loaders/types';
+import { setVersionWindowVar } from 'loaders/utils/GetVersion';
 
-const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> = ({
+export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
+
+export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> = ({
 	hasPartnerSlot,
 	isFullScreen,
 	videoDetails,
@@ -12,6 +15,8 @@ const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> = ({
 		if (!player) {
 			getPlayer();
 		}
+
+		setVersionWindowVar();
 	}, []);
 
 	const getPlayer = async () => {
