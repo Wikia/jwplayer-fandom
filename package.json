@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.0.0-beta-17-code-splitting-7",
+	"version": "2.0.0-beta-18",
 	"description": "JWPlayer for Fandom",
 	"exports": {
 		".": "./main.js",
