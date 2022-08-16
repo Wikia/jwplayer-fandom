@@ -1,22 +1,15 @@
 import React from 'react';
 import JWMobileArticleVideoPlayer from 'jwplayer/players/MobileArticleVideoPlayer/MobileArticleVideoPlayer';
 import { MobileArticleVideoLoaderProps } from 'loaders/types';
-import checkIfUserInGeo from 'utils/experiments/checkIfUserInGeo';
-import isUserAnon from 'utils/experiments/checkUserAnon';
 import { jwPlayerExperimentTracker } from 'jwplayer/utils/videoTracking';
+import { checkIfUserInNoVideoExperiment } from 'utils/experiments/experiments';
 
 const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> = ({
 	hasPartnerSlot,
 	isFullScreen,
 	videoDetails,
 }) => {
-	// Disable video load if:
-	if (
-		// - user is in the US
-		checkIfUserInGeo(['US']) &&
-		// - user is anon
-		isUserAnon()
-	) {
+	if (checkIfUserInNoVideoExperiment()) {
 		jwPlayerExperimentTracker.singleTrack('no-video-experiment');
 		return null;
 	}

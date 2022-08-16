@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.0.0-experiment-no-video-2",
+	"version": "2.0.0-experiment-no-video-3",
 	"description": "JWPlayer for Fandom",
 	"main": "bundle.umd.js",
 	"module": "bundle.esm.js",
