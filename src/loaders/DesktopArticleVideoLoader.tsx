@@ -10,10 +10,14 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 	const [player, setPlayer] = useState(undefined);
 
 	useEffect(() => {
+		console.log('loading video player');
 		if (!player) {
+			console.log('video player is not loaded, so we are loading it');
 			if (checkIfUserInNoVideoExperiment()) {
+				console.log('experiment was hit, so no player');
 				jwPlayerExperimentTracker.singleTrack('desktop-no-video-experiment');
 			} else {
+				console.log('load the player since we are not in the experiment');
 				getPlayer();
 			}
 		}
