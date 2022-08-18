@@ -11,7 +11,7 @@ export const ALLOWED_BUCKET_CHAR = /[0-9a-zA-Z_-]/;
 export function getCurrentBucket(index = 0): string {
 	const forcedBucket = getValueFromQuery('ss_pathfinder_force_bucket');
 
-	if (typeof forcedBucket !== 'undefined' && forcedBucket?.length > 0) {
+	if (typeof forcedBucket !== null && forcedBucket?.length > 0) {
 		return forcedBucket?.[index];
 	}
 
@@ -21,13 +21,13 @@ export function getCurrentBucket(index = 0): string {
 }
 
 /** Gets value from URL's query string */
-export function getValueFromQuery(name: string, defaultValue?: string): string {
+export function getValueFromQuery(name: string, defaultValue?: string): string | null {
 	const searchParams = new URLSearchParams(window?.location.search);
 	if (!searchParams.has(name)) {
-		return defaultValue ?? '';
+		return defaultValue || null;
 	}
 
-	return searchParams.get(name) ?? '';
+	return searchParams.get(name);
 }
 
 /** Checks weather the user's current bucket identifier is in the allowed defined buckets */
