@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.0.0-experiment-no-video-6",
+	"version": "2.0.0-experiment-no-video-7",
 	"description": "JWPlayer for Fandom",
 	"exports": {
 		".": "./main.js",
