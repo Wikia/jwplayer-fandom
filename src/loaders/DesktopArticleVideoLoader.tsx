@@ -1,18 +1,29 @@
-import React from 'react';
-import JWDesktopArticleVideoPlayer from 'jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer';
+import React, { useEffect, useState } from 'react';
 import { DesktopArticleVideoLoaderProps } from 'loaders/types';
-import { jwPlayerExperimentTracker } from 'jwplayer/utils/videoTracking';
-import { checkIfUserInNoVideoExperiment } from 'utils/experiments/experiments';
+import { setVersionWindowVar } from 'loaders/utils/GetVersion';
 
-const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps> = ({ videoDetails }) => {
-	// Disable video load if:
-	if (checkIfUserInNoVideoExperiment()) {
-		jwPlayerExperimentTracker.singleTrack('no-video-experiment');
-		return null;
-	}
+export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
-	// Default to JW Player
-	return <JWDesktopArticleVideoPlayer videoDetails={videoDetails} />;
+export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps> = ({ videoDetails }) => {
+	const [player, setPlayer] = useState(undefined);
+
+	useEffect(() => {
+		if (!player) {
+			getPlayer();
+		}
+
+		setVersionWindowVar();
+	}, []);
+
+	const getPlayer = async () => {
+		// By default just set the base player
+		import('jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer').then(
+			({ default: JWDesktopArticleVideoPlayer }) =>
+				setPlayer(<JWDesktopArticleVideoPlayer videoDetails={videoDetails} />),
+		);
+	};
+
+	return player;
 };
 
 export default DesktopArticleVideoLoader;

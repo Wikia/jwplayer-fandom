@@ -1,27 +1,39 @@
-import React from 'react';
-import JWMobileArticleVideoPlayer from 'jwplayer/players/MobileArticleVideoPlayer/MobileArticleVideoPlayer';
+import React, { useEffect, useState } from 'react';
 import { MobileArticleVideoLoaderProps } from 'loaders/types';
-import { jwPlayerExperimentTracker } from 'jwplayer/utils/videoTracking';
-import { checkIfUserInNoVideoExperiment } from 'utils/experiments/experiments';
+import { setVersionWindowVar } from 'loaders/utils/GetVersion';
 
-const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> = ({
+export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
+
+export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> = ({
 	hasPartnerSlot,
 	isFullScreen,
 	videoDetails,
 }) => {
-	if (checkIfUserInNoVideoExperiment()) {
-		jwPlayerExperimentTracker.singleTrack('no-video-experiment');
-		return null;
-	}
+	const [player, setPlayer] = useState(undefined);
 
-	// Default to JW Player
-	return (
-		<JWMobileArticleVideoPlayer
-			hasPartnerSlot={hasPartnerSlot}
-			videoDetails={videoDetails}
-			isFullScreen={isFullScreen}
-		/>
-	);
+	useEffect(() => {
+		if (!player) {
+			getPlayer();
+		}
+
+		setVersionWindowVar();
+	}, []);
+
+	const getPlayer = async () => {
+		// By default set the base player
+		import('jwplayer/players/MobileArticleVideoPlayer/MobileArticleVideoPlayer').then(
+			({ default: JWMobileArticleVideoPlayer }) =>
+				setPlayer(
+					<JWMobileArticleVideoPlayer
+						hasPartnerSlot={hasPartnerSlot}
+						videoDetails={videoDetails}
+						isFullScreen={isFullScreen}
+					/>,
+				),
+		);
+	};
+
+	return player;
 };
 
 export default MobileArticleVideoLoader;
