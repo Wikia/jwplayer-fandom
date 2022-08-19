@@ -7,7 +7,6 @@ import useOnScreen from 'utils/useOnScreen';
 
 const CanonicalVideoTopPlaceholder = styled.div`
 	width: 100%;
-	height: 56.25vw;
 	position: relative;
 `;
 
