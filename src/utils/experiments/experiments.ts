@@ -11,6 +11,9 @@ export function checkIfUserInNoVideoExperiment() {
 		endDate = queryValue;
 	}
 
+	console.log('current endDate', endDate);
+	console.log('current is user in bucket [a] ->', checkIfUserInBucket(['a']));
+
 	const dateRangeConfig: UnitDateRange = {
 		// no set start date, start running from the beginning of deploy
 		start: null,

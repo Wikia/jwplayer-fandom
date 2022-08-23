@@ -2,6 +2,10 @@ import { getWikiaBeaconId } from '@fandom/context';
 
 export const ALLOWED_BUCKET_CHAR = /[0-9a-zA-Z_-]/;
 
+export interface ExperimentWindowInterface extends Window {
+	__user_in_no_video_experiment: boolean;
+}
+
 /**
  * Gets the current bucket for user based on the following rules:
  *
@@ -9,7 +13,7 @@ export const ALLOWED_BUCKET_CHAR = /[0-9a-zA-Z_-]/;
  * - If the user is not in a forced bucket, return the bucket based on `getWikiaBeaconId`.
  */
 export function getCurrentBucket(index = 0): string {
-	const forcedBucket = getValueFromQuery('ss_pathfinder_force_bucket');
+	const forcedBucket = getValueFromQuery('jw_experiment_force_bucket');
 
 	if (typeof forcedBucket !== null && forcedBucket?.length > 0) {
 		return forcedBucket?.[index];
