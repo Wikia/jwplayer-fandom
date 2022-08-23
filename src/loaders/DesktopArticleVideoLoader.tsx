@@ -14,7 +14,9 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 
 	useEffect(() => {
 		if (!player) {
+			console.log('checking if user is in experiment');
 			if (checkIfUserInNoVideoExperiment()) {
+				console.log('user is in experiment, disabling player');
 				window.__user_in_no_video_experiment = true;
 				jwPlayerExperimentTracker.singleTrack('desktop-no-video-experiment');
 			} else {
