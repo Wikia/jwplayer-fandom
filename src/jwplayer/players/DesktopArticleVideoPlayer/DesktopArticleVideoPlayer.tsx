@@ -99,7 +99,12 @@ const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ v
 		<PlayerWrapper playerName="jw-desktop-article-video">
 			<DesktopArticleVideoTopPlaceholder ref={placeholderRef}>
 				{adComplete && (
-					<DesktopArticleVideoWrapper right={right} width={width} isScrollPlayer={isScrollPlayer}>
+					<DesktopArticleVideoWrapper
+						className={'desktop-article-video-wrapper'}
+						right={right}
+						width={width}
+						isScrollPlayer={isScrollPlayer}
+					>
 						<TopBar>
 							{!isScrollPlayer && <UnmuteButton />}
 							{isScrollPlayer && <CloseButton dismiss={() => setDismissed(true)} />}
