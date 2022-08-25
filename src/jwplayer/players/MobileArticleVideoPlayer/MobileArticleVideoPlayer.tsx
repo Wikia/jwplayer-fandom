@@ -90,9 +90,13 @@ const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
 
 	return (
 		<PlayerWrapper playerName="jw-mobile-article-video">
-			<MobileArticleVideoTopPlaceholder ref={ref}>
+			<MobileArticleVideoTopPlaceholder className={isScrollPlayer ? ' is-on-scroll-active ' : ''} ref={ref}>
 				{adComplete && (
-					<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer} topPosition={getTopPosition()}>
+					<MobileArticleVideoWrapper
+						className={'mobile-article-video-wrapper'}
+						isScrollPlayer={isScrollPlayer}
+						topPosition={getTopPosition()}
+					>
 						<JwPlayerWrapper
 							config={getArticleVideoConfig(videoDetails)}
 							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}

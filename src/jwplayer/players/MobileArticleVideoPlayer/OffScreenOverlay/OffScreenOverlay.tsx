@@ -35,7 +35,7 @@ const OffScreenOverlay: React.FC<OffScreenOverlayProps> = ({ dismiss }) => {
 	}
 
 	return (
-		<OffScreenOverlayWrapper playing={playing}>
+		<OffScreenOverlayWrapper className={'article-featured-video__on-scroll-video-wrapper'} playing={playing}>
 			<CloseButton dismiss={dismiss} />
 			<VideoDetails playing={playing} />
 		</OffScreenOverlayWrapper>
