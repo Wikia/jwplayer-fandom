@@ -2,14 +2,18 @@
 	"name": "@fandom/jwplayer-fandom",
 	"version": "2.0.0-beta-21",
 	"description": "JWPlayer for Fandom",
-	"main": "bundle.umd.js",
-	"module": "bundle.esm.js",
+	"exports": {
+		".": "./main.js",
+		"./DesktopArticleVideoLoader" : "./DesktopArticleVideoLoader.js", 
+		"./MobileArticleVideoLoader" : "./MobileArticleVideoLoader.js", 
+		"./CanonicalVideoLoader" : "./CanonicalVideoLoader.js"
+	},
 	"types": "main.d.ts",
 	"install-peers": "install-peers",
 	"scripts": {
 		"build": "yarn run create-dist && rollup -c && cp package.json dist/ && cd dist && npm set-script prepare ''",
 		"watch": "yarn run create-dist && NODE_ENV=development rollup -c --watch",
-		"app": "cp dist/bundle.esm.js test-jw/src && cd test-jw && yarn start",
+		"app": "cd test-jw && yarn && yarn start",
 		"create-dist": "rm -rf dist && mkdir -p dist",
 		"cp:loop": " while true; do cp dist/bundle.esm.js test-jw/src; sleep 10; done",
 		"lint": "yarn eslint src && yarn prettier --check src",

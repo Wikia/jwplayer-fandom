@@ -1,10 +1,10 @@
-import { DesktopArticleVideoLoader } from './bundle.esm.js'
+import CanonicalVideoLoader from '@fandom/jwplayer-fandom/CanonicalVideoLoader'
 import { WIREWAX_VIDEO, CANONICAL_VIDEO, ARTICLE_VIDEO_DETAILS } from './videoConfigs';
 
 function App() {
   return (
     <div className="App">
-		  <DesktopArticleVideoLoader videoDetails={ARTICLE_VIDEO_DETAILS} />
+		  <CanonicalVideoLoader currentVideo={CANONICAL_VIDEO} />
     </div>
   );
 }

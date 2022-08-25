@@ -1,12 +1,28 @@
-import React from 'react';
-import CanonicalVideoPlayer from 'jwplayer/players/CanonicalVideoPlayer/CanonicalVideoPlayer';
+import React, { useEffect, useState } from 'react';
 import { CanonicalVideoLoaderProps } from 'loaders/types';
+import { setVersionWindowVar } from 'loaders/utils/GetVersion';
 
-const CanonicalVideoLoader: React.FC<CanonicalVideoLoaderProps> = ({ currentVideo, onComplete }) => {
-	// Nothing in here for now, largely a placeholder for future needs
+export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
-	// Default to main Player
-	return <CanonicalVideoPlayer currentVideo={currentVideo} onComplete={onComplete} />;
+export const CanonicalVideoLoader: React.FC<CanonicalVideoLoaderProps> = ({ currentVideo, onComplete }) => {
+	const [player, setPlayer] = useState(undefined);
+
+	useEffect(() => {
+		if (!player) {
+			getPlayer();
+		}
+
+		setVersionWindowVar();
+	}, []);
+
+	const getPlayer = async () => {
+		// By default just set the base player
+		import('jwplayer/players/CanonicalVideoPlayer/CanonicalVideoPlayer').then(({ default: CanonicalVideoPlayer }) =>
+			setPlayer(<CanonicalVideoPlayer currentVideo={currentVideo} onComplete={onComplete} />),
+		);
+	};
+
+	return player;
 };
 
 export default CanonicalVideoLoader;

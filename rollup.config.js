@@ -6,6 +6,7 @@ import json from '@rollup/plugin-json';
 import { terser } from 'rollup-plugin-terser';
 import dts from 'rollup-plugin-dts';
 import replace from '@rollup/plugin-replace';
+
 import packageJson from './package.json';
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -18,23 +19,18 @@ if (!isDev) {
 
 const config = [
 	{
-		input: 'src/main.ts',
+		input: {
+			main: 'src/main.ts',
+			DesktopArticleVideoLoader: 'src/loaders/DesktopArticleVideoLoader.tsx',
+			MobileArticleVideoLoader: 'src/loaders/MobileArticleVideoLoader.tsx',
+			CanonicalVideoLoader: 'src/loaders/CanonicalVideoLoader.tsx',
+		},
 		output: [
 			{
-				file: 'dist/bundle.esm.js',
+				dir: 'dist',
 				compact: true,
 				plugins: plugins,
 				format: 'es',
-				globals: {
-					react: 'React',
-				},
-			},
-			{
-				name: 'jwplayer-fandom',
-				file: 'dist/bundle.umd.js',
-				compact: true,
-				plugins: plugins,
-				format: 'umd',
 				globals: {
 					react: 'React',
 				},
@@ -56,7 +52,7 @@ const config = [
 				exclude: ['node_modules', 'src/old', 'src/locales', 'scripts'],
 				include: ['src/**/*.(ts|tsx|js)'],
 			}),
-			typescript({tsconfig: './tsconfig.json'}),
+			typescript({ tsconfig: './tsconfig.json' }),
 			resolve(),
 			json(),
 			commonjs(),
@@ -65,7 +61,7 @@ const config = [
 	},
 	{
 		input: './src/types.d.ts',
-		output: [{file: 'dist/main.d.ts', format: 'es'}],
+		output: [{ file: 'dist/main.d.ts', format: 'es' }],
 		plugins: [dts()],
 	},
 ];
