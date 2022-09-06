@@ -6,7 +6,8 @@
 		".": "./main.js",
 		"./DesktopArticleVideoLoader" : "./DesktopArticleVideoLoader.js", 
 		"./MobileArticleVideoLoader" : "./MobileArticleVideoLoader.js", 
-		"./CanonicalVideoLoader" : "./CanonicalVideoLoader.js"
+		"./CanonicalVideoLoader" : "./CanonicalVideoLoader.js",
+		"./DesktopReskinnedArticleVideoLoader" : "./DesktopReskinnedArticleVideoLoader.js"
 	},
 	"types": "main.d.ts",
 	"install-peers": "install-peers",

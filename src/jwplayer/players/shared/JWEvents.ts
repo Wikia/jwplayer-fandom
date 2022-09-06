@@ -11,6 +11,7 @@ const JWEvents = {
 	COMPLETE: 'complete',
 	TIME: 'time',
 	VIEWABLE: 'viewable',
+	BUFFER_CHANGE: 'bufferChange',
 
 	// Navigation
 	NEXT: 'nextClick',
