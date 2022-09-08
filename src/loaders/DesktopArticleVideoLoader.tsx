@@ -23,13 +23,13 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 				({ default: JWDesktopReskinnedArticleVideoPlayer }) =>
 					setPlayer(<JWDesktopReskinnedArticleVideoPlayer videoDetails={videoDetails} />),
 			);
+		} else {
+			// By default just set the base player
+			import('jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer').then(
+				({ default: JWDesktopArticleVideoPlayer }) =>
+					setPlayer(<JWDesktopArticleVideoPlayer videoDetails={videoDetails} />),
+			);
 		}
-
-		// By default just set the base player
-		import('jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer').then(
-			({ default: JWDesktopArticleVideoPlayer }) =>
-				setPlayer(<JWDesktopArticleVideoPlayer videoDetails={videoDetails} />),
-		);
 	};
 
 	return player;
