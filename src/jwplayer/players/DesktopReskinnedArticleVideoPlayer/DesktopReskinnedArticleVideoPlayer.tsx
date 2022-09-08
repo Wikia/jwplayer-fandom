@@ -118,7 +118,9 @@ const DesktopReskinnedArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProp
 						<JwPlayerWrapper
 							playerUrl={'https://cdn.jwplayer.com/libraries/FEZLNIW0.js'}
 							config={getArticleVideoConfig(videoDetails)}
-							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
+							onReady={(playerInstance) => {
+								articlePlayerOnReady(videoDetails, playerInstance);
+							}}
 						/>
 						<ControlBarWrapper id={'control-bar-wrapper'}>
 							<TimeSlider />
