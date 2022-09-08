@@ -24,7 +24,6 @@ const config = [
 			DesktopArticleVideoLoader: 'src/loaders/DesktopArticleVideoLoader.tsx',
 			MobileArticleVideoLoader: 'src/loaders/MobileArticleVideoLoader.tsx',
 			CanonicalVideoLoader: 'src/loaders/CanonicalVideoLoader.tsx',
-			DesktopReskinnedArticleVideoLoader: 'src/loaders/DesktopReskinnedArticleVideoLoader.tsx',
 		},
 		output: [
 			{

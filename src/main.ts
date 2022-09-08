@@ -6,15 +6,13 @@ export { default as JWMobileArticleVideoPlayer } from 'jwplayer/players/MobileAr
 
 export { default as JWCanonicalVideoPlayer } from 'jwplayer/players/CanonicalVideoPlayer/CanonicalVideoPlayer';
 
-export { default as JWDesktopReskinnedArticleVideoPlayer } from 'jwplayer/players/DesktopReskinnedArticleVideoPlayer/DesktopReskinnedArticleVideoPlayer';
+export { default as JWDesktopReskinnedArticleVideoPlayer } from 'experimental/players/DesktopReskinnedArticleVideoPlayer/DesktopReskinnedArticleVideoPlayer';
 
 export { default as TwitchDesktopArticleVideoPlayer } from 'twitch/players/DesktopArticleVideoPlayer';
 
 export { default as TwitchMobileArticleVideoPlayer } from 'twitch/players/MobileArticleVideoPlayer';
 
 export { default as DesktopArticleVideoLoader } from 'loaders/DesktopArticleVideoLoader';
-
-export { default as DesktopReskinnedArticleVideoLoader } from 'loaders/DesktopReskinnedArticleVideoLoader';
 
 export { default as MobileArticleVideoLoader } from 'loaders/MobileArticleVideoLoader';
 
