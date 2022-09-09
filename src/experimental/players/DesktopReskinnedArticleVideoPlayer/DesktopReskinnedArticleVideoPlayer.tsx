@@ -13,7 +13,7 @@ import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoC
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
 import TimeSlider from 'experimental/shared/TimeSlider';
 import ControlBarWrapper from 'experimental/shared/ControlBar';
-import PlayStateWrapper from 'experimental/shared/PlayStateWrapper';
+import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
 /* import useAdComplete from 'jwplayer/utils/useAdComplete'; */
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
@@ -98,8 +98,6 @@ const DesktopReskinnedArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProp
 		if (moreVideosIcon) moreVideosIcon.style.display = 'none';
 		if (pipIcon) pipIcon.style.display = 'none';
 	}
-
-	console.log('Should start loading DesktopReskinnedArticleVideoPlayer');
 
 	return (
 		<PlayerWrapper playerName="jw-desktop-article-video">

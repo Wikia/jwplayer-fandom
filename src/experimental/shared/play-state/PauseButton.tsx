@@ -2,18 +2,10 @@ import React, { useContext } from 'react';
 import IconPauseSmall from '@fandom-frontend/react-common/dist/icons/IconPauseSmall';
 import styled from 'styled-components';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
-
-const PauseWrapper = styled.div`
-	cursor: pointer;
-	pointer-events: initial;
-`;
+import { IconWrapper, playStateIconStyles } from 'experimental/shared/play-state/PlayStateWrapper';
 
 const PauseIcon = styled(IconPauseSmall)`
-	/*TODO: Convert fill color to props*/
-	fill: rgb(204, 204, 204);
-	height: 24px;
-	height: 24px;
-	pointer-events: none;
+	${playStateIconStyles}
 `;
 
 export interface PauseButtonProps {
@@ -36,9 +28,9 @@ const PauseButton: React.FC<PauseButtonProps> = ({ onClickCallback }) => {
 	};
 
 	return (
-		<PauseWrapper onClick={onClickPause}>
+		<IconWrapper onClick={onClickPause}>
 			<PauseIcon />
-		</PauseWrapper>
+		</IconWrapper>
 	);
 };
 

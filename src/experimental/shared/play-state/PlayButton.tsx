@@ -2,18 +2,10 @@ import React, { useContext } from 'react';
 import IconPlaySmall from '@fandom-frontend/react-common/dist/icons/IconPlaySmall';
 import styled from 'styled-components';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
-
-const PlayWrapper = styled.div`
-	cursor: pointer;
-	pointer-events: initial;
-`;
+import { IconWrapper, playStateIconStyles } from 'experimental/shared/play-state/PlayStateWrapper';
 
 const PlayIcon = styled(IconPlaySmall)`
-	/*TODO: Convert fill color to props*/
-	fill: rgb(204, 204, 204);
-	height: 24px;
-	height: 24px;
-	pointer-events: none;
+	${playStateIconStyles}
 `;
 
 export interface PlayButtonProps {
@@ -36,9 +28,9 @@ const PlayButton: React.FC<PlayButtonProps> = ({ onClickCallback }) => {
 	};
 
 	return (
-		<PlayWrapper onClick={onClickPlay}>
+		<IconWrapper onClick={onClickPlay}>
 			<PlayIcon />
-		</PlayWrapper>
+		</IconWrapper>
 	);
 };
 
