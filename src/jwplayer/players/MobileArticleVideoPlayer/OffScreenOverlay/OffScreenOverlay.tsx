@@ -23,9 +23,10 @@ const OffScreenOverlayWrapper = styled.div<OffScreenOverlayWrapperProps>`
 
 interface OffScreenOverlayProps {
 	dismiss: () => void;
+	isScrollPlayer: boolean;
 }
 
-const OffScreenOverlay: React.FC<OffScreenOverlayProps> = ({ dismiss }) => {
+const OffScreenOverlay: React.FC<OffScreenOverlayProps> = ({ dismiss, isScrollPlayer }) => {
 	const playing = usePlaying();
 	const controlbar = document.querySelector<HTMLElement>('.jw-controlbar');
 	const adBreak = useAdBreak();
@@ -37,6 +38,8 @@ const OffScreenOverlay: React.FC<OffScreenOverlayProps> = ({ dismiss }) => {
 	} else {
 		if (controlbar) controlbar.style.visibility = 'visible';
 	}
+
+	if (!isScrollPlayer) return null;
 
 	return (
 		<OffScreenOverlayWrapper className={'article-featured-video__on-scroll-video-wrapper'} playing={playing}>
