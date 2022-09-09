@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
+import JWEvents from 'jwplayer/players/shared/JWEvents';
 
 export default function usePlaying(): boolean {
 	const [playing, setPlaying] = useState(false);
@@ -10,10 +11,10 @@ export default function usePlaying(): boolean {
 			setPlaying(true);
 		}
 
-		player?.on('play', () => {
+		player?.on(JWEvents.PLAY, () => {
 			setPlaying(true);
 		});
-		player?.on('pause', () => {
+		player?.on(JWEvents.PAUSE, () => {
 			setPlaying(false);
 		});
 	}, [player]);
