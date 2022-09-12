@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import VideoDetails from 'jwplayer/players/MobileArticleVideoPlayer/OffScreenOverlay/VideoDetails';
 import CloseButton from 'jwplayer/players/shared/CloseButton';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
+import useAdBreak from 'utils/useAdBreak';
 
 interface OffScreenOverlayWrapperProps {
 	playing: boolean;
@@ -22,11 +23,24 @@ const OffScreenOverlayWrapper = styled.div<OffScreenOverlayWrapperProps>`
 
 interface OffScreenOverlayProps {
 	dismiss: () => void;
+	isScrollPlayer: boolean;
 }
 
-const OffScreenOverlay: React.FC<OffScreenOverlayProps> = ({ dismiss }) => {
+const OffScreenOverlay: React.FC<OffScreenOverlayProps> = ({ dismiss, isScrollPlayer }) => {
 	const playing = usePlaying();
+	const adBreak = useAdBreak();
+	console.log('AdBreak Value: ', adBreak);
+
 	const controlbar = document.querySelector<HTMLElement>('.jw-controlbar');
+	let closeButtonOffset = 0;
+
+	if (adBreak) {
+		console.log('Ad should be playing. Adding 40px offset.');
+		closeButtonOffset = 40;
+	} else {
+		console.log("Ad should've finished. Setting top offset to 0px.");
+		closeButtonOffset = 0;
+	}
 
 	if (!playing) {
 		if (controlbar) controlbar.style.visibility = 'hidden';
@@ -34,9 +48,11 @@ const OffScreenOverlay: React.FC<OffScreenOverlayProps> = ({ dismiss }) => {
 		if (controlbar) controlbar.style.visibility = 'visible';
 	}
 
+	if (!isScrollPlayer) return null;
+
 	return (
 		<OffScreenOverlayWrapper className={'article-featured-video__on-scroll-video-wrapper'} playing={playing}>
-			<CloseButton dismiss={dismiss} />
+			<CloseButton topOffset={closeButtonOffset} dismiss={dismiss} />
 			<VideoDetails playing={playing} />
 		</OffScreenOverlayWrapper>
 	);
