@@ -1,19 +1,18 @@
 import React, { useRef, useState } from 'react';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import styled, { css, keyframes } from 'styled-components';
-import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButton';
-import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
-import VideoDetails from 'jwplayer/players/DesktopArticleVideoPlayer/VideoDetails';
 import useOnScreen from 'utils/useOnScreen';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import { DesktopArticleVideoPlayerProps } from 'jwplayer/types';
-import CloseButton from 'jwplayer/players/shared/CloseButton';
 import Attribution from 'jwplayer/players/DesktopArticleVideoPlayer/Attribution';
+// import useAdBreak from 'jwplayer/utils/useAdBreak';
+import ContentPlayerOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/content/ConentPlayerOverlay';
+import PrerollPlayerOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/preroll/PrerollPlayerOverlay';
+
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
-import TimeSlider from 'experimental/shared/TimeSlider';
-import ControlBarWrapper from 'experimental/shared/ControlBar';
-import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
+import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
+
 /* import useAdComplete from 'jwplayer/utils/useAdComplete'; */
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
@@ -67,11 +66,6 @@ const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
 			  `}
 `;
 
-const TopBar = styled.div`
-	width: 100%;
-	position: relative;
-`;
-
 const DesktopReskinnedArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	/* TODO: FIX THIS - This is used to test the player locally ONLY */
@@ -86,6 +80,8 @@ const DesktopReskinnedArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProp
 	const shareIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-settings-sharing');
 	const moreVideosIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-related-btn');
 	const pipIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-icon-pip');
+	// const adBreak = useAdBreak();
+	const [adBreak, setAdBreak] = useState(false);
 
 	if (onScreen) {
 		if (controlbar) controlbar.style.background = 'rgba(0, 0, 0, 0.5)';
@@ -109,10 +105,11 @@ const DesktopReskinnedArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProp
 						width={width}
 						isScrollPlayer={isScrollPlayer}
 					>
-						<TopBar>
-							{!isScrollPlayer && <UnmuteButton />}
-							{isScrollPlayer && <CloseButton dismiss={() => setDismissed(true)} />}
-						</TopBar>
+						{adBreak ? (
+							<PrerollPlayerOverlay />
+						) : (
+							<ContentPlayerOverlay isScrollPlayer={isScrollPlayer} setDismissed={setDismissed} />
+						)}
 						<JwPlayerWrapper
 							playerUrl={'https://cdn.jwplayer.com/libraries/FEZLNIW0.js'}
 							config={getArticleVideoConfig(videoDetails)}
@@ -120,15 +117,13 @@ const DesktopReskinnedArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProp
 								articlePlayerOnReady(videoDetails, playerInstance);
 							}}
 						/>
-						<ControlBarWrapper id={'control-bar-wrapper'}>
-							<TimeSlider />
-							<PlayStateWrapper />
-						</ControlBarWrapper>
-						{isScrollPlayer && <VideoDetails />}
 					</DesktopArticleVideoWrapper>
 				)}
 			</DesktopArticleVideoTopPlaceholder>
-			<Attribution />
+			<Attribution /> {/* TODO: will need to check here as well */}
+			<button style={{ position: 'absolute', bottom: 0 }} onClick={() => setAdBreak(!adBreak)}>
+				TEST
+			</button>
 		</PlayerWrapper>
 	);
 };
