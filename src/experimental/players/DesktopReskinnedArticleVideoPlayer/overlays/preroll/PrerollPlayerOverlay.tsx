@@ -2,6 +2,9 @@ import React, { useRef } from 'react';
 // import styled from 'styled-components';
 import useOnScreen from 'utils/useOnScreen';
 import PlayerOverlay from 'experimental/shared/PlayerOverlay';
+import TimeSlider from 'experimental/shared/TimeSlider';
+import ControlBarWrapper from 'experimental/shared/ControlBar';
+import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
 
 const PrerollPlayerOverlay: React.FC = () => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
@@ -24,7 +27,14 @@ const PrerollPlayerOverlay: React.FC = () => {
 		if (pipIcon) pipIcon.style.display = 'none';
 	}
 
-	return <PlayerOverlay></PlayerOverlay>;
+	return (
+		<PlayerOverlay>
+			<ControlBarWrapper id={'control-bar-wrapper'}>
+				<TimeSlider />
+				<PlayStateWrapper />
+			</ControlBarWrapper>
+		</PlayerOverlay>
+	);
 };
 
 export default PrerollPlayerOverlay;
