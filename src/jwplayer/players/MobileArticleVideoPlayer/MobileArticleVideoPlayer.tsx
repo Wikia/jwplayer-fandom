@@ -101,7 +101,7 @@ const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
 							config={getArticleVideoConfig(videoDetails)}
 							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
 						/>
-						{isScrollPlayer && <OffScreenOverlay dismiss={() => setDismissed(true)} />}
+						<OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />
 					</MobileArticleVideoWrapper>
 				)}
 			</MobileArticleVideoTopPlaceholder>
