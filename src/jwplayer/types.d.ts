@@ -294,6 +294,10 @@ export interface DesktopArticleVideoPlayerProps {
 	videoDetails: ArticleVideoDetails;
 }
 
+export interface ContentPlayerOverlayProps {
+	isScrollPlayer: boolean;
+	setDismissed: (dismissed: boolean) => void;
+}
 export interface MobileArticleVideoPlayerProps {
 	hasPartnerSlot?: boolean;
 	isFullScreen?: boolean;

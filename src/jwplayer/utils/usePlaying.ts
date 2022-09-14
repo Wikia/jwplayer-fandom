@@ -7,7 +7,7 @@ export default function usePlaying(): boolean {
 	const { player } = useContext(PlayerContext);
 
 	useEffect(() => {
-		if (player?.getState() === 'playing' || player?.getConfig().autostart) {
+		if (player?.getState() === 'playing') {
 			setPlaying(true);
 		}
 

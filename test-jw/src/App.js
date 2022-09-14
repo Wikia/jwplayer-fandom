@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       {/*<CanonicalVideoLoader currentVideo={CANONICAL_VIDEO} />*/}
-		  <MobileArticleVideoLoader videoDetails={ARTICLE_VIDEO_DETAILS} />
+		  <DesktopArticleVideoLoader videoDetails={ARTICLE_VIDEO_DETAILS} />
     </div>
   );
 }
