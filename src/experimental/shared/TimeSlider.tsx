@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import useBufferUpdate from 'experimental/utils/useBufferUpdate';
 import useProgressUpdate from 'experimental/utils/useProgressUpdate';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
@@ -85,14 +85,8 @@ const ProgressKnob = styled.div<ProgressKnobProps>`
 	border-radius: 50%;
 	box-shadow: 0 0 10px rgb(0 0 0 / 40%);
 	opacity: 1;
-	pointer-events: none;
 	position: absolute;
-	transform: translate(-50%, -50%) scale(0);
-	transition: 150ms cubic-bezier(0, 0.25, 0.25, 1);
-	transition-property: opacity, transform;
 	display: none;
-	top: 50%;
-	transform: translate(-50%, -50%) scale(1);
 
 	${TimeSliderWrapper}:hover & {
 		display: block;
@@ -101,31 +95,54 @@ const ProgressKnob = styled.div<ProgressKnobProps>`
 
 const TimeSlider = () => {
 	const { bufferPercent } = useBufferUpdate();
-	const { positionPercent, duration, position } = useProgressUpdate();
-	console.log(`bufferPercent: ${bufferPercent} | positionPercent: ${positionPercent}`);
+	const { positionPercent, duration } = useProgressUpdate();
+	const sliderRef = useRef<HTMLDivElement>();
 
 	const { player } = useContext(PlayerContext);
 
+	const retrieveRailWidth = () => {
+		// Retrieve the width, or bring back a static approximate so that at least something work
+		return sliderRef?.current?.offsetWidth ?? 818;
+	};
+
+	const calculateSeekUpdate = (elementRelativePosition: number) => {
+		return (elementRelativePosition * duration) / retrieveRailWidth();
+	};
+
 	const seek = (event: React.MouseEvent<HTMLDivElement>) => {
 		const elementRelativePosition = event.clientX - event.currentTarget.getBoundingClientRect().left;
-		console.log('Calculated position: ', elementRelativePosition);
-		console.log('Video duration is: ', duration);
-		console.log('Current video position: ', position);
-		console.log('Current video percentage position: ', positionPercent);
-
-		const seekTimeUpdate = (elementRelativePosition * duration) / 818;
-		console.log('New seek time update should be: ', seekTimeUpdate);
-
+		const seekTimeUpdate = calculateSeekUpdate(elementRelativePosition);
 		player.seek(seekTimeUpdate);
+	};
+
+	const onMouseMove = (event) => {
+		event.preventDefault();
+		const elementRelativePosition = event.clientX - sliderRef.current.getBoundingClientRect().left;
+		const seekUpdate = calculateSeekUpdate(elementRelativePosition);
+		player.seek(seekUpdate);
+	};
+
+	const onMouseUp = () => {
+		sliderRef.current.removeEventListener('mousemove', onMouseMove);
+		sliderRef.current.removeEventListener('mouseup', onMouseUp);
+		player.play();
+	};
+
+	const onMouseDown = (event) => {
+		event.preventDefault();
+		player.pause();
+
+		sliderRef.current.addEventListener('mousemove', onMouseMove);
+		sliderRef.current.addEventListener('mouseup', onMouseUp);
 	};
 
 	return (
 		<TimeSliderWrapper>
-			<TimeSliderContainer onClick={seek}>
+			<TimeSliderContainer ref={sliderRef} onClick={seek}>
 				<Rail />
 				<Buffer percentageBuffered={bufferPercent} />
 				<Progress percentageProgress={positionPercent} />
-				<ProgressKnob percentageProgress={positionPercent} />
+				<ProgressKnob onMouseDown={onMouseDown} percentageProgress={positionPercent} />
 			</TimeSliderContainer>
 		</TimeSliderWrapper>
 	);

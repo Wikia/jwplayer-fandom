@@ -9,13 +9,10 @@ export interface BufferUpdateData {
 }
 
 const useBufferUpdate = () => {
-	console.log('Inside useBufferUpdate.');
 	const [bufferData, setBufferData] = useState<BufferUpdateData>({ bufferPercent: 0, duration: 0, position: 0 });
-	console.log('Inside useBufferUpdate after state update.');
 	const { player } = useContext(PlayerContext);
 
 	const getBufferData = (data: BufferUpdateData): void => {
-		console.log('getBufferData called with: ', data);
 		setBufferData(data);
 	};
 

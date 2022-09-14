@@ -18,7 +18,6 @@ const useProgressUpdate = (): ProgressUpdateData => {
 	const { player } = useContext(PlayerContext);
 
 	const getProgressData = (data: ProgressUpdateData): void => {
-		console.log('Inside getProgressData: ', data);
 		const { duration, position } = data;
 		data.positionPercent = (position / duration) * 100;
 		setProgressData(data);
