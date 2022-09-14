@@ -29,16 +29,15 @@ interface OffScreenOverlayProps {
 const OffScreenOverlay: React.FC<OffScreenOverlayProps> = ({ dismiss, isScrollPlayer }) => {
 	const playing = usePlaying();
 	const adBreak = useAdBreak();
-	console.log('AdBreak Value: ', adBreak);
 
 	const controlbar = document.querySelector<HTMLElement>('.jw-controlbar');
 	let closeButtonOffset = 0;
 
 	if (adBreak) {
-		console.log('Ad should be playing. Adding 40px offset.');
+		console.debug('Ad should be playing. Adding 40px offset.');
 		closeButtonOffset = 40;
 	} else {
-		console.log("Ad should've finished. Setting top offset to 0px.");
+		console.debug("Ad should've finished. Setting top offset to 0px.");
 		closeButtonOffset = 0;
 	}
 
