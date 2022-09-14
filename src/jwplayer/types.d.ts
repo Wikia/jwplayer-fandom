@@ -119,6 +119,11 @@ export interface ShareEventData {
 	method: string;
 }
 
+export interface OnPlaylistItemEventData {
+	index: number;
+	item: PlaylistItem;
+}
+
 type JwEventData =
 	| PlayPlayerEventData
 	| PausePlayerEventData
@@ -133,7 +138,8 @@ type JwEventData =
 	| SeekEventData
 	| AdEvents
 	| OnAdTimeEventData
-	| ShareEventData;
+	| ShareEventData
+	| OnPlaylistItemEventData;
 type JwEventHandler = (event?: JwEventData) => void;
 
 interface BasePluginInterface {
