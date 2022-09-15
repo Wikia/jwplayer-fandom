@@ -68,7 +68,7 @@ const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ v
 						<JwPlayerWrapper
 							config={getArticleVideoConfig(videoDetails)}
 							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
-							playerUrl={'https://content.jwplatform.com/libraries/VXc5h4Tf.js'}
+							playerUrl={'https://cdn.jwplayer.com/libraries/VXc5h4Tf.js'}
 						/>
 					</DesktopArticleVideoWrapper>
 				)}

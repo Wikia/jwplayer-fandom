@@ -100,7 +100,7 @@ const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
 						<JwPlayerWrapper
 							config={getArticleVideoConfig(videoDetails)}
 							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
-							playerUrl={'https://content.jwplatform.com/libraries/ZqDOepgu.js'}
+							playerUrl={'https://cdn.jwplayer.com/libraries/ZqDOepgu.js'}
 						/>
 						<OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />
 					</MobileArticleVideoWrapper>
