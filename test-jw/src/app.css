@@ -1,0 +1,10 @@
+.App {
+    margin-bottom: 18px;
+    max-width: 858px;
+    /*padding-top: 56.25%;*/
+    position: relative;
+}
+
+body {
+    height: 200vh;
+}
