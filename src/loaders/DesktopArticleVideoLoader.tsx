@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { DesktopArticleVideoLoaderProps } from 'loaders/types';
 import { setVersionWindowVar } from 'loaders/utils/GetVersion';
+import { shouldLoadUcpPlayer } from 'loaders/utils/shouldLoadPlayer';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
 export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps> = ({ videoDetails }) => {
+	if (!shouldLoadUcpPlayer()) {
+		return;
+	}
+
 	const [player, setPlayer] = useState(undefined);
 
 	useEffect(() => {
