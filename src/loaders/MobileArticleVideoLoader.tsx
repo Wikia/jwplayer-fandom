@@ -10,14 +10,10 @@ export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> =
 	isFullScreen,
 	videoDetails,
 }) => {
-	if (!shouldLoadUcpPlayer()) {
-		return;
-	}
-
 	const [player, setPlayer] = useState(undefined);
 
 	useEffect(() => {
-		if (!player) {
+		if (!player && shouldLoadUcpPlayer()) {
 			getPlayer();
 		}
 
