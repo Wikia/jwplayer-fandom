@@ -11,5 +11,5 @@ export const shouldLoadUcpPlayer = () => {
 	const canPlay = isPlayVideoAFunction && window?.canPlayVideo();
 	console.debug('Can Play Video on UCP? ', canPlay);
 
-	return typeof window !== 'undefined' && canPlay;
+	return canPlay;
 };
