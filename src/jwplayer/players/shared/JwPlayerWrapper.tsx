@@ -73,7 +73,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, on
 			});
 
 			playerInstance.on(JWEvents.PLAYLIST_ITEM, (event: OnPlaylistItemEventData) => {
-				if (event.index === 2) {
+				if (event.index >= 2) {
 					playerInstance.pause();
 				}
 			});
