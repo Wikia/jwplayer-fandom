@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButton';
 import VideoDetails from 'jwplayer/players/DesktopArticleVideoPlayer/VideoDetails';
 import useOnScreen from 'utils/useOnScreen';
 import { ContentPlayerOverlayProps } from 'jwplayer/types';
@@ -40,7 +39,7 @@ const ContentPlayerOverlay: React.FC<ContentPlayerOverlayProps> = ({ isScrollPla
 	return (
 		<PlayerOverlay>
 			<TopBar>
-				{!isScrollPlayer && <UnmuteButton />}
+				{/* {!isScrollPlayer && <UnmuteButton />} */}
 				{isScrollPlayer && <CloseButton dismiss={() => setDismissed(true)} />}
 			</TopBar>
 			<ControlBarWrapper id={'control-bar-wrapper'}>

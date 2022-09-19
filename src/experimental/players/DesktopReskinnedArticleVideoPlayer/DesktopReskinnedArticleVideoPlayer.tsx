@@ -6,7 +6,7 @@ import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import { DesktopArticleVideoPlayerProps } from 'jwplayer/types';
 import Attribution from 'jwplayer/players/DesktopArticleVideoPlayer/Attribution';
 // import useAdBreak from 'jwplayer/utils/useAdBreak';
-import ContentPlayerOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/content/ConentPlayerOverlay';
+import ContentPlayerOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/content/ContentPlayerOverlay';
 import PrerollPlayerOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/preroll/PrerollPlayerOverlay';
 
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';

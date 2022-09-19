@@ -19,11 +19,13 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 		const isReskinned = true; // TODO: add logic for experiment check
 
 		if (isReskinned) {
+			console.log('Loading re-skinned Desktop Article Video Player');
 			import('experimental/players/DesktopReskinnedArticleVideoPlayer/DesktopReskinnedArticleVideoPlayer').then(
 				({ default: JWDesktopReskinnedArticleVideoPlayer }) =>
 					setPlayer(<JWDesktopReskinnedArticleVideoPlayer videoDetails={videoDetails} />),
 			);
 		} else {
+			console.log('Loading plain Desktop Article Video Player');
 			// By default just set the base player
 			import('jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer').then(
 				({ default: JWDesktopArticleVideoPlayer }) =>

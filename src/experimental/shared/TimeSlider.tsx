@@ -3,9 +3,10 @@ import React, { useContext, useRef } from 'react';
 import useBufferUpdate from 'experimental/utils/useBufferUpdate';
 import useProgressUpdate from 'experimental/utils/useProgressUpdate';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
+import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 
 const TimeSliderWrapper = styled.div`
-	z-index: 1;
+	z-index: ${Number(WDSVariables.z8) + 1};
 	outline: 0;
 
 	// TODO: May need to be added in as a prop, especially when using overlays etc

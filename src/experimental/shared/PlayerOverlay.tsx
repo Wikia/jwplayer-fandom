@@ -7,8 +7,9 @@ const PlayerOverlay = styled.div`
 	left: 0;
 	width: 100%;
 	height: 100%;
-	pointer-events: none;
 	z-index: ${Number(WDSVariables.z7) + 2};
+	box-sizing: border-box;
+	padding: 1em 1.6em;
 `;
 
 export default PlayerOverlay;
