@@ -65,6 +65,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 					video_time_to_first_frame: timeToFirstFrame,
 					video_startup_time: getVideoStartupTime(),
 				});
+				triggerVideoMetric('started');
 			}
 		})
 		.on(JWEvents.TIME, (event: OnVideoTimeEventData) => {

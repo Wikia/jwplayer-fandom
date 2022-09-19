@@ -133,8 +133,6 @@ export const jwPlayerAdTracker = trackerWithNewCategory(EVENT_CATEGORIES.AD);
 export const jwPlayerContentTracker = trackerWithNewCategory(EVENT_CATEGORIES.CONTENT);
 export const jwPlayerWirewaxTracker = trackerWithNewCategory(EVENT_CATEGORIES.WIREWAX);
 
-console.log(jwPlayerContentTracker);
-
 const mappings = new Set<string>();
 export function singleTrack(eventName: string) {
 	if (mappings.has(eventName)) {
