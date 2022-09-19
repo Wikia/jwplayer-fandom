@@ -20,7 +20,7 @@ import {
 } from 'jwplayer/utils/globalJWInterface';
 import addGlobalProps from 'jwplayer/utils/videoTrackingGlobalProps';
 import getVideoPlayerVersion from 'jwplayer/utils/getVideoPlayerVersion';
-import triggerMetric from "@fandom/tracking-metrics/metrics/metric";
+import triggerMetric from '@fandom/tracking-metrics/metrics/metric';
 
 // https://docs.google.com/spreadsheets/d/1jEn61uIP8dYE8KQP3nrMG3nePFArgxrs3Q4lxTcArZQ/edit#gid=1564524057
 export const PROPERTY_NAMES = {
