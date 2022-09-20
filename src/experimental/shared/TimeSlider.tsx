@@ -30,12 +30,16 @@ const TimeSliderContainer = styled.div`
 	touch-action: none;
 `;
 
-const Rail = styled.div`
+interface RailProps {
+	railBackgroundColor?: string;
+}
+
+const Rail = styled.div<RailProps>`
 	// Convert this to props in the future
-	background-color: rgba(255, 255, 255, 0.2);
+	background-color: ${(props) => (props.railBackgroundColor ? props.railBackgroundColor : `rgba(255, 255, 255, 0.2)`)};
 
 	// Temporarily use white as the placeholder color for the full rail
-	background-color: white;
+	//background-color: white;
 
 	width: 100%;
 	height: 100%;
@@ -91,7 +95,14 @@ const ProgressKnob = styled.div<ProgressKnobProps>`
 	}
 `;
 
-const TimeSlider: React.FC<TimeSliderProps> = ({ className, interactive = true }) => {
+const TimeSlider: React.FC<TimeSliderProps> = ({
+	className,
+	interactive = true,
+	railColor,
+	bufferColor,
+	knobColor,
+	progressColor,
+}) => {
 	const { bufferPercent } = useBufferUpdate();
 	const { positionPercent, duration } = useProgressUpdate();
 	const sliderRef = useRef<HTMLDivElement>();
@@ -139,10 +150,12 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ className, interactive = true }
 	return (
 		<TimeSliderWrapper className={className}>
 			<TimeSliderContainer ref={sliderRef} onClick={handleSeek}>
-				<Rail />
-				{interactive && <Buffer percentageBuffered={bufferPercent} />}
-				<Progress percentageProgress={positionPercent} />
-				{interactive && <ProgressKnob onMouseDown={onMouseDown} percentageProgress={positionPercent} />}
+				<Rail color={railColor} />
+				{interactive && <Buffer percentageBuffered={bufferPercent} bufferBackgroundColor={bufferColor} />}
+				<Progress percentageProgress={positionPercent} progressBackgroundColor={progressColor} />
+				{interactive && (
+					<ProgressKnob onMouseDown={onMouseDown} percentageProgress={positionPercent} progressKnobColor={knobColor} />
+				)}
 			</TimeSliderContainer>
 		</TimeSliderWrapper>
 	);

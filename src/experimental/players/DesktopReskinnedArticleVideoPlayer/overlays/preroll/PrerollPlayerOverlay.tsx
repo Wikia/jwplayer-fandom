@@ -39,7 +39,7 @@ const PrerollPlayerOverlay: React.FC<PrerollPlayerOverlayProps> = ({ isScrollPla
 			{isScrollPlayer ? <PrerollPlayerScrollOverlay /> : <PrerollPlayerFullOverlay />}
 			{/* Full size */}
 			{/* Scroll player */}
-			<PrerollOverlayTimeSlider interactive={false} />
+			<PrerollOverlayTimeSlider interactive={false} progressColor={'#FFC500'} />
 		</PlayerOverlay>
 	);
 };

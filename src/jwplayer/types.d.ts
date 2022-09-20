@@ -313,4 +313,8 @@ export interface MobileArticleVideoPlayerProps {
 export interface TimeSliderProps {
 	className?: string;
 	interactive?: boolean;
+	railColor?: string;
+	bufferColor?: string;
+	knobColor?: string;
+	progressColor?: string;
 }
