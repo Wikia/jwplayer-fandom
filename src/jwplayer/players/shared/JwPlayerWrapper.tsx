@@ -3,7 +3,7 @@ import { JWPlayerApi, PlaylistItem, OnPlaylistItemEventData } from 'jwplayer/typ
 import FandomWirewaxPlugin from 'jwplayer/plugins/fandom-wirewax.plugin';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { JwPlayerWrapperProps } from 'jwplayer/types';
-import { jwPlayerPlaybackTracker } from 'jwplayer/utils/videoTracking';
+import { jwPlayerPlaybackTracker, triggerVideoMetric } from 'jwplayer/utils/videoTracking';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
 import JWEvents from 'jwplayer/players/shared/JWEvents';
 import addBaseTrackingEvents from 'jwplayer/players/shared/addBaseTrackingEvents';
@@ -41,6 +41,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, on
 		const onload = () => {
 			jwPlayerPlaybackTracker({ event_name: 'video_player_load' });
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY);
+			triggerVideoMetric('loaded');
 			const registerPlugin = window.jwplayer().registerPlugin;
 			registerPlugin('wirewax', '8.0', FandomWirewaxPlugin);
 
@@ -53,6 +54,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, on
 
 			playerInstance.on(JWEvents.READY, (event) => {
 				recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_READY);
+				triggerVideoMetric('ready');
 				// only add the events after the player is ready
 				jwPlayerPlaybackTracker({ event_name: 'video_player_ready' });
 				addBaseTrackingEvents(playerInstance);
