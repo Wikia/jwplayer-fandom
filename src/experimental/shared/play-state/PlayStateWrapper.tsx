@@ -22,7 +22,7 @@ const Wrapper = styled.div<{ color?: string }>`
 	display: flex;
 	justify-content: center;
 	position: relative;
-	color: ${(props) => (props.color ? props.color : 'rgb(204, 204, 204)')};
+	color: ${(props) => (props.color ? props.color : '#ffffff')};
 
 	&::hover {
 		// Change this!

@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 export const svgDefaultStyles = css<SvgIconProps>`
 	height: ${(props) => (props?.height ? props?.height : '24px')};
 	width: ${(props) => (props?.width ? props?.width : '24px')};
-	fill: ${(props) => (props?.fill ? props?.fill : '#ffffff')};
+	fill: ${(props) => (props?.fill ? props?.fill : 'currentColor')};
 	box-sizing: border-box;
 `;
 
