@@ -14,7 +14,6 @@ const TimeSliderWrapper = styled.div`
 	width: 100%;
 	align-items: center;
 	background: transparent none;
-	padding: 0 12px;
 
 	// Horizontal class styles
 	display: flex;
@@ -24,9 +23,7 @@ const TimeSliderWrapper = styled.div`
 
 const TimeSliderContainer = styled.div`
 	height: 5px;
-
 	width: 100%;
-
 	display: flex;
 	align-items: center;
 	position: relative;
@@ -35,7 +32,7 @@ const TimeSliderContainer = styled.div`
 
 const Rail = styled.div`
 	// Convert this to props in the future
-	// background-color: rgba(255,255,255,.2);
+	background-color: rgba(255, 255, 255, 0.2);
 
 	// Temporarily use white as the placeholder color for the full rail
 	background-color: white;

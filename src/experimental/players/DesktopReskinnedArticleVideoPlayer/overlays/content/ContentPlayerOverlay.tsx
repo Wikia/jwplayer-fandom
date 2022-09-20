@@ -15,6 +15,14 @@ const TopBar = styled.div`
 	position: relative;
 `;
 
+const PlayerOverlayStyled = styled(PlayerOverlay)`
+	padding: 1em 1.6em;
+`;
+
+const ContentOverlayTimeSlider = styled(TimeSlider)`
+	padding: 0 12px;
+`;
+
 const ContentPlayerOverlay: React.FC<ContentPlayerOverlayProps> = ({ isScrollPlayer, setDismissed }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	/* TODO: FIX THIS - This is used to test the player locally ONLY */
@@ -37,17 +45,17 @@ const ContentPlayerOverlay: React.FC<ContentPlayerOverlayProps> = ({ isScrollPla
 	}
 
 	return (
-		<PlayerOverlay>
+		<PlayerOverlayStyled>
 			<TopBar>
 				{/* {!isScrollPlayer && <UnmuteButton />} */}
 				{isScrollPlayer && <CloseButton dismiss={() => setDismissed(true)} />}
 			</TopBar>
 			<ControlBarWrapper id={'control-bar-wrapper'}>
-				<TimeSlider />
+				<ContentOverlayTimeSlider />
 				<PlayStateWrapper />
 			</ControlBarWrapper>
 			{isScrollPlayer && <VideoDetails />}
-		</PlayerOverlay>
+		</PlayerOverlayStyled>
 	);
 };
 
