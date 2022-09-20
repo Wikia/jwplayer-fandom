@@ -312,4 +312,5 @@ export interface MobileArticleVideoPlayerProps {
 
 export interface TimeSliderProps {
 	className?: string;
+	interactive?: boolean;
 }

@@ -39,7 +39,7 @@ const PrerollPlayerOverlay: React.FC<PrerollPlayerOverlayProps> = ({ isScrollPla
 			{isScrollPlayer ? <PrerollPlayerScrollOverlay /> : <PrerollPlayerFullOverlay />}
 			{/* Full size */}
 			{/* Scroll player */}
-			<PrerollOverlayTimeSlider />
+			<PrerollOverlayTimeSlider interactive={false} />
 		</PlayerOverlay>
 	);
 };

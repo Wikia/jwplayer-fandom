@@ -91,7 +91,7 @@ const ProgressKnob = styled.div<ProgressKnobProps>`
 	}
 `;
 
-const TimeSlider: React.FC<TimeSliderProps> = ({ className }) => {
+const TimeSlider: React.FC<TimeSliderProps> = ({ className, interactive = true }) => {
 	const { bufferPercent } = useBufferUpdate();
 	const { positionPercent, duration } = useProgressUpdate();
 	const sliderRef = useRef<HTMLDivElement>();
@@ -134,13 +134,15 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ className }) => {
 		sliderRef.current.addEventListener('mouseup', onMouseUp);
 	};
 
+	const handleSeek = interactive ? seek : null;
+
 	return (
 		<TimeSliderWrapper className={className}>
-			<TimeSliderContainer ref={sliderRef} onClick={seek}>
+			<TimeSliderContainer ref={sliderRef} onClick={handleSeek}>
 				<Rail />
-				<Buffer percentageBuffered={bufferPercent} />
+				{interactive && <Buffer percentageBuffered={bufferPercent} />}
 				<Progress percentageProgress={positionPercent} />
-				<ProgressKnob onMouseDown={onMouseDown} percentageProgress={positionPercent} />
+				{interactive && <ProgressKnob onMouseDown={onMouseDown} percentageProgress={positionPercent} />}
 			</TimeSliderContainer>
 		</TimeSliderWrapper>
 	);
