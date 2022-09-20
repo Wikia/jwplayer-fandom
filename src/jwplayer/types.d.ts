@@ -298,6 +298,12 @@ export interface ContentPlayerOverlayProps {
 	isScrollPlayer: boolean;
 	setDismissed: (dismissed: boolean) => void;
 }
+
+export interface PrerollPlayerOverlayProps {
+	isScrollPlayer: boolean;
+	setDismissed: (dismissed: boolean) => void;
+}
+
 export interface MobileArticleVideoPlayerProps {
 	hasPartnerSlot?: boolean;
 	isFullScreen?: boolean;

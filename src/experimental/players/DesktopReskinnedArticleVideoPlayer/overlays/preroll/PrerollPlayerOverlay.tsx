@@ -1,12 +1,19 @@
 import React, { useRef } from 'react';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 import useOnScreen from 'utils/useOnScreen';
 import PlayerOverlay from 'experimental/shared/PlayerOverlay';
 import TimeSlider from 'experimental/shared/TimeSlider';
-import ControlBarWrapper from 'experimental/shared/ControlBar';
-import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
+import { PrerollPlayerOverlayProps } from 'jwplayer/types';
+import PrerollPlayerFullOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/preroll/PrerollPlayerFullOverlay';
+import PrerollPlayerScrollOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/preroll/PrerollPlayerScrollOverlay';
 
-const PrerollPlayerOverlay: React.FC = () => {
+const TimeSliderWrapper = styled.div`
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+`;
+
+const PrerollPlayerOverlay: React.FC<PrerollPlayerOverlayProps> = ({ isScrollPlayer }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	/* TODO: FIX THIS - This is used to test the player locally ONLY */
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.1);
@@ -29,10 +36,12 @@ const PrerollPlayerOverlay: React.FC = () => {
 
 	return (
 		<PlayerOverlay>
-			<ControlBarWrapper id={'control-bar-wrapper'}>
+			{isScrollPlayer ? <PrerollPlayerScrollOverlay /> : <PrerollPlayerFullOverlay />}
+			{/* Full size */}
+			{/* Scroll player */}
+			<TimeSliderWrapper>
 				<TimeSlider />
-				<PlayStateWrapper />
-			</ControlBarWrapper>
+			</TimeSliderWrapper>
 		</PlayerOverlay>
 	);
 };

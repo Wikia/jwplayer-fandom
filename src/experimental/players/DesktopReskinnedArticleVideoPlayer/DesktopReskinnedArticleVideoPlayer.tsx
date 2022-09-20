@@ -106,7 +106,7 @@ const DesktopReskinnedArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProp
 						isScrollPlayer={isScrollPlayer}
 					>
 						{adBreak ? (
-							<PrerollPlayerOverlay />
+							<PrerollPlayerOverlay isScrollPlayer={isScrollPlayer} setDismissed={setDismissed} />
 						) : (
 							<ContentPlayerOverlay isScrollPlayer={isScrollPlayer} setDismissed={setDismissed} />
 						)}
