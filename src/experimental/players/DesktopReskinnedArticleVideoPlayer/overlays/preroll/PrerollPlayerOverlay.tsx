@@ -7,9 +7,9 @@ import { PrerollPlayerOverlayProps } from 'jwplayer/types';
 import PrerollPlayerFullOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/preroll/PrerollPlayerFullOverlay';
 import PrerollPlayerScrollOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/preroll/PrerollPlayerScrollOverlay';
 
-const TimeSliderWrapper = styled.div`
+const PrerollOverlayTimeSlider = styled(TimeSlider)`
+	align-items: flex-end;
 	position: absolute;
-	width: 100%;
 	bottom: 0;
 `;
 
@@ -39,9 +39,7 @@ const PrerollPlayerOverlay: React.FC<PrerollPlayerOverlayProps> = ({ isScrollPla
 			{isScrollPlayer ? <PrerollPlayerScrollOverlay /> : <PrerollPlayerFullOverlay />}
 			{/* Full size */}
 			{/* Scroll player */}
-			<TimeSliderWrapper>
-				<TimeSlider />
-			</TimeSliderWrapper>
+			<PrerollOverlayTimeSlider />
 		</PlayerOverlay>
 	);
 };

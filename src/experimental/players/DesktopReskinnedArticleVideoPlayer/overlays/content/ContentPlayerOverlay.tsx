@@ -21,6 +21,7 @@ const PlayerOverlayStyled = styled(PlayerOverlay)`
 
 const ContentOverlayTimeSlider = styled(TimeSlider)`
 	padding: 0 12px;
+	align-items: center;
 `;
 
 const ContentPlayerOverlay: React.FC<ContentPlayerOverlayProps> = ({ isScrollPlayer, setDismissed }) => {

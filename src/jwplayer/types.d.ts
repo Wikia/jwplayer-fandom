@@ -309,3 +309,7 @@ export interface MobileArticleVideoPlayerProps {
 	isFullScreen?: boolean;
 	videoDetails: ArticleVideoDetails;
 }
+
+export interface TimeSliderProps {
+	className?: string;
+}

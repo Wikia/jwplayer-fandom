@@ -4,6 +4,7 @@ import useBufferUpdate from 'experimental/utils/useBufferUpdate';
 import useProgressUpdate from 'experimental/utils/useProgressUpdate';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
+import { TimeSliderProps } from 'jwplayer/types';
 
 const TimeSliderWrapper = styled.div`
 	z-index: ${Number(WDSVariables.z8) + 1};
@@ -12,7 +13,6 @@ const TimeSliderWrapper = styled.div`
 	// TODO: May need to be added in as a prop, especially when using overlays etc
 	height: 17px;
 	width: 100%;
-	align-items: center;
 	background: transparent none;
 
 	// Horizontal class styles
@@ -91,7 +91,7 @@ const ProgressKnob = styled.div<ProgressKnobProps>`
 	}
 `;
 
-const TimeSlider = () => {
+const TimeSlider: React.FC<TimeSliderProps> = ({ className }) => {
 	const { bufferPercent } = useBufferUpdate();
 	const { positionPercent, duration } = useProgressUpdate();
 	const sliderRef = useRef<HTMLDivElement>();
@@ -135,7 +135,7 @@ const TimeSlider = () => {
 	};
 
 	return (
-		<TimeSliderWrapper>
+		<TimeSliderWrapper className={className}>
 			<TimeSliderContainer ref={sliderRef} onClick={seek}>
 				<Rail />
 				<Buffer percentageBuffered={bufferPercent} />
