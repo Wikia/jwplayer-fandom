@@ -2,20 +2,13 @@ import React from 'react';
 import PlayButton, { PlayButtonProps } from 'experimental/shared/play-state/PlayButton';
 import PauseButton, { PauseButtonProps } from 'experimental/shared/play-state/PauseButton';
 import usePlaying from 'jwplayer/utils/usePlaying';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 interface PlayStateWrapperProps {
 	playConfig?: PlayButtonProps;
 	pauseConfig?: PauseButtonProps;
 	iconColor?: string;
 }
-
-export const playStateIconStyles = css`
-	fill: currentColor;
-	height: 24px;
-	height: 24px;
-	pointer-events: none;
-`;
 
 export const IconWrapper = styled.div`
 	cursor: pointer;
@@ -30,6 +23,11 @@ const Wrapper = styled.div<{ color?: string }>`
 	justify-content: center;
 	position: relative;
 	color: ${(props) => (props.color ? props.color : 'rgb(204, 204, 204)')};
+
+	&::hover {
+		// Change this!
+		color: green;
+	}
 `;
 
 const PlayStateWrapper: React.FC<PlayStateWrapperProps> = ({ playConfig, pauseConfig, iconColor }) => {

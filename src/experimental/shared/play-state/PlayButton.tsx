@@ -1,12 +1,7 @@
 import React, { useContext } from 'react';
-import IconPlaySmall from '@fandom-frontend/react-common/dist/icons/IconPlaySmall';
-import styled from 'styled-components';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
-import { IconWrapper, playStateIconStyles } from 'experimental/shared/play-state/PlayStateWrapper';
-
-const PlayIcon = styled(IconPlaySmall)`
-	${playStateIconStyles}
-`;
+import { IconWrapper } from 'experimental/shared/play-state/PlayStateWrapper';
+import PlayIcon from 'experimental/shared/icons/play/PlayIcon';
 
 export interface PlayButtonProps {
 	/** Optional, additional events that should fire whenever the Play button is pressed.

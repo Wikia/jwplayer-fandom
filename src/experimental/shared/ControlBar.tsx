@@ -11,8 +11,7 @@ const ControlBarWrapper = styled.div`
 	display: flex;*/
 
 	align-items: center;
-	background-color: rgba(255, 255, 255, 0.9);
-	background-color: rgba(255, 255, 255, 0.9);
+	background-color: transparent;
 	border-radius: 2px;
 	cursor: pointer;
 	width: 100%;
@@ -26,6 +25,28 @@ const ControlBarWrapper = styled.div`
 
 	display: flex;
 	flex-direction: column;
+`;
+
+export const ControlBarButtonWrapper = styled.div`
+	display: flex;
+	flex-flow: row nowrap;
+	flex: 1 1 auto;
+	align-items: center;
+	justify-content: flex-start;
+	width: 100%;
+	padding: 0 12px;
+
+	&::after {
+		content: '';
+		flex-grow: 1;
+		order: 0;
+	}
+`;
+
+export const ControlBarLeftAlignedButtonContainer = styled.div``;
+
+export const ControlBarRightAlignedButtonContainer = styled.div`
+	order: 1;
 `;
 
 export default ControlBarWrapper;

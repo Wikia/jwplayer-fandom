@@ -1,12 +1,7 @@
 import React, { useContext } from 'react';
-import IconPauseSmall from '@fandom-frontend/react-common/dist/icons/IconPauseSmall';
-import styled from 'styled-components';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
-import { IconWrapper, playStateIconStyles } from 'experimental/shared/play-state/PlayStateWrapper';
-
-const PauseIcon = styled(IconPauseSmall)`
-	${playStateIconStyles}
-`;
+import { IconWrapper } from 'experimental/shared/play-state/PlayStateWrapper';
+import PauseIcon from 'experimental/shared/icons/play/PauseIcon';
 
 export interface PauseButtonProps {
 	/** Optional, additional events that should fire whenever the pause button is pressed.
