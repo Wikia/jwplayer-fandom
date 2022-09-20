@@ -1,7 +1,13 @@
 import React from 'react';
 
+import PrerollOverlayTimeSlider from './PrerollOverlayTimeSlider';
+
 const PrerollPlayerFullOverlay: React.FC = () => {
-	return <div></div>;
+	return (
+		<>
+			<PrerollOverlayTimeSlider interactive={false} progressColor={'#FFC500'} />
+		</>
+	);
 };
 
 export default PrerollPlayerFullOverlay;
