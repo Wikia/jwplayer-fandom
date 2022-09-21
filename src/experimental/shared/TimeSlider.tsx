@@ -11,7 +11,7 @@ const TimeSliderWrapper = styled.div`
 	outline: 0;
 
 	// TODO: May need to be added in as a prop, especially when using overlays etc
-	height: 17px;
+	height: 5px;
 	width: 100%;
 	background: transparent none;
 

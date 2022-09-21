@@ -1,9 +1,6 @@
 import React from 'react';
-
 import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
 import styled from 'styled-components';
-
-import PrerollOverlayTimeSlider from './PrerollOverlayTimeSlider';
 
 const PlayStateContainer = styled.div`
 	width: 100%;
@@ -21,7 +18,6 @@ const PrerollPlayerScrollOverlay: React.FC = () => {
 				<PlayStateWrapper iconColor={'#fff'} />
 			</PlayStateContainer>
 			{/* control bar (bottom) */}
-			<PrerollOverlayTimeSlider interactive={false} progressColor={'#FFC500'} />
 		</>
 	);
 };
