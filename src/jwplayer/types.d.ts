@@ -192,6 +192,16 @@ export type WirewaxPluginOptions = {
 	ready: JwEventData;
 };
 
+export interface AdTimeData {
+	client: string;
+	creativetype: string;
+	duration: number;
+	position: number;
+	sequence: number;
+	tag: string;
+	viewable: number;
+}
+
 export interface SeekedEmbedderEventData {
 	seekTo: number;
 }
