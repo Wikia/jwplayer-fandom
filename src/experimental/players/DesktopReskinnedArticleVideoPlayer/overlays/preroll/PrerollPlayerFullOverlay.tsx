@@ -6,7 +6,7 @@ import usePlaylistItem from 'jwplayer/utils/usePlaylistItem';
 import useAdTime from 'jwplayer/utils/useAdTime';
 
 const PrerollPlayerFullOverlayWrapper = styled.div`
-	padding: 20px;
+	padding: 35px 56px 35px 56px;
 	height: 100%;
 	width: 100%;
 	display: flex;
@@ -15,9 +15,18 @@ const PrerollPlayerFullOverlayWrapper = styled.div`
 	box-sizing: border-box;
 `;
 
-const TextWrapper = styled.div``;
-const UpperText = styled.h2``;
-const LowerText = styled.h1``;
+const TextWrapper = styled.div`
+	color: #eee;
+`;
+const UpperText = styled.div`
+	font-weight: 400;
+	font-size: 14px;
+	margin-bottom: 5px;
+`;
+const LowerText = styled.div`
+	font-weight: 400;
+	font-size: 20px;
+`;
 
 const ControlWrapper = styled.div`
 	width: 100%;
