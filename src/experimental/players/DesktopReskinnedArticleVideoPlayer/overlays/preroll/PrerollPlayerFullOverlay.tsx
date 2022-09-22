@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
 import usePlaylistItem from 'jwplayer/utils/usePlaylistItem';
-// import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
+import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
 import useAdTime from 'jwplayer/utils/useAdTime';
 import LearnMoreButton from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/preroll/LearnMoreButton';
 
@@ -35,7 +35,9 @@ const ControlWrapper = styled.div`
 	justify-content: space-between;
 `;
 
-const PlayVolumeWrapper = styled.div``;
+const PlayVolumeWrapper = styled.div`
+	display: flex;
+`;
 
 const PrerollPlayerFullOverlay: React.FC = () => {
 	const playlistItem = usePlaylistItem();
@@ -50,7 +52,7 @@ const PrerollPlayerFullOverlay: React.FC = () => {
 			<ControlWrapper>
 				<PlayVolumeWrapper>
 					<PlayStateWrapper iconColor={'#fff'} />
-					{/* <VolumeStateWrapper /> */}
+					<VolumeStateWrapper />
 				</PlayVolumeWrapper>
 				<LearnMoreButton />
 			</ControlWrapper>

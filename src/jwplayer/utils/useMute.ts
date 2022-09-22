@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
+import { MutePlayerEventData } from 'jwplayer/types';
 import JWEvents from 'jwplayer/players/shared/JWEvents';
 
 export default function useMute(): boolean {
@@ -11,8 +12,8 @@ export default function useMute(): boolean {
 			setMute(true);
 		}
 
-		player?.on(JWEvents.MUTE, () => {
-			setMute(!mute);
+		player?.on(JWEvents.MUTE, (event: MutePlayerEventData) => {
+			setMute(event.mute);
 		});
 	}, [player]);
 
