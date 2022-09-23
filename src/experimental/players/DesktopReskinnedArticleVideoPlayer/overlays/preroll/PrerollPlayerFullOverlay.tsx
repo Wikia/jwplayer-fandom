@@ -52,7 +52,7 @@ const PrerollPlayerFullOverlay: React.FC = () => {
 			<ControlWrapper>
 				<PlayVolumeWrapper>
 					<PlayStateWrapper iconColor={'#fff'} />
-					<VolumeStateWrapper />
+					<VolumeStateWrapper hasSlider={true} />
 				</PlayVolumeWrapper>
 				<LearnMoreButton />
 			</ControlWrapper>

@@ -4,4 +4,5 @@ export interface UnmuteButtonProps {
 
 export interface VolumeStateWrapperProps {
 	iconColor?: string;
+	hasSlider: boolean;
 }

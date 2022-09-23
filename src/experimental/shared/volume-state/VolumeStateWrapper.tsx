@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import VolumeButton from 'experimental/shared/volume-state/VolumeButton';
 import UnmuteButton from 'experimental/shared/volume-state/UnmuteButton';
+import VolumeSlider from 'experimental/shared/volume-state/VolumeSlider';
 import useMute from 'jwplayer/utils/useMute';
 import styled from 'styled-components';
 import { VolumeStateWrapperProps } from 'experimental/types';
@@ -11,24 +12,23 @@ export const IconWrapper = styled.div`
 `;
 
 const Wrapper = styled.div<{ color?: string }>`
-	height: 44px;
-	width: 44px;
-	align-items: center;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
-	position: relative;
+	align-items: center;
 	color: ${(props) => (props.color ? props.color : '#ffffff')};
-
-	&::hover {
-		// Change this!
-		color: green;
-	}
 `;
 
-const VolumeStateWrapper: React.FC<VolumeStateWrapperProps> = ({ iconColor }) => {
+const VolumeStateWrapper: React.FC<VolumeStateWrapperProps> = ({ iconColor, hasSlider }) => {
 	const isMute = useMute();
+	const [hover, setHover] = useState(false);
 
-	return <Wrapper color={iconColor}>{isMute ? <UnmuteButton hasLabel={true} /> : <VolumeButton />}</Wrapper>;
+	return (
+		<Wrapper onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} color={iconColor}>
+			{hasSlider && hover && <VolumeSlider />}
+			{isMute ? <UnmuteButton hasLabel={true} /> : <VolumeButton />}
+		</Wrapper>
+	);
 };
 
 export default VolumeStateWrapper;
