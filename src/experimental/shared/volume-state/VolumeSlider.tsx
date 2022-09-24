@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useRef, useContext } from 'react';
 import useVolume from 'jwplayer/utils/useVolume';
 import styled from 'styled-components';
 import useMute from 'jwplayer/utils/useMute';
+import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 
 const SliderWrapper = styled.div`
 	background-color: transparent;
@@ -79,16 +80,38 @@ const SliderKnob = styled.div<{ volume: number; mute: boolean }>`
 `;
 
 const VolumeSlider: React.FC = () => {
-	// const { player } = useContext(PlayerContext);
+	const { player } = useContext(PlayerContext);
 	const volume = useVolume();
 	const mute = useMute();
+	const sliderRef = useRef<HTMLDivElement>();
 
-	console.log('volume:', volume);
+	const onSliderMouseDown = (event) => {
+		const newVol = getSliderPercent(event);
+		player.setVolume(newVol);
+		sliderRef.current.addEventListener('mousemove', onMoveSlider);
+	};
+
+	const onSliderMouseUp = () => {
+		sliderRef.current.removeEventListener('mousemove', onMoveSlider);
+	};
+
+	const onMoveSlider = (event) => {
+		const newVol = getSliderPercent(event);
+		player.setVolume(newVol);
+	};
+
+	const getSliderPercent = (event) => {
+		const sliderDiff = event.currentTarget.getBoundingClientRect().bottom - event.clientY;
+		const sliderHeight = 88; // TODO: move this
+		const calcPercent = (sliderDiff / sliderHeight) * 100;
+		return calcPercent;
+	};
+
 	return (
 		<SliderWrapper>
 			<SliderContainer>
 				<SliderRail />
-				<SliderBuffer />
+				<SliderBuffer onMouseDown={onSliderMouseDown} onMouseUp={onSliderMouseUp} ref={sliderRef} />
 				<SliderProgress mute={mute} volume={volume} />
 				<SliderKnob mute={mute} volume={volume} />
 			</SliderContainer>

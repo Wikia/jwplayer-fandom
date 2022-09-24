@@ -173,6 +173,7 @@ export type Player = {
 	getContainer: () => HTMLElement;
 	seek: (seekTo: number) => void;
 	getVolume: () => number;
+	setVolume: (volume: number) => void;
 	getPosition: () => number;
 	getCurrentQuality: () => number;
 	getPlaylistIndex: () => number;
