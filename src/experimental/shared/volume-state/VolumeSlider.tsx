@@ -4,11 +4,22 @@ import styled from 'styled-components';
 import useMute from 'jwplayer/utils/useMute';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 
-const SliderWrapper = styled.div`
+const SliderOverlay = styled.div`
+	position: absolute;
+	bottom: 100%;
+	width: 44px;
 	background-color: transparent;
+	float: none;
+	vertical-align: baseline;
+`;
+
+const SliderWrapper = styled.div`
+	padding: 13px 0 26px;
 	align-items: center;
 	flex-direction: column;
 	display: flex;
+	background-color: transparent;
+	vertical-align: baseline;
 `;
 const SliderContainer = styled.div`
 	background-color: transparent;
@@ -17,7 +28,6 @@ const SliderContainer = styled.div`
 	display: flex;
 	align-items: center;
 	position: relative;
-	touch-action: none;
 `;
 const SliderRail = styled.div`
 	height: 100%;
@@ -57,6 +67,7 @@ const SliderProgress = styled.div<{ volume: number; mute: boolean }>`
 	position: absolute;
 	cursor: pointer;
 	left: 50%;
+	pointer-events: none;
 `;
 
 const SliderKnob = styled.div<{ volume: number; mute: boolean }>`
@@ -108,14 +119,16 @@ const VolumeSlider: React.FC = () => {
 	};
 
 	return (
-		<SliderWrapper>
-			<SliderContainer>
-				<SliderRail />
-				<SliderBuffer onMouseDown={onSliderMouseDown} onMouseUp={onSliderMouseUp} ref={sliderRef} />
-				<SliderProgress mute={mute} volume={volume} />
-				<SliderKnob mute={mute} volume={volume} />
-			</SliderContainer>
-		</SliderWrapper>
+		<SliderOverlay>
+			<SliderWrapper>
+				<SliderContainer>
+					<SliderRail />
+					<SliderBuffer onMouseDown={onSliderMouseDown} onMouseUp={onSliderMouseUp} ref={sliderRef} />
+					<SliderProgress mute={mute} volume={volume} />
+					<SliderKnob mute={mute} volume={volume} />
+				</SliderContainer>
+			</SliderWrapper>
+		</SliderOverlay>
 	);
 };
 
