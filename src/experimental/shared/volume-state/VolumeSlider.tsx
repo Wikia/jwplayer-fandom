@@ -1,8 +1,9 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef, useContext, useState } from 'react';
 import useVolume from 'jwplayer/utils/useVolume';
 import styled from 'styled-components';
 import useMute from 'jwplayer/utils/useMute';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
+import { VolumeSliderProps } from 'experimental/types';
 
 const SliderOverlay = styled.div`
 	position: absolute;
@@ -90,20 +91,25 @@ const SliderKnob = styled.div<{ volume: number; mute: boolean }>`
 	color: rgba(255, 255, 255, 0.8);
 `;
 
-const VolumeSlider: React.FC = () => {
+const VolumeSlider: React.FC<VolumeSliderProps> = ({ hover }) => {
 	const { player } = useContext(PlayerContext);
 	const volume = useVolume();
 	const mute = useMute();
 	const sliderRef = useRef<HTMLDivElement>();
+	const [mouseDown, setMouseDown] = useState(false);
 
 	const onSliderMouseDown = (event) => {
 		const newVol = getSliderPercent(event);
 		player.setVolume(newVol);
-		sliderRef.current.addEventListener('mousemove', onMoveSlider);
+		setMouseDown(true);
+		document.addEventListener('mousemove', onMoveSlider);
+		document.addEventListener('mouseup', onSliderMouseUp);
 	};
 
 	const onSliderMouseUp = () => {
-		sliderRef.current.removeEventListener('mousemove', onMoveSlider);
+		document.removeEventListener('mousemove', onMoveSlider);
+		document.removeEventListener('mouseup', onSliderMouseUp);
+		setMouseDown(false);
 	};
 
 	const onMoveSlider = (event) => {
@@ -112,18 +118,22 @@ const VolumeSlider: React.FC = () => {
 	};
 
 	const getSliderPercent = (event) => {
-		const sliderDiff = event.currentTarget.getBoundingClientRect().bottom - event.clientY;
+		const sliderDiff = sliderRef?.current?.getBoundingClientRect().bottom - event.clientY;
+		console.log(event);
 		const sliderHeight = 88; // TODO: move this
 		const calcPercent = (sliderDiff / sliderHeight) * 100;
+
 		return calcPercent;
 	};
 
+	if (!(hover || mouseDown)) return null;
+
 	return (
-		<SliderOverlay>
+		<SliderOverlay onMouseDown={onSliderMouseDown}>
 			<SliderWrapper>
-				<SliderContainer>
+				<SliderContainer ref={sliderRef}>
 					<SliderRail />
-					<SliderBuffer onMouseDown={onSliderMouseDown} onMouseUp={onSliderMouseUp} ref={sliderRef} />
+					<SliderBuffer />
 					<SliderProgress mute={mute} volume={volume} />
 					<SliderKnob mute={mute} volume={volume} />
 				</SliderContainer>

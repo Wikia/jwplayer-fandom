@@ -3,3 +3,7 @@ export interface VolumeStateWrapperProps {
 	hasLabel?: boolean;
 	hasSlider?: boolean;
 }
+
+export interface VolumeSliderProps {
+	hover: boolean;
+}

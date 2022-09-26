@@ -52,7 +52,7 @@ const VolumeStateWrapper: React.FC<VolumeStateWrapperProps> = ({
 	return (
 		<Wrapper color={iconColor}>
 			<SoundButtonWrapper onClick={onClick} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-				{hasSlider && hover && <VolumeSlider />}
+				{hasSlider && <VolumeSlider hover={hover} />}
 				{mute ? <StyledSoundOffIcon /> : <StyledSoundIcon />}
 			</SoundButtonWrapper>
 			{hasLabel && 'Play Sound'}
