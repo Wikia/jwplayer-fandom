@@ -1,49 +1,123 @@
 {
-  "name": "jwplayer-fandom",
-  "version": "1.12.1",
-  "description": "JWPlayer for Fandom",
-  "main": "index.js",
-  "scripts": {
-    "dev": "npm run build-dev && npm-run-all --parallel watch-other watch-js watch-scss watch-i18n server",
-    "server": "http-server -c-1 dev",
-    "copy-html": "mkdir -p dev && cp src/*.html dev/",
-    "create-dist": "mkdir -p dist",
-    "build": "npm run create-dist && npm run build-i18n && npm run build-index-css && npm run build-js",
-    "build-dev": "npm run copy-html && npm run build-i18n && npm run build-all-css-dev && npm run build-js-dev",
-    "build-js": "uglifyjs --compress --mangle -o dist/wikiajwplayer.js --wrap wikiaJWPlayer -- src/*.js",
-    "build-js-dev": "uglifyjs -o dev/wikiajwplayer.js --wrap wikiaJWPlayer -- src/*.js",
-    "build-vendor-css": "node-sass src/styles/vendor.scss --output-style compressed | postcss -u autoprefixer --autoprefixer.browsers=\"ie >= 11, Safari >= 7.1, last 2 versions\" > dist/vendor.css",
-    "build-vendor-css-dev": "node-sass src/styles/vendor.scss --output-style compressed | postcss -u autoprefixer --autoprefixer.browsers=\"ie >= 11, Safari >= 7.1, last 2 versions\" > dev/vendor.css",
-    "build-index-css": "node-sass src/styles/index.scss --output-style compressed | postcss -u autoprefixer --autoprefixer.browsers=\"ie >= 11, Safari >= 7.1, last 2 versions\" > dist/index.css",
-    "build-index-css-dev": "node-sass src/styles/index.scss --output-style compressed | postcss -u autoprefixer --autoprefixer.browsers=\"ie >= 11, Safari >= 7.1, last 2 versions\" > dev/index.css",
-    "build-all-css-dev": "npm run build-index-css-dev && npm run build-vendor-css-dev",
-    "build-i18n": "node scripts/i18n-build.es6",
-    "watch-scss": "nodemon -e scss -x \"npm run build-all-css-dev\"",
-    "watch-other": "nodemon -e html --ignore dist/ -x \"npm run copy-html\"",
-    "watch-js": "nodemon -e js --ignore dist/ -x \"npm run build-js-dev\"",
-    "watch-i18n": "nodemon --watch src/locales -e json --ignore dist/ -x \"npm run build-i18n\""
-  },
-  "publishConfig": {
-    "registry": "https://artifactory.wikia-inc.com/artifactory/api/npm/wikia-npm/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Wikia/jwplayer-fandom.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Wikia/jwplayer-fandom/issues"
-  },
-  "homepage": "https://github.com/Wikia/jwplayer-fandom#readme",
-  "devDependencies": {
-    "autoprefixer": "7.1.6",
-    "design-system": "git+https://github.com/Wikia/design-system.git#8.12.0",
-    "http-server": "0.10.0",
-    "node-sass": "4.11.0",
-    "nodemon": "1.12.1",
-    "npm-run-all": "4.1.1",
-    "postcss-cli": "4.1.1",
-    "uglify-js": "3.1.5"
-  }
+	"name": "@fandom/jwplayer-fandom",
+	"version": "2.0.0",
+	"description": "JWPlayer for Fandom",
+	"exports": {
+		".": "./main.js",
+		"./DesktopArticleVideoLoader": "./DesktopArticleVideoLoader.js",
+		"./MobileArticleVideoLoader": "./MobileArticleVideoLoader.js",
+		"./CanonicalVideoLoader": "./CanonicalVideoLoader.js"
+	},
+	"types": "main.d.ts",
+	"install-peers": "install-peers",
+	"scripts": {
+		"build": "yarn run create-dist && rollup -c && cp package.json dist/ && cd dist && npm set-script prepare ''",
+		"watch": "yarn run create-dist && NODE_ENV=development rollup -c --watch",
+		"app": "cd test-jw && yarn && yarn start",
+		"create-dist": "rm -rf dist && mkdir -p dist",
+		"cp:loop": " while true; do cp dist/bundle.esm.js test-jw/src; sleep 10; done",
+		"lint": "yarn eslint src && yarn prettier --check src",
+		"lint:fix": "npm-run-all --continue-on-error --parallel lint:prettier lint:eslint",
+		"lint:prettier:src": "prettier --write src",
+		"lint:prettier:scripts": "prettier --write scripts",
+		"lint:prettier:tests": "prettier --write tests",
+		"lint:prettier": "npm-run-all --continue-on-error --parallel lint:prettier:src",
+		"lint:eslint:src": "eslint --cache --fix src",
+		"lint:eslint:scripts": "eslint --cache --fix scripts",
+		"lint:eslint:tests": "eslint --cache --fix tests",
+		"lint:eslint": "npm-run-all --continue-on-error --parallel lint:eslint:src",
+		"test": "echo 'No Tests yet'",
+		"prepare": "husky install",
+		"pub:patch": "npm version patch && rm -rf dist && yarn pub",
+		"pub:minor": "npm version minor && rm -rf dist && yarn pub",
+		"pub:major": "npm version major && rm -rf dist && yarn pub",
+		"pub": "yarn build && cd dist && npm publish --tag beta"
+	},
+	"lint-staged": {
+		"src/**/*.(ts|tsx|js)": [
+			"prettier --write",
+			"eslint --cache  --fix"
+		],
+		"scripts/**/*.(ts|tsx|js)": [
+			"prettier --write",
+			"eslint --cache  --fix"
+		],
+		"tests/**/*.(ts|tsx|js)": [
+			"prettier --write",
+			"eslint --cache  --fix"
+		],
+		"src/**/*.json": [
+			"prettier --write"
+		],
+		"src/**/*.md": [
+			"prettier --write"
+		],
+		"scripts/**/*.json": [
+			"prettier --write"
+		],
+		"tests/**/*.json": [
+			"prettier --write"
+		],
+		"*.js": "eslint --cache --fix",
+		"*.{js,css,md}": "prettier --write"
+	},
+	"publishConfig": {
+		"registry": "https://artifactory.wikia-inc.com/artifactory/api/npm/wikia-npm/"
+	},
+	"repository": "git+https://github.com/Wikia/jwplayer-fandom.git",
+	"author": "Warren Leaverton <wleaverton@fandom.com>",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Wikia/jwplayer-fandom/issues"
+	},
+	"homepage": "https://github.com/Wikia/jwplayer-fandom#readme",
+	"devDependencies": {
+		"@babel/cli": "^7.16.0",
+		"@babel/core": "^7.16.5",
+		"@babel/plugin-proposal-optional-chaining": "^7.16.5",
+		"@babel/preset-env": "^7.16.5",
+		"@babel/preset-react": "^7.16.5",
+		"@babel/preset-typescript": "^7.16.5",
+		"@fandom-frontend/eslint-config": "^3.0.0",
+		"@fandom-frontend/prettier-config": "^2.1.0",
+		"@rollup/plugin-babel": "5.3.0",
+		"@rollup/plugin-commonjs": "21.0.1",
+		"@rollup/plugin-json": "4.1.0",
+		"@rollup/plugin-node-resolve": "13.1.3",
+		"@rollup/plugin-replace": "4.0.0",
+		"@rollup/plugin-typescript": "8.3.0",
+		"@types/react": "17.0.39",
+		"@types/styled-components": "^5.1.18",
+		"@typescript-eslint/eslint-plugin": "5.16.0",
+		"@typescript-eslint/parser": "5.16.0",
+		"babel-plugin-styled-components": "^2.0.2",
+		"eslint": "^7.0.0",
+		"eslint-config-prettier": "8.4.0",
+		"husky": ">=6",
+		"lint-staged": "12.3.4",
+		"node-watch": "0.7.3",
+		"npm-run-all": "4.1.5",
+		"prettier": "2.5.1",
+		"rollup": "2.68.0",
+		"rollup-plugin-dts": "4.2.0",
+		"rollup-plugin-terser": "7.0.2",
+		"tslib": "^2.3.1",
+		"typescript": "^4.5.4"
+	},
+	"peerDependencies": {
+		"i18next": "^19.7.0",
+		"react": "^16.14.0 || ^17.0.2 || ^18.0.0",
+		"react-dom": "^16.14.0 || ^17.0.2 || ^18.0.0",
+		"react-i18next": "^11.7.1"
+	},
+	"dependencies": {
+		"@fandom-frontend/design-system": "9.0.0",
+		"@fandom-frontend/react-common": "6.35.0",
+		"@fandom/context": "^0.6.1",
+		"@fandom/tracking-metrics": "0.0.18-alpha-2",
+		"@wikia/post-quecast": "2.0.1",
+		"js-cookie": "3.0.1",
+		"rxjs": "7.5.4",
+		"styled-components": "^5.3.3"
+	}
 }

@@ -1,0 +1,21 @@
+{
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/*.d.ts"],
+  "exclude": ["node_modules", "old/**/*", "src/locales/**/*", "dist/**/*"],
+  "compilerOptions": {
+    "outDir": "dist",
+    "lib": ["es5", "es6", "es7", "es2017", "dom"],
+    "module": "es2020",
+    "target": "es5",
+    "jsx": "react",
+    "allowJs": true,
+    "checkJs": false,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "paths": {
+      "*": ["node_modules", "src/*"]
+    },
+    "baseUrl": "./",
+    "typeRoots": ["src/types", "node_modules/@types"],
+    "resolveJsonModule": true
+  }
+}

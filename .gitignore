@@ -4,3 +4,6 @@ node_modules
 dev
 .cache
 *.iml
+.eslintcache
+yarn-error.log
+dist

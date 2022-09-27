@@ -1,0 +1,8 @@
+/dist
+/src/old
+/.history
+/.vscode
+*.svg
+*.sh
+**/temp/**
+test-jw

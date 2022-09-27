@@ -1,0 +1,50 @@
+{
+    "name": "jwplayer-fandom",
+    "version": "1.12.1",
+    "description": "JWPlayer for Fandom",
+    "main": "index.js",
+    "scripts": {
+      "dev": "npm run build-dev && npm-run-all --parallel watch-other watch-js watch-scss watch-i18n server",
+      "server": "http-server -c-1 dev",
+      "copy-html": "mkdir -p dev && cp src/*.html dev/",
+      "create-dist": "mkdir -p dist",
+      "build": "npm run create-dist && npm run build-i18n && npm run build-index-css && npm run build-js",
+      "build-dev": "npm run copy-html && npm run build-i18n && npm run build-all-css-dev && npm run build-js-dev",
+      "build-js": "uglifyjs --compress --mangle -o dist/wikiajwplayer.js --wrap wikiaJWPlayer -- src/*.js",
+      "build-js-dev": "uglifyjs -o dev/wikiajwplayer.js --wrap wikiaJWPlayer -- src/*.js",
+      "build-vendor-css": "node-sass src/styles/vendor.scss --output-style compressed | postcss -u autoprefixer --autoprefixer.browsers=\"ie >= 11, Safari >= 7.1, last 2 versions\" > dist/vendor.css",
+      "build-vendor-css-dev": "node-sass src/styles/vendor.scss --output-style compressed | postcss -u autoprefixer --autoprefixer.browsers=\"ie >= 11, Safari >= 7.1, last 2 versions\" > dev/vendor.css",
+      "build-index-css": "node-sass src/styles/index.scss --output-style compressed | postcss -u autoprefixer --autoprefixer.browsers=\"ie >= 11, Safari >= 7.1, last 2 versions\" > dist/index.css",
+      "build-index-css-dev": "node-sass src/styles/index.scss --output-style compressed | postcss -u autoprefixer --autoprefixer.browsers=\"ie >= 11, Safari >= 7.1, last 2 versions\" > dev/index.css",
+      "build-all-css-dev": "npm run build-index-css-dev && npm run build-vendor-css-dev",
+      "build-i18n": "node scripts/i18n-build.es6",
+      "watch-scss": "nodemon -e scss -x \"npm run build-all-css-dev\"",
+      "watch-other": "nodemon -e html --ignore dist/ -x \"npm run copy-html\"",
+      "watch-js": "nodemon -e js --ignore dist/ -x \"npm run build-js-dev\"",
+      "watch-i18n": "nodemon --watch src/locales -e json --ignore dist/ -x \"npm run build-i18n\""
+    },
+    "publishConfig": {
+      "registry": "https://artifactory.wikia-inc.com/artifactory/api/npm/wikia-npm/"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/Wikia/jwplayer-fandom.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/Wikia/jwplayer-fandom/issues"
+    },
+    "homepage": "https://github.com/Wikia/jwplayer-fandom#readme",
+    "devDependencies": {
+      "autoprefixer": "7.1.6",
+      "design-system": "git+https://github.com/Wikia/design-system.git#8.12.0",
+      "http-server": "0.10.0",
+      "node-sass": "4.11.0",
+      "nodemon": "1.12.1",
+      "npm-run-all": "4.1.1",
+      "postcss-cli": "4.1.1",
+      "uglify-js": "3.1.5"
+    }
+  }
+  
