@@ -119,7 +119,6 @@ const VolumeSlider: React.FC<VolumeSliderProps> = ({ hover }) => {
 
 	const getSliderPercent = (event) => {
 		const sliderDiff = sliderRef?.current?.getBoundingClientRect().bottom - event.clientY;
-		console.log(event);
 		const sliderHeight = 88; // TODO: move this
 		const calcPercent = (sliderDiff / sliderHeight) * 100;
 
@@ -129,7 +128,12 @@ const VolumeSlider: React.FC<VolumeSliderProps> = ({ hover }) => {
 	if (!(hover || mouseDown)) return null;
 
 	return (
-		<SliderOverlay onMouseDown={onSliderMouseDown}>
+		<SliderOverlay
+			onClick={(event) => {
+				event.stopPropagation();
+			}}
+			onMouseDown={onSliderMouseDown}
+		>
 			<SliderWrapper>
 				<SliderContainer ref={sliderRef}>
 					<SliderRail />
