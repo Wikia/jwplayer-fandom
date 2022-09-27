@@ -57,8 +57,8 @@ const SliderBuffer = styled.div`
 	background: rgba(255, 255, 255, 0.3);
 `;
 
-const SliderProgress = styled.div<{ volume: number; mute: boolean }>`
-	background-color: rgb(0, 214, 214);
+const SliderProgress = styled.div<{ volume: number; mute: boolean; color: string }>`
+	background-color: ${(props) => props.color};
 	height: ${(props) => (props.mute ? '0' : props.volume)}%;
 	width: 5px;
 	backface-visibility: hidden;
@@ -71,7 +71,7 @@ const SliderProgress = styled.div<{ volume: number; mute: boolean }>`
 	pointer-events: none;
 `;
 
-const SliderKnob = styled.div<{ volume: number; mute: boolean }>`
+const SliderKnob = styled.div<{ volume: number; mute: boolean; color: string }>`
 	height: 13px;
 	width: 13px;
 	background-color: #fff;
@@ -84,14 +84,14 @@ const SliderKnob = styled.div<{ volume: number; mute: boolean }>`
 	transition: 150ms cubic-bezier(0, 0.25, 0.25, 1);
 	transition-property: opacity, transform;
 	transform: translate(-50%, 50%);
-	background-color: rgb(0, 214, 214);
+	background-color: ${(props) => props.color};
 	transform: translate(-50%, 50%);
 	left: 50%;
 	bottom: ${(props) => (props.mute ? '0' : props.volume)}%;
 	color: rgba(255, 255, 255, 0.8);
 `;
 
-const VolumeSlider: React.FC<VolumeSliderProps> = ({ hover }) => {
+const VolumeSlider: React.FC<VolumeSliderProps> = ({ hover, color }) => {
 	const { player } = useContext(PlayerContext);
 	const volume = useVolume();
 	const mute = useMute();
@@ -138,8 +138,8 @@ const VolumeSlider: React.FC<VolumeSliderProps> = ({ hover }) => {
 				<SliderContainer ref={sliderRef}>
 					<SliderRail />
 					<SliderBuffer />
-					<SliderProgress mute={mute} volume={volume} />
-					<SliderKnob mute={mute} volume={volume} />
+					<SliderProgress mute={mute} volume={volume} color={color} />
+					<SliderKnob mute={mute} volume={volume} color={color} />
 				</SliderContainer>
 			</SliderWrapper>
 		</SliderOverlay>

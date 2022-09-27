@@ -17,7 +17,7 @@ const Wrapper = styled.div<{ color?: string }>`
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	color: ${(props) => (props.color ? props.color : '#ffffff')};
+	color: ${(props) => props.color};
 `;
 
 const SoundButtonWrapper = styled.div`
@@ -28,16 +28,17 @@ const SoundButtonWrapper = styled.div`
 
 const StyledSoundOffIcon = styled(IconSoundOff)`
 	width: 44px;
-	fill: #fff;
+	fill: ${(props) => props.fill};
 `;
 
 const StyledSoundIcon = styled(IconSound)`
 	width: 44px;
-	fill: #fff;
+	fill: ${(props) => props.fill};
 `;
 
 const VolumeStateWrapper: React.FC<VolumeStateWrapperProps> = ({
 	iconColor = '#fff',
+	sliderColor = 'rgb(0, 214, 214)',
 	hasSlider = true,
 	hasLabel = false,
 }) => {
@@ -52,8 +53,8 @@ const VolumeStateWrapper: React.FC<VolumeStateWrapperProps> = ({
 	return (
 		<Wrapper onClick={onClick} color={iconColor}>
 			<SoundButtonWrapper onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-				{hasSlider && <VolumeSlider hover={hover} />}
-				{mute ? <StyledSoundOffIcon /> : <StyledSoundIcon />}
+				{hasSlider && <VolumeSlider color={sliderColor} hover={hover} />}
+				{mute ? <StyledSoundOffIcon fill={iconColor} /> : <StyledSoundIcon fill={iconColor} />}
 			</SoundButtonWrapper>
 			{mute && hasLabel && 'Play Sound'}
 		</Wrapper>
