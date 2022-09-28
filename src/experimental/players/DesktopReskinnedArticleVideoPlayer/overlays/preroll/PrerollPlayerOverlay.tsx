@@ -1,6 +1,6 @@
 import React from 'react';
 import PlayerOverlay from 'experimental/shared/PlayerOverlay';
-import { PrerollPlayerOverlayProps } from 'jwplayer/types';
+import { PrerollPlayerOverlayProps } from 'experimental/types';
 import PrerollPlayerFullOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/preroll/PrerollPlayerFullOverlay';
 import PrerollPlayerScrollOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/preroll/PrerollPlayerScrollOverlay';
 

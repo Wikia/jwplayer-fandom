@@ -305,27 +305,8 @@ export interface DesktopArticleVideoPlayerProps {
 	videoDetails: ArticleVideoDetails;
 }
 
-export interface ContentPlayerOverlayProps {
-	isScrollPlayer: boolean;
-	setDismissed: (dismissed: boolean) => void;
-}
-
-export interface PrerollPlayerOverlayProps {
-	isScrollPlayer: boolean;
-	setDismissed: (dismissed: boolean) => void;
-}
-
 export interface MobileArticleVideoPlayerProps {
 	hasPartnerSlot?: boolean;
 	isFullScreen?: boolean;
 	videoDetails: ArticleVideoDetails;
-}
-
-export interface TimeSliderProps {
-	className?: string;
-	interactive?: boolean;
-	railColor?: string;
-	bufferColor?: string;
-	knobColor?: string;
-	progressColor?: string;
 }

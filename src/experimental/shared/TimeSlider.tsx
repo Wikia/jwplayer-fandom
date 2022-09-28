@@ -4,7 +4,7 @@ import useBufferUpdate from 'experimental/utils/useBufferUpdate';
 import useProgressUpdate from 'experimental/utils/useProgressUpdate';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
-import { TimeSliderProps } from 'jwplayer/types';
+import { TimeSliderProps } from 'experimental/types';
 
 const TimeSliderWrapper = styled.div`
 	z-index: ${Number(WDSVariables.z8) + 1};
