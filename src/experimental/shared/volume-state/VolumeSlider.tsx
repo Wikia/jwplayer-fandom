@@ -12,6 +12,7 @@ const SliderOverlay = styled.div`
 	background-color: transparent;
 	float: none;
 	vertical-align: baseline;
+	z-index: 802;
 `;
 
 const SliderWrapper = styled.div`

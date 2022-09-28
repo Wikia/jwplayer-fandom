@@ -7,6 +7,7 @@ import ControlBarWrapper, {
 	ControlBarRightAlignedButtonContainer,
 } from 'experimental/shared/ControlBar';
 import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
+import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
 import PlayerOverlay from 'experimental/shared/PlayerOverlay';
 
 const PlayerOverlayStyled = styled(PlayerOverlay)`
@@ -28,7 +29,9 @@ const ContentPlayerFullOverlay: React.FC = () => {
 					<ControlBarLeftAlignedButtonContainer>
 						<PlayStateWrapper />
 					</ControlBarLeftAlignedButtonContainer>
-					<ControlBarLeftAlignedButtonContainer>1</ControlBarLeftAlignedButtonContainer>
+					<ControlBarLeftAlignedButtonContainer>
+						<VolumeStateWrapper />
+					</ControlBarLeftAlignedButtonContainer>
 					<ControlBarRightAlignedButtonContainer>2</ControlBarRightAlignedButtonContainer>
 				</ControlBarButtonWrapper>
 			</ControlBarWrapper>
