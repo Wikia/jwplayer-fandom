@@ -28,3 +28,8 @@ export interface TimeSliderProps {
 	knobColor?: string;
 	progressColor?: string;
 }
+
+export interface PlayerFullOverlayTopTextProps {
+	upperText: string;
+	lowerText: string;
+}

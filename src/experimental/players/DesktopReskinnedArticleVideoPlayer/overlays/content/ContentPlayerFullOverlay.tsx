@@ -1,17 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import TimeSlider from 'experimental/shared/TimeSlider';
-import ControlBarWrapper, {
-	ControlBarButtonWrapper,
-	ControlBarLeftAlignedButtonContainer,
-	ControlBarRightAlignedButtonContainer,
-} from 'experimental/shared/ControlBar';
 import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
 import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
-import PlayerOverlay from 'experimental/shared/PlayerOverlay';
+import { PlayerFullOverlayWrapper } from 'experimental/shared/FullOverlay/PlayerFullOverlayWrapper';
+import usePlaylistItem from 'jwplayer/utils/usePlaylistItem';
+import PlayerFullOverlayTopText from 'experimental/shared/FullOverlay/PlayerFullOverlayTopText';
 
-const PlayerOverlayStyled = styled(PlayerOverlay)`
-	padding: 1em 1.6em;
+const ControlWrapper = styled.div`
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+`;
+
+const PlayVolumeWrapper = styled.div`
+	display: flex;
 `;
 
 const ContentOverlayTimeSlider = styled(TimeSlider)`
@@ -20,22 +23,29 @@ const ContentOverlayTimeSlider = styled(TimeSlider)`
 	height: 17px;
 `;
 
+const BottomWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+`;
+
 const ContentPlayerFullOverlay: React.FC = () => {
+	const playlistItem = usePlaylistItem();
+	const upperText = 'Now Playing';
+	const lowerText = playlistItem?.title;
+
 	return (
-		<PlayerOverlayStyled>
-			<ControlBarWrapper id={'control-bar-wrapper'}>
+		<PlayerFullOverlayWrapper>
+			<PlayerFullOverlayTopText upperText={upperText} lowerText={lowerText} />
+			<BottomWrapper>
 				<ContentOverlayTimeSlider />
-				<ControlBarButtonWrapper>
-					<ControlBarLeftAlignedButtonContainer>
-						<PlayStateWrapper />
-					</ControlBarLeftAlignedButtonContainer>
-					<ControlBarLeftAlignedButtonContainer>
-						<VolumeStateWrapper />
-					</ControlBarLeftAlignedButtonContainer>
-					<ControlBarRightAlignedButtonContainer>2</ControlBarRightAlignedButtonContainer>
-				</ControlBarButtonWrapper>
-			</ControlBarWrapper>
-		</PlayerOverlayStyled>
+				<ControlWrapper>
+					<PlayVolumeWrapper>
+						<PlayStateWrapper iconColor={'#fff'} />
+						<VolumeStateWrapper iconColor={'#fff'} hasSlider={true} hasLabel={false} />
+					</PlayVolumeWrapper>
+				</ControlWrapper>
+			</BottomWrapper>
+		</PlayerFullOverlayWrapper>
 	);
 };
 
