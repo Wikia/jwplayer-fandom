@@ -1,53 +1,39 @@
 import React from 'react';
-import styled from 'styled-components';
-import VideoDetails from 'jwplayer/players/DesktopArticleVideoPlayer/VideoDetails';
-import CloseButton from 'jwplayer/players/shared/CloseButton';
-import TimeSlider from 'experimental/shared/TimeSlider';
-import ControlBarWrapper, {
-	ControlBarButtonWrapper,
-	ControlBarLeftAlignedButtonContainer,
-	ControlBarRightAlignedButtonContainer,
-} from 'experimental/shared/ControlBar';
 import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
-import PlayerOverlay from 'experimental/shared/PlayerOverlay';
+import styled from 'styled-components';
+import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
+import LearnMoreButton from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/preroll/LearnMoreButton';
+import OverlayTimeSliderBottom from 'experimental/shared/OverlayTimeSliderBottom';
 
-const TopBar = styled.div`
+const PlayStateContainer = styled.div`
 	width: 100%;
-	position: relative;
-`;
-
-const PlayerOverlayStyled = styled(PlayerOverlay)`
-	padding: 1em 1.6em;
-`;
-
-const ContentOverlayTimeSlider = styled(TimeSlider)`
-	padding: 0 12px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 	align-items: center;
-	height: 17px;
+`;
+
+const BottomControls = styled.div`
+	display: flex;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	justify-content: space-between;
 `;
 
 const ContentPlayerScrollOverlay: React.FC = () => {
 	return (
-		<PlayerOverlayStyled>
-			<TopBar>
-				<CloseButton
-					dismiss={() => {
-						console.log('dismissed');
-					}}
-				/>
-			</TopBar>
-			<ControlBarWrapper id={'control-bar-wrapper'}>
-				<ContentOverlayTimeSlider />
-				<ControlBarButtonWrapper>
-					<ControlBarLeftAlignedButtonContainer>
-						<PlayStateWrapper />
-					</ControlBarLeftAlignedButtonContainer>
-					<ControlBarLeftAlignedButtonContainer>1</ControlBarLeftAlignedButtonContainer>
-					<ControlBarRightAlignedButtonContainer>2</ControlBarRightAlignedButtonContainer>
-				</ControlBarButtonWrapper>
-			</ControlBarWrapper>
-			<VideoDetails />
-		</PlayerOverlayStyled>
+		<>
+			<PlayStateContainer>
+				<PlayStateWrapper iconColor={'#fff'} />
+			</PlayStateContainer>
+			<BottomControls>
+				<VolumeStateWrapper iconColor={'#fff'} hasSlider={false} hasLabel={true} />
+				<LearnMoreButton />
+				<OverlayTimeSliderBottom />
+			</BottomControls>
+		</>
 	);
 };
 
