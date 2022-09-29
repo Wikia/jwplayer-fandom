@@ -2,7 +2,7 @@ import React from 'react';
 import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
 import styled from 'styled-components';
 import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
-import LearnMoreButton from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/preroll/LearnMoreButton';
+import PlayerCTAButton from 'experimental/shared/PlayerCTAButton';
 
 const PlayStateContainer = styled.div`
 	width: 100%;
@@ -29,7 +29,12 @@ const PrerollPlayerScrollOverlay: React.FC = () => {
 			</PlayStateContainer>
 			<BottomControls>
 				<VolumeStateWrapper iconColor={'#fff'} hasSlider={false} hasLabel={true} />
-				<LearnMoreButton />
+				<PlayerCTAButton
+					text={'Learn More'}
+					onClick={() => {
+						console.log('learn more');
+					}}
+				/>
 			</BottomControls>
 		</>
 	);

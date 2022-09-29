@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { PlayerCTAButtonProps } from 'experimental/types';
 
 const ButtonStyled = styled.button`
 	width: 132px;
@@ -11,8 +12,8 @@ const ButtonStyled = styled.button`
 	font-weight: 500px;
 `;
 
-const LearnMoreButton: React.FC = () => {
-	return <ButtonStyled>Learn More</ButtonStyled>;
+const PlayerCTAButton: React.FC<PlayerCTAButtonProps> = ({ text, onClick }) => {
+	return <ButtonStyled onClick={onClick}>{text}</ButtonStyled>;
 };
 
-export default LearnMoreButton;
+export default PlayerCTAButton;

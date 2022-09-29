@@ -33,3 +33,8 @@ export interface PlayerFullOverlayTopTextProps {
 	upperText: string;
 	lowerText: string;
 }
+
+export interface PlayerCTAButtonProps {
+	text: string;
+	onClick: () => void;
+}

@@ -4,7 +4,7 @@ import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
 import usePlaylistItem from 'jwplayer/utils/usePlaylistItem';
 import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
 import useAdTime from 'jwplayer/utils/useAdTime';
-import LearnMoreButton from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/preroll/LearnMoreButton';
+import PlayerCTAButton from 'experimental/shared/PlayerCTAButton';
 import PlayerFullOverlayTopText from 'experimental/shared/FullOverlay/PlayerFullOverlayTopText';
 import { PlayerFullOverlayWrapper } from 'experimental/shared/FullOverlay/PlayerFullOverlayWrapper';
 
@@ -32,7 +32,12 @@ const PrerollPlayerFullOverlay: React.FC = () => {
 					<PlayStateWrapper iconColor={'#fff'} />
 					<VolumeStateWrapper iconColor={'#fff'} sliderColor={'#FFC500'} hasSlider={true} hasLabel={false} />
 				</PlayVolumeWrapper>
-				<LearnMoreButton />
+				<PlayerCTAButton
+					text={'Learn More'}
+					onClick={() => {
+						console.log('learn more');
+					}}
+				/>
 			</ControlWrapper>
 		</PlayerFullOverlayWrapper>
 	);

@@ -2,7 +2,7 @@ import React from 'react';
 import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
 import styled from 'styled-components';
 import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
-import LearnMoreButton from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/preroll/LearnMoreButton';
+import PlayerCTAButton from 'experimental/shared/PlayerCTAButton';
 import OverlayTimeSliderBottom from 'experimental/shared/OverlayTimeSliderBottom';
 
 const PlayStateContainer = styled.div`
@@ -30,7 +30,12 @@ const ContentPlayerScrollOverlay: React.FC = () => {
 			</PlayStateContainer>
 			<BottomControls>
 				<VolumeStateWrapper iconColor={'#fff'} hasSlider={false} hasLabel={true} />
-				<LearnMoreButton />
+				<PlayerCTAButton
+					text={'Watch More'}
+					onClick={() => {
+						console.log('watch more');
+					}}
+				/>
 				<OverlayTimeSliderBottom />
 			</BottomControls>
 		</>
