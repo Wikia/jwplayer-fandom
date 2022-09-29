@@ -7,6 +7,7 @@ import { PlayerFullOverlayWrapper } from 'experimental/shared/FullOverlay/Player
 import usePlaylistItem from 'jwplayer/utils/usePlaylistItem';
 import PlayerFullOverlayTopText from 'experimental/shared/FullOverlay/PlayerFullOverlayTopText';
 import PlayerCTAButton from 'experimental/shared/PlayerCTAButton';
+import TimeRemaining from 'experimental/shared/TimeRemaining';
 
 const ControlWrapper = styled.div`
 	width: 100%;
@@ -43,14 +44,15 @@ const ContentPlayerFullOverlay: React.FC = () => {
 					<PlayVolumeWrapper>
 						<PlayStateWrapper iconColor={'#fff'} />
 						<VolumeStateWrapper iconColor={'#fff'} hasSlider={true} hasLabel={false} />
+						<TimeRemaining />
 					</PlayVolumeWrapper>
+					<PlayerCTAButton
+						text={'Watch More'}
+						onClick={() => {
+							console.log('watch more');
+						}}
+					/>
 				</ControlWrapper>
-				<PlayerCTAButton
-					text={'Watch More'}
-					onClick={() => {
-						console.log('watch more');
-					}}
-				/>
 			</BottomWrapper>
 		</PlayerFullOverlayWrapper>
 	);

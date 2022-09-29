@@ -37,4 +37,5 @@ export interface PlayerFullOverlayTopTextProps {
 export interface PlayerCTAButtonProps {
 	text: string;
 	onClick: () => void;
+	isScrollPlayer?: boolean;
 }

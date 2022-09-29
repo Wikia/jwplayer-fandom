@@ -30,6 +30,7 @@ const PrerollPlayerScrollOverlay: React.FC = () => {
 			<BottomControls>
 				<VolumeStateWrapper iconColor={'#fff'} hasSlider={false} hasLabel={true} />
 				<PlayerCTAButton
+					isScrollPlayer={true}
 					text={'Learn More'}
 					onClick={() => {
 						console.log('learn more');

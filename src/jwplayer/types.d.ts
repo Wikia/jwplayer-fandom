@@ -119,6 +119,12 @@ export interface ShareEventData {
 	method: string;
 }
 
+export interface TimeEventData {
+	duration: number;
+	position: number;
+	viewable: number;
+}
+
 type JwEventData =
 	| PlayPlayerEventData
 	| PausePlayerEventData
@@ -133,7 +139,8 @@ type JwEventData =
 	| SeekEventData
 	| AdEvents
 	| OnAdTimeEventData
-	| ShareEventData;
+	| ShareEventData
+	| TimeEventData;
 type JwEventHandler = (event?: JwEventData) => void;
 
 interface BasePluginInterface {
