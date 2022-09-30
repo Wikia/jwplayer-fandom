@@ -5,15 +5,10 @@ import useOnScreen from 'utils/useOnScreen';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import { DesktopArticleVideoPlayerProps } from 'jwplayer/types';
 import Attribution from 'jwplayer/players/DesktopArticleVideoPlayer/Attribution';
-// import useAdBreak from 'jwplayer/utils/useAdBreak';
-import ContentPlayerOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/content/ContentPlayerOverlay';
-import PrerollPlayerOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/preroll/PrerollPlayerOverlay';
-
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
-
-/* import useAdComplete from 'jwplayer/utils/useAdComplete'; */
+import DesktopReskinnedArticleVideoPlayerOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/DesktopReskinnedArticleVideoPlayerOverlay';
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
 	position: absolute;
@@ -76,8 +71,6 @@ const DesktopReskinnedArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProp
 	const boundingClientRect = placeholderRef.current?.getBoundingClientRect();
 	const right = boundingClientRect?.right;
 	const width = boundingClientRect?.width;
-	// const adBreak = useAdBreak();
-	const [adBreak, setAdBreak] = useState(false);
 
 	return (
 		<PlayerWrapper playerName="jw-desktop-article-video">
@@ -89,11 +82,7 @@ const DesktopReskinnedArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProp
 						width={width}
 						isScrollPlayer={isScrollPlayer}
 					>
-						{adBreak ? (
-							<PrerollPlayerOverlay isScrollPlayer={isScrollPlayer} setDismissed={setDismissed} />
-						) : (
-							<ContentPlayerOverlay isScrollPlayer={isScrollPlayer} setDismissed={setDismissed} />
-						)}
+						<DesktopReskinnedArticleVideoPlayerOverlay isScrollPlayer={isScrollPlayer} setDismissed={setDismissed} />
 						<JwPlayerWrapper
 							playerUrl={'https://cdn.jwplayer.com/libraries/FEZLNIW0.js'}
 							config={getArticleVideoConfig(videoDetails)}
@@ -105,9 +94,6 @@ const DesktopReskinnedArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProp
 				)}
 			</DesktopArticleVideoTopPlaceholder>
 			<Attribution /> {/* TODO: will need to check here as well */}
-			<button style={{ position: 'absolute', bottom: 0 }} onClick={() => setAdBreak(!adBreak)}>
-				TEST
-			</button>
 		</PlayerWrapper>
 	);
 };

@@ -3,6 +3,7 @@ import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
 import styled from 'styled-components';
 import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
 import PlayerCTAButton from 'experimental/shared/PlayerCTAButton';
+import useAdImpression from 'jwplayer/utils/useAdImpression';
 
 const PlayStateContainer = styled.div`
 	width: 100%;
@@ -22,6 +23,8 @@ const BottomControls = styled.div`
 `;
 
 const PrerollPlayerScrollOverlay: React.FC = () => {
+	const adImpression = useAdImpression();
+
 	return (
 		<>
 			<PlayStateContainer>
@@ -33,7 +36,7 @@ const PrerollPlayerScrollOverlay: React.FC = () => {
 					isScrollPlayer={true}
 					text={'Learn More'}
 					onClick={() => {
-						console.log('learn more');
+						window.open(adImpression?.clickThroughUrl, '_blank').focus();
 					}}
 				/>
 			</BottomControls>

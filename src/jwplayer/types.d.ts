@@ -125,6 +125,30 @@ export interface TimeEventData {
 	viewable: number;
 }
 
+interface Bidder {
+	id: number;
+	name: string;
+	priceInCents: number;
+	result: string;
+	tagKey: number;
+	timeforBidResponse: number;
+	winner: boolean;
+}
+export interface AdImpressionEventData {
+	adposition: string;
+	adsystem: string;
+	adtitle: string;
+	bidders: Bidder[];
+	clickThroughUrl: string;
+	client: string;
+	creativetype: string;
+	duration: number;
+	linear: string;
+	tag: string;
+	timeLoading: number;
+	viewable: number;
+}
+
 type JwEventData =
 	| PlayPlayerEventData
 	| PausePlayerEventData
@@ -140,7 +164,9 @@ type JwEventData =
 	| AdEvents
 	| OnAdTimeEventData
 	| ShareEventData
-	| TimeEventData;
+	| TimeEventData
+	| AdImpressionEventData;
+
 type JwEventHandler = (event?: JwEventData) => void;
 
 interface BasePluginInterface {
@@ -316,4 +342,9 @@ export interface MobileArticleVideoPlayerProps {
 	hasPartnerSlot?: boolean;
 	isFullScreen?: boolean;
 	videoDetails: ArticleVideoDetails;
+}
+
+export interface DesktopReskinnedArticleVideoPlayerOverlayProps {
+	isScrollPlayer: boolean;
+	setDismissed: (dismissed: boolean) => void;
 }
