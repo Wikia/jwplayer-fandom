@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { JWPlayerApi, PlaylistItem, OnPlaylistItemEventData } from 'jwplayer/types';
+import { JWPlayerApi, PlaylistItem, OnPlaylistItemEventData, SponsoredVideo } from 'jwplayer/types';
 import FandomWirewaxPlugin from 'jwplayer/plugins/fandom-wirewax.plugin';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { JwPlayerWrapperProps } from 'jwplayer/types';
@@ -8,8 +8,10 @@ import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimin
 import JWEvents from 'jwplayer/players/shared/JWEvents';
 import addBaseTrackingEvents from 'jwplayer/players/shared/addBaseTrackingEvents';
 import slugify from 'jwplayer/utils/slugify';
+import getSponsoredVideos from 'utils/getSponsoredVideos';
 interface WindowJWPlayer extends Window {
 	jwplayer?: JWPlayerApi;
+	sponsoredVideo?: SponsoredVideo;
 }
 
 declare let window: WindowJWPlayer;
@@ -28,8 +30,18 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, on
 	const defaultConfig = {
 		plugins: { fandomWirewax: {} },
 	};
-
+	let sponsoredVideos: string[] = [];
 	useEffect(() => {
+		const retrieveSponsoredVideo = async () => {
+			const sponsoredVideoResponse = await getSponsoredVideos();
+			if (sponsoredVideoResponse) {
+				sponsoredVideos = sponsoredVideoResponse;
+				console.debug('SponsoredVideo list: ', sponsoredVideos);
+			}
+		};
+		retrieveSponsoredVideo().catch((e) => {
+			console.error('There was an issue with retrieving Sponsored Videos. ', e);
+		});
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_INIT_RENDER);
 		initPlayer('featured-video__player', playerUrl);
 	}, []);
@@ -75,6 +87,21 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, on
 			});
 
 			playerInstance.on(JWEvents.PLAYLIST_ITEM, (event: OnPlaylistItemEventData) => {
+				const nextMediaId = event?.item?.mediaid;
+				const isSponsoredVideo = sponsoredVideos.includes(nextMediaId);
+				console.debug('SponsoredVideo List: ', sponsoredVideos);
+				console.debug(
+					`Is Sponsored Video || next mediaId: ${event?.item?.mediaid} || sponsored video list: ${sponsoredVideos} || isSponsoredVideo: ${isSponsoredVideo}`,
+				);
+				if (window?.sponsoredVideo) {
+					window.sponsoredVideo.isSponsored = isSponsoredVideo;
+					window.sponsoredVideo.mediaId = nextMediaId;
+				} else {
+					window.sponsoredVideo = {
+						isSponsored: isSponsoredVideo,
+						mediaId: nextMediaId,
+					};
+				}
 				if (event.index >= 4) {
 					playerInstance.pause();
 				}

@@ -305,3 +305,8 @@ export interface MobileArticleVideoPlayerProps {
 	isFullScreen?: boolean;
 	videoDetails: ArticleVideoDetails;
 }
+
+export interface SponsoredVideo {
+	mediaId: string;
+	isSponsored: boolean;
+}
