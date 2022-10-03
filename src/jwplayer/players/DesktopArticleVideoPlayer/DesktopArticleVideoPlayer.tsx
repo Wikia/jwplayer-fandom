@@ -52,6 +52,7 @@ const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
 					z-index: ${Number(WDSVariables.z2) + 2};
 					position: fixed;
 					animation: ${moveDownAnimation(props.right, props.width)} 0.4s normal forwards;
+					-webkit-transform: translate3d(0, 0, 0);
 			  `
 			: css`
 					position: absolute;
