@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.0.0",
+	"version": "2.0.0-safari-scroll-bug-10",
 	"description": "JWPlayer for Fandom",
 	"exports": {
 		".": "./main.js",
