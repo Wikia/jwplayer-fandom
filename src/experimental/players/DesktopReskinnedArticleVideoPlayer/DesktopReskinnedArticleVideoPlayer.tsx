@@ -84,7 +84,7 @@ const DesktopReskinnedArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProp
 					>
 						<DesktopReskinnedArticleVideoPlayerOverlay isScrollPlayer={isScrollPlayer} setDismissed={setDismissed} />
 						<JwPlayerWrapper
-							playerUrl={'https://cdn.jwplayer.com/libraries/FEZLNIW0.js'}
+							playerUrl={'https://cdn.jwplayer.com/libraries/v46VcUMb.js'}
 							config={getArticleVideoConfig(videoDetails)}
 							onReady={(playerInstance) => {
 								articlePlayerOnReady(videoDetails, playerInstance);
