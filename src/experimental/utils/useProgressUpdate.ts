@@ -25,6 +25,7 @@ const useProgressUpdate = (): ProgressUpdateData => {
 
 	useEffect(() => {
 		player?.on(JWEvents.TIME, getProgressData);
+		player?.on(JWEvents.AD_TIME, getProgressData);
 	}, [player]);
 
 	return progressData;

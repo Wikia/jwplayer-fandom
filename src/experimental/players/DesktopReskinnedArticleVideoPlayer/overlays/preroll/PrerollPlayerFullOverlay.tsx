@@ -24,7 +24,7 @@ const PrerollPlayerFullOverlay: React.FC = () => {
 	const adTime = useAdTime();
 	const adImpression = useAdImpression();
 	const upperText = `Up next in ${adTime?.duration - adTime?.position} seconds`;
-	const lowerText = playlistItem.title;
+	const lowerText = playlistItem?.title;
 
 	return (
 		<PlayerFullOverlayWrapper>
