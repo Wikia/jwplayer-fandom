@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import VideoDetails from 'jwplayer/players/MobileArticleVideoPlayer/OffScreenOverlay/VideoDetails';
 import CloseButton from 'jwplayer/players/shared/CloseButton';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
-import useAdBreak from 'jwplayer/utils/useAdBreak';
 
 interface OffScreenOverlayWrapperProps {
 	playing: boolean;
@@ -29,9 +28,6 @@ interface OffScreenOverlayProps {
 const OffScreenOverlay: React.FC<OffScreenOverlayProps> = ({ dismiss, isScrollPlayer }) => {
 	const playing = usePlaying();
 	const controlbar = document.querySelector<HTMLElement>('.jw-controlbar');
-	const adBreak = useAdBreak();
-
-	console.log('adBreak:', adBreak);
 
 	if (!playing) {
 		if (controlbar) controlbar.style.visibility = 'hidden';

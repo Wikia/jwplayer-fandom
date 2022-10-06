@@ -21,6 +21,7 @@ const JWEvents = {
 	// Ad Events
 	AD_LOADED: 'adLoaded',
 	AD_PLAY: 'adPlay',
+	AD_PAUSE: 'adPause',
 	AD_STARTED: 'adStarted',
 	AD_FINISHED: 'adComplete',
 	AD_TIME: 'adTime',

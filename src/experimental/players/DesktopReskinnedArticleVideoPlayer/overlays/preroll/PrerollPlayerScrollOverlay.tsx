@@ -28,7 +28,7 @@ const PrerollPlayerScrollOverlay: React.FC = () => {
 	return (
 		<>
 			<PlayStateContainer>
-				<PlayStateWrapper iconColor={'#fff'} />
+				<PlayStateWrapper iconColor={'#fff'} isAd={true} />
 			</PlayStateContainer>
 			<BottomControls>
 				<VolumeStateWrapper iconColor={'#fff'} hasSlider={false} hasLabel={true} />

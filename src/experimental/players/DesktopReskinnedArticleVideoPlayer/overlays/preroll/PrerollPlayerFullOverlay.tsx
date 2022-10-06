@@ -17,6 +17,7 @@ const ControlWrapper = styled.div`
 
 const PlayVolumeWrapper = styled.div`
 	display: flex;
+	pointer-events: auto;
 `;
 
 const PrerollPlayerFullOverlay: React.FC = () => {
@@ -31,7 +32,7 @@ const PrerollPlayerFullOverlay: React.FC = () => {
 			<PlayerFullOverlayTopText upperText={upperText} lowerText={lowerText} />
 			<ControlWrapper>
 				<PlayVolumeWrapper>
-					<PlayStateWrapper iconColor={'#fff'} />
+					<PlayStateWrapper iconColor={'#fff'} isAd={true} />
 					<VolumeStateWrapper iconColor={'#fff'} sliderColor={'#FFC500'} hasSlider={true} hasLabel={false} />
 				</PlayVolumeWrapper>
 				<PlayerCTAButton

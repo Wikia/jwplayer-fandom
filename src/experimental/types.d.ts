@@ -22,7 +22,6 @@ export interface PrerollPlayerOverlayProps {
 
 export interface TimeSliderProps {
 	className?: string;
-	interactive?: boolean;
 	railColor?: string;
 	bufferColor?: string;
 	knobColor?: string;

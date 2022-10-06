@@ -2,12 +2,14 @@ import React from 'react';
 import PlayButton, { PlayButtonProps } from 'experimental/shared/play-state/PlayButton';
 import PauseButton, { PauseButtonProps } from 'experimental/shared/play-state/PauseButton';
 import usePlaying from 'jwplayer/utils/usePlaying';
+import useAdPlaying from 'jwplayer/utils/useAdPlaying';
 import styled from 'styled-components';
 
 interface PlayStateWrapperProps {
 	playConfig?: PlayButtonProps;
 	pauseConfig?: PauseButtonProps;
 	iconColor?: string;
+	isAd?: boolean;
 }
 
 export const IconWrapper = styled.div`
@@ -30,8 +32,8 @@ const Wrapper = styled.div<{ color?: string }>`
 	}
 `;
 
-const PlayStateWrapper: React.FC<PlayStateWrapperProps> = ({ playConfig, pauseConfig, iconColor }) => {
-	const isPlaying = usePlaying();
+const PlayStateWrapper: React.FC<PlayStateWrapperProps> = ({ playConfig, pauseConfig, iconColor, isAd }) => {
+	const isPlaying = isAd ? useAdPlaying() : usePlaying();
 
 	return (
 		<Wrapper color={iconColor}>

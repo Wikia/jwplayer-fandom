@@ -1,18 +1,16 @@
 import React from 'react';
 import { DesktopReskinnedArticleVideoPlayerOverlayProps } from 'jwplayer/types';
-// import useAdBreak from 'jwplayer/utils/useAdBreak';
 import ContentPlayerOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/content/ContentPlayerOverlay';
 import PrerollPlayerOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/preroll/PrerollPlayerOverlay';
-import useAdPlaying from 'jwplayer/utils/useAdPlaying';
+import useAdStarted from 'jwplayer/utils/useAdStarted';
 
 const DesktopReskinnedArticleVideoPlayerOverlay: React.FC<DesktopReskinnedArticleVideoPlayerOverlayProps> = ({
 	isScrollPlayer,
 	setDismissed,
 }) => {
-	// const adBreak = useAdBreak();
-	const adPlaying = useAdPlaying();
+	const adStarted = useAdStarted();
 
-	if (adPlaying) {
+	if (adStarted) {
 		return <PrerollPlayerOverlay isScrollPlayer={isScrollPlayer} setDismissed={setDismissed} />;
 	} else {
 		return <ContentPlayerOverlay isScrollPlayer={isScrollPlayer} setDismissed={setDismissed} />;
