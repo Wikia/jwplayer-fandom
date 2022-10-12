@@ -14,6 +14,10 @@ export default function useAdStarted(): boolean {
 		player?.on(JWEvents.AD_COMPLETE, () => {
 			setAdStarted(false);
 		});
+
+		player?.on(JWEvents.AD_SKIPPED, () => {
+			setAdStarted(false);
+		});
 	}, [player]);
 
 	return adStarted;

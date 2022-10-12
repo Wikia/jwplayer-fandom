@@ -29,6 +29,7 @@ const JWEvents = {
 	AD_BREAK_END: 'adBreakEnd',
 	AD_IMPRESSION: 'adImpression',
 	AD_COMPLETE: 'adComplete',
+	AD_SKIPPED: 'adSkipped',
 
 	// Playlist
 	PLAYLIST_LOADED: 'playlist',
