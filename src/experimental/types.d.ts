@@ -12,12 +12,10 @@ export interface VolumeSliderProps {
 
 export interface ContentPlayerOverlayProps {
 	isScrollPlayer: boolean;
-	setDismissed: (dismissed: boolean) => void;
 }
 
 export interface PrerollPlayerOverlayProps {
 	isScrollPlayer: boolean;
-	setDismissed: (dismissed: boolean) => void;
 }
 
 export interface TimeSliderProps {
@@ -37,4 +35,13 @@ export interface PlayerCTAButtonProps {
 	text: string;
 	onClick: () => void;
 	isScrollPlayer?: boolean;
+}
+
+export interface DesktopReskinnedArticleVideoPlayerOverlayProps {
+	isScrollPlayer: boolean;
+}
+
+export interface DesktopScrollVideoTopContentProps {
+	isScrollPlayer: boolean;
+	onCloseClick: () => void;
 }

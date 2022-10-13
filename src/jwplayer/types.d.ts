@@ -343,8 +343,3 @@ export interface MobileArticleVideoPlayerProps {
 	isFullScreen?: boolean;
 	videoDetails: ArticleVideoDetails;
 }
-
-export interface DesktopReskinnedArticleVideoPlayerOverlayProps {
-	isScrollPlayer: boolean;
-	setDismissed: (dismissed: boolean) => void;
-}

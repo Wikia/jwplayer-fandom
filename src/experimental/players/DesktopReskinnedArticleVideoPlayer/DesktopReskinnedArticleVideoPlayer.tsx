@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
-import styled, { css, keyframes } from 'styled-components';
+import styled, { css } from 'styled-components';
 import useOnScreen from 'utils/useOnScreen';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import { DesktopArticleVideoPlayerProps } from 'jwplayer/types';
@@ -9,8 +9,10 @@ import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoC
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import DesktopReskinnedArticleVideoPlayerOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/DesktopReskinnedArticleVideoPlayerOverlay';
+import DesktopScrollVideoTopContent from 'experimental/players/DesktopReskinnedArticleVideoPlayer/DesktopScrollVideoTopContent';
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
+	z-index: ${Number(WDSVariables.z2) + 2};
 	position: absolute;
 	width: 100%;
 	padding-top: 56.25%;
@@ -19,20 +21,6 @@ const DesktopArticleVideoTopPlaceholder = styled.div`
 	bottom: 0;
 	right: 0;
 	z-index: 2;
-`;
-
-const moveDownAnimation = (right: number, width: number) => keyframes`
-	from {
-		right: ${right}px;
-		bottom: 100%;
-		width: ${width}px;
-	}
-
-	to {
-		right: 18px;
-		bottom: 45px;
-		width: 300px;  
-	}
 `;
 
 interface DesktopArticleVideoWrapperProps {
@@ -46,9 +34,10 @@ const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
 	${(props) =>
 		props.isScrollPlayer
 			? css`
-					z-index: ${Number(WDSVariables.z2) + 2};
+					right: 18px;
+					bottom: 45px;
+					width: 300px;
 					position: fixed;
-					animation: ${moveDownAnimation(props.right, props.width)} 0.4s normal forwards;
 			  `
 			: css`
 					position: absolute;
@@ -56,16 +45,14 @@ const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
 					right: 0;
 					top: 0;
 					left: 0;
-					transform: translateZ(0);
-					-webkit-transform: translateZ(0);
 			  `}
 `;
 
-const DesktopReskinnedArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
+const DesktopReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	/* TODO: FIX THIS - This is used to test the player locally ONLY */
 	const adComplete = true;
-	const onScreen = useOnScreen(placeholderRef, '0px', 0.1);
+	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
 	const boundingClientRect = placeholderRef.current?.getBoundingClientRect();
@@ -73,7 +60,7 @@ const DesktopReskinnedArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProp
 	const width = boundingClientRect?.width;
 
 	return (
-		<PlayerWrapper playerName="jw-desktop-article-video">
+		<>
 			<DesktopArticleVideoTopPlaceholder ref={placeholderRef}>
 				{adComplete && (
 					<DesktopArticleVideoWrapper
@@ -82,7 +69,8 @@ const DesktopReskinnedArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProp
 						width={width}
 						isScrollPlayer={isScrollPlayer}
 					>
-						<DesktopReskinnedArticleVideoPlayerOverlay isScrollPlayer={isScrollPlayer} setDismissed={setDismissed} />
+						<DesktopScrollVideoTopContent isScrollPlayer={isScrollPlayer} onCloseClick={() => setDismissed(true)} />
+						<DesktopReskinnedArticleVideoPlayerOverlay isScrollPlayer={isScrollPlayer} />
 						<JwPlayerWrapper
 							playerUrl={'https://cdn.jwplayer.com/libraries/v46VcUMb.js'}
 							config={getArticleVideoConfig(videoDetails)}
@@ -93,7 +81,15 @@ const DesktopReskinnedArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProp
 					</DesktopArticleVideoWrapper>
 				)}
 			</DesktopArticleVideoTopPlaceholder>
-			<Attribution /> {/* TODO: will need to check here as well */}
+			<Attribution />
+		</>
+	);
+};
+
+const DesktopReskinnedArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
+	return (
+		<PlayerWrapper playerName="jw-desktop-article-video">
+			<DesktopReskinnedArticleVideoPlayerContent videoDetails={videoDetails} />
 		</PlayerWrapper>
 	);
 };
