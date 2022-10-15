@@ -28,7 +28,6 @@ const ContentOverlayTimeSlider = styled(TimeSlider)`
 const BottomWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
-	pointer-events: auto;
 `;
 
 const ContentPlayerFullOverlay: React.FC = () => {

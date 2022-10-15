@@ -17,7 +17,6 @@ const ControlWrapper = styled.div`
 
 const PlayVolumeWrapper = styled.div`
 	display: flex;
-	pointer-events: auto;
 `;
 
 const PrerollPlayerFullOverlay: React.FC = () => {

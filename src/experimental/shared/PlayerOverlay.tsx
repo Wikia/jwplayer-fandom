@@ -9,7 +9,8 @@ const PlayerOverlay = styled.div`
 	height: 100%;
 	z-index: ${Number(WDSVariables.z7) + 2};
 	box-sizing: border-box;
-	pointer-events: none;
 `;
+
+// TODO: add hover behavior
 
 export default PlayerOverlay;

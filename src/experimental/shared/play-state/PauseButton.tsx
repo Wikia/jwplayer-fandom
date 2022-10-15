@@ -9,14 +9,16 @@ export interface PauseButtonProps {
 	 *
 	 *  There is no need to call the player.pause() event in this callback */
 	onClickCallback?: () => void;
+	isAd?: boolean;
 }
 
-const PauseButton: React.FC<PauseButtonProps> = ({ onClickCallback }) => {
+const PauseButton: React.FC<PauseButtonProps> = ({ onClickCallback, isAd }) => {
 	const { player } = useContext(PlayerContext);
 	const onClickPause = () => {
 		/* Tracking events should already be handled in a wrapping component.
 		 * When using this component, its best to check if the pause event fires as intended. */
-		player.pause();
+		isAd ? player.pauseAd(true) : player.pause();
+
 		if (onClickCallback) {
 			onClickCallback();
 		}

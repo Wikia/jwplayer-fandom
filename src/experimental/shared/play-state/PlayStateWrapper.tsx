@@ -14,7 +14,6 @@ interface PlayStateWrapperProps {
 
 export const IconWrapper = styled.div`
 	cursor: pointer;
-	pointer-events: initial;
 `;
 
 const Wrapper = styled.div<{ color?: string }>`
@@ -38,9 +37,9 @@ const PlayStateWrapper: React.FC<PlayStateWrapperProps> = ({ playConfig, pauseCo
 	return (
 		<Wrapper color={iconColor}>
 			{isPlaying ? (
-				<PauseButton onClickCallback={pauseConfig?.onClickCallback} />
+				<PauseButton onClickCallback={pauseConfig?.onClickCallback} isAd={isAd} />
 			) : (
-				<PlayButton onClickCallback={playConfig?.onClickCallback} />
+				<PlayButton onClickCallback={playConfig?.onClickCallback} isAd={isAd} />
 			)}
 		</Wrapper>
 	);

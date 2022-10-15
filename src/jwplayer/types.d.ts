@@ -219,6 +219,7 @@ export type Player = {
 	getQualityLevels: () => QualityObject[];
 	load: (playlist: string | Playlist) => null;
 	setPlaylistItemCallback: (PlaylistItemCallbackData) => void;
+	pauseAd: (state: boolean) => null;
 };
 export type CreateWirewaxEmbedder = () => Embedder;
 export type WirewaxPluginOptions = {

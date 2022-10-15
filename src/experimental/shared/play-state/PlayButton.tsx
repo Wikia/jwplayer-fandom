@@ -9,14 +9,16 @@ export interface PlayButtonProps {
 	 *
 	 *  There is no need to call the player.play() event in this callback */
 	onClickCallback?: () => void;
+	isAd?: boolean;
 }
 
-const PlayButton: React.FC<PlayButtonProps> = ({ onClickCallback }) => {
+const PlayButton: React.FC<PlayButtonProps> = ({ onClickCallback, isAd }) => {
 	const { player } = useContext(PlayerContext);
 	const onClickPlay = () => {
 		/* Tracking events should already be handled in a wrapping component.
 		 * When using this component, its best to check if the play event fires as intended. */
-		player.play();
+		isAd ? player.pauseAd(false) : player.play();
+
 		if (onClickCallback) {
 			onClickCallback();
 		}

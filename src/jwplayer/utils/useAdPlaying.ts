@@ -3,7 +3,7 @@ import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import JWEvents from 'jwplayer/players/shared/JWEvents';
 
 export default function useAdPlaying(): boolean {
-	const [adPlaying, setAdPlaying] = useState(false);
+	const [adPlaying, setAdPlaying] = useState(true);
 	const { player } = useContext(PlayerContext);
 
 	useEffect(() => {
