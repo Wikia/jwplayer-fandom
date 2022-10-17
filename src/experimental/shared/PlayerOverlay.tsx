@@ -1,7 +1,8 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 
-const PlayerOverlay = styled.div`
+const PlayerOverlayStyled = styled.div`
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -11,6 +12,28 @@ const PlayerOverlay = styled.div`
 	box-sizing: border-box;
 `;
 
-// TODO: add hover behavior
+const PlayerOverlay: React.FC = ({ children }) => {
+	const [showOverlay, setShowOverlay] = useState(false);
+	const [overlayTimeout, setOverlayTimeout] = useState(undefined);
+
+	const handleMouseEnter = () => {
+		if (overlayTimeout) {
+			clearTimeout(overlayTimeout);
+		}
+
+		setShowOverlay(true);
+	};
+
+	const handleMouseLeave = () => {
+		const hideOverlayTimeout: ReturnType<typeof setTimeout> = setTimeout(() => setShowOverlay(false), 600);
+		setOverlayTimeout(hideOverlayTimeout);
+	};
+
+	return (
+		<PlayerOverlayStyled onMouseEnter={() => handleMouseEnter()} onMouseLeave={() => handleMouseLeave()}>
+			{showOverlay && children}
+		</PlayerOverlayStyled>
+	);
+};
 
 export default PlayerOverlay;
