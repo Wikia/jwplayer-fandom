@@ -4,6 +4,7 @@ import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import LoadableVideoPlayerWrapper from 'jwplayer/players/shared/LoadableVideoPlayerWrapper';
 import styled, { css } from 'styled-components';
 import useOnScreen from 'utils/useOnScreen';
+import useAdComplete from 'jwplayer/utils/useAdComplete';
 
 const CanonicalVideoTopPlaceholder = styled.div`
 	width: 100%;
@@ -35,17 +36,24 @@ const CanonicalVideoWrapper = styled.div<CanonicalVideoWrapperProps>`
 	}
 `;
 
-const CanonicalVideoPlayer: React.FC<CanonicalVideoPlayerProps> = ({ currentVideo, onComplete }) => {
+const CanonicalVideoPlayer: React.FC<CanonicalVideoPlayerProps> = ({ currentVideo, videoDetails, onComplete }) => {
 	const ref = useRef<HTMLDivElement>(null);
+	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(ref, '0px', 1);
 	const isScrollPlayer = !onScreen;
 
 	return (
 		<PlayerWrapper playerName="canonical-video-player">
 			<CanonicalVideoTopPlaceholder ref={ref}>
-				<CanonicalVideoWrapper isScrollPlayer={isScrollPlayer}>
-					<LoadableVideoPlayerWrapper currentVideo={currentVideo} onComplete={onComplete} />
-				</CanonicalVideoWrapper>
+				{adComplete && (
+					<CanonicalVideoWrapper isScrollPlayer={isScrollPlayer}>
+						<LoadableVideoPlayerWrapper
+							currentVideo={currentVideo}
+							videoDetails={videoDetails}
+							onComplete={onComplete}
+						/>
+					</CanonicalVideoWrapper>
+				)}
 			</CanonicalVideoTopPlaceholder>
 		</PlayerWrapper>
 	);

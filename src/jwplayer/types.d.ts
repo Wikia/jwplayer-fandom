@@ -276,8 +276,43 @@ export interface ArticleVideoDetails {
 	videoTags: string;
 }
 
+export interface CanonicalVideoDetails {
+	title: string;
+	feedid: string;
+	description?: string;
+	duration: number;
+	mediaid: string;
+	link: string;
+	image: string;
+	images?: Array<JWImages>;
+	sources?: Array<Source>;
+	tracks?: Array<Track>;
+	pubdate: number;
+	tags?: Array<string>;
+}
+
+/** JWPlayer's video source definition  */
+type Source = {
+	file: string;
+	type: string;
+};
+
+/** JWPlayer's video track definition  */
+type Track = {
+	file: string;
+	kind: string;
+};
+
+/** JWPlayer's image object definition  */
+type JWImages = {
+	src: string;
+	type: number;
+	width: number;
+};
+
 export interface CanonicalVideoPlayerProps {
 	currentVideo: string;
+	videoDetails: CanonicalVideoDetails;
 	onComplete: () => void;
 }
 
@@ -290,6 +325,7 @@ export interface JwPlayerWrapperProps {
 
 export interface LoadableVideoPlayerWrapperProps {
 	currentVideo: string;
+	videoDetails: CanonicalVideoDetails;
 	config?: PlayerConfig;
 	playerUrl?: string;
 	onReady?: (playerInstance: Player) => void;
