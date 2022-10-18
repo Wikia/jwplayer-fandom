@@ -1,3 +1,5 @@
+import React from 'react';
+
 export interface VolumeStateWrapperProps {
 	iconColor?: string;
 	sliderColor?: string;
@@ -44,4 +46,9 @@ export interface DesktopReskinnedArticleVideoPlayerOverlayProps {
 export interface DesktopScrollVideoTopContentProps {
 	isScrollPlayer: boolean;
 	onCloseClick: () => void;
+}
+
+export interface PlayerOverlayProps {
+	children?: React.ReactNode;
+	forceOverlay?: boolean;
 }
