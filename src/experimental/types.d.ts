@@ -51,4 +51,5 @@ export interface DesktopScrollVideoTopContentProps {
 export interface PlayerOverlayProps {
 	children?: React.ReactNode;
 	forceOverlay?: boolean;
+	handleOverlayClick?: () => void;
 }

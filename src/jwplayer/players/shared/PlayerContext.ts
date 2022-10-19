@@ -7,6 +7,8 @@ interface PlayerContextInterface {
 	playerName: string;
 	config: PlayerConfig;
 	setConfig: (playerConfig) => void;
+	adPlaying: boolean;
+	setAdPlaying: (newAdPlayState) => void;
 }
 
 export const PlayerContext = React.createContext<PlayerContextInterface | null>(null);

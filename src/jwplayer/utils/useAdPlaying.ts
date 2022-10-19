@@ -1,10 +1,9 @@
-import { useState, useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import JWEvents from 'jwplayer/players/shared/JWEvents';
 
 export default function useAdPlaying(): boolean {
-	const [adPlaying, setAdPlaying] = useState(true);
-	const { player } = useContext(PlayerContext);
+	const { player, setAdPlaying, adPlaying } = useContext(PlayerContext);
 
 	useEffect(() => {
 		player?.on(JWEvents.AD_PLAY, () => {

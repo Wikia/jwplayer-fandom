@@ -13,9 +13,10 @@ const PlayerOverlayStyled = styled.div.attrs((props: { showOverlay: boolean }) =
 	box-sizing: border-box;
 	background-color: rgb(0, 0, 0, 0.4);
 	opacity: ${(props) => (props.showOverlay ? '1' : '0')};
+	cursor: pointer;
 `;
 
-const PlayerOverlay: React.FC<PlayerOverlayProps> = ({ children, forceOverlay = false }) => {
+const PlayerOverlay: React.FC<PlayerOverlayProps> = ({ children, forceOverlay = false, handleOverlayClick }) => {
 	const hideOverlayTimeout = () => {
 		const timeout: ReturnType<typeof setTimeout> = setTimeout(() => {
 			setShowOverlay(false);
@@ -50,6 +51,7 @@ const PlayerOverlay: React.FC<PlayerOverlayProps> = ({ children, forceOverlay = 
 			showOverlay={showOverlay || forceOverlay}
 			onMouseEnter={() => handleMouseEnter()}
 			onMouseLeave={() => handleMouseLeave()}
+			onClick={handleOverlayClick}
 		>
 			{children}
 		</PlayerOverlayStyled>
