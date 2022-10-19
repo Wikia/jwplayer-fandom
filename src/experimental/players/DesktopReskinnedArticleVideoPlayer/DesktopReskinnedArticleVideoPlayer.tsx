@@ -31,6 +31,10 @@ interface DesktopArticleVideoWrapperProps {
 
 const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
 	height: max-content;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
 	${(props) =>
 		props.isScrollPlayer
 			? css`
@@ -46,6 +50,11 @@ const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
 					top: 0;
 					left: 0;
 			  `}
+`;
+
+const DesktopReskinnedVideoContentContainer = styled.div`
+	position: relative;
+	flex-grow: 2;
 `;
 
 const DesktopReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
@@ -70,14 +79,16 @@ const DesktopReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPla
 						isScrollPlayer={isScrollPlayer}
 					>
 						<DesktopScrollVideoTopContent isScrollPlayer={isScrollPlayer} onCloseClick={() => setDismissed(true)} />
-						<DesktopReskinnedArticleVideoPlayerOverlay isScrollPlayer={isScrollPlayer} />
-						<JwPlayerWrapper
-							playerUrl={'https://cdn.jwplayer.com/libraries/v46VcUMb.js'}
-							config={getArticleVideoConfig(videoDetails)}
-							onReady={(playerInstance) => {
-								articlePlayerOnReady(videoDetails, playerInstance);
-							}}
-						/>
+						<DesktopReskinnedVideoContentContainer>
+							<DesktopReskinnedArticleVideoPlayerOverlay isScrollPlayer={isScrollPlayer} />
+							<JwPlayerWrapper
+								playerUrl={'https://cdn.jwplayer.com/libraries/v46VcUMb.js'}
+								config={getArticleVideoConfig(videoDetails)}
+								onReady={(playerInstance) => {
+									articlePlayerOnReady(videoDetails, playerInstance);
+								}}
+							/>
+						</DesktopReskinnedVideoContentContainer>
 					</DesktopArticleVideoWrapper>
 				)}
 			</DesktopArticleVideoTopPlaceholder>
