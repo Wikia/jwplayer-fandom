@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { JWPlayerApi, PlaylistItem, OnPlaylistItemEventData } from 'jwplayer/types';
+import { JWPlayerApi, PlaylistItem } from 'jwplayer/types';
 import FandomWirewaxPlugin from 'jwplayer/plugins/fandom-wirewax.plugin';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { JwPlayerWrapperProps } from 'jwplayer/types';
@@ -86,12 +86,6 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, on
 			playerInstance.on(JWEvents.COMPLETE, () => {
 				if (typeof onComplete === 'function') {
 					onComplete();
-				}
-			});
-
-			playerInstance.on(JWEvents.PLAYLIST_ITEM, (event: OnPlaylistItemEventData) => {
-				if (event.index >= 4) {
-					playerInstance.pause();
 				}
 			});
 
