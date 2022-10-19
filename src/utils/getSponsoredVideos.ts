@@ -9,7 +9,6 @@ const getSponsoredVideos = async (): Promise<Array<string>> => {
 			const response = await fetch(devArticleVideo);
 			return (await response?.json()) as Array<string>;
 		} else {
-			// TODO: Change this to a Prod URL once the Video Targeting API changes are deployed
 			const response = await fetch(prodArticleVideo);
 			return (await response?.json()) as Array<string>;
 		}
