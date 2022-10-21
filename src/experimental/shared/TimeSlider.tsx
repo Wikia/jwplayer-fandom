@@ -5,7 +5,7 @@ import useProgressUpdate from 'experimental/utils/useProgressUpdate';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import { TimeSliderProps } from 'experimental/types';
-import useAdStarted from 'jwplayer/utils/useAdStarted';
+import useAdPlaying from 'jwplayer/utils/useAdPlaying';
 
 const TimeSliderWrapper = styled.div`
 	z-index: ${Number(WDSVariables.z8) + 1};
@@ -139,16 +139,16 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ className, railColor, bufferCol
 		sliderRef.current.addEventListener('mouseup', onMouseUp);
 	};
 
-	const adStarted = useAdStarted();
-	const handleSeek = adStarted ? seek : null;
+	const adPlaying = useAdPlaying();
+	const handleSeek = adPlaying ? seek : null;
 
 	return (
 		<TimeSliderWrapper className={className}>
 			<TimeSliderContainer ref={sliderRef} onClick={handleSeek}>
 				<Rail color={railColor} />
-				{!adStarted && <Buffer percentageBuffered={bufferPercent} bufferBackgroundColor={bufferColor} />}
+				{!adPlaying && <Buffer percentageBuffered={bufferPercent} bufferBackgroundColor={bufferColor} />}
 				<Progress percentageProgress={positionPercent} progressBackgroundColor={progressColor} />
-				{!adStarted && (
+				{!adPlaying && (
 					<ProgressKnob onMouseDown={onMouseDown} percentageProgress={positionPercent} progressKnobColor={knobColor} />
 				)}
 			</TimeSliderContainer>
