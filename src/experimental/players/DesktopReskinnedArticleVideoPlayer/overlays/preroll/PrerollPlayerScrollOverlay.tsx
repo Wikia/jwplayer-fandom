@@ -20,6 +20,7 @@ const BottomControls = styled.div`
 	bottom: 0;
 	width: 100%;
 	justify-content: space-between;
+	margin-bottom: 11px;
 `;
 
 const PrerollPlayerScrollOverlay: React.FC = () => {

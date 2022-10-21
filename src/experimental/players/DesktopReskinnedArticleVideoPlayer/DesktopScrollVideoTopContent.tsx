@@ -8,10 +8,12 @@ import CloseButton from 'jwplayer/players/shared/CloseButton';
 
 const DesktopScrollVideoTopContainer = styled.div`
 	display: flex;
-	width: 100%'
+	width: 100%;
 	jusity-content: space-between;
 	align-items: center;
 	justify-content: center;
+	padding: 12px 18px 12px 18px;
+	box-sizing: border-box;
 `;
 
 const DesktopScrollVideoTopWrapperTextWrapper = styled.div`
@@ -24,6 +26,7 @@ const UpperText = styled.div`
 	font-weight: 400;
 	font-size: 10px;
 	color: #aaaaaa;
+	padding-bottom: 4px;
 `;
 
 const LowerText = styled.div`
@@ -31,6 +34,12 @@ const LowerText = styled.div`
 	font-weight: 500;
 	font-size: 14px;
 	color: #333333'
+`;
+
+const CloseButtonSmall = styled(CloseButton)`
+	width: 14px;
+	height: 14px;
+	margin-left: 20px;
 `;
 
 const DesktopScrollVideoTopContent: React.FC<DesktopScrollVideoTopContentProps> = ({
@@ -57,7 +66,7 @@ const DesktopScrollVideoTopContent: React.FC<DesktopScrollVideoTopContentProps> 
 				<UpperText>{upperText}</UpperText>
 				<LowerText>{lowerText}</LowerText>
 			</DesktopScrollVideoTopWrapperTextWrapper>
-			<CloseButton dismiss={onCloseClick} iconColor={'#333333'} />
+			<CloseButtonSmall dismiss={onCloseClick} iconColor={'#333333'} />
 		</DesktopScrollVideoTopContainer>
 	);
 };

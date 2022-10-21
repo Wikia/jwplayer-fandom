@@ -38,6 +38,12 @@ const moveDownAnimation = (right: number, width: number) => keyframes`
 	}
 `;
 
+const CloseButtonPositioned = styled(CloseButton)`
+	position: absolute;
+	right: 0;
+	top: 0;
+`;
+
 interface DesktopArticleVideoWrapperProps {
 	isScrollPlayer: boolean;
 	right?: number;
@@ -107,7 +113,7 @@ const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ v
 					>
 						<TopBar>
 							{!isScrollPlayer && <UnmuteButton />}
-							{isScrollPlayer && <CloseButton dismiss={() => setDismissed(true)} />}
+							{isScrollPlayer && <CloseButtonPositioned dismiss={() => setDismissed(true)} />}
 						</TopBar>
 						<JwPlayerWrapper
 							config={getArticleVideoConfig(videoDetails)}

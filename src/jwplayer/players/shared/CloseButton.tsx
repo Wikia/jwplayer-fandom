@@ -14,9 +14,6 @@ const CloseWrapper = styled.div`
 	align-items: center;
 	justify-content: center;
 	opacity: 0.98;
-	position: absolute;
-	right: 0;
-	top: 0;
 	z-index: ${Number(WDSVariables.z7) + 1};
 `;
 
@@ -25,11 +22,12 @@ const CrossIcon = styled(IconCrossTiny)`
 `;
 
 interface CloseButtonProps {
+	className?: string;
 	dismiss: () => void;
 	iconColor?: string;
 }
 
-const CloseButton: React.FC<CloseButtonProps> = ({ dismiss, iconColor }) => {
+const CloseButton: React.FC<CloseButtonProps> = ({ className, dismiss, iconColor }) => {
 	const { player } = useContext(PlayerContext);
 	const onClickClose = () => {
 		jwPlayerPlaybackTracker({ event_name: 'video_player_close' });
@@ -38,7 +36,7 @@ const CloseButton: React.FC<CloseButtonProps> = ({ dismiss, iconColor }) => {
 	};
 
 	return (
-		<CloseWrapper onClick={onClickClose}>
+		<CloseWrapper className={className} onClick={onClickClose}>
 			<CrossIcon fill={iconColor} />
 		</CloseWrapper>
 	);

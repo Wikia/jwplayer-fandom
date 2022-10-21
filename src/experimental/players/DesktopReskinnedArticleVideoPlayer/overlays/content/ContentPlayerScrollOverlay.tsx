@@ -20,6 +20,7 @@ const BottomControls = styled.div`
 	bottom: 0;
 	width: 100%;
 	justify-content: space-between;
+	margin-bottom: 11px;
 `;
 
 const ContentPlayerScrollOverlay: React.FC = () => {
@@ -37,8 +38,8 @@ const ContentPlayerScrollOverlay: React.FC = () => {
 						console.log('watch more');
 					}}
 				/>
-				<OverlayTimeSliderBottom />
 			</BottomControls>
+			<OverlayTimeSliderBottom />
 		</>
 	);
 };
