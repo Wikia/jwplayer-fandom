@@ -46,8 +46,9 @@ const VolumeStateWrapper: React.FC<VolumeStateWrapperProps> = ({
 	const mute = useMute();
 	const [hover, setHover] = useState(false);
 
-	const onClick = () => {
+	const onClick = (event) => {
 		player?.setMute(!mute);
+		event.stopPropagation();
 	};
 
 	return (
