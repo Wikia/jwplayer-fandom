@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import styled, { css } from 'styled-components';
 import useOnScreen from 'utils/useOnScreen';
@@ -68,6 +68,35 @@ const DesktopReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPla
 	const right = boundingClientRect?.right;
 	const width = boundingClientRect?.width;
 
+	const hideOverlayTimeout = () => {
+		const timeout: ReturnType<typeof setTimeout> = setTimeout(() => {
+			setShowOverlay(false);
+			setOverlayTimeout(undefined);
+		}, 2000);
+		return timeout;
+	};
+
+	const [showOverlay, setShowOverlay] = useState(false);
+	const [overlayTimeout, setOverlayTimeout] = useState(undefined);
+
+	useEffect(() => {
+		setShowOverlay(true);
+		setOverlayTimeout(hideOverlayTimeout());
+	}, []);
+
+	const handleMouseEnter = () => {
+		if (overlayTimeout) {
+			clearTimeout(overlayTimeout);
+			setOverlayTimeout(undefined);
+		}
+
+		setShowOverlay(true);
+	};
+
+	const handleMouseLeave = () => {
+		setOverlayTimeout(hideOverlayTimeout());
+	};
+
 	return (
 		<>
 			<DesktopArticleVideoTopPlaceholder ref={placeholderRef}>
@@ -79,8 +108,11 @@ const DesktopReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPla
 						isScrollPlayer={isScrollPlayer}
 					>
 						<DesktopScrollVideoTopContent isScrollPlayer={isScrollPlayer} onCloseClick={() => setDismissed(true)} />
-						<DesktopReskinnedVideoContentContainer>
-							<DesktopReskinnedArticleVideoPlayerOverlay isScrollPlayer={isScrollPlayer} />
+						<DesktopReskinnedVideoContentContainer
+							onMouseEnter={() => handleMouseEnter()}
+							onMouseLeave={() => handleMouseLeave()}
+						>
+							<DesktopReskinnedArticleVideoPlayerOverlay isScrollPlayer={isScrollPlayer} showOverlay={showOverlay} />
 							<JwPlayerWrapper
 								playerUrl={'https://cdn.jwplayer.com/libraries/v46VcUMb.js'}
 								config={getArticleVideoConfig(videoDetails)}

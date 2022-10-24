@@ -13,6 +13,7 @@ const ControlWrapper = styled.div`
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
+	pointer-events: auto;
 `;
 
 const PlayVolumeWrapper = styled.div`

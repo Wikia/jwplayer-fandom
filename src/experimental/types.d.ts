@@ -13,11 +13,13 @@ export interface VolumeSliderProps {
 }
 
 export interface ContentPlayerOverlayProps {
+	showOverlay: boolean;
 	isScrollPlayer: boolean;
 }
 
 export interface PrerollPlayerOverlayProps {
 	isScrollPlayer: boolean;
+	showOverlay: boolean;
 }
 
 export interface TimeSliderProps {
@@ -41,6 +43,7 @@ export interface PlayerCTAButtonProps {
 
 export interface DesktopReskinnedArticleVideoPlayerOverlayProps {
 	isScrollPlayer: boolean;
+	showOverlay: boolean;
 }
 
 export interface DesktopScrollVideoTopContentProps {
@@ -50,6 +53,7 @@ export interface DesktopScrollVideoTopContentProps {
 
 export interface PlayerOverlayProps {
 	children?: React.ReactNode;
-	forceOverlay?: boolean;
+	showOverlay?: boolean;
 	handleOverlayClick?: () => void;
+	className?: string;
 }

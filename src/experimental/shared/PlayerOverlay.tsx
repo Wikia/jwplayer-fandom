@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import { PlayerOverlayProps } from 'experimental/types';
 
 const PlayerOverlayStyled = styled.div.attrs((props: { showOverlay: boolean }) => props)`
+	pointer-events: none;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -16,43 +17,9 @@ const PlayerOverlayStyled = styled.div.attrs((props: { showOverlay: boolean }) =
 	cursor: pointer;
 `;
 
-const PlayerOverlay: React.FC<PlayerOverlayProps> = ({ children, forceOverlay = false, handleOverlayClick }) => {
-	const hideOverlayTimeout = () => {
-		const timeout: ReturnType<typeof setTimeout> = setTimeout(() => {
-			setShowOverlay(false);
-			setOverlayTimeout(undefined);
-		}, 2000);
-		return timeout;
-	};
-
-	const [showOverlay, setShowOverlay] = useState(false);
-	const [overlayTimeout, setOverlayTimeout] = useState(undefined);
-
-	useEffect(() => {
-		setShowOverlay(true);
-		setOverlayTimeout(hideOverlayTimeout());
-	}, []);
-
-	const handleMouseEnter = () => {
-		if (overlayTimeout) {
-			clearTimeout(overlayTimeout);
-			setOverlayTimeout(undefined);
-		}
-
-		setShowOverlay(true);
-	};
-
-	const handleMouseLeave = () => {
-		setOverlayTimeout(hideOverlayTimeout());
-	};
-
+const PlayerOverlay: React.FC<PlayerOverlayProps> = ({ children, handleOverlayClick, className, showOverlay }) => {
 	return (
-		<PlayerOverlayStyled
-			showOverlay={showOverlay || forceOverlay}
-			onMouseEnter={() => handleMouseEnter()}
-			onMouseLeave={() => handleMouseLeave()}
-			onClick={handleOverlayClick}
-		>
+		<PlayerOverlayStyled className={className} showOverlay={showOverlay} onClick={handleOverlayClick}>
 			{children}
 		</PlayerOverlayStyled>
 	);

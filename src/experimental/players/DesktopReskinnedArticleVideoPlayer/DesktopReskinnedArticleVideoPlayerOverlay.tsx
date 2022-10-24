@@ -6,13 +6,14 @@ import useAdStarted from 'jwplayer/utils/useAdStarted';
 
 const DesktopReskinnedArticleVideoPlayerOverlay: React.FC<DesktopReskinnedArticleVideoPlayerOverlayProps> = ({
 	isScrollPlayer,
+	showOverlay,
 }) => {
 	const adStarted = useAdStarted();
 
 	if (adStarted) {
-		return <PrerollPlayerOverlay isScrollPlayer={isScrollPlayer} />;
+		return <PrerollPlayerOverlay isScrollPlayer={isScrollPlayer} showOverlay={showOverlay} />;
 	} else {
-		return <ContentPlayerOverlay isScrollPlayer={isScrollPlayer} />;
+		return <ContentPlayerOverlay isScrollPlayer={isScrollPlayer} showOverlay={showOverlay} />;
 	}
 };
 

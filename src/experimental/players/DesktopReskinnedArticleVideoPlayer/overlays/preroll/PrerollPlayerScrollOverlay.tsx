@@ -12,6 +12,7 @@ const PlayStateContainer = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	pointer-events: auto;
 `;
 
 const BottomControls = styled.div`
@@ -21,6 +22,7 @@ const BottomControls = styled.div`
 	width: 100%;
 	justify-content: space-between;
 	margin-bottom: 11px;
+	pointer-events: auto;
 `;
 
 const PrerollPlayerScrollOverlay: React.FC = () => {
