@@ -10,6 +10,7 @@ interface PlayStateWrapperProps {
 	pauseConfig?: PauseButtonProps;
 	iconColor?: string;
 	isAd?: boolean;
+	className?: string;
 }
 
 export const IconWrapper = styled.div`
@@ -31,11 +32,11 @@ const Wrapper = styled.div<{ color?: string }>`
 	}
 `;
 
-const PlayStateWrapper: React.FC<PlayStateWrapperProps> = ({ playConfig, pauseConfig, iconColor, isAd }) => {
+const PlayStateWrapper: React.FC<PlayStateWrapperProps> = ({ playConfig, pauseConfig, iconColor, isAd, className }) => {
 	const isPlaying = isAd ? useAdPlaying() : usePlaying();
 
 	return (
-		<Wrapper color={iconColor}>
+		<Wrapper color={iconColor} className={className}>
 			{isPlaying ? (
 				<PauseButton onClickCallback={pauseConfig?.onClickCallback} isAd={isAd} />
 			) : (
