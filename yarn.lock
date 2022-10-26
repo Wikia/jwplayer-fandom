@@ -1172,6 +1172,14 @@
     react-select "^5.2.1"
     styled-components "^5.0.1"
 
+"@fandom/context@^0.4.1":
+  version "0.4.1"
+  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/context/-/@fandom/context-0.4.1.tgz#08bf918e4e713b80146b146bd8b6190716181826"
+  integrity sha512-ni7fn1/SMRYwBfT1kaV3yT3MdGKGcAzh9nKtLkMOXN0a1IPsLWknx5WbSiaiYTGULIL6WhznPlO4ERvyxHGx7A==
+  dependencies:
+    lodash "^4.17.21"
+    lodash-es "^4.17.21"
+
 "@fandom/context@^0.6.1":
   version "0.6.2"
   resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/context/-/@fandom/context-0.6.2.tgz#54037825118c1c4a32a0ddfdb7da0340c455a892"
@@ -1179,6 +1187,13 @@
   dependencies:
     lodash "^4.17.21"
     lodash-es "^4.17.21"
+
+"@fandom/pathfinder-bucketing@0.0.1":
+  version "0.0.1"
+  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/pathfinder-bucketing/-/@fandom/pathfinder-bucketing-0.0.1.tgz#dfe229f9fb6fecaeff3a16a5a45d4d1dcbda9926"
+  integrity sha512-vQBR87KzTg6XxSBXY+C49a2l+ckJ6AhacgVe6yoWPTDEG7LjWKamJ8fvO9QMQzf8I+Gc6XI4wRyOylnyCKFZXg==
+  dependencies:
+    "@fandom/context" "^0.4.1"
 
 "@fandom/tracking-metrics@0.0.18-alpha-2":
   version "0.0.18-alpha-2"
