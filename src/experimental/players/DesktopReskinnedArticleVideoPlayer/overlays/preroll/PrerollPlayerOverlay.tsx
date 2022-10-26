@@ -4,10 +4,13 @@ import { PrerollPlayerOverlayProps } from 'experimental/types';
 import PrerollPlayerFullOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/preroll/PrerollPlayerFullOverlay';
 import PrerollPlayerScrollOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/preroll/PrerollPlayerScrollOverlay';
 import OverlayTimeSliderBottom from 'experimental/shared/OverlayTimeSliderBottom';
+import useAdPlaying from 'jwplayer/utils/useAdPlaying';
 
 const PrerollPlayerOverlay: React.FC<PrerollPlayerOverlayProps> = ({ isScrollPlayer, showOverlay }) => {
+	const adPlaying = useAdPlaying();
+
 	return (
-		<PlayerOverlay showOverlay={showOverlay}>
+		<PlayerOverlay showOverlay={showOverlay || !adPlaying}>
 			{isScrollPlayer ? <PrerollPlayerScrollOverlay /> : <PrerollPlayerFullOverlay />}
 			<OverlayTimeSliderBottom progressColor={'#FFC500'} />
 		</PlayerOverlay>

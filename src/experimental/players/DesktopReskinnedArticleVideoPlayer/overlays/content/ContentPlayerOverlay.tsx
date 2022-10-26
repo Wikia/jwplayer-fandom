@@ -19,7 +19,7 @@ const ContentPlayerOverlay: React.FC<ContentPlayerOverlayProps> = ({ isScrollPla
 
 	return (
 		<PlayerOverlayAllowClick
-			showOverlay={showOverlay && !isRelatedOpen}
+			showOverlay={(showOverlay && !isRelatedOpen) || !isPlaying}
 			handleOverlayClick={isPlaying ? player?.pause : player?.play}
 		>
 			{isScrollPlayer ? <ContentPlayerScrollOverlay /> : <ContentPlayerFullOverlay />}
