@@ -9,10 +9,8 @@ export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
 const desktopReskinnedExperiment = defineExperiment({
 	name: 'desktop-reskinned-player',
-	buckets: ['z', 'a'],
+	buckets: ['p', 'q'],
 });
-
-const currentExperimentBeforeLoad: Experiment = getExperiment([desktopReskinnedExperiment]);
 
 export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps> = ({ videoDetails }) => {
 	const [player, setPlayer] = useState(undefined);
@@ -26,33 +24,48 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 	}, []);
 
 	const getPlayer = async () => {
-		const isReskinned = true; // TODO: add logic for experiment check
-		const currentExperiment: Experiment = getExperiment([desktopReskinnedExperiment]);
-		console.log('defined experiment: ', desktopReskinnedExperiment);
-		console.log(`experiment: ${currentExperiment}`);
-		console.log(`experiment before load value: ${currentExperimentBeforeLoad}`);
-		if (currentExperiment?.name === desktopReskinnedExperiment?.name) {
-			console.log('Should be inside experiment.');
-		} else {
-			console.log('Not inside experiment');
-		}
+		const experimentPromise = new Promise((resolve) => {
+			console.log('Should be inside promise.');
+			let isReskinned = false;
+			const currentExperiment: Experiment = getExperiment([desktopReskinnedExperiment]);
+			console.log('defined experiment: ', desktopReskinnedExperiment);
+			console.log(`experiment: ${currentExperiment}`);
+			if (currentExperiment && currentExperiment?.name === desktopReskinnedExperiment?.name) {
+				console.log('Should be inside experiment.');
+				isReskinned = true;
+			} else {
+				console.log('Not inside experiment');
+			}
+			resolve(isReskinned);
+		})
+			.then((isReskinned: boolean) => {
+				console.log('Inside promise then statement with passed down isReskinned value');
+				console.log('Is reskinned is: ', isReskinned);
+				if (isReskinned) {
+					console.log('Loading re-skinned Desktop Article Video Player');
+					import('experimental/players/DesktopReskinnedArticleVideoPlayer/DesktopReskinnedArticleVideoPlayer').then(
+						({ default: JWDesktopReskinnedArticleVideoPlayer }) =>
+							setPlayer(<JWDesktopReskinnedArticleVideoPlayer videoDetails={videoDetails} />),
+					);
+				} else {
+					console.log('Loading plain Desktop Article Video Player');
+					// By default just set the base player
+					import('jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer').then(
+						({ default: JWDesktopArticleVideoPlayer }) =>
+							setPlayer(<JWDesktopArticleVideoPlayer videoDetails={videoDetails} />),
+					);
+				}
+			})
+			.then(() => {
+				console.log('Should return player from Promise: ', player);
+				return player;
+			});
 
-		if (isReskinned) {
-			console.log('Loading re-skinned Desktop Article Video Player');
-			import('experimental/players/DesktopReskinnedArticleVideoPlayer/DesktopReskinnedArticleVideoPlayer').then(
-				({ default: JWDesktopReskinnedArticleVideoPlayer }) =>
-					setPlayer(<JWDesktopReskinnedArticleVideoPlayer videoDetails={videoDetails} />),
-			);
-		} else {
-			console.log('Loading plain Desktop Article Video Player');
-			// By default just set the base player
-			import('jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer').then(
-				({ default: JWDesktopArticleVideoPlayer }) =>
-					setPlayer(<JWDesktopArticleVideoPlayer videoDetails={videoDetails} />),
-			);
-		}
+		return await experimentPromise;
+		// TODO: add logic for experiment check
 	};
 
+	console.log('Returning player: ', player);
 	return player;
 };
 
