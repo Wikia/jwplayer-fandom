@@ -6,6 +6,7 @@ const PlayerWrapper: React.FC<{ playerName: string }> = ({ playerName, children 
 	const [jwPlayer, setJwPlayer] = useState<Player>(null);
 	const [jwPlayerConfig, setJwPlayerConfig] = useState<PlayerConfig>(null);
 	const [jwPlayerAdPlaying, setjwPlayerAdPlaying] = useState(false);
+	const [jwPlayerRelatedOpen, setjwPlayerRelatedOpen] = useState(false);
 
 	const setPlayer = (player: Player) => {
 		setJwPlayer(player);
@@ -19,6 +20,10 @@ const PlayerWrapper: React.FC<{ playerName: string }> = ({ playerName, children 
 		setjwPlayerAdPlaying(adPlaying);
 	};
 
+	const setRelatedOpen = (relatedOpen: boolean) => {
+		setjwPlayerRelatedOpen(relatedOpen);
+	};
+
 	return (
 		<PlayerContext.Provider
 			value={{
@@ -29,6 +34,8 @@ const PlayerWrapper: React.FC<{ playerName: string }> = ({ playerName, children 
 				setConfig: setConfig,
 				setAdPlaying: setAdPlaying,
 				adPlaying: jwPlayerAdPlaying,
+				setRelatedOpen: setRelatedOpen,
+				relatedOpen: jwPlayerRelatedOpen,
 			}}
 		>
 			{children}

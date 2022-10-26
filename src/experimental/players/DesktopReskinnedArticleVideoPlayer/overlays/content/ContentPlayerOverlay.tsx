@@ -6,16 +6,22 @@ import ContentPlayerFullOverlay from 'experimental/players/DesktopReskinnedArtic
 import ContentPlayerScrollOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/content/ContentPlayerScrollOverlay';
 import usePlaying from 'jwplayer/utils/usePlaying';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
+import useRelatedOpen from 'jwplayer/utils/useRelatedOpen';
 
 const PlayerOverlayAllowClick = styled(PlayerOverlay)`
-	pointer-events: auto;
+	${(props) => props.showOverlay && `pointer-events: auto;`}
 `;
 
 const ContentPlayerOverlay: React.FC<ContentPlayerOverlayProps> = ({ isScrollPlayer, showOverlay }) => {
 	const { player } = useContext(PlayerContext);
 	const isPlaying = usePlaying();
+	const isRelatedOpen = useRelatedOpen();
+
 	return (
-		<PlayerOverlayAllowClick showOverlay={showOverlay} handleOverlayClick={isPlaying ? player?.pause : player?.play}>
+		<PlayerOverlayAllowClick
+			showOverlay={showOverlay && !isRelatedOpen}
+			handleOverlayClick={isPlaying ? player?.pause : player?.play}
+		>
 			{isScrollPlayer ? <ContentPlayerScrollOverlay /> : <ContentPlayerFullOverlay />}
 		</PlayerOverlayAllowClick>
 	);

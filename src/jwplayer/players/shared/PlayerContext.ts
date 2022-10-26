@@ -9,6 +9,8 @@ interface PlayerContextInterface {
 	setConfig: (playerConfig) => void;
 	adPlaying: boolean;
 	setAdPlaying: (newAdPlayState) => void;
+	relatedOpen: boolean;
+	setRelatedOpen: (newRelatedOpenState) => void;
 }
 
 export const PlayerContext = React.createContext<PlayerContextInterface | null>(null);

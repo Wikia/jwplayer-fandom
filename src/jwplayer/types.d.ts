@@ -175,6 +175,7 @@ interface BasePluginInterface {
 
 interface Plugins {
 	sharing: BasePluginInterface;
+	related: BasePluginInterface;
 }
 
 interface QualityObject {
