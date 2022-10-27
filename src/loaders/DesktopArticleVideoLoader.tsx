@@ -24,45 +24,26 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 	}, []);
 
 	const getPlayer = async () => {
-		const experimentPromise = new Promise((resolve) => {
-			console.log('Should be inside promise.');
-			let isReskinned = false;
-			const currentExperiment: Experiment = getExperiment([desktopReskinnedExperiment]);
-			console.log('defined experiment: ', desktopReskinnedExperiment);
-			console.log(`experiment: ${currentExperiment}`);
-			if (currentExperiment && currentExperiment?.name === desktopReskinnedExperiment?.name) {
-				console.log('Should be inside experiment.');
-				isReskinned = true;
-			} else {
-				console.log('Not inside experiment');
-			}
-			resolve(isReskinned);
-		})
-			.then((isReskinned: boolean) => {
-				console.log('Inside promise then statement with passed down isReskinned value');
-				console.log('Is reskinned is: ', isReskinned);
-				if (isReskinned) {
-					console.log('Loading re-skinned Desktop Article Video Player');
-					import('experimental/players/DesktopReskinnedArticleVideoPlayer/DesktopReskinnedArticleVideoPlayer').then(
-						({ default: JWDesktopReskinnedArticleVideoPlayer }) =>
-							setPlayer(<JWDesktopReskinnedArticleVideoPlayer videoDetails={videoDetails} />),
-					);
-				} else {
-					console.log('Loading plain Desktop Article Video Player');
-					// By default just set the base player
-					import('jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer').then(
-						({ default: JWDesktopArticleVideoPlayer }) =>
-							setPlayer(<JWDesktopArticleVideoPlayer videoDetails={videoDetails} />),
-					);
-				}
-			})
-			.then(() => {
-				console.log('Should return player from Promise: ', player);
-				return player;
-			});
+		const currentExperiment: Experiment = getExperiment([desktopReskinnedExperiment]);
 
-		return await experimentPromise;
-		// TODO: add logic for experiment check
+		// By default just set the base player
+		if (!currentExperiment) {
+			console.log('Loading plain Desktop Article Video Player');
+			import('jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer').then(
+				({ default: JWDesktopArticleVideoPlayer }) =>
+					setPlayer(<JWDesktopArticleVideoPlayer videoDetails={videoDetails} />),
+			);
+
+			return;
+		}
+
+		if (currentExperiment?.name === desktopReskinnedExperiment?.name) {
+			console.log('Loading re-skinned Desktop Article Video Player');
+			import('experimental/players/DesktopReskinnedArticleVideoPlayer/DesktopReskinnedArticleVideoPlayer').then(
+				({ default: JWDesktopReskinnedArticleVideoPlayer }) =>
+					setPlayer(<JWDesktopReskinnedArticleVideoPlayer videoDetails={videoDetails} />),
+			);
+		}
 	};
 
 	console.log('Returning player: ', player);
