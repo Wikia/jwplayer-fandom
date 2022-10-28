@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { DesktopArticleVideoLoaderProps } from 'loaders/types';
 import { setVersionWindowVar } from 'loaders/utils/GetVersion';
-import defineExperiment from '@fandom/pathfinder-bucketing/experiments/defineExperiment';
-import getExperiment from '@fandom/pathfinder-bucketing/experiments/getExperiment';
-import { Experiment } from '@fandom/pathfinder-bucketing/types';
+import defineExperiment from '@fandom/pathfinder-lite/experiments/defineExperiment';
+import getExperiment from '@fandom/pathfinder-lite/experiments/getExperiment';
+import { Experiment } from '@fandom/pathfinder-lite/types';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
@@ -26,9 +26,8 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 	const getPlayer = async () => {
 		const currentExperiment: Experiment = getExperiment([desktopReskinnedExperiment]);
 
-		// By default just set the base player
+		// By default if there is no experiment just set the base player
 		if (!currentExperiment) {
-			console.log('Loading plain Desktop Article Video Player');
 			import('jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer').then(
 				({ default: JWDesktopArticleVideoPlayer }) =>
 					setPlayer(<JWDesktopArticleVideoPlayer videoDetails={videoDetails} />),
@@ -38,7 +37,7 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 		}
 
 		if (currentExperiment?.name === desktopReskinnedExperiment?.name) {
-			console.log('Loading re-skinned Desktop Article Video Player');
+			currentExperiment.log.info('Loading re-skinned Desktop Article Video Player');
 			import('experimental/players/DesktopReskinnedArticleVideoPlayer/DesktopReskinnedArticleVideoPlayer').then(
 				({ default: JWDesktopReskinnedArticleVideoPlayer }) =>
 					setPlayer(<JWDesktopReskinnedArticleVideoPlayer videoDetails={videoDetails} />),
@@ -46,7 +45,6 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 		}
 	};
 
-	console.log('Returning player: ', player);
 	return player;
 };
 

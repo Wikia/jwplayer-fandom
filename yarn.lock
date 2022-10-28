@@ -1172,14 +1172,6 @@
     react-select "^5.2.1"
     styled-components "^5.0.1"
 
-"@fandom/context@^0.4.1":
-  version "0.4.1"
-  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/context/-/@fandom/context-0.4.1.tgz#08bf918e4e713b80146b146bd8b6190716181826"
-  integrity sha512-ni7fn1/SMRYwBfT1kaV3yT3MdGKGcAzh9nKtLkMOXN0a1IPsLWknx5WbSiaiYTGULIL6WhznPlO4ERvyxHGx7A==
-  dependencies:
-    lodash "^4.17.21"
-    lodash-es "^4.17.21"
-
 "@fandom/context@^0.6.1":
   version "0.6.2"
   resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/context/-/@fandom/context-0.6.2.tgz#54037825118c1c4a32a0ddfdb7da0340c455a892"
@@ -1188,12 +1180,20 @@
     lodash "^4.17.21"
     lodash-es "^4.17.21"
 
-"@fandom/pathfinder-bucketing@0.0.1":
-  version "0.0.1"
-  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/pathfinder-bucketing/-/@fandom/pathfinder-bucketing-0.0.1.tgz#dfe229f9fb6fecaeff3a16a5a45d4d1dcbda9926"
-  integrity sha512-vQBR87KzTg6XxSBXY+C49a2l+ckJ6AhacgVe6yoWPTDEG7LjWKamJ8fvO9QMQzf8I+Gc6XI4wRyOylnyCKFZXg==
+"@fandom/context@^0.6.2":
+  version "0.6.3"
+  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/context/-/@fandom/context-0.6.3.tgz#810a4993cd6e64f5eff9eb71d9723242d20e0219"
+  integrity sha512-6THxJdnEuaqS9q813d+HMEnl55FOlOcIhVW1JL2Wu3OtT47LJBjiJLwCkrtKy1vAYnpnsmvfrm1Cw1ztoSBAwg==
   dependencies:
-    "@fandom/context" "^0.4.1"
+    lodash "^4.17.21"
+    lodash-es "^4.17.21"
+
+"@fandom/pathfinder-lite@1.0.0":
+  version "1.0.0"
+  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/pathfinder-lite/-/@fandom/pathfinder-lite-1.0.0.tgz#b39528b7694c4ef2cddd9eba70315a4477eb5b56"
+  integrity sha512-LFM61ZnOSHbM9IXRYrxZgoFB0B2iFsanumnMmnXLSi0qkzWlZUjPTfH18ZRi/TmDLk8HiC46BRlD01a4LYkN5A==
+  dependencies:
+    "@fandom/context" "^0.6.2"
 
 "@fandom/tracking-metrics@0.0.18-alpha-2":
   version "0.0.18-alpha-2"

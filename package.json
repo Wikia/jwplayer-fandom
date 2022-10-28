@@ -4,9 +4,9 @@
 	"description": "JWPlayer for Fandom",
 	"exports": {
 		".": "./main.js",
-		"./DesktopArticleVideoLoader" : "./DesktopArticleVideoLoader.js", 
-		"./MobileArticleVideoLoader" : "./MobileArticleVideoLoader.js", 
-		"./CanonicalVideoLoader" : "./CanonicalVideoLoader.js"
+		"./DesktopArticleVideoLoader": "./DesktopArticleVideoLoader.js",
+		"./MobileArticleVideoLoader": "./MobileArticleVideoLoader.js",
+		"./CanonicalVideoLoader": "./CanonicalVideoLoader.js"
 	},
 	"types": "main.d.ts",
 	"install-peers": "install-peers",
@@ -78,7 +78,7 @@
 		"@babel/preset-env": "^7.16.5",
 		"@babel/preset-react": "^7.16.5",
 		"@babel/preset-typescript": "^7.16.5",
-		"@fandom/pathfinder-bucketing": "0.0.1",
+		"@fandom/pathfinder-lite": "1.0.0",
 		"@fandom-frontend/eslint-config": "^3.0.0",
 		"@fandom-frontend/prettier-config": "^2.1.0",
 		"@rollup/plugin-babel": "5.3.0",
