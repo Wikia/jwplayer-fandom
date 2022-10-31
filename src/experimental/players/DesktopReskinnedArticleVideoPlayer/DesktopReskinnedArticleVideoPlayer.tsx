@@ -57,6 +57,10 @@ const DesktopReskinnedVideoContentContainer = styled.div`
 	flex-grow: 2;
 `;
 
+const JwPlayerWrapperStyled = styled(JwPlayerWrapper)`
+	cursor: pointer;
+`;
+
 const DesktopReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	/* TODO: FIX THIS - This is used to test the player locally ONLY */
@@ -94,6 +98,9 @@ const DesktopReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPla
 	};
 
 	const handleMouseLeave = () => {
+		if (overlayTimeout) {
+			clearTimeout(overlayTimeout);
+		}
 		setOverlayTimeout(hideOverlayTimeout());
 	};
 
@@ -108,12 +115,9 @@ const DesktopReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPla
 						isScrollPlayer={isScrollPlayer}
 					>
 						<DesktopScrollVideoTopContent isScrollPlayer={isScrollPlayer} onCloseClick={() => setDismissed(true)} />
-						<DesktopReskinnedVideoContentContainer
-							onMouseEnter={() => handleMouseEnter()}
-							onMouseLeave={() => handleMouseLeave()}
-						>
+						<DesktopReskinnedVideoContentContainer onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
 							<DesktopReskinnedArticleVideoPlayerOverlay isScrollPlayer={isScrollPlayer} showOverlay={showOverlay} />
-							<JwPlayerWrapper
+							<JwPlayerWrapperStyled
 								playerUrl={'https://cdn.jwplayer.com/libraries/v46VcUMb.js'}
 								config={getArticleVideoConfig(videoDetails)}
 								onReady={(playerInstance) => {

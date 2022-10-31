@@ -24,7 +24,7 @@ const getDefaultPlayerUrl = () => {
 		: 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
 };
 
-const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, onReady, onComplete }) => {
+const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, onReady, onComplete, className }) => {
 	const { setPlayer, setConfig } = useContext(PlayerContext);
 	const defaultConfig = {
 		plugins: { fandomWirewax: {} },
@@ -93,7 +93,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, on
 	};
 
 	return (
-		<div>
+		<div className={className}>
 			<div id="featured-video__player" />
 		</div>
 	);

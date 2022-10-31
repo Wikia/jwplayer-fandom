@@ -326,6 +326,7 @@ export interface JwPlayerWrapperProps {
 	playerUrl?: string;
 	onReady?: (playerInstance: Player) => void;
 	onComplete?: () => void;
+	className?: string;
 }
 
 export interface LoadableVideoPlayerWrapperProps {
