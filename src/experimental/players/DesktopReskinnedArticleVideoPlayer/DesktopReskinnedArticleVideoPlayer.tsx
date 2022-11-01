@@ -10,6 +10,7 @@ import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnRea
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import DesktopReskinnedArticleVideoPlayerOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/DesktopReskinnedArticleVideoPlayerOverlay';
 import DesktopScrollVideoTopContent from 'experimental/players/DesktopReskinnedArticleVideoPlayer/DesktopScrollVideoTopContent';
+import useAdComplete from 'jwplayer/utils/useAdComplete';
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
 	z-index: ${Number(WDSVariables.z2) + 2};
@@ -63,8 +64,7 @@ const JwPlayerWrapperStyled = styled(JwPlayerWrapper)`
 
 const DesktopReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
-	/* TODO: FIX THIS - This is used to test the player locally ONLY */
-	const adComplete = true;
+	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
