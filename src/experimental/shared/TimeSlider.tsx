@@ -6,6 +6,7 @@ import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import { TimeSliderProps } from 'experimental/types';
 import useAdPlaying from 'jwplayer/utils/useAdPlaying';
+import usePlaying from 'jwplayer/utils/usePlaying';
 
 const TimeSliderWrapper = styled.div`
 	z-index: ${Number(WDSVariables.z8) + 1};
@@ -92,14 +93,27 @@ const ProgressKnob = styled.div<ProgressKnobProps>`
 `;
 
 const TimeSlider: React.FC<TimeSliderProps> = ({ className, railColor, bufferColor, knobColor, progressColor }) => {
+	const { player } = useContext(PlayerContext);
 	const { bufferPercent } = useBufferUpdate();
 	const { positionPercent, duration } = useProgressUpdate();
+	const isPlaying = usePlaying();
+	const [seekTimeout, setSeekTimeout] = useState(undefined);
 	const [mouseDown, setMouseDown] = useState(false);
+	const [dragging, setDragging] = useState(false);
+	const [dragPosition, setDragPosition] = useState(0);
+	const [throttleDrag, setThrottleDrag] = useState(false);
+	const [wasPlaying, setWasPlaying] = useState(false);
 	const [hover, setHover] = useState(false);
-
 	const sliderRef = useRef<HTMLDivElement>();
 
-	const { player } = useContext(PlayerContext);
+	const seekUpdateTimeout = (seekUpdate) => {
+		clearTimeout(seekTimeout);
+		const timeout: ReturnType<typeof setTimeout> = setTimeout(() => {
+			player.seek(seekUpdate);
+			setSeekTimeout(undefined);
+		}, 400);
+		return timeout;
+	};
 
 	const retrieveRailWidth = () => {
 		// Retrieve the width, or bring back a static approximate so that at least something work
@@ -107,47 +121,74 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ className, railColor, bufferCol
 	};
 
 	const calculateSeekUpdate = (elementRelativePosition: number) => {
-		return (elementRelativePosition * duration) / retrieveRailWidth();
+		const seekUpdate = (elementRelativePosition * duration) / retrieveRailWidth();
+		if (seekUpdate < 0) return 0;
+		if (seekUpdate > duration) return duration;
+
+		return seekUpdate;
 	};
 
 	const seek = (event: React.MouseEvent<HTMLDivElement>) => {
 		event.stopPropagation();
-		const elementRelativePosition = event.clientX - event.currentTarget.getBoundingClientRect().left;
+		const elementRelativePosition = event.clientX - sliderRef.current.getBoundingClientRect().left;
 		const seekTimeUpdate = calculateSeekUpdate(elementRelativePosition);
 		player.seek(seekTimeUpdate);
 	};
 
 	const onMouseMove = (event) => {
+		event.preventDefault();
+
+		if (!dragging) {
+			setWasPlaying(isPlaying);
+			player.pause();
+			setDragging(true);
+		}
+
+		if (throttleDrag) return;
+		setThrottleDrag(true);
+
 		const elementRelativePosition = event.clientX - sliderRef.current.getBoundingClientRect().left;
 		const seekUpdate = calculateSeekUpdate(elementRelativePosition);
-		player.seek(seekUpdate);
+		const newDragPosition = (seekUpdate / duration) * 100;
+
+		setDragPosition(newDragPosition);
+
+		setTimeout(function () {
+			setSeekTimeout(seekUpdateTimeout(seekUpdate));
+			setThrottleDrag(false);
+		}, 200);
 	};
 
 	const onMouseUp = () => {
-		sliderRef.current.removeEventListener('mousemove', onMouseMove);
-		sliderRef.current.removeEventListener('mouseup', onMouseUp);
-		player.play();
+		document.removeEventListener('mousemove', onMouseMove);
+		document.removeEventListener('mouseup', onMouseUp);
+
+		if (wasPlaying) {
+			player.play();
+		}
+
 		setMouseDown(false);
+		setDragging(false);
 	};
 
 	const onMouseDown = () => {
-		player.pause();
 		setMouseDown(true);
-		sliderRef.current.addEventListener('mousemove', onMouseMove);
-		sliderRef.current.addEventListener('mouseup', onMouseUp);
+		document.addEventListener('mousemove', onMouseMove);
+		document.addEventListener('mouseup', onMouseUp);
 	};
 
 	const adPlaying = useAdPlaying();
 	const handleSeek = adPlaying ? (event) => event.stopPropagation() : seek;
+	const progress = dragging ? dragPosition : positionPercent;
 
 	return (
 		<TimeSliderWrapper className={className} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-			<TimeSliderContainer ref={sliderRef} onClick={handleSeek}>
+			<TimeSliderContainer ref={sliderRef} onMouseDown={onMouseDown} onClick={handleSeek}>
 				<Rail color={railColor} />
 				{!adPlaying && <Buffer percentageBuffered={bufferPercent} bufferBackgroundColor={bufferColor} />}
-				<Progress percentageProgress={positionPercent} progressBackgroundColor={progressColor} />
+				<Progress percentageProgress={progress} progressBackgroundColor={progressColor} />
 				{!adPlaying && (hover || mouseDown) && (
-					<ProgressKnob onMouseDown={onMouseDown} percentageProgress={positionPercent} progressKnobColor={knobColor} />
+					<ProgressKnob percentageProgress={progress} progressKnobColor={knobColor} />
 				)}
 			</TimeSliderContainer>
 		</TimeSliderWrapper>

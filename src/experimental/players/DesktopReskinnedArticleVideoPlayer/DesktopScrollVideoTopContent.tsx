@@ -14,6 +14,7 @@ const DesktopScrollVideoTopContainer = styled.div`
 	justify-content: center;
 	padding: 12px 18px 12px 18px;
 	box-sizing: border-box;
+	background-color: #ffffff;
 `;
 
 const DesktopScrollVideoTopWrapperTextWrapper = styled.div`
