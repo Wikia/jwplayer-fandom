@@ -111,7 +111,7 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ className, railColor, bufferCol
 		const timeout: ReturnType<typeof setTimeout> = setTimeout(() => {
 			player.seek(seekUpdate);
 			setSeekTimeout(undefined);
-		}, 400);
+		}, 100);
 		return timeout;
 	};
 
@@ -156,7 +156,7 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ className, railColor, bufferCol
 		setTimeout(function () {
 			setSeekTimeout(seekUpdateTimeout(seekUpdate));
 			setThrottleDrag(false);
-		}, 200);
+		}, 400);
 	};
 
 	const onMouseUp = () => {
