@@ -164,6 +164,7 @@ interface PlaylistItemCallbackData {
 
 export type Player = {
 	playToggle: () => null;
+	stop: () => null;
 	pause: () => null;
 	play: () => null;
 	setMute: (mute: boolean | null) => null;

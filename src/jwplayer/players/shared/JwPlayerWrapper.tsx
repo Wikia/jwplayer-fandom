@@ -27,6 +27,7 @@ const getDefaultPlayerUrl = () => {
 
 const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, onReady, onComplete }) => {
 	const { setPlayer, setConfig } = useContext(PlayerContext);
+	const videoIndexRef = React.useRef(0);
 	const defaultConfig = {
 		plugins: { fandomWirewax: {} },
 	};
@@ -86,6 +87,18 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, on
 			playerInstance.on(JWEvents.COMPLETE, () => {
 				if (typeof onComplete === 'function') {
 					onComplete();
+				}
+
+				// Incrementing videos watched count
+				videoIndexRef.current += 1;
+			});
+
+			playerInstance.on(JWEvents.PLAYLIST_ITEM, () => {
+				// if the video is on its 2nd play, pause the video if its not on screen
+				if (videoIndexRef.current >= 1 && playerInstance.getViewable() === 0) {
+					// send tracking event
+					jwPlayerPlaybackTracker({ event_name: 'video_player_pause_not_viewable' });
+					playerInstance.stop();
 				}
 			});
 
