@@ -7,6 +7,7 @@ import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import { TimeSliderProps } from 'experimental/types';
 import useAdPlaying from 'jwplayer/utils/useAdPlaying';
 import usePlaying from 'jwplayer/utils/usePlaying';
+import useStateRef from 'experimental/utils/useStateRef';
 
 const TimeSliderWrapper = styled.div`
 	z-index: ${Number(WDSVariables.z8) + 1};
@@ -64,12 +65,13 @@ const Buffer = styled.div<BufferProps>`
 `;
 
 interface ProgressProps {
-	percentageProgress: number;
+	progress: number;
+	dragging: boolean;
 	progressBackgroundColor?: string;
 }
 
 const Progress = styled.div<ProgressProps>`
-	width: ${(props) => props.percentageProgress}%;
+	width: ${(props) => (props.dragging ? `${props.progress}px` : `${props.progress}%`)};
 	height: 100%;
 	position: absolute;
 	cursor: pointer;
@@ -77,12 +79,13 @@ const Progress = styled.div<ProgressProps>`
 `;
 
 interface ProgressKnobProps {
-	percentageProgress: number;
+	progress: number;
+	dragging: boolean;
 	progressKnobColor?: string;
 }
 
 const ProgressKnob = styled.div<ProgressKnobProps>`
-	left: ${(props) => props.percentageProgress}%;
+	left: ${(props) => (props.dragging ? `${props.progress}px` : `${props.progress}%`)};
 	height: 13px;
 	width: 13px;
 	background-color: rgb(0, 214, 214);
@@ -97,27 +100,35 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ className, railColor, bufferCol
 	const { bufferPercent } = useBufferUpdate();
 	const { positionPercent, duration } = useProgressUpdate();
 	const isPlaying = usePlaying();
-	const [seekTimeout, setSeekTimeout] = useState(undefined);
 	const [mouseDown, setMouseDown] = useState(false);
-	const [dragging, setDragging] = useState(false);
+	const [dragging, setDragging, draggingRef] = useStateRef(false);
 	const [dragPosition, setDragPosition] = useState(0);
-	const [throttleDrag, setThrottleDrag] = useState(false);
 	const [wasPlaying, setWasPlaying] = useState(false);
 	const [hover, setHover] = useState(false);
 	const sliderRef = useRef<HTMLDivElement>();
+	const throttleDragRef = useRef(false);
+	const seekTimeoutRef = useRef(undefined);
 
-	const seekUpdateTimeout = (seekUpdate) => {
-		clearTimeout(seekTimeout);
+	const seekUpdateTimeout = (elementRelativePosition) => {
+		clearTimeout(seekTimeoutRef.current);
 		const timeout: ReturnType<typeof setTimeout> = setTimeout(() => {
+			const seekUpdate = calculateSeekUpdate(elementRelativePosition);
 			player.seek(seekUpdate);
-			setSeekTimeout(undefined);
-		}, 100);
+			seekTimeoutRef.current = undefined;
+		}, 300);
 		return timeout;
 	};
 
 	const retrieveRailWidth = () => {
 		// Retrieve the width, or bring back a static approximate so that at least something work
 		return sliderRef?.current?.offsetWidth ?? 818;
+	};
+
+	const limitDragPosition = (newPosition) => {
+		const MIN = 0;
+		const MAX = retrieveRailWidth();
+		const parsed = parseInt(newPosition);
+		return Math.min(Math.max(parsed, MIN), MAX);
 	};
 
 	const calculateSeekUpdate = (elementRelativePosition: number) => {
@@ -138,25 +149,23 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ className, railColor, bufferCol
 	const onMouseMove = (event) => {
 		event.preventDefault();
 
-		if (!dragging) {
+		if (!draggingRef.current) {
 			setWasPlaying(isPlaying);
 			player.pause();
 			setDragging(true);
 		}
 
-		if (throttleDrag) return;
-		setThrottleDrag(true);
+		if (throttleDragRef.current) return;
 
-		const elementRelativePosition = event.clientX - sliderRef.current.getBoundingClientRect().left;
-		const seekUpdate = calculateSeekUpdate(elementRelativePosition);
-		const newDragPosition = (seekUpdate / duration) * 100;
+		throttleDragRef.current = true;
 
-		setDragPosition(newDragPosition);
+		const elementRelativePosition = limitDragPosition(event.clientX - sliderRef.current.getBoundingClientRect().left);
+		setDragPosition(elementRelativePosition);
+		seekTimeoutRef.current = seekUpdateTimeout(elementRelativePosition);
 
-		setTimeout(function () {
-			setSeekTimeout(seekUpdateTimeout(seekUpdate));
-			setThrottleDrag(false);
-		}, 400);
+		setTimeout(() => {
+			throttleDragRef.current = false;
+		}, 50);
 	};
 
 	const onMouseUp = () => {
@@ -186,9 +195,9 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ className, railColor, bufferCol
 			<TimeSliderContainer ref={sliderRef} onMouseDown={onMouseDown} onClick={handleSeek}>
 				<Rail color={railColor} />
 				{!adPlaying && <Buffer percentageBuffered={bufferPercent} bufferBackgroundColor={bufferColor} />}
-				<Progress percentageProgress={progress} progressBackgroundColor={progressColor} />
+				<Progress progress={progress} dragging={dragging} progressBackgroundColor={progressColor} />
 				{!adPlaying && (hover || mouseDown) && (
-					<ProgressKnob percentageProgress={progress} progressKnobColor={knobColor} />
+					<ProgressKnob progress={progress} dragging={dragging} progressKnobColor={knobColor} />
 				)}
 			</TimeSliderContainer>
 		</TimeSliderWrapper>
