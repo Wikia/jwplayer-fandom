@@ -98,6 +98,7 @@ const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ v
 						<JwPlayerWrapper
 							config={getArticleVideoConfig(videoDetails)}
 							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
+							pauseOnExitViewport={true}
 						/>
 						{isScrollPlayer && <VideoDetails />}
 					</DesktopArticleVideoWrapper>

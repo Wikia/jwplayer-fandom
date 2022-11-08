@@ -287,6 +287,7 @@ export interface JwPlayerWrapperProps {
 	playerUrl?: string;
 	onReady?: (playerInstance: Player) => void;
 	onComplete?: () => void;
+	pauseOnExitViewport?: boolean;
 }
 
 export interface LoadableVideoPlayerWrapperProps {

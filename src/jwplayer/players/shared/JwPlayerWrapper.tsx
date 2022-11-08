@@ -25,7 +25,13 @@ const getDefaultPlayerUrl = () => {
 		: 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
 };
 
-const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, onReady, onComplete }) => {
+const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
+	config,
+	playerUrl,
+	onReady,
+	onComplete,
+	pauseOnExitViewport,
+}) => {
 	const { setPlayer, setConfig } = useContext(PlayerContext);
 	const videoIndexRef = React.useRef(0);
 	const defaultConfig = {
@@ -94,7 +100,12 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, on
 			});
 
 			playerInstance.on(JWEvents.PLAYLIST_ITEM, () => {
-				// if the video is on its 2nd play, pause the video if its not on screen
+				// if pauseOnExitViewport is set to false we want the normal behavior for the player
+				if (!pauseOnExitViewport) {
+					return;
+				}
+
+				// if the video is on its 2nd+ play, pause the video if its not on the viewport
 				if (videoIndexRef.current >= 1 && playerInstance.getViewable() === 0) {
 					// send tracking event
 					jwPlayerPlaybackTracker({ event_name: 'video_player_pause_not_viewable' });
