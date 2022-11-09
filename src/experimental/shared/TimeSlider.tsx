@@ -6,7 +6,7 @@ import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import { TimeSliderProps } from 'experimental/types';
 import useAdPlaying from 'jwplayer/utils/useAdPlaying';
-import usePlaying from 'jwplayer/utils/usePlaying';
+import { usePlayingStateRef } from 'jwplayer/utils/usePlaying';
 import useStateRef from 'experimental/utils/useStateRef';
 
 const TimeSliderWrapper = styled.div`
@@ -99,15 +99,15 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ className, railColor, bufferCol
 	const { player } = useContext(PlayerContext);
 	const { bufferPercent } = useBufferUpdate();
 	const { positionPercent, duration } = useProgressUpdate();
-	const isPlaying = usePlaying();
+	const isPlayingRef = usePlayingStateRef()[1];
 	const [mouseDown, setMouseDown] = useState(false);
 	const [dragging, setDragging, draggingRef] = useStateRef(false);
 	const [dragPosition, setDragPosition] = useState(0);
-	const [wasPlaying, setWasPlaying] = useState(false);
 	const [hover, setHover] = useState(false);
 	const sliderRef = useRef<HTMLDivElement>();
 	const throttleDragRef = useRef(false);
 	const seekTimeoutRef = useRef(undefined);
+	const wasPlaying = useRef(false);
 
 	const seekUpdateTimeout = (elementRelativePosition) => {
 		clearTimeout(seekTimeoutRef.current);
@@ -150,7 +150,7 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ className, railColor, bufferCol
 		event.preventDefault();
 
 		if (!draggingRef.current) {
-			setWasPlaying(isPlaying);
+			wasPlaying.current = isPlayingRef.current;
 			player.pause();
 			setDragging(true);
 		}
@@ -172,7 +172,7 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ className, railColor, bufferCol
 		document.removeEventListener('mousemove', onMouseMove);
 		document.removeEventListener('mouseup', onMouseUp);
 
-		if (wasPlaying) {
+		if (wasPlaying.current) {
 			player.play();
 		}
 
@@ -191,8 +191,14 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ className, railColor, bufferCol
 	const progress = dragging ? dragPosition : positionPercent;
 
 	return (
-		<TimeSliderWrapper className={className} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-			<TimeSliderContainer ref={sliderRef} onMouseDown={onMouseDown} onClick={handleSeek}>
+		<TimeSliderWrapper
+			className={className}
+			onMouseEnter={() => setHover(true)}
+			onMouseLeave={() => setHover(false)}
+			onMouseDown={onMouseDown}
+			onClick={handleSeek}
+		>
+			<TimeSliderContainer ref={sliderRef}>
 				<Rail color={railColor} />
 				{!adPlaying && <Buffer percentageBuffered={bufferPercent} bufferBackgroundColor={bufferColor} />}
 				<Progress progress={progress} dragging={dragging} progressBackgroundColor={progressColor} />

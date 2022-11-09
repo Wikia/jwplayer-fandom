@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-const useStateRef = (initialValue) => {
+export default function useStateRef(initialValue) {
 	const [value, setValue] = useState(initialValue);
 
 	const ref = useRef(value);
@@ -10,6 +10,4 @@ const useStateRef = (initialValue) => {
 	}, [value]);
 
 	return [value, setValue, ref];
-};
-
-export default useStateRef;
+}
