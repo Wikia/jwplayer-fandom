@@ -1188,10 +1188,10 @@
     lodash "^4.17.21"
     lodash-es "^4.17.21"
 
-"@fandom/pathfinder-lite@1.0.0":
-  version "1.0.0"
-  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/pathfinder-lite/-/@fandom/pathfinder-lite-1.0.0.tgz#b39528b7694c4ef2cddd9eba70315a4477eb5b56"
-  integrity sha512-LFM61ZnOSHbM9IXRYrxZgoFB0B2iFsanumnMmnXLSi0qkzWlZUjPTfH18ZRi/TmDLk8HiC46BRlD01a4LYkN5A==
+"@fandom/pathfinder-lite@1.0.2":
+  version "1.0.2"
+  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/pathfinder-lite/-/@fandom/pathfinder-lite-1.0.2.tgz#ad107ad05fa8abeb7f4f0630a7c481a5e3d68674"
+  integrity sha512-W6cnUlMz9m6RQQOj05U747DTPSZQitK22KVMq59hKctNbUh37MPSFPkThFyXEoMkdPSVq9k/ZV7RqQuIlRpdbg==
   dependencies:
     "@fandom/context" "^0.6.2"
 
