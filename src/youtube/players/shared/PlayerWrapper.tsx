@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { PlayerContext } from 'twitch/players/shared/PlayerContext';
-import { Player } from 'twitch/types';
+import { PlayerContext } from 'youtube/players/shared/PlayerContext';
+import { Player } from 'youtube/types';
 
 const PlayerWrapper: React.FC<{ playerName: string }> = ({ playerName, children }) => {
 	const [twitchPlayer, setTwitchPlayer] = useState<Player>(null);

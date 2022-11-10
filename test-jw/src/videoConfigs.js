@@ -6608,5 +6608,6 @@ export const ARTICLE_VIDEO_DETAILS = {
                 "fcc4038c": 0.7692186749171301
             }
         }
-    }
+    },
+    "tier3Mapping": false,
 }

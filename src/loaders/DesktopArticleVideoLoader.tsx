@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { DesktopArticleVideoLoaderProps } from 'loaders/types';
 import { setVersionWindowVar } from 'loaders/utils/GetVersion';
 import { shouldLoadUcpPlayer } from 'loaders/utils/shouldLoadPlayer';
-import JWDesktopArticleVideoPlayer from 'jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer';
+// import YoutubeDesktopArticleVideoPlayer from "youtube/players/YoutubeDesktopArticleVideoPlayer";
+import { eligibleForYoutubeTakeover, getYoutubeTakeoverDetails } from 'loaders/utils/GetYoutubeTakeoverDetails';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
@@ -17,9 +18,23 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 		setVersionWindowVar();
 	}, []);
 
-	const getPlayer = () => {
+	const getPlayer = async () => {
 		// By default just set the base player
-		setPlayer(<JWDesktopArticleVideoPlayer videoDetails={videoDetails} />);
+		const youtubeTakeoverDetails = await getYoutubeTakeoverDetails();
+
+		if (eligibleForYoutubeTakeover(youtubeTakeoverDetails)) {
+			console.debug('Youtube takeover - loading youtube embed.');
+			import('youtube/players/YoutubeDesktopArticleVideoPlayer').then(({ default: YoutubeDesktopArticleVideoPlayer }) =>
+				setPlayer(<YoutubeDesktopArticleVideoPlayer youtubeTakeoverDetails={youtubeTakeoverDetails} />),
+			);
+		} else {
+			console.debug('Loading plain Desktop Article Video Player');
+			// By default just set the base player
+			import('jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer').then(
+				({ default: JWDesktopArticleVideoPlayer }) =>
+					setPlayer(<JWDesktopArticleVideoPlayer videoDetails={videoDetails} />),
+			);
+		}
 	};
 
 	return player;

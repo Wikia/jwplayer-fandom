@@ -1,14 +1,15 @@
 import React, { useRef } from 'react';
-import TwitchPlayerWrapper from 'twitch/players/shared/TwitchPlayerWrapper';
-import PlayerWrapper from 'twitch/players/shared/PlayerWrapper';
+import YoutubePlayerWrapper from 'youtube/players/shared/YoutubePlayerWrapper';
+import PlayerWrapper from 'youtube/players/shared/PlayerWrapper';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import styled, { css, keyframes } from 'styled-components';
 // import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButton';
 import useOnScreen from 'utils/useOnScreen';
 // import { ArticleVideoDetails } from 'jwplayer/types';
 // import CloseButton from 'jwplayer/players/shared/CloseButton';
+import { YoutubeTakeOverDetails } from 'loaders/utils/GetYoutubeTakeoverDetails';
 
-const DesktopArticleVideoTopPlaceholder = styled.div`
+const YoutubeDesktopArticleVideoTopPlaceholder = styled.div`
 	position: absolute;
 	width: 100%;
 	padding-top: 56.25%;
@@ -33,13 +34,17 @@ const moveDownAnimation = (right: number, width: number) => keyframes`
 	}
 `;
 
-interface DesktopArticleVideoWrapperProps {
+interface YoutubeDesktopArticleVideoWrapperProps {
 	isScrollPlayer: boolean;
 	right?: number;
 	width?: number;
 }
 
-const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
+interface YoutubeDesktopArticleVideoPlayerProps {
+	youtubeTakeoverDetails: YoutubeTakeOverDetails;
+}
+
+const DesktopArticleVideoWrapper = styled.div<YoutubeDesktopArticleVideoWrapperProps>`
 	height: max-content;
 	${(props) =>
 		props.isScrollPlayer
@@ -64,7 +69,9 @@ const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
 // 	position: relative;
 // `;
 
-const DesktopArticleVideoPlayer: React.FC = () => {
+const YoutubeDesktopArticleVideoPlayer: React.FC<YoutubeDesktopArticleVideoPlayerProps> = ({
+	youtubeTakeoverDetails,
+}) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.1);
 	// const [dismissed, setDismissed] = useState(false);
@@ -76,17 +83,16 @@ const DesktopArticleVideoPlayer: React.FC = () => {
 
 	return (
 		<PlayerWrapper playerName="twitch-desktop-article-video">
-			<DesktopArticleVideoTopPlaceholder ref={placeholderRef}>
+			<YoutubeDesktopArticleVideoTopPlaceholder ref={placeholderRef}>
 				<DesktopArticleVideoWrapper right={right} width={width} isScrollPlayer={isScrollPlayer}>
 					{/* <TopBar>
-							{!isScrollPlayer && <UnmuteButton />}
 							{isScrollPlayer && <CloseButton dismiss={() => setDismissed(true)} />}
 						</TopBar> */}
-					<TwitchPlayerWrapper deviceType={'desktop'} />
+					<YoutubePlayerWrapper deviceType={'desktop'} youtubeTakeoverDetails={youtubeTakeoverDetails} />
 				</DesktopArticleVideoWrapper>
-			</DesktopArticleVideoTopPlaceholder>
+			</YoutubeDesktopArticleVideoTopPlaceholder>
 		</PlayerWrapper>
 	);
 };
 
-export default DesktopArticleVideoPlayer;
+export default YoutubeDesktopArticleVideoPlayer;

@@ -274,6 +274,7 @@ export interface ArticleVideoDetails {
 	playlist: Playlist;
 	title: string;
 	videoTags: string;
+	tier3Mapping: boolean;
 }
 
 export interface CanonicalVideoPlayerProps {

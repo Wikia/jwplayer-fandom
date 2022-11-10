@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import styled, { css } from 'styled-components';
-import TwitchPlayerWrapper from 'twitch/players/shared/TwitchPlayerWrapper';
+import YoutubePlayerWrapper from 'youtube/players/shared/YoutubePlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
-import PlayerWrapper from 'twitch/players/shared/PlayerWrapper';
+import PlayerWrapper from 'youtube/players/shared/PlayerWrapper';
 
 const MobileArticleVideoTopPlaceholder = styled.div`
 	width: 100%;
@@ -40,7 +40,7 @@ interface MobileArticleVideoPlayerProps {
 	isFullScreen?: boolean;
 }
 
-const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({ hasPartnerSlot, isFullScreen }) => {
+const YoutubeMobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({ hasPartnerSlot, isFullScreen }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const onScreen = useOnScreen(ref, '0px', 1);
 	// const [dismissed, setDismissed] = useState(false);
@@ -59,14 +59,14 @@ const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({ has
 	};
 
 	return (
-		<PlayerWrapper playerName="twitch-mobile-article-video">
+		<PlayerWrapper playerName="youtube-mobile-article-video">
 			<MobileArticleVideoTopPlaceholder ref={ref}>
 				<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer} topPosition={getTopPosition()}>
-					<TwitchPlayerWrapper deviceType={'mobile'} />
+					<YoutubePlayerWrapper deviceType={'mobile'} />
 				</MobileArticleVideoWrapper>
 			</MobileArticleVideoTopPlaceholder>
 		</PlayerWrapper>
 	);
 };
 
-export default MobileArticleVideoPlayer;
+export default YoutubeMobileArticleVideoPlayer;
