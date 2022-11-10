@@ -30,21 +30,19 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	playerUrl,
 	onReady,
 	onComplete,
-	pauseOnExitViewport,
+	stopAutoAdvanceOnExitViewport,
 }) => {
 	const { setPlayer, setConfig } = useContext(PlayerContext);
 	const videoIndexRef = React.useRef(0);
 	const defaultConfig = {
 		plugins: { fandomWirewax: {} },
 	};
-	const sponsoredVideos: string[] = [];
+
 	useEffect(() => {
 		const retrieveSponsoredVideo = async () => {
 			const sponsoredVideoResponse = await getSponsoredVideos();
-			console.debug('Fetched sponsoredVideo list: ', sponsoredVideos);
 			if (sponsoredVideoResponse && typeof window !== undefined) {
 				window.sponsoredVideos = sponsoredVideoResponse;
-				console.debug('Set window.sponsoredVideos to: ', window.sponsoredVideos);
 			} else {
 				console.debug('Could not set sponsored videos. Either window the fetched sponsoredVideo list were undefined.');
 			}
@@ -97,19 +95,22 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 
 				// Incrementing videos watched count
 				videoIndexRef.current += 1;
-			});
 
-			playerInstance.on(JWEvents.PLAYLIST_ITEM, () => {
-				// if pauseOnExitViewport is set to false we want the normal behavior for the player
-				if (!pauseOnExitViewport) {
+				// if stopAutoAdvanceOnExitViewport is false then we don't want to stop the auto advance, keep normal behavior
+				if (!stopAutoAdvanceOnExitViewport) {
 					return;
 				}
 
 				// if the video is on its 2nd+ play, pause the video if its not on the viewport
-				if (videoIndexRef.current >= 1 && playerInstance.getViewable() === 0) {
+				if (videoIndexRef.current >= 1 && (playerInstance.getViewable() === 0 || document.hasFocus() === false)) {
 					// send tracking event
 					jwPlayerPlaybackTracker({ event_name: 'video_player_pause_not_viewable' });
-					playerInstance.stop();
+
+					// close the related UI to stop auto advancement, and then re-open it for users to click on
+					setTimeout(() => {
+						window.jwplayer(elementId).getPlugin('related').close();
+						window.jwplayer(elementId).getPlugin('related').open();
+					}, 1000);
 				}
 			});
 

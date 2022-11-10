@@ -100,7 +100,7 @@ const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
 						<JwPlayerWrapper
 							config={getArticleVideoConfig(videoDetails)}
 							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
-							pauseOnExitViewport={true}
+							stopAutoAdvanceOnExitViewport={true}
 						/>
 						<OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />
 					</MobileArticleVideoWrapper>

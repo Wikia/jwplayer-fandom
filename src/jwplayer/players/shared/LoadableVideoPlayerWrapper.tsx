@@ -19,7 +19,7 @@ const LoadableVideoPlayerWrapper: React.FC<LoadableVideoPlayerWrapperProps> = ({
 			config={playerConfig}
 			playerUrl={'https://content.jwplatform.com/libraries/tcoydixg.js'}
 			onComplete={onComplete}
-			pauseOnExitViewport={false}
+			stopAutoAdvanceOnExitViewport={false}
 		/>
 	);
 };
