@@ -20,6 +20,7 @@ const DesktopScrollVideoTopContainer = styled.div`
 const DesktopScrollVideoTopWrapperTextWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 `;
 
 const UpperText = styled.div`
@@ -34,7 +35,10 @@ const LowerText = styled.div`
 	font-family: 'Rubik';
 	font-weight: 500;
 	font-size: 14px;
-	color: #333333'
+	color: #333333;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 `;
 
 const CloseButtonSmall = styled(CloseButton)`

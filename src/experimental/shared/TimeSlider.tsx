@@ -24,8 +24,12 @@ const TimeSliderWrapper = styled.div`
 	cursor: pointer;
 `;
 
-const TimeSliderContainer = styled.div`
-	height: 5px;
+interface TimeSliderContainerProps {
+	height: string;
+}
+
+const TimeSliderContainer = styled.div<TimeSliderContainerProps>`
+	height: ${(props) => (props.height ? props.height : '5px')};
 	width: 100%;
 	display: flex;
 	align-items: center;
@@ -95,7 +99,14 @@ const ProgressKnob = styled.div<ProgressKnobProps>`
 	position: absolute;
 `;
 
-const TimeSlider: React.FC<TimeSliderProps> = ({ className, railColor, bufferColor, knobColor, progressColor }) => {
+const TimeSlider: React.FC<TimeSliderProps> = ({
+	className,
+	railColor,
+	bufferColor,
+	knobColor,
+	progressColor,
+	railHeight,
+}) => {
 	const { player } = useContext(PlayerContext);
 	const { bufferPercent } = useBufferUpdate();
 	const { positionPercent, duration } = useProgressUpdate();
@@ -198,7 +209,7 @@ const TimeSlider: React.FC<TimeSliderProps> = ({ className, railColor, bufferCol
 			onMouseDown={onMouseDown}
 			onClick={handleSeek}
 		>
-			<TimeSliderContainer ref={sliderRef}>
+			<TimeSliderContainer ref={sliderRef} height={railHeight}>
 				<Rail color={railColor} />
 				{!adPlaying && <Buffer percentageBuffered={bufferPercent} bufferBackgroundColor={bufferColor} />}
 				<Progress progress={progress} dragging={dragging} progressBackgroundColor={progressColor} />

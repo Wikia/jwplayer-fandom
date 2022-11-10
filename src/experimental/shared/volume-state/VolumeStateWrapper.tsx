@@ -24,6 +24,9 @@ const SoundButtonWrapper = styled.div`
 	align-items: center;
 	position: relative;
 	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 `;
 
 const StyledSoundOffIcon = styled(IconSoundOff)`
@@ -36,10 +39,14 @@ const StyledSoundIcon = styled(IconSound)`
 	fill: ${(props) => props.fill};
 `;
 
+const Label = styled.div`
+	font-size: 12px;
+`;
+
 const VolumeStateWrapper: React.FC<VolumeStateWrapperProps> = ({
 	iconColor = '#fff',
 	sliderColor = 'rgb(0, 214, 214)',
-	hasSlider = true,
+	isScrollPlayer = false,
 	hasLabel = false,
 }) => {
 	const { player } = useContext(PlayerContext);
@@ -54,10 +61,10 @@ const VolumeStateWrapper: React.FC<VolumeStateWrapperProps> = ({
 	return (
 		<Wrapper onClick={onClick} color={iconColor}>
 			<SoundButtonWrapper onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-				{hasSlider && <VolumeSlider color={sliderColor} hover={hover} />}
+				{!isScrollPlayer && <VolumeSlider color={sliderColor} hover={hover} />}
 				{mute ? <StyledSoundOffIcon fill={iconColor} /> : <StyledSoundIcon fill={iconColor} />}
 			</SoundButtonWrapper>
-			{mute && hasLabel && 'Play Sound'}
+			{mute && hasLabel && <Label>Play Sound</Label>}
 		</Wrapper>
 	);
 };

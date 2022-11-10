@@ -13,6 +13,7 @@ const ControlWrapper = styled.div`
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
+	margin-top: 5px;
 `;
 
 const PlayVolumeWrapper = styled.div`
@@ -20,7 +21,6 @@ const PlayVolumeWrapper = styled.div`
 `;
 
 const ContentOverlayTimeSlider = styled(TimeSlider)`
-	padding: 0 12px;
 	align-items: center;
 	height: 17px;
 `;
@@ -39,11 +39,11 @@ const ContentPlayerFullOverlay: React.FC = () => {
 		<PlayerFullOverlayWrapper>
 			<PlayerFullOverlayTopText upperText={upperText} lowerText={lowerText} />
 			<BottomWrapper>
-				<ContentOverlayTimeSlider />
+				<ContentOverlayTimeSlider railHeight={'2px'} />
 				<ControlWrapper>
 					<PlayVolumeWrapper>
 						<PlayStateWrapper iconColor={'#fff'} />
-						<VolumeStateWrapper iconColor={'#fff'} hasSlider={true} hasLabel={false} />
+						<VolumeStateWrapper iconColor={'#fff'} isScrollPlayer={false} hasLabel={false} />
 						<TimeRemaining />
 					</PlayVolumeWrapper>
 					<PlayerCTAButton

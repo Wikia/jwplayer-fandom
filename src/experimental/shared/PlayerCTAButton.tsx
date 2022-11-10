@@ -18,8 +18,9 @@ const ButtonStyled = styled.div<{ isScrollPlayer: boolean }>`
 			? css`
 					width: 100px;
 					height: 31px;
-					font-size: 10px;
+					font-size: 12px;
 					font-weight: 500px;
+					margin-right: 10px;
 			  `
 			: css`
 					width: 132px;
@@ -33,12 +34,14 @@ const IconStyled = styled(IconExternal)<{ isScrollPlayer: boolean }>`
 	${(props) =>
 		props.isScrollPlayer
 			? css`
-					width: 10px;
-					height: 10px;
+					width: 12px;
+					height: 12px;
+					margin-left: 6px;
 			  `
 			: css`
 					width: 14px;
 					height: 14px;
+					margin-left: 7px;
 			  `}
 `;
 

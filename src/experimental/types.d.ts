@@ -4,7 +4,7 @@ export interface VolumeStateWrapperProps {
 	iconColor?: string;
 	sliderColor?: string;
 	hasLabel?: boolean;
-	hasSlider?: boolean;
+	isScrollPlayer?: boolean;
 }
 
 export interface VolumeSliderProps {
@@ -28,6 +28,7 @@ export interface TimeSliderProps {
 	bufferColor?: string;
 	knobColor?: string;
 	progressColor?: string;
+	railHeight?: string;
 }
 
 export interface PlayerFullOverlayTopTextProps {

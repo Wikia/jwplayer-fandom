@@ -15,6 +15,9 @@ interface PlayStateWrapperProps {
 
 export const IconWrapper = styled.div`
 	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 `;
 
 const Wrapper = styled.div<{ color?: string }>`
