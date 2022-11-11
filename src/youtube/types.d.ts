@@ -1,3 +1,13 @@
+import 'react';
+
+// eslint-disable-line @typescript-eslint/no-unused-vars
+declare module 'react' {
+	/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+	export interface IframeHTMLAttributes<T> {
+		enablejsapi?: '0' | '1';
+	}
+}
+
 export interface TwitchApi {
 	Player;
 }

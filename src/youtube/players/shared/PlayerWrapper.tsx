@@ -3,14 +3,14 @@ import { PlayerContext } from 'youtube/players/shared/PlayerContext';
 import { Player } from 'youtube/types';
 
 const PlayerWrapper: React.FC<{ playerName: string }> = ({ playerName, children }) => {
-	const [twitchPlayer, setTwitchPlayer] = useState<Player>(null);
+	const [youtubePlayer, setYoutubePlayer] = useState<Player>(null);
 
 	const setPlayer = (player: Player) => {
-		setTwitchPlayer(player);
+		setYoutubePlayer(player);
 	};
 
 	return (
-		<PlayerContext.Provider value={{ player: twitchPlayer, setPlayer: setPlayer, playerName }}>
+		<PlayerContext.Provider value={{ player: youtubePlayer, setPlayer: setPlayer, playerName }}>
 			{children}
 		</PlayerContext.Provider>
 	);

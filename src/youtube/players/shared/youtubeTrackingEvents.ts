@@ -4,12 +4,20 @@ export interface YoutubePlayerTrackingProps {
 	deviceType: 'desktop' | 'mobile';
 }
 
-export const youtubeInit = ({ deviceType }: YoutubePlayerTrackingProps) => {
-	console.debug('Should send twitch init event.');
+export const trackYoutubePlayerInit = ({ deviceType }: YoutubePlayerTrackingProps) => {
+	console.debug('Should send youtube init event.');
 	track({
-		event: `basic-mw-event-init-youtube-${deviceType}`,
+		event: `basic-mw-event-youtube-init-${deviceType}`,
 		action: 'youtube',
-		category: 'youtube-init',
+		category: 'youtube-ready',
 	});
-	console.debug("Should've sent twitch init event.");
+	console.debug("Should've sent youtube init event.");
+};
+
+export const trackYoutubePlayerReady = ({ deviceType }: YoutubePlayerTrackingProps) => {
+	track({
+		event: `basic-mw-event-youtube-ready-${deviceType}`,
+		action: 'youtube',
+		category: 'youtube-ready',
+	});
 };

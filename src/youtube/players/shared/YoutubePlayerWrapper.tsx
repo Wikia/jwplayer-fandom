@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { youtubeInit, YoutubePlayerTrackingProps } from 'youtube/players/shared/youtubeTrackingEvents';
+import {
+	trackYoutubePlayerInit,
+	trackYoutubePlayerReady,
+	YoutubePlayerTrackingProps,
+} from 'youtube/players/shared/youtubeTrackingEvents';
 import { YoutubeTakeOverDetails } from 'loaders/utils/GetYoutubeTakeoverDetails';
 
 const YoutubePlayerTarget = styled.div`
@@ -22,40 +26,68 @@ export interface YoutubeVideoDetails extends YoutubePlayerTrackingProps {
 	youtubeTakeoverDetails?: YoutubeTakeOverDetails;
 }
 
+interface WindowWithYouTube extends Window {
+	onYouTubeIframeAPIReady: () => void;
+	YT: unknown;
+}
+
+declare let window: WindowWithYouTube;
+
+const youtubeTargetId = 'youtube-embed-target';
+
 const YoutubePlayerWrapper: React.FC<YoutubeVideoDetails> = ({ deviceType, youtubeTakeoverDetails }) => {
+	// const [youtubePlayer, setYoutubePlayer] = useState<YT.Player>(null);
+
+	const loadYoutubeVideo = () => {
+		new YT.Player(youtubeTargetId, {
+			events: {
+				onReady: onYoutubeReady,
+				onStateChange: () => console.log('Some player state change occurred'),
+			},
+		});
+		console.debug('Youtube API object initiated.');
+		// setYoutubePlayer(player);
+	};
+
 	useEffect(() => {
-		// initPlayer('twitch-video__player');
-		youtubeInit({ deviceType });
+		initPlayer();
+		trackYoutubePlayerInit({ deviceType });
 	}, []);
 
-	/*	const initPlayer = (elementId: string) => {
-		const onload = () => {
-			console.log('onload');
-			const player = new window.Twitch.Player(elementId, defaultOptions);
-			setPlayer(player);
-		};
+	const onYoutubeReady = () => {
+		console.debug('Youtube Player Embed Ready.');
+		trackYoutubePlayerReady({ deviceType });
+	};
 
-		if (typeof window.Twitch === 'function') {
-			onload();
-		} else {
+	const initPlayer = () => {
+		// If the Youtube iFrame API script are not present, then load them in the header
+		if (!window?.YT) {
 			const script = document.createElement('script');
-			script.async = true;
-			script.src = 'https://player.twitch.tv/js/embed/v1.js';
-			script.onload = onload;
+			script.src = 'https://www.youtube.com/iframe_api';
+
+			window.onYouTubeIframeAPIReady = loadYoutubeVideo;
+
+			const firstScriptTag = document.getElementsByTagName('script')[0];
+			firstScriptTag.parentNode.insertBefore(script, firstScriptTag);
 			document.getElementsByTagName('head')[0].appendChild(script);
+		} else {
+			// If the Youtube script was loaded already for some reason, then just initialize the Youtube iFrame
+			loadYoutubeVideo();
 		}
-	}; */
+	};
 
 	return (
 		<YoutubePlayerTargetWrapper>
 			<YoutubePlayerTarget>
 				<iframe
+					id={youtubeTargetId}
 					width="100%"
 					height="100%"
 					src={`https://www.youtube.com/embed/${youtubeTakeoverDetails.youtubeVideoId}`}
 					frameBorder="0"
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 					allowFullScreen
+					enablejsapi="1"
 				/>
 			</YoutubePlayerTarget>
 		</YoutubePlayerTargetWrapper>
