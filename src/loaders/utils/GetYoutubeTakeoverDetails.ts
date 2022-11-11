@@ -56,8 +56,9 @@ export async function getYoutubeTakeoverDetails(): Promise<YoutubeTakeOverDetail
 
 	const config = window?.mw?.config;
 	const wikiId = config?.get('wgCityId');
+	const isTier3Wiki = config?.get('wgArticleFeaturedVideo')?.tier3Mapping ?? false;
 
-	if (!wikiId) {
+	if (!wikiId || !isTier3Wiki) {
 		return youtubeTakeoverDetails;
 	}
 
