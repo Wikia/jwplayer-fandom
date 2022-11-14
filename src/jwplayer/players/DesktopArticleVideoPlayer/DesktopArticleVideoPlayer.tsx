@@ -55,6 +55,12 @@ const TopBar = styled.div`
 	position: relative;
 `;
 
+const CloseButtonPositioned = styled(CloseButton)`
+	position: absolute;
+	right: 0;
+	top: 0;
+`;
+
 const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();

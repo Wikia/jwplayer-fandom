@@ -5,7 +5,7 @@ import IconCrossTiny from '@fandom-frontend/react-common/dist/icons/IconCrossTin
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { jwPlayerPlaybackTracker } from 'jwplayer/utils/videoTracking';
 
-const CloseWrapper = styled.div<{ topOffset?: number }>`
+const CloseWrapper = styled.div`
 	cursor: pointer;
 	pointer-events: initial;
 	height: 36px;
