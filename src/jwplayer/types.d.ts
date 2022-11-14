@@ -144,6 +144,8 @@ type JwEventHandler = (event?: JwEventData) => void;
 
 interface BasePluginInterface {
 	on: (name: string, handler: (method: JwEventData) => void) => Player;
+	close?: () => void;
+	open?: () => void;
 }
 
 interface Plugins {
@@ -189,6 +191,7 @@ export type Player = {
 	getFullscreen: () => boolean;
 	getFloating: () => boolean;
 	plugins: Plugins;
+	getPlugin: (name: string) => BasePluginInterface;
 	getQualityLevels: () => QualityObject[];
 	load: (playlist: string | Playlist) => null;
 	setPlaylistItemCallback: (PlaylistItemCallbackData) => void;
