@@ -144,6 +144,8 @@ type JwEventHandler = (event?: JwEventData) => void;
 
 interface BasePluginInterface {
 	on: (name: string, handler: (method: JwEventData) => void) => Player;
+	close?: () => void;
+	open?: () => void;
 }
 
 interface Plugins {
@@ -164,6 +166,7 @@ interface PlaylistItemCallbackData {
 
 export type Player = {
 	playToggle: () => null;
+	stop: () => null;
 	pause: () => null;
 	play: () => null;
 	setMute: (mute: boolean | null) => null;
@@ -188,6 +191,7 @@ export type Player = {
 	getFullscreen: () => boolean;
 	getFloating: () => boolean;
 	plugins: Plugins;
+	getPlugin: (name: string) => BasePluginInterface;
 	getQualityLevels: () => QualityObject[];
 	load: (playlist: string | Playlist) => null;
 	setPlaylistItemCallback: (PlaylistItemCallbackData) => void;
@@ -286,6 +290,7 @@ export interface JwPlayerWrapperProps {
 	playerUrl?: string;
 	onReady?: (playerInstance: Player) => void;
 	onComplete?: () => void;
+	stopAutoAdvanceOnExitViewport?: boolean;
 }
 
 export interface LoadableVideoPlayerWrapperProps {
