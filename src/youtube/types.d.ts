@@ -1,4 +1,5 @@
 import 'react';
+import { YoutubeTakeOverDetails } from 'loaders/utils/GetYoutubeTakeoverDetails';
 
 // eslint-disable-line @typescript-eslint/no-unused-vars
 declare module 'react' {
@@ -16,6 +17,10 @@ export interface TwitchApi {
 export interface PlayerInstance {
 	// To fill with needed player methods...
 	getMuted: () => boolean;
+}
+
+export interface YoutubeArticleVideoPlayerProps {
+	youtubeTakeoverDetails: YoutubeTakeOverDetails;
 }
 
 export type Player = (

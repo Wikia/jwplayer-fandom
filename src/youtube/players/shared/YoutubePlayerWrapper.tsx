@@ -48,6 +48,7 @@ const YoutubePlayerWrapper: React.FC<YoutubeVideoDetails> = ({ deviceType, youtu
 			playerVars: {
 				autoplay: 1,
 				mute: 1,
+				playsinline: 1,
 			},
 		});
 		console.debug('Youtube API object initiated.');
@@ -94,7 +95,7 @@ const YoutubePlayerWrapper: React.FC<YoutubeVideoDetails> = ({ deviceType, youtu
 					id={youtubeTargetId}
 					width="100%"
 					height="100%"
-					src={`https://www.youtube.com/embed/${youtubeTakeoverDetails.youtubeVideoId}?autoplay=1&mute=1`}
+					src={`https://www.youtube.com/embed/${youtubeTakeoverDetails.youtubeVideoId}?autoplay=1&mute=1&playsinline=1`}
 					frameBorder="0"
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 					allowFullScreen

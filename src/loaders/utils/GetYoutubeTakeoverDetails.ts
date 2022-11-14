@@ -1,6 +1,7 @@
 import { isServerSide } from 'utils/getEnv';
 import getValueFromQuery from 'utils/getValuefromQuery';
 import { getArticleVideoServiceBaseUrl } from 'utils/getPandoraDetails';
+import { trackYoutubeTakeoverDetails, YoutubePlayerTrackingProps } from 'youtube/players/shared/youtubeTrackingEvents';
 
 function getYoutubeTakeoverUrl(wikiId?: string): string {
 	const articleVideoBaseUrl = getArticleVideoServiceBaseUrl();
@@ -34,13 +35,15 @@ export interface YoutubeTakeoverResponse {
 }
 
 export interface YoutubeTakeOverDetails {
-	isYoutubeTakeover: boolean;
+	isYoutubeTakeover?: boolean;
 	youtubeVideoId?: string;
 }
 
 declare let window: WindowWithMW;
 
-export async function getYoutubeTakeoverDetails(): Promise<YoutubeTakeOverDetails> {
+export async function getYoutubeTakeoverDetails({
+	deviceType,
+}: YoutubePlayerTrackingProps): Promise<YoutubeTakeOverDetails> {
 	const youtubeTakeoverDetails: YoutubeTakeOverDetails = { isYoutubeTakeover: false };
 	if (isServerSide()) {
 		return youtubeTakeoverDetails;
@@ -68,6 +71,7 @@ export async function getYoutubeTakeoverDetails(): Promise<YoutubeTakeOverDetail
 	if (data?.youtube_take_over && data?.youtube_video_id?.trim().length !== 0) {
 		youtubeTakeoverDetails.isYoutubeTakeover = data.youtube_take_over;
 		youtubeTakeoverDetails.youtubeVideoId = data.youtube_video_id;
+		trackYoutubeTakeoverDetails({ deviceType: deviceType, youtubeVideoId: youtubeTakeoverDetails.youtubeVideoId });
 	}
 
 	return youtubeTakeoverDetails;

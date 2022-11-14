@@ -34,7 +34,6 @@ interface CloseButtonProps extends YoutubePlayerTrackingProps {
 const CloseButton: React.FC<CloseButtonProps> = ({ dismiss, topOffset, deviceType }) => {
 	const onClickClose = () => {
 		trackYoutubePlayerScrollClose({ deviceType: deviceType });
-		// player.pause();
 		dismiss();
 	};
 

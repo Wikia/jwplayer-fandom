@@ -20,10 +20,10 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 
 	const getPlayer = async () => {
 		// By default just set the base player
-		const youtubeTakeoverDetails = await getYoutubeTakeoverDetails();
+		const youtubeTakeoverDetails = await getYoutubeTakeoverDetails({ deviceType: 'mobile' });
 
 		if (eligibleForYoutubeTakeover(youtubeTakeoverDetails)) {
-			console.debug('Youtube takeover - loading youtube embed.');
+			console.debug('Youtube takeover - loading Desktop youtube embed.');
 			import('youtube/players/YoutubeDesktopArticleVideoPlayer').then(({ default: YoutubeDesktopArticleVideoPlayer }) =>
 				setPlayer(<YoutubeDesktopArticleVideoPlayer youtubeTakeoverDetails={youtubeTakeoverDetails} />),
 			);

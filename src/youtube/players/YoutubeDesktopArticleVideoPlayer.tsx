@@ -3,11 +3,9 @@ import YoutubePlayerWrapper from 'youtube/players/shared/YoutubePlayerWrapper';
 import PlayerWrapper from 'youtube/players/shared/PlayerWrapper';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import styled, { css, keyframes } from 'styled-components';
-// import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButton';
 import useOnScreen from 'utils/useOnScreen';
-// import { ArticleVideoDetails } from 'jwplayer/types';
-import { YoutubeTakeOverDetails } from 'loaders/utils/GetYoutubeTakeoverDetails';
 import CloseButton from 'youtube/players/shared/CloseButton';
+import { YoutubeArticleVideoPlayerProps } from 'youtube/types';
 
 const YoutubeDesktopArticleVideoTopPlaceholder = styled.div`
 	position: absolute;
@@ -40,10 +38,6 @@ interface YoutubeDesktopArticleVideoWrapperProps {
 	width?: number;
 }
 
-interface YoutubeDesktopArticleVideoPlayerProps {
-	youtubeTakeoverDetails: YoutubeTakeOverDetails;
-}
-
 const DesktopArticleVideoWrapper = styled.div<YoutubeDesktopArticleVideoWrapperProps>`
 	height: max-content;
 	${(props) =>
@@ -69,9 +63,7 @@ const TopBar = styled.div`
 	position: relative;
 `;
 
-const YoutubeDesktopArticleVideoPlayer: React.FC<YoutubeDesktopArticleVideoPlayerProps> = ({
-	youtubeTakeoverDetails,
-}) => {
+const YoutubeDesktopArticleVideoPlayer: React.FC<YoutubeArticleVideoPlayerProps> = ({ youtubeTakeoverDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.1);
 	const [dismissed, setDismissed] = useState(false);
