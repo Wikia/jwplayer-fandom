@@ -5,7 +5,6 @@ import defineExperiment from '@fandom/pathfinder-lite/experiments/defineExperime
 import getExperiment from '@fandom/pathfinder-lite/experiments/getExperiment';
 import { Experiment } from '@fandom/pathfinder-lite/types';
 import { shouldLoadUcpPlayer } from 'loaders/utils/shouldLoadPlayer';
-import JWDesktopArticleVideoPlayer from 'jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 

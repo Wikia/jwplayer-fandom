@@ -30,7 +30,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	playerUrl,
 	onReady,
 	onComplete,
-  className,
+	className,
 	stopAutoAdvanceOnExitViewport,
 }) => {
 	const { setPlayer, setConfig } = useContext(PlayerContext);
