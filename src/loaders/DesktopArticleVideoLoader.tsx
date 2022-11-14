@@ -4,6 +4,8 @@ import { setVersionWindowVar } from 'loaders/utils/GetVersion';
 import defineExperiment from '@fandom/pathfinder-lite/experiments/defineExperiment';
 import getExperiment from '@fandom/pathfinder-lite/experiments/getExperiment';
 import { Experiment } from '@fandom/pathfinder-lite/types';
+import { shouldLoadUcpPlayer } from 'loaders/utils/shouldLoadPlayer';
+import JWDesktopArticleVideoPlayer from 'jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
@@ -16,7 +18,7 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 	const [player, setPlayer] = useState(undefined);
 
 	useEffect(() => {
-		if (!player) {
+		if (!player && shouldLoadUcpPlayer()) {
 			getPlayer();
 		}
 

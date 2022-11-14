@@ -33,7 +33,7 @@ const JWEvents = {
 
 	// Playlist
 	PLAYLIST_LOADED: 'playlist',
-	PLAYLIST_CHANGE: 'playlistItem',
+	PLAYLIST_ITEM: 'playlistItem',
 };
 
 export const PLAY_REASONS = {

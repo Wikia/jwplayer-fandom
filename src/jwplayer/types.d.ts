@@ -134,6 +134,7 @@ interface Bidder {
 	timeforBidResponse: number;
 	winner: boolean;
 }
+
 export interface AdImpressionEventData {
 	adposition: string;
 	adsystem: string;
@@ -147,6 +148,11 @@ export interface AdImpressionEventData {
 	tag: string;
 	timeLoading: number;
 	viewable: number;
+}
+
+export interface OnPlaylistItemEventData {
+	index: number;
+	item: PlaylistItem;
 }
 
 type JwEventData =
@@ -165,12 +171,15 @@ type JwEventData =
 	| OnAdTimeEventData
 	| ShareEventData
 	| TimeEventData
-	| AdImpressionEventData;
+	| AdImpressionEventData
+	| OnPlaylistItemEventData;
 
 type JwEventHandler = (event?: JwEventData) => void;
 
 interface BasePluginInterface {
 	on: (name: string, handler: (method: JwEventData) => void) => Player;
+	close?: () => void;
+	open?: () => void;
 }
 
 interface Plugins {
@@ -192,6 +201,7 @@ interface PlaylistItemCallbackData {
 
 export type Player = {
 	playToggle: () => null;
+	stop: () => null;
 	pause: () => null;
 	play: () => null;
 	setMute: (mute: boolean | null) => null;
@@ -217,6 +227,7 @@ export type Player = {
 	getFullscreen: () => boolean;
 	getFloating: () => boolean;
 	plugins: Plugins;
+	getPlugin: (name: string) => BasePluginInterface;
 	getQualityLevels: () => QualityObject[];
 	load: (playlist: string | Playlist) => null;
 	setPlaylistItemCallback: (PlaylistItemCallbackData) => void;
@@ -327,6 +338,7 @@ export interface JwPlayerWrapperProps {
 	onReady?: (playerInstance: Player) => void;
 	onComplete?: () => void;
 	className?: string;
+	stopAutoAdvanceOnExitViewport?: boolean;
 }
 
 export interface LoadableVideoPlayerWrapperProps {

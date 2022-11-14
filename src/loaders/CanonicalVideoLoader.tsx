@@ -15,6 +15,11 @@ export const CanonicalVideoLoader: React.FC<CanonicalVideoLoaderProps> = ({ curr
 		setVersionWindowVar();
 	}, []);
 
+	// Since the player is lazy loaded, change the player again when there is a new video prop
+	useEffect(() => {
+		getPlayer();
+	}, [currentVideo]);
+
 	const getPlayer = async () => {
 		// By default just set the base player
 		import('jwplayer/players/CanonicalVideoPlayer/CanonicalVideoPlayer').then(({ default: CanonicalVideoPlayer }) =>
