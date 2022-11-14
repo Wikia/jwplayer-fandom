@@ -21,3 +21,19 @@ export const trackYoutubePlayerReady = ({ deviceType }: YoutubePlayerTrackingPro
 		category: 'youtube-ready',
 	});
 };
+
+export const trackYoutubePlayerScrollClose = ({ deviceType }: YoutubePlayerTrackingProps) => {
+	track({
+		event: `basic-mw-event-youtube-scroll-player-close-${deviceType}`,
+		action: 'youtube',
+		category: 'youtube-scroll-close',
+	});
+};
+
+export const trackYoutubePlayerReadyError = ({ deviceType }: YoutubePlayerTrackingProps) => {
+	track({
+		event: `basic-mw-event-youtube-ready-error-${deviceType}`,
+		action: 'youtube',
+		category: 'youtube-ready-error',
+	});
+};

@@ -5,6 +5,7 @@ declare module 'react' {
 	/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 	export interface IframeHTMLAttributes<T> {
 		enablejsapi?: '0' | '1';
+		autoplay?: '0' | '1';
 	}
 }
 

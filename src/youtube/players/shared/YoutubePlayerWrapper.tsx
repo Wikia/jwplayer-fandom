@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {
 	trackYoutubePlayerInit,
 	trackYoutubePlayerReady,
+	trackYoutubePlayerReadyError,
 	YoutubePlayerTrackingProps,
 } from 'youtube/players/shared/youtubeTrackingEvents';
 import { YoutubeTakeOverDetails } from 'loaders/utils/GetYoutubeTakeoverDetails';
@@ -36,17 +37,21 @@ declare let window: WindowWithYouTube;
 const youtubeTargetId = 'youtube-embed-target';
 
 const YoutubePlayerWrapper: React.FC<YoutubeVideoDetails> = ({ deviceType, youtubeTakeoverDetails }) => {
-	// const [youtubePlayer, setYoutubePlayer] = useState<YT.Player>(null);
+	const [youtubePlayer, setYoutubePlayer] = useState<YT.Player>(null);
 
 	const loadYoutubeVideo = () => {
-		new YT.Player(youtubeTargetId, {
+		const player = new YT.Player(youtubeTargetId, {
 			events: {
 				onReady: onYoutubeReady,
 				onStateChange: () => console.log('Some player state change occurred'),
 			},
+			playerVars: {
+				autoplay: 1,
+				mute: 1,
+			},
 		});
 		console.debug('Youtube API object initiated.');
-		// setYoutubePlayer(player);
+		setYoutubePlayer(player);
 	};
 
 	useEffect(() => {
@@ -56,7 +61,13 @@ const YoutubePlayerWrapper: React.FC<YoutubeVideoDetails> = ({ deviceType, youtu
 
 	const onYoutubeReady = () => {
 		console.debug('Youtube Player Embed Ready.');
-		trackYoutubePlayerReady({ deviceType });
+		if (youtubePlayer) {
+			trackYoutubePlayerReady({ deviceType });
+			youtubePlayer.playVideo();
+		} else {
+			console.error('Error on Youtube ready. The Youtube Player API was not set.');
+			trackYoutubePlayerReadyError({ deviceType });
+		}
 	};
 
 	const initPlayer = () => {
@@ -83,11 +94,12 @@ const YoutubePlayerWrapper: React.FC<YoutubeVideoDetails> = ({ deviceType, youtu
 					id={youtubeTargetId}
 					width="100%"
 					height="100%"
-					src={`https://www.youtube.com/embed/${youtubeTakeoverDetails.youtubeVideoId}`}
+					src={`https://www.youtube.com/embed/${youtubeTakeoverDetails.youtubeVideoId}?autoplay=1&mute=1`}
 					frameBorder="0"
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 					allowFullScreen
 					enablejsapi="1"
+					autoplay="1"
 				/>
 			</YoutubePlayerTarget>
 		</YoutubePlayerTargetWrapper>
