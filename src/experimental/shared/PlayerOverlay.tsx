@@ -14,6 +14,7 @@ const PlayerOverlayStyled = styled.div.attrs((props: { showOverlay: boolean }) =
 	box-sizing: border-box;
 	background-color: rgb(0, 0, 0, 0.4);
 	opacity: ${(props) => (props.showOverlay ? '1' : '0')};
+	transition: opacity 0.2s;
 	cursor: pointer;
 `;
 
