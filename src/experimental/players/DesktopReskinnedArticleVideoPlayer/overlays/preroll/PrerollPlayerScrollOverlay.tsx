@@ -24,6 +24,7 @@ const BottomControls = styled.div`
 	justify-content: space-between;
 	margin-bottom: 11px;
 	pointer-events: auto;
+	height: 31px;
 `;
 
 const PrerollPlayerScrollOverlay: React.FC = () => {

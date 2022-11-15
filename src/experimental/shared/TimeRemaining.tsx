@@ -3,14 +3,15 @@ import styled from 'styled-components';
 import useTime from 'jwplayer/utils/useTime';
 
 const TimeRemainingWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+	text-align: center;
 	color: #fff;
 `;
 
-const TimeRemaining: React.FC = () => {
+interface TimeRemainingProps {
+	className?: string;
+}
+
+const TimeRemaining: React.FC<TimeRemainingProps> = ({ className }) => {
 	const time = useTime();
 
 	const formatTime = (time) => {
@@ -22,8 +23,10 @@ const TimeRemaining: React.FC = () => {
 	};
 
 	return (
-		<TimeRemainingWrapper>
-			{formatTime(time.position)} / {formatTime(time.duration)}
+		<TimeRemainingWrapper className={className}>
+			<p>
+				{formatTime(time.position)} / {formatTime(time.duration)}
+			</p>
 		</TimeRemainingWrapper>
 	);
 };

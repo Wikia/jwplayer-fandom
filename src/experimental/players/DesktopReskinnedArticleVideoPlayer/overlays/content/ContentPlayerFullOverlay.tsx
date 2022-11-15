@@ -18,6 +18,8 @@ const ControlWrapper = styled.div`
 
 const PlayVolumeWrapper = styled.div`
 	display: flex;
+	position: relative;
+	left: -15px;
 `;
 
 const ContentOverlayTimeSlider = styled(TimeSlider)`
@@ -28,6 +30,10 @@ const ContentOverlayTimeSlider = styled(TimeSlider)`
 const BottomWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
+`;
+
+const TimeRemainingPadded = styled(TimeRemaining)`
+	padding-left: 10px;
 `;
 
 const ContentPlayerFullOverlay: React.FC = () => {
@@ -44,7 +50,7 @@ const ContentPlayerFullOverlay: React.FC = () => {
 					<PlayVolumeWrapper>
 						<PlayStateWrapper iconColor={'#fff'} />
 						<VolumeStateWrapper iconColor={'#fff'} isScrollPlayer={false} hasLabel={false} />
-						<TimeRemaining />
+						<TimeRemainingPadded />
 					</PlayVolumeWrapper>
 					<PlayerCTAButton
 						text={'Watch More'}

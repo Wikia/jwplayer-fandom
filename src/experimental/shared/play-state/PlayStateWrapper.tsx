@@ -21,7 +21,6 @@ export const IconWrapper = styled.div`
 `;
 
 const Wrapper = styled.div<{ color?: string }>`
-	height: 44px;
 	width: 44px;
 	align-items: center;
 	display: flex;
