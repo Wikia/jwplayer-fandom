@@ -4,7 +4,11 @@ import { setVersionWindowVar } from 'loaders/utils/GetVersion';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
-export const CanonicalVideoLoader: React.FC<CanonicalVideoLoaderProps> = ({ currentVideo, onComplete }) => {
+export const CanonicalVideoLoader: React.FC<CanonicalVideoLoaderProps> = ({
+	currentVideo,
+	videoDetails,
+	onComplete,
+}) => {
 	const [player, setPlayer] = useState(undefined);
 
 	useEffect(() => {
@@ -23,7 +27,9 @@ export const CanonicalVideoLoader: React.FC<CanonicalVideoLoaderProps> = ({ curr
 	const getPlayer = async () => {
 		// By default just set the base player
 		import('jwplayer/players/CanonicalVideoPlayer/CanonicalVideoPlayer').then(({ default: CanonicalVideoPlayer }) =>
-			setPlayer(<CanonicalVideoPlayer currentVideo={currentVideo} onComplete={onComplete} />),
+			setPlayer(
+				<CanonicalVideoPlayer currentVideo={currentVideo} onComplete={onComplete} videoDetails={videoDetails} />,
+			),
 		);
 	};
 
