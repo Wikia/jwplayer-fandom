@@ -27,6 +27,7 @@ const LoadableVideoPlayerWrapper: React.FC<LoadableVideoPlayerWrapperProps> = ({
 			playerUrl={'https://content.jwplatform.com/libraries/tcoydixg.js'}
 			onComplete={onComplete}
 			onReady={(playerInstance) => canonicalOnReady(videoDetails, playerInstance)}
+			stopAutoAdvanceOnExitViewport={false}
 		/>
 	);
 };
