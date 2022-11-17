@@ -48,7 +48,7 @@ const CanonicalVideoPlayer: React.FC<CanonicalVideoPlayerProps> = ({ currentVide
 		};
 
 		// if the player's mounted communicate that the video platform is ready
-		communicationService.dispatch({ type: '[F2] Configured', payload });
+		communicationService.dispatch({ type: '[F2] Configured', ...payload });
 	}, []);
 
 	return (
