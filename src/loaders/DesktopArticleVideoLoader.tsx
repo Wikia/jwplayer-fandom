@@ -10,7 +10,10 @@ export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
 const desktopReskinnedExperiment = defineExperiment({
 	name: 'desktop-reskinned-player',
-	buckets: ['p', 'q'],
+	buckets: ['p'],
+	// TODO: Change this before MERGING!! Used for testing purposes. The date will most likely be 2022-11-28
+	startDate: Date.parse('2022-11-21T08:00:00'),
+	endDate: Date.parse('2022-12-04T11:59:00'),
 });
 
 export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps> = ({ videoDetails }) => {
