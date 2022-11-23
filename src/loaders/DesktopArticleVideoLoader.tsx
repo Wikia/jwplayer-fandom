@@ -20,7 +20,7 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 
 	const getPlayer = async () => {
 		// By default just set the base player
-		const youtubeTakeoverDetails = await getYoutubeTakeoverDetails({ deviceType: 'mobile' });
+		const youtubeTakeoverDetails = await getYoutubeTakeoverDetails({ deviceType: 'desktop' });
 
 		if (eligibleForYoutubeTakeover(youtubeTakeoverDetails)) {
 			console.debug('Youtube takeover - loading Desktop youtube embed.');
