@@ -72,12 +72,18 @@ export async function getYoutubeTakeoverDetails({
 	}
 
 	const response = await fetch(getYoutubeTakeoverUrl(wikiId));
-	const data = (await response.json()) as YoutubeTakeoverResponse;
+	const dataArray = (await response.json()) as YoutubeTakeoverResponse[];
+	console.debug(`Youtube Takeover: dataArray - ${dataArray}`);
+	const wikiYoutubeTakeoverDetails = dataArray?.length === 1 ? dataArray[0] : null;
+	console.debug(`Youtube Takeover: wikiYoutubeTakeoverDetails - ${wikiYoutubeTakeoverDetails}`);
 
-	if (data?.youtube_take_over && data?.youtube_video_id?.trim().length !== 0) {
+	if (
+		wikiYoutubeTakeoverDetails?.youtube_take_over &&
+		wikiYoutubeTakeoverDetails?.youtube_video_id?.trim().length !== 0
+	) {
 		console.debug('Youtube Takeover: Eligible for youtube takeover based on the targeting params.');
-		youtubeTakeoverDetails.isYoutubeTakeover = data.youtube_take_over;
-		youtubeTakeoverDetails.youtubeVideoId = data.youtube_video_id;
+		youtubeTakeoverDetails.isYoutubeTakeover = wikiYoutubeTakeoverDetails.youtube_take_over;
+		youtubeTakeoverDetails.youtubeVideoId = wikiYoutubeTakeoverDetails.youtube_video_id;
 		trackYoutubeTakeoverDetails({ deviceType: deviceType, youtubeVideoId: youtubeTakeoverDetails.youtubeVideoId });
 	}
 
