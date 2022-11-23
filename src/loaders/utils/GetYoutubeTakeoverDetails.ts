@@ -52,6 +52,9 @@ export async function getYoutubeTakeoverDetails({
 	const forcedYoutubeEmbedVideoId = getValueFromQuery('youtube_embed_video_id');
 	if (forcedYoutubeEmbedVideoId) {
 		// If we can extract a youtube video id from the URL query params, then we can assume we want the youtube takeover
+		console.debug(
+			`Youtube Takeover: Found the youtube_embed_video_id query param, with a value of ${forcedYoutubeEmbedVideoId}`,
+		);
 		youtubeTakeoverDetails.isYoutubeTakeover = true;
 		youtubeTakeoverDetails.youtubeVideoId = forcedYoutubeEmbedVideoId;
 		return youtubeTakeoverDetails;
@@ -61,7 +64,10 @@ export async function getYoutubeTakeoverDetails({
 	const wikiId = config?.get('wgCityId');
 	const isTier3Wiki = config?.get('wgArticleFeaturedVideo')?.tier3Mapping ?? false;
 
-	if (!wikiId || !isTier3Wiki) {
+	// If the wikiId is not found for some reason or if the wiki is a tier3 wiki,
+	// then just return the default youtubeTakeoverDetails that include the isYoutubeTakeover set to false
+	if (!wikiId || isTier3Wiki) {
+		console.debug(`Youtube Takeover: Youtube video embed check. wikiId: ${wikiId} | isTier3Wiki: ${isTier3Wiki}`);
 		return youtubeTakeoverDetails;
 	}
 
@@ -69,6 +75,7 @@ export async function getYoutubeTakeoverDetails({
 	const data = (await response.json()) as YoutubeTakeoverResponse;
 
 	if (data?.youtube_take_over && data?.youtube_video_id?.trim().length !== 0) {
+		console.debug('Youtube Takeover: Eligible for youtube takeover based on the targeting params.');
 		youtubeTakeoverDetails.isYoutubeTakeover = data.youtube_take_over;
 		youtubeTakeoverDetails.youtubeVideoId = data.youtube_video_id;
 		trackYoutubeTakeoverDetails({ deviceType: deviceType, youtubeVideoId: youtubeTakeoverDetails.youtubeVideoId });
@@ -78,5 +85,10 @@ export async function getYoutubeTakeoverDetails({
 }
 
 export const eligibleForYoutubeTakeover = (youtubeTakeoverDetails: YoutubeTakeOverDetails) => {
-	return youtubeTakeoverDetails.isYoutubeTakeover && youtubeTakeoverDetails?.youtubeVideoId?.length !== 0;
+	const youtubeTakeoverFlag = youtubeTakeoverDetails.isYoutubeTakeover;
+	const isVideoIdValidLength = youtubeTakeoverDetails?.youtubeVideoId?.length !== 0;
+	console.log(
+		`Youtube Takeover: eligibleForYoutubeTakeover - youtubeTakeoverFlag: ${youtubeTakeoverFlag} | isVideoIdValidLength: ${isVideoIdValidLength}`,
+	);
+	return youtubeTakeoverFlag && isVideoIdValidLength;
 };
