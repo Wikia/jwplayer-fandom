@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
 import PlayerCTAButton from 'experimental/shared/PlayerCTAButton';
 import OverlayTimeSliderBottom from 'experimental/shared/OverlayTimeSliderBottom';
+import usePlaylistItem from 'jwplayer/utils/usePlaylistItem';
 
 const PlayStateContainer = styled.div`
 	width: 100%;
@@ -24,6 +25,8 @@ const BottomControls = styled.div`
 `;
 
 const ContentPlayerScrollOverlay: React.FC = () => {
+	const playlistItem = usePlaylistItem();
+
 	return (
 		<>
 			<PlayStateContainer>
@@ -35,7 +38,7 @@ const ContentPlayerScrollOverlay: React.FC = () => {
 					isScrollPlayer={true}
 					text={'Watch More'}
 					onClick={() => {
-						console.log('watch more');
+						window.open(`https://www.fandom.com/video/${playlistItem.mediaid}`, '_blank');
 					}}
 				/>
 			</BottomControls>

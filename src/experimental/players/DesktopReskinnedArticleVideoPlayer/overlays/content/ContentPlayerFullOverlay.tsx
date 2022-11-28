@@ -55,7 +55,7 @@ const ContentPlayerFullOverlay: React.FC = () => {
 					<PlayerCTAButton
 						text={'Watch More'}
 						onClick={() => {
-							console.log('watch more');
+							window.open(`https://www.fandom.com/video/${playlistItem.mediaid}`, '_blank');
 						}}
 					/>
 				</ControlWrapper>
