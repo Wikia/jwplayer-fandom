@@ -15,6 +15,7 @@ const DesktopScrollVideoTopContainer = styled.div`
 	padding: 12px 18px 12px 18px;
 	box-sizing: border-box;
 	background-color: #ffffff;
+	cursor: pointer;
 `;
 
 const DesktopScrollVideoTopWrapperTextWrapper = styled.div`
@@ -51,6 +52,7 @@ const CloseButtonSmall = styled(CloseButton)`
 const DesktopScrollVideoTopContent: React.FC<DesktopScrollVideoTopContentProps> = ({
 	isScrollPlayer,
 	onCloseClick,
+	handleClick,
 }) => {
 	const adStarted = useAdStarted();
 	const playlistItem = usePlaylistItem();
@@ -67,7 +69,7 @@ const DesktopScrollVideoTopContent: React.FC<DesktopScrollVideoTopContentProps> 
 	if (!isScrollPlayer) return null;
 
 	return (
-		<DesktopScrollVideoTopContainer>
+		<DesktopScrollVideoTopContainer onClick={handleClick}>
 			<DesktopScrollVideoTopWrapperTextWrapper>
 				<UpperText>{upperText}</UpperText>
 				<LowerText>{lowerText}</LowerText>

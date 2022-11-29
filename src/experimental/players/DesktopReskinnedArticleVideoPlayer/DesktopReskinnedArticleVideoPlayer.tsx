@@ -114,7 +114,11 @@ const DesktopReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPla
 						width={width}
 						isScrollPlayer={isScrollPlayer}
 					>
-						<DesktopScrollVideoTopContent isScrollPlayer={isScrollPlayer} onCloseClick={() => setDismissed(true)} />
+						<DesktopScrollVideoTopContent
+							isScrollPlayer={isScrollPlayer}
+							onCloseClick={() => setDismissed(true)}
+							handleClick={() => placeholderRef.current.scrollIntoView()}
+						/>
 						<DesktopReskinnedVideoContentContainer onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
 							<DesktopReskinnedArticleVideoPlayerOverlay isScrollPlayer={isScrollPlayer} showOverlay={showOverlay} />
 							<JwPlayerWrapperStyled

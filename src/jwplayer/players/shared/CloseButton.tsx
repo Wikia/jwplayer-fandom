@@ -29,7 +29,8 @@ interface CloseButtonProps {
 
 const CloseButton: React.FC<CloseButtonProps> = ({ className, dismiss, iconColor }) => {
 	const { player } = useContext(PlayerContext);
-	const onClickClose = () => {
+	const onClickClose = (event) => {
+		event.stopPropagation();
 		jwPlayerPlaybackTracker({ event_name: 'video_player_close' });
 		player.pause();
 		dismiss();

@@ -50,6 +50,7 @@ export interface DesktopReskinnedArticleVideoPlayerOverlayProps {
 export interface DesktopScrollVideoTopContentProps {
 	isScrollPlayer: boolean;
 	onCloseClick: () => void;
+	handleClick: () => void;
 }
 
 export interface PlayerOverlayProps {
