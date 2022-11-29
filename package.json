@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.0.5-test-youtube-7",
+	"version": "2.0.5-test-youtube-8",
 	"description": "JWPlayer for Fandom",
 	"exports": {
 		".": "./main.js",
