@@ -51,6 +51,7 @@ const YoutubePlayerWrapper: React.FC<YoutubeVideoDetails> = ({ deviceType, youtu
 				mute: 1,
 				playsinline: 1,
 				autohide: 1,
+				rel: 0,
 			},
 		});
 		console.debug(`Youtube API object initiated - ${!!player}`);
