@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import {
 	trackYoutubePlayerInit,
@@ -37,7 +37,7 @@ declare let window: WindowWithYouTube;
 const youtubeTargetId = 'youtube-embed-target';
 
 const YoutubePlayerWrapper: React.FC<YoutubeVideoDetails> = ({ deviceType, youtubeTakeoverDetails }) => {
-	const [youtubePlayer, setYoutubePlayer] = useState<YT.Player>(null);
+	// const [setYoutubePlayer] = useState<YT.Player>(null);
 
 	const loadYoutubeVideo = () => {
 		const player = new YT.Player(youtubeTargetId, {
@@ -45,14 +45,15 @@ const YoutubePlayerWrapper: React.FC<YoutubeVideoDetails> = ({ deviceType, youtu
 				onReady: onYoutubeReady,
 				onStateChange: () => console.log('Some player state change occurred'),
 			},
+			videoId: youtubeTakeoverDetails.youtubeVideoId,
 			playerVars: {
 				autoplay: 1,
 				mute: 1,
 				playsinline: 1,
+				autohide: 1,
 			},
 		});
-		console.debug('Youtube API object initiated.');
-		setYoutubePlayer(player);
+		console.debug(`Youtube API object initiated - ${!!player}`);
 	};
 
 	useEffect(() => {
@@ -60,11 +61,12 @@ const YoutubePlayerWrapper: React.FC<YoutubeVideoDetails> = ({ deviceType, youtu
 		trackYoutubePlayerInit({ deviceType });
 	}, []);
 
-	const onYoutubeReady = () => {
+	const onYoutubeReady = (event) => {
 		console.debug('Youtube Player Embed Ready.');
-		if (youtubePlayer) {
+		if (typeof event?.target?.playVideo === 'function') {
+			console.debug('Youtube Player Embed Ready - YoutubePlayer was set.');
 			trackYoutubePlayerReady({ deviceType });
-			youtubePlayer.playVideo();
+			event.target.playVideo();
 		} else {
 			console.error('Error on Youtube ready. The Youtube Player API was not set.');
 			trackYoutubePlayerReadyError({ deviceType });
@@ -91,17 +93,7 @@ const YoutubePlayerWrapper: React.FC<YoutubeVideoDetails> = ({ deviceType, youtu
 	return (
 		<YoutubePlayerTargetWrapper>
 			<YoutubePlayerTarget>
-				<iframe
-					id={youtubeTargetId}
-					width="100%"
-					height="100%"
-					src={`https://www.youtube.com/embed/${youtubeTakeoverDetails.youtubeVideoId}?autoplay=1&mute=1&playsinline=1`}
-					frameBorder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-					allowFullScreen
-					enablejsapi="1"
-					autoplay="1"
-				/>
+				<div id={youtubeTargetId} />
 			</YoutubePlayerTarget>
 		</YoutubePlayerTargetWrapper>
 	);

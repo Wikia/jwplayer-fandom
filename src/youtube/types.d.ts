@@ -23,10 +23,4 @@ export interface YoutubeArticleVideoPlayerProps {
 	youtubeTakeoverDetails: YoutubeTakeOverDetails;
 }
 
-export type Player = (
-	playerDivId: string,
-	channel: string,
-	height: number,
-	width: number,
-	parent?: string[],
-) => PlayerInstance;
+export type Player = (playerDivId: string, height: number, width: number, parent?: string[]) => PlayerInstance;
