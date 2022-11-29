@@ -57,11 +57,13 @@ const DesktopScrollVideoTopContent: React.FC<DesktopScrollVideoTopContentProps> 
 	const adStarted = useAdStarted();
 	const playlistItem = usePlaylistItem();
 	const adTime = useAdTime();
-
 	let upperText = 'Now Playing';
 
 	if (adStarted) {
-		upperText = `Up next in ${Math.trunc(adTime?.duration - adTime?.position)} seconds`;
+		const adSeconds = Math.trunc(adTime?.duration - adTime?.position);
+		const timeLabel = adSeconds === 1 ? 'second' : 'seconds';
+
+		upperText = `Up next in ${adSeconds} ${timeLabel}`;
 	}
 
 	const lowerText = playlistItem?.title;

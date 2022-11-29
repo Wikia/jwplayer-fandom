@@ -22,7 +22,9 @@ const PlayVolumeWrapper = styled.div`
 const PrerollPlayerFullOverlay: React.FC = () => {
 	const playlistItem = usePlaylistItem();
 	const adTime = useAdTime();
-	const upperText = `Up next in ${Math.trunc(adTime?.duration - adTime?.position)} seconds`;
+	const adSeconds = Math.trunc(adTime?.duration - adTime?.position);
+	const timeLabel = adSeconds === 1 ? 'second' : 'seconds';
+	const upperText = `Up next in ${adSeconds} ${timeLabel}`;
 	const lowerText = playlistItem?.title;
 
 	return (
