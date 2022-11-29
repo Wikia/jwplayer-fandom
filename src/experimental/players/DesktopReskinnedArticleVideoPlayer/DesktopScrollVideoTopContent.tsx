@@ -21,6 +21,7 @@ const DesktopScrollVideoTopWrapperTextWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
+	overflow: hidden;
 `;
 
 const UpperText = styled.div`
