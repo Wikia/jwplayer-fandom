@@ -4,9 +4,12 @@ import {
 	trackYoutubePlayerInit,
 	trackYoutubePlayerReady,
 	trackYoutubePlayerReadyError,
+	trackYoutubePlayerStateChange,
 	YoutubePlayerTrackingProps,
 } from 'youtube/players/shared/youtubeTrackingEvents';
 import { YoutubeTakeOverDetails } from 'loaders/utils/GetYoutubeTakeoverDetails';
+
+import OnStateChangeEvent = YT.OnStateChangeEvent;
 
 const YoutubePlayerTarget = styled.div`
 	iframe {
@@ -43,7 +46,11 @@ const YoutubePlayerWrapper: React.FC<YoutubeVideoDetails> = ({ deviceType, youtu
 		const player = new YT.Player(youtubeTargetId, {
 			events: {
 				onReady: onYoutubeReady,
-				onStateChange: () => console.log('Some player state change occurred'),
+				onStateChange: (event: OnStateChangeEvent) => {
+					const playerStateEnum = YT.PlayerState;
+					const stateValueAsString = Object.keys(playerStateEnum).find((key) => playerStateEnum?.[key] === event.data);
+					trackYoutubePlayerStateChange({ deviceType, playerStateName: stateValueAsString });
+				},
 			},
 			videoId: youtubeTakeoverDetails.youtubeVideoId,
 			playerVars: {

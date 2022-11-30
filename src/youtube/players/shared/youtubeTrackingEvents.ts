@@ -5,6 +5,10 @@ export interface YoutubePlayerTrackingProps {
 	deviceType: 'desktop' | 'mobile';
 }
 
+interface YoutubePlayerTrackingWithPlayerStateProps extends YoutubePlayerTrackingProps {
+	playerStateName: string;
+}
+
 export const trackYoutubeTakeoverDetails = ({
 	deviceType,
 	youtubeVideoId,
@@ -32,6 +36,17 @@ export const trackYoutubePlayerReady = ({ deviceType }: YoutubePlayerTrackingPro
 		event: `basic-mw-event-youtube-ready-${deviceType}`,
 		action: 'youtube',
 		category: 'youtube-ready',
+	});
+};
+
+export const trackYoutubePlayerStateChange = ({
+	deviceType,
+	playerStateName,
+}: YoutubePlayerTrackingWithPlayerStateProps) => {
+	track({
+		event: `basic-mw-event-youtube-state-change-${deviceType}`,
+		action: 'youtube',
+		category: `youtube-state-change-${playerStateName}`,
 	});
 };
 
