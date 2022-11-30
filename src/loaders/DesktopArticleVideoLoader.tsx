@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { DesktopArticleVideoLoaderProps } from 'loaders/types';
 import { setVersionWindowVar } from 'loaders/utils/GetVersion';
 import { shouldLoadUcpPlayer } from 'loaders/utils/shouldLoadPlayer';
-// import YoutubeDesktopArticleVideoPlayer from "youtube/players/YoutubeDesktopArticleVideoPlayer";
 import { eligibleForYoutubeTakeover, getYoutubeTakeoverDetails } from 'loaders/utils/GetYoutubeTakeoverDetails';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
