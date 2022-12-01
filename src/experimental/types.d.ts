@@ -59,3 +59,34 @@ export interface PlayerOverlayProps {
 	handleOverlayClick?: () => void;
 	className?: string;
 }
+
+export interface MobileReskinnedArticleVideoPlayerOverlayProps {
+	isScrollPlayer: boolean;
+	showOverlay: boolean;
+}
+
+export interface MobileReskinnedArticleVideoPlayerContentOverlayProps {
+	isScrollPlayer: boolean;
+	showOverlay: boolean;
+}
+
+export interface MobileReskinnedArticleVideoPlayerContentFullOverlayProps {
+	showOverlay: boolean;
+}
+
+export interface MobileReskinnedArticleVideoPlayerContentScrollOverlayProps {
+	showOverlay: boolean;
+}
+
+export interface MobileReskinnedArticleVideoPlayerPrerollOverlayProps {
+	isScrollPlayer: boolean;
+	showOverlay: boolean;
+}
+
+export interface MobileReskinnedArticleVideoPlayerPrerollFullOverlayProps {
+	showOverlay: boolean;
+}
+
+export interface MobileReskinnedArticleVideoPlayerPrerollScrollOverlayProps {
+	showOverlay: boolean;
+}

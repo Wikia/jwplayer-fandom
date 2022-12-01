@@ -6,6 +6,7 @@ import { DesktopArticleVideoPlayerProps } from 'jwplayer/types';
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
+import MobileReskinnedArticleVideoPlayerOverlay from 'experimental/players/MobileReskinnedArticleVideoPlayer/MobileReskinnedArticleVideoPlayerOverlay';
 // import useAdComplete from 'jwplayer/utils/useAdComplete';
 
 const MobileReskinnedArticleVideoTopPlaceholder = styled.div`
@@ -57,17 +58,17 @@ const MobileReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlay
 
 	const hideOverlayTimeout = () => {
 		const timeout: ReturnType<typeof setTimeout> = setTimeout(() => {
-			// setShowOverlay(false);
+			setShowOverlay(false);
 			setOverlayTimeout(undefined);
 		}, 6000);
 		return timeout;
 	};
 
-	// const [showOverlay, setShowOverlay] = useState(false);
+	const [showOverlay, setShowOverlay] = useState(false);
 	const [overlayTimeout, setOverlayTimeout] = useState(undefined);
 
 	useEffect(() => {
-		// setShowOverlay(true);
+		setShowOverlay(true);
 		setOverlayTimeout(hideOverlayTimeout());
 	}, []);
 
@@ -77,7 +78,7 @@ const MobileReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlay
 			setOverlayTimeout(hideOverlayTimeout());
 		}
 
-		// setShowOverlay(true);
+		setShowOverlay(true);
 	};
 
 	return (
@@ -91,7 +92,7 @@ const MobileReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlay
 						isScrollPlayer={isScrollPlayer}
 					>
 						<MobileReskinnedVideoContentContainer onTouchStart={handleTouchStart}>
-							{/* <DesktopReskinnedArticleVideoPlayerOverlay isScrollPlayer={isScrollPlayer} showOverlay={showOverlay} /> */}
+							<MobileReskinnedArticleVideoPlayerOverlay isScrollPlayer={isScrollPlayer} showOverlay={showOverlay} />
 							<JwPlayerWrapper
 								playerUrl={'https://cdn.jwplayer.com/libraries/v46VcUMb.js'}
 								config={getArticleVideoConfig(videoDetails)}
