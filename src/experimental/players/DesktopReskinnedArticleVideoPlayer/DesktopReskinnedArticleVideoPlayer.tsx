@@ -107,8 +107,7 @@ const DesktopReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPla
 	};
 
 	const scrollToPlaceholder = () => {
-		const yOffset = -91;
-		const y = boundingClientRect.top + window.pageYOffset + yOffset;
+		const y = boundingClientRect.top - 91;
 
 		window.scrollTo({ top: y, behavior: 'smooth' });
 	};
