@@ -42,7 +42,7 @@ const ContentPlayerScrollOverlay: React.FC = () => {
 					}}
 				/>
 			</BottomControls>
-			<OverlayTimeSliderBottom />
+			<OverlayTimeSliderBottom canSeek={false} />
 		</>
 	);
 };

@@ -29,6 +29,7 @@ export interface TimeSliderProps {
 	knobColor?: string;
 	progressColor?: string;
 	railHeight?: string;
+	canSeek?: boolean;
 }
 
 export interface PlayerFullOverlayTopTextProps {
