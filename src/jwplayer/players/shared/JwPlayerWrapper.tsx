@@ -103,6 +103,8 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 				}
 
 				// if the video is on its 2nd+ play, pause the video if its not on the viewport
+				/*
+				// Temporarily removed since this was tanking the sponsored content views
 				if (videoIndexRef.current >= 1 && (playerInstance.getViewable() === 0 || document.hasFocus() === false)) {
 					// send tracking event
 					jwPlayerPlaybackTracker({ event_name: 'video_player_pause_not_viewable' });
@@ -112,7 +114,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 						window.jwplayer(elementId).getPlugin('related').close();
 						window.jwplayer(elementId).getPlugin('related').open();
 					}, 1000);
-				}
+				} */
 			});
 
 			playerInstance.setPlaylistItemCallback((item: PlaylistItem) => {
