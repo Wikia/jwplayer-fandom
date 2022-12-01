@@ -104,6 +104,13 @@ const DesktopReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPla
 		setOverlayTimeout(hideOverlayTimeout());
 	};
 
+	const scrollToPlaceholder = () => {
+		const yOffset = -91;
+		const y = boundingClientRect.top + window.pageYOffset + yOffset;
+
+		window.scrollTo({ top: y, behavior: 'smooth' });
+	};
+
 	return (
 		<>
 			<DesktopArticleVideoTopPlaceholder ref={placeholderRef}>
@@ -117,7 +124,7 @@ const DesktopReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPla
 						<DesktopScrollVideoTopContent
 							isScrollPlayer={isScrollPlayer}
 							onCloseClick={() => setDismissed(true)}
-							handleClick={() => placeholderRef.current.scrollIntoView()}
+							handleClick={scrollToPlaceholder}
 						/>
 						<DesktopReskinnedVideoContentContainer onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
 							<DesktopReskinnedArticleVideoPlayerOverlay isScrollPlayer={isScrollPlayer} showOverlay={showOverlay} />
