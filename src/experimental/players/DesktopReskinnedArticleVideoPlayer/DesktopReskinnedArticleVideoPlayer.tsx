@@ -16,7 +16,7 @@ const DesktopArticleVideoTopPlaceholder = styled.div`
 	z-index: ${Number(WDSVariables.z2) + 2};
 	position: absolute;
 	width: 100%;
-	padding-top: 56.25%;
+	aspect-ratio: 16 / 9;
 	top: 0;
 	left: 0;
 	bottom: 0;
@@ -56,6 +56,8 @@ const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
 const DesktopReskinnedVideoContentContainer = styled.div`
 	position: relative;
 	flex-grow: 2;
+	aspect-ratio: 16 / 9;
+	width: 100%;
 `;
 
 const JwPlayerWrapperStyled = styled(JwPlayerWrapper)`
