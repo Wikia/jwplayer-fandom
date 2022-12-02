@@ -1,12 +1,9 @@
 import React from 'react';
-import { MobileReskinnedArticleVideoPlayerPrerollFullOverlayProps } from 'experimental/types';
 
-const MobileReskinnedArticleVideoPlayerPrerollFullOverlay: React.FC<
-	MobileReskinnedArticleVideoPlayerPrerollFullOverlayProps
-> = ({ showOverlay }) => {
+const PrerollPlayerFullOverlay: React.FC = () => {
 	console.log('================ PREROLL FULL OVERLAY ================');
 
-	return <div>{showOverlay}</div>;
+	return <div></div>;
 };
 
-export default MobileReskinnedArticleVideoPlayerPrerollFullOverlay;
+export default PrerollPlayerFullOverlay;

@@ -74,11 +74,13 @@ const MobileReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlay
 
 	const handleTouchStart = () => {
 		if (overlayTimeout) {
+			setShowOverlay(false);
 			clearTimeout(overlayTimeout);
+			setOverlayTimeout(undefined);
+		} else {
+			setShowOverlay(true);
 			setOverlayTimeout(hideOverlayTimeout());
 		}
-
-		setShowOverlay(true);
 	};
 
 	return (

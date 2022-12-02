@@ -1,16 +1,27 @@
 import React from 'react';
-import { MobileReskinnedArticleVideoPlayerContentOverlayProps } from 'experimental/types';
-import ContentPlayerScrollOverlay from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/content/ContentPlayerScrollOverlay';
+import styled from 'styled-components';
+import PlayerOverlay from 'experimental/shared/PlayerOverlay';
+import { ContentPlayerOverlayProps } from 'experimental/types';
 import ContentPlayerFullOverlay from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/content/ContentPlayerFullOverlay';
+import ContentPlayerScrollOverlay from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/content/ContentPlayerScrollOverlay';
+import usePlaying from 'jwplayer/utils/usePlaying';
+import useRelatedOpen from 'jwplayer/utils/useRelatedOpen';
 
-const MobileReskinnedArticleVideoPlayerContentOverlay: React.FC<
-	MobileReskinnedArticleVideoPlayerContentOverlayProps
-> = ({ isScrollPlayer, showOverlay }) => {
-	if (isScrollPlayer) {
-		return <ContentPlayerScrollOverlay showOverlay={showOverlay} />;
-	} else {
-		return <ContentPlayerFullOverlay showOverlay={showOverlay} />;
-	}
+const PlayerOverlayAllowClick = styled(PlayerOverlay)`
+	pointer-events: auto;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	-webkit-tap-highlight-color: transparent;
+`;
+
+const ContentPlayerOverlay: React.FC<ContentPlayerOverlayProps> = ({ isScrollPlayer, showOverlay }) => {
+	const isPlaying = usePlaying();
+	const isRelatedOpen = useRelatedOpen();
+
+	return (
+		<PlayerOverlayAllowClick showOverlay={(showOverlay && !isRelatedOpen) || !isPlaying}>
+			{isScrollPlayer ? <ContentPlayerScrollOverlay /> : <ContentPlayerFullOverlay />}
+		</PlayerOverlayAllowClick>
+	);
 };
 
-export default MobileReskinnedArticleVideoPlayerContentOverlay;
+export default ContentPlayerOverlay;

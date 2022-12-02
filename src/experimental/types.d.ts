@@ -71,23 +71,7 @@ export interface MobileReskinnedArticleVideoPlayerContentOverlayProps {
 	showOverlay: boolean;
 }
 
-export interface MobileReskinnedArticleVideoPlayerContentFullOverlayProps {
-	showOverlay: boolean;
-}
-
-export interface MobileReskinnedArticleVideoPlayerContentScrollOverlayProps {
-	showOverlay: boolean;
-}
-
 export interface MobileReskinnedArticleVideoPlayerPrerollOverlayProps {
 	isScrollPlayer: boolean;
-	showOverlay: boolean;
-}
-
-export interface MobileReskinnedArticleVideoPlayerPrerollFullOverlayProps {
-	showOverlay: boolean;
-}
-
-export interface MobileReskinnedArticleVideoPlayerPrerollScrollOverlayProps {
 	showOverlay: boolean;
 }

@@ -1,12 +1,9 @@
 import React from 'react';
-import { MobileReskinnedArticleVideoPlayerContentScrollOverlayProps } from 'experimental/types';
 
-const MobileReskinnedArticleVideoPlayerContentScrollOverlay: React.FC<
-	MobileReskinnedArticleVideoPlayerContentScrollOverlayProps
-> = ({ showOverlay }) => {
+const ContentPlayerScrollOverlay: React.FC = () => {
 	console.log('================ CONTENT SCROLL OVERLAY ================');
 
-	return <div>{showOverlay}</div>;
+	return <div></div>;
 };
 
-export default MobileReskinnedArticleVideoPlayerContentScrollOverlay;
+export default ContentPlayerScrollOverlay;
