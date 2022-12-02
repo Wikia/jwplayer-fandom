@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.0.2-playerReskin-21",
+	"version": "2.0.2-playerReskin-24",
 	"description": "JWPlayer for Fandom",
 	"exports": {
 		".": "./main.js",
@@ -31,7 +31,7 @@
 		"pub:patch": "npm version patch && rm -rf dist && yarn pub",
 		"pub:minor": "npm version minor && rm -rf dist && yarn pub",
 		"pub:major": "npm version major && rm -rf dist && yarn pub",
-		"pub": "yarn build && cd dist && npm publish --tag beta"
+		"pub": "yarn install && yarn build && cd dist && npm publish --tag beta"
 	},
 	"lint-staged": {
 		"src/**/*.(ts|tsx|js)": [

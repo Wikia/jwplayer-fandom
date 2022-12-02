@@ -5,7 +5,6 @@ import useProgressUpdate from 'experimental/utils/useProgressUpdate';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import { TimeSliderProps } from 'experimental/types';
-import useAdPlaying from 'jwplayer/utils/useAdPlaying';
 import { usePlayingStateRef } from 'jwplayer/utils/usePlaying';
 import useStateRef from 'experimental/utils/useStateRef';
 
@@ -106,6 +105,7 @@ const TimeSlider: React.FC<TimeSliderProps> = ({
 	knobColor,
 	progressColor,
 	railHeight,
+	canSeek = true,
 }) => {
 	const { player } = useContext(PlayerContext);
 	const { bufferPercent } = useBufferUpdate();
@@ -197,8 +197,8 @@ const TimeSlider: React.FC<TimeSliderProps> = ({
 		document.addEventListener('mouseup', onMouseUp);
 	};
 
-	const adPlaying = useAdPlaying();
-	const handleSeek = adPlaying ? (event) => event.stopPropagation() : seek;
+	const handleSeek = canSeek ? seek : undefined;
+	const handleMouseDown = canSeek ? onMouseDown : undefined;
 	const progress = dragging ? dragPosition : positionPercent;
 
 	return (
@@ -206,14 +206,14 @@ const TimeSlider: React.FC<TimeSliderProps> = ({
 			className={className}
 			onMouseEnter={() => setHover(true)}
 			onMouseLeave={() => setHover(false)}
-			onMouseDown={onMouseDown}
+			onMouseDown={handleMouseDown}
 			onClick={handleSeek}
 		>
 			<TimeSliderContainer ref={sliderRef} height={railHeight}>
 				<Rail color={railColor} />
-				{!adPlaying && <Buffer percentageBuffered={bufferPercent} bufferBackgroundColor={bufferColor} />}
+				{canSeek && <Buffer percentageBuffered={bufferPercent} bufferBackgroundColor={bufferColor} />}
 				<Progress progress={progress} dragging={dragging} progressBackgroundColor={progressColor} />
-				{!adPlaying && (hover || mouseDown) && (
+				{canSeek && (hover || mouseDown) && (
 					<ProgressKnob progress={progress} dragging={dragging} progressKnobColor={knobColor} />
 				)}
 			</TimeSliderContainer>

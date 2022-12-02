@@ -16,6 +16,7 @@ const DesktopScrollVideoTopContainer = styled.div`
 	box-sizing: border-box;
 	background-color: #ffffff;
 	cursor: pointer;
+	height: 70px;
 `;
 
 const DesktopScrollVideoTopWrapperTextWrapper = styled.div`

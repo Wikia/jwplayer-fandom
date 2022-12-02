@@ -16,7 +16,7 @@ const DesktopArticleVideoTopPlaceholder = styled.div`
 	z-index: ${Number(WDSVariables.z2) + 2};
 	position: absolute;
 	width: 100%;
-	padding-top: 56.25%;
+	aspect-ratio: 16 / 9;
 	top: 0;
 	left: 0;
 	bottom: 0;
@@ -56,6 +56,8 @@ const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
 const DesktopReskinnedVideoContentContainer = styled.div`
 	position: relative;
 	flex-grow: 2;
+	aspect-ratio: 16 / 9;
+	width: 100%;
 `;
 
 const JwPlayerWrapperStyled = styled(JwPlayerWrapper)`
@@ -104,6 +106,12 @@ const DesktopReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPla
 		setOverlayTimeout(hideOverlayTimeout());
 	};
 
+	const scrollToPlaceholder = () => {
+		const y = boundingClientRect.top - 91;
+
+		window.scrollTo({ top: y, behavior: 'smooth' });
+	};
+
 	return (
 		<>
 			<DesktopArticleVideoTopPlaceholder ref={placeholderRef}>
@@ -117,7 +125,7 @@ const DesktopReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPla
 						<DesktopScrollVideoTopContent
 							isScrollPlayer={isScrollPlayer}
 							onCloseClick={() => setDismissed(true)}
-							handleClick={() => placeholderRef.current.scrollIntoView()}
+							handleClick={scrollToPlaceholder}
 						/>
 						<DesktopReskinnedVideoContentContainer onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
 							<DesktopReskinnedArticleVideoPlayerOverlay isScrollPlayer={isScrollPlayer} showOverlay={showOverlay} />
