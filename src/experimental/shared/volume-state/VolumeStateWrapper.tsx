@@ -46,7 +46,7 @@ const Label = styled.div`
 const VolumeStateWrapper: React.FC<VolumeStateWrapperProps> = ({
 	iconColor = '#fff',
 	sliderColor = 'rgb(0, 214, 214)',
-	isScrollPlayer = false,
+	hasSlider = false,
 	hasLabel = false,
 }) => {
 	const { player } = useContext(PlayerContext);
@@ -61,7 +61,7 @@ const VolumeStateWrapper: React.FC<VolumeStateWrapperProps> = ({
 	return (
 		<Wrapper onClick={onClick} color={iconColor}>
 			<SoundButtonWrapper onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-				{!isScrollPlayer && <VolumeSlider color={sliderColor} hover={hover} />}
+				{hasSlider && <VolumeSlider color={sliderColor} hover={hover} />}
 				{mute ? <StyledSoundOffIcon fill={iconColor} /> : <StyledSoundIcon fill={iconColor} />}
 			</SoundButtonWrapper>
 			{mute && hasLabel && <Label>Play Sound</Label>}

@@ -33,7 +33,7 @@ const ContentPlayerScrollOverlay: React.FC = () => {
 				<PlayStateWrapper iconColor={'#fff'} />
 			</PlayStateContainer>
 			<BottomControls>
-				<VolumeStateWrapper iconColor={'#fff'} isScrollPlayer={true} hasLabel={true} />
+				<VolumeStateWrapper iconColor={'#fff'} hasSlider={false} hasLabel={true} />
 				<PlayerCTAButton
 					isScrollPlayer={true}
 					text={'Watch More'}

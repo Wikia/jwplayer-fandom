@@ -49,7 +49,7 @@ const ContentPlayerFullOverlay: React.FC = () => {
 				<ControlWrapper>
 					<PlayVolumeWrapper>
 						<PlayStateWrapper iconColor={'#fff'} />
-						<VolumeStateWrapper iconColor={'#fff'} isScrollPlayer={false} hasLabel={false} />
+						<VolumeStateWrapper iconColor={'#fff'} hasLabel={false} hasSlider={true} />
 						<TimeRemainingPadded />
 					</PlayVolumeWrapper>
 					<PlayerCTAButton
