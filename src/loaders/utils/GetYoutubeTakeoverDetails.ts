@@ -92,7 +92,8 @@ export async function getYoutubeTakeoverDetails({
 
 export const eligibleForYoutubeTakeover = (youtubeTakeoverDetails: YoutubeTakeOverDetails) => {
 	const youtubeTakeoverFlag = youtubeTakeoverDetails.isYoutubeTakeover;
-	const isVideoIdValidLength = youtubeTakeoverDetails?.youtubeVideoId?.length !== 0;
+	const isVideoIdValidLength =
+		youtubeTakeoverDetails?.youtubeVideoId && youtubeTakeoverDetails?.youtubeVideoId?.length !== 0;
 	console.log(
 		`Youtube Takeover: eligibleForYoutubeTakeover - youtubeTakeoverFlag: ${youtubeTakeoverFlag} | isVideoIdValidLength: ${isVideoIdValidLength}`,
 	);
