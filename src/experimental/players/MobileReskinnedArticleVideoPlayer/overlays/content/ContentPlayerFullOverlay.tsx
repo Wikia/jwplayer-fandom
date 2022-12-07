@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import TimeSlider from 'experimental/shared/TimeSlider';
 import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
 import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
-import { PlayerFullOverlayWrapper } from 'experimental/shared/FullOverlay/PlayerFullOverlayWrapper';
+import { MobilePlayerFullOverlayWrapper } from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/shared/MobilePlayerFullOverlayWrapper';
 import usePlaylistItem from 'jwplayer/utils/usePlaylistItem';
 import PlayerFullOverlayTopText from 'experimental/shared/FullOverlay/PlayerFullOverlayTopText';
 import PlayerCTAButton from 'experimental/shared/PlayerCTAButton';
@@ -36,17 +36,21 @@ const TimeRemainingPadded = styled(TimeRemaining)`
 	padding-left: 10px;
 `;
 
+const PlayStateWrapperStyled = styled(PlayStateWrapper)`
+	align-self: center;
+`;
+
 const ContentPlayerFullOverlay: React.FC = () => {
 	const playlistItem = usePlaylistItem();
 	const upperText = 'Now Playing';
 	const lowerText = playlistItem?.title;
 
 	return (
-		<PlayerFullOverlayWrapper>
+		<MobilePlayerFullOverlayWrapper>
 			<PlayerFullOverlayTopText upperText={upperText} lowerText={lowerText} />
-			<PlayStateWrapper iconColor={'#fff'} />
+			<PlayStateWrapperStyled iconColor={'#fff'} />
 			<BottomWrapper>
-				<ContentOverlayTimeSlider railHeight={'2px'} isMobile={true} />
+				<ContentOverlayTimeSlider railHeight={'4px'} isMobile={true} />
 				<ControlWrapper>
 					<PlayVolumeWrapper>
 						<VolumeStateWrapper iconColor={'#fff'} hasSlider={false} hasLabel={false} />
@@ -60,7 +64,7 @@ const ContentPlayerFullOverlay: React.FC = () => {
 					/>
 				</ControlWrapper>
 			</BottomWrapper>
-		</PlayerFullOverlayWrapper>
+		</MobilePlayerFullOverlayWrapper>
 	);
 };
 

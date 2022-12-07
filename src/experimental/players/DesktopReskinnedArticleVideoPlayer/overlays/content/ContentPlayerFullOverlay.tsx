@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import TimeSlider from 'experimental/shared/TimeSlider';
 import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
 import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
-import { PlayerFullOverlayWrapper } from 'experimental/shared/FullOverlay/PlayerFullOverlayWrapper';
+import { DesktopPlayerFullOverlayWrapper } from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/shared/DesktopPlayerFullOverlayWrapper';
 import usePlaylistItem from 'jwplayer/utils/usePlaylistItem';
 import PlayerFullOverlayTopText from 'experimental/shared/FullOverlay/PlayerFullOverlayTopText';
 import PlayerCTAButton from 'experimental/shared/PlayerCTAButton';
@@ -42,7 +42,7 @@ const ContentPlayerFullOverlay: React.FC = () => {
 	const lowerText = playlistItem?.title;
 
 	return (
-		<PlayerFullOverlayWrapper>
+		<DesktopPlayerFullOverlayWrapper>
 			<PlayerFullOverlayTopText upperText={upperText} lowerText={lowerText} />
 			<BottomWrapper>
 				<ContentOverlayTimeSlider railHeight={'2px'} />
@@ -60,7 +60,7 @@ const ContentPlayerFullOverlay: React.FC = () => {
 					/>
 				</ControlWrapper>
 			</BottomWrapper>
-		</PlayerFullOverlayWrapper>
+		</DesktopPlayerFullOverlayWrapper>
 	);
 };
 
