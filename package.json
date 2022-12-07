@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.0.11",
+	"version": "2.1.0",
 	"description": "JWPlayer for Fandom",
 	"exports": {
 		".": "./main.js",
@@ -31,7 +31,7 @@
 		"pub:patch": "npm version patch && rm -rf dist && yarn pub",
 		"pub:minor": "npm version minor && rm -rf dist && yarn pub",
 		"pub:major": "npm version major && rm -rf dist && yarn pub",
-		"pub": "yarn build && cd dist && npm publish --tag beta"
+		"pub": "yarn install && yarn build && cd dist && npm publish --tag beta"
 	},
 	"lint-staged": {
 		"src/**/*.(ts|tsx|js)": [
@@ -78,6 +78,7 @@
 		"@babel/preset-env": "^7.16.5",
 		"@babel/preset-react": "^7.16.5",
 		"@babel/preset-typescript": "^7.16.5",
+		"@fandom/pathfinder-lite": "1.0.5",
 		"@fandom-frontend/eslint-config": "^3.0.0",
 		"@fandom-frontend/prettier-config": "^2.1.0",
 		"@rollup/plugin-babel": "5.3.0",

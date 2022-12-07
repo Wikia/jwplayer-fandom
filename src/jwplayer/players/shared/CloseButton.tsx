@@ -5,7 +5,7 @@ import IconCrossTiny from '@fandom-frontend/react-common/dist/icons/IconCrossTin
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { jwPlayerPlaybackTracker } from 'jwplayer/utils/videoTracking';
 
-const CloseWrapper = styled.div<{ topOffset?: number }>`
+const CloseWrapper = styled.div`
 	cursor: pointer;
 	pointer-events: initial;
 	height: 36px;
@@ -14,32 +14,31 @@ const CloseWrapper = styled.div<{ topOffset?: number }>`
 	align-items: center;
 	justify-content: center;
 	opacity: 0.98;
-	position: absolute;
-	right: 0;
-	top: ${(props) => (props.topOffset ? `${props.topOffset}px` : 0)};
 	z-index: ${Number(WDSVariables.z7) + 1};
 `;
 
 const CrossIcon = styled(IconCrossTiny)`
-	fill: ${WDSVariables.wdsColorWhite};
+	fill: ${(props) => (props.fill ? props.fill : WDSVariables.wdsColorWhite)};
 `;
 
 interface CloseButtonProps {
+	className?: string;
 	dismiss: () => void;
-	topOffset?: number;
+	iconColor?: string;
 }
 
-const CloseButton: React.FC<CloseButtonProps> = ({ dismiss, topOffset }) => {
+const CloseButton: React.FC<CloseButtonProps> = ({ className, dismiss, iconColor }) => {
 	const { player } = useContext(PlayerContext);
-	const onClickClose = () => {
+	const onClickClose = (event) => {
+		event.stopPropagation();
 		jwPlayerPlaybackTracker({ event_name: 'video_player_close' });
 		player.pause();
 		dismiss();
 	};
 
 	return (
-		<CloseWrapper topOffset={topOffset} onClick={onClickClose}>
-			<CrossIcon />
+		<CloseWrapper className={className} onClick={onClickClose}>
+			<CrossIcon fill={iconColor} />
 		</CloseWrapper>
 	);
 };

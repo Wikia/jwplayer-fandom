@@ -119,6 +119,37 @@ export interface ShareEventData {
 	method: string;
 }
 
+export interface TimeEventData {
+	duration: number;
+	position: number;
+	viewable: number;
+}
+
+interface Bidder {
+	id: number;
+	name: string;
+	priceInCents: number;
+	result: string;
+	tagKey: number;
+	timeforBidResponse: number;
+	winner: boolean;
+}
+
+export interface AdImpressionEventData {
+	adposition: string;
+	adsystem: string;
+	adtitle: string;
+	bidders: Bidder[];
+	clickThroughUrl: string;
+	client: string;
+	creativetype: string;
+	duration: number;
+	linear: string;
+	tag: string;
+	timeLoading: number;
+	viewable: number;
+}
+
 export interface OnPlaylistItemEventData {
 	index: number;
 	item: PlaylistItem;
@@ -139,7 +170,10 @@ type JwEventData =
 	| AdEvents
 	| OnAdTimeEventData
 	| ShareEventData
+	| TimeEventData
+	| AdImpressionEventData
 	| OnPlaylistItemEventData;
+
 type JwEventHandler = (event?: JwEventData) => void;
 
 interface BasePluginInterface {
@@ -150,6 +184,7 @@ interface BasePluginInterface {
 
 interface Plugins {
 	sharing: BasePluginInterface;
+	related: BasePluginInterface;
 }
 
 interface QualityObject {
@@ -182,6 +217,7 @@ export type Player = {
 	getContainer: () => HTMLElement;
 	seek: (seekTo: number) => void;
 	getVolume: () => number;
+	setVolume: (volume: number) => void;
 	getPosition: () => number;
 	getCurrentQuality: () => number;
 	getPlaylistIndex: () => number;
@@ -195,12 +231,23 @@ export type Player = {
 	getQualityLevels: () => QualityObject[];
 	load: (playlist: string | Playlist) => null;
 	setPlaylistItemCallback: (PlaylistItemCallbackData) => void;
+	pauseAd: (state: boolean) => null;
 };
 export type CreateWirewaxEmbedder = () => Embedder;
 export type WirewaxPluginOptions = {
 	player: Player;
 	ready: JwEventData;
 };
+
+export interface AdTimeData {
+	client: string;
+	creativetype: string;
+	duration: number;
+	position: number;
+	sequence: number;
+	tag: string;
+	viewable: number;
+}
 
 export interface SeekedEmbedderEventData {
 	seekTo: number;
@@ -325,6 +372,7 @@ export interface JwPlayerWrapperProps {
 	playerUrl?: string;
 	onReady?: (playerInstance: Player) => void;
 	onComplete?: () => void;
+	className?: string;
 	stopAutoAdvanceOnExitViewport?: boolean;
 }
 

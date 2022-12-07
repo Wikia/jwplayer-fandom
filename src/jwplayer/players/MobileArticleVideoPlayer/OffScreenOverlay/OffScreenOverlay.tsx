@@ -21,6 +21,12 @@ const OffScreenOverlayWrapper = styled.div<OffScreenOverlayWrapperProps>`
 	z-index: ${Number(WDSVariables.z7) + 2};
 `;
 
+const CloseButtonStyled = styled(CloseButton).attrs((props: { topOffset: number }) => props)`
+	position: absolute;
+	right: 0;
+	top: ${(props) => (props.topOffset ? `${props.topOffset}px` : 0)};
+`;
+
 interface OffScreenOverlayProps {
 	dismiss: () => void;
 	isScrollPlayer: boolean;
@@ -51,7 +57,7 @@ const OffScreenOverlay: React.FC<OffScreenOverlayProps> = ({ dismiss, isScrollPl
 
 	return (
 		<OffScreenOverlayWrapper className={'article-featured-video__on-scroll-video-wrapper'} playing={playing}>
-			<CloseButton topOffset={closeButtonOffset} dismiss={dismiss} />
+			<CloseButtonStyled dismiss={dismiss} topOffset={closeButtonOffset} />
 			<VideoDetails playing={playing} />
 		</OffScreenOverlayWrapper>
 	);

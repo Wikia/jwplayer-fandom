@@ -1186,6 +1186,21 @@
     lodash "^4.17.21"
     lodash-es "^4.17.21"
 
+"@fandom/context@^0.6.2":
+  version "0.6.3"
+  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/context/-/@fandom/context-0.6.3.tgz#810a4993cd6e64f5eff9eb71d9723242d20e0219"
+  integrity sha512-6THxJdnEuaqS9q813d+HMEnl55FOlOcIhVW1JL2Wu3OtT47LJBjiJLwCkrtKy1vAYnpnsmvfrm1Cw1ztoSBAwg==
+  dependencies:
+    lodash "^4.17.21"
+    lodash-es "^4.17.21"
+
+"@fandom/pathfinder-lite@1.0.5":
+  version "1.0.5"
+  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/pathfinder-lite/-/@fandom/pathfinder-lite-1.0.5.tgz#199f744779bc127e7fd6ba97c8d6badd979dac92"
+  integrity sha512-mL9kaq7EzJr1aCWu0n3ROCAV9fUuf9tSo106GOavVF3mZMB/Ugs/ehlFM3057PAowARPQWrgwk/YlhfZ14Nfag==
+  dependencies:
+    "@fandom/context" "^0.6.2"
+
 "@fandom/tracking-metrics@0.0.18-alpha-2":
   version "0.0.18-alpha-2"
   resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/tracking-metrics/-/@fandom/tracking-metrics-0.0.18-alpha-2.tgz"
