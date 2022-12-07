@@ -3,9 +3,16 @@ import { LoadableVideoPlayerWrapperProps } from 'jwplayer/types';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 
-const LoadableVideoPlayerWrapper: React.FC<LoadableVideoPlayerWrapperProps> = ({ currentVideo, onComplete }) => {
-	const { player, config } = useContext(PlayerContext);
-	const playerConfig = config || { playlist: currentVideo };
+import getCanonicalVideoConfig from 'jwplayer/utils/canonicalVideoConfig';
+
+import canonicalOnReady from '../CanonicalVideoPlayer/canonicalOnReady';
+
+const LoadableVideoPlayerWrapper: React.FC<LoadableVideoPlayerWrapperProps> = ({
+	currentVideo,
+	videoDetails,
+	onComplete,
+}) => {
+	const { player } = useContext(PlayerContext);
 
 	useEffect(() => {
 		if (player !== null) {
@@ -16,9 +23,11 @@ const LoadableVideoPlayerWrapper: React.FC<LoadableVideoPlayerWrapperProps> = ({
 
 	return (
 		<JwPlayerWrapper
-			config={playerConfig}
+			config={getCanonicalVideoConfig(videoDetails)}
 			playerUrl={'https://content.jwplatform.com/libraries/tcoydixg.js'}
 			onComplete={onComplete}
+			onReady={(playerInstance) => canonicalOnReady(videoDetails, playerInstance)}
+			stopAutoAdvanceOnExitViewport={false}
 		/>
 	);
 };

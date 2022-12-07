@@ -25,19 +25,25 @@ const getDefaultPlayerUrl = () => {
 		: 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
 };
 
-const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, onReady, onComplete }) => {
+const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
+	config,
+	playerUrl,
+	onReady,
+	onComplete,
+	className,
+	stopAutoAdvanceOnExitViewport,
+}) => {
 	const { setPlayer, setConfig } = useContext(PlayerContext);
+	const videoIndexRef = React.useRef(0);
 	const defaultConfig = {
 		plugins: { fandomWirewax: {} },
 	};
-	const sponsoredVideos: string[] = [];
+
 	useEffect(() => {
 		const retrieveSponsoredVideo = async () => {
 			const sponsoredVideoResponse = await getSponsoredVideos();
-			console.debug('Fetched sponsoredVideo list: ', sponsoredVideos);
 			if (sponsoredVideoResponse && typeof window !== undefined) {
 				window.sponsoredVideos = sponsoredVideoResponse;
-				console.debug('Set window.sponsoredVideos to: ', window.sponsoredVideos);
 			} else {
 				console.debug('Could not set sponsored videos. Either window the fetched sponsoredVideo list were undefined.');
 			}
@@ -87,6 +93,28 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, on
 				if (typeof onComplete === 'function') {
 					onComplete();
 				}
+
+				// Incrementing videos watched count
+				videoIndexRef.current += 1;
+
+				// if stopAutoAdvanceOnExitViewport is false then we don't want to stop the auto advance, keep normal behavior
+				if (!stopAutoAdvanceOnExitViewport) {
+					return;
+				}
+
+				// if the video is on its 2nd+ play, pause the video if its not on the viewport
+				/*
+				// Temporarily removed since this was tanking the sponsored content views
+				if (videoIndexRef.current >= 1 && (playerInstance.getViewable() === 0 || document.hasFocus() === false)) {
+					// send tracking event
+					jwPlayerPlaybackTracker({ event_name: 'video_player_pause_not_viewable' });
+
+					// close the related UI to stop auto advancement, and then re-open it for users to click on
+					setTimeout(() => {
+						window.jwplayer(elementId).getPlugin('related').close();
+						window.jwplayer(elementId).getPlugin('related').open();
+					}, 1000);
+				} */
 			});
 
 			playerInstance.setPlaylistItemCallback((item: PlaylistItem) => {
@@ -109,7 +137,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({ config, playerUrl, on
 	};
 
 	return (
-		<div>
+		<div className={className}>
 			<div id="featured-video__player" />
 		</div>
 	);

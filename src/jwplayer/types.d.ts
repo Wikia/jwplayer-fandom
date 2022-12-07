@@ -119,6 +119,37 @@ export interface ShareEventData {
 	method: string;
 }
 
+export interface TimeEventData {
+	duration: number;
+	position: number;
+	viewable: number;
+}
+
+interface Bidder {
+	id: number;
+	name: string;
+	priceInCents: number;
+	result: string;
+	tagKey: number;
+	timeforBidResponse: number;
+	winner: boolean;
+}
+
+export interface AdImpressionEventData {
+	adposition: string;
+	adsystem: string;
+	adtitle: string;
+	bidders: Bidder[];
+	clickThroughUrl: string;
+	client: string;
+	creativetype: string;
+	duration: number;
+	linear: string;
+	tag: string;
+	timeLoading: number;
+	viewable: number;
+}
+
 export interface OnPlaylistItemEventData {
 	index: number;
 	item: PlaylistItem;
@@ -139,15 +170,21 @@ type JwEventData =
 	| AdEvents
 	| OnAdTimeEventData
 	| ShareEventData
+	| TimeEventData
+	| AdImpressionEventData
 	| OnPlaylistItemEventData;
+
 type JwEventHandler = (event?: JwEventData) => void;
 
 interface BasePluginInterface {
 	on: (name: string, handler: (method: JwEventData) => void) => Player;
+	close?: () => void;
+	open?: () => void;
 }
 
 interface Plugins {
 	sharing: BasePluginInterface;
+	related: BasePluginInterface;
 }
 
 interface QualityObject {
@@ -164,6 +201,7 @@ interface PlaylistItemCallbackData {
 
 export type Player = {
 	playToggle: () => null;
+	stop: () => null;
 	pause: () => null;
 	play: () => null;
 	setMute: (mute: boolean | null) => null;
@@ -179,6 +217,7 @@ export type Player = {
 	getContainer: () => HTMLElement;
 	seek: (seekTo: number) => void;
 	getVolume: () => number;
+	setVolume: (volume: number) => void;
 	getPosition: () => number;
 	getCurrentQuality: () => number;
 	getPlaylistIndex: () => number;
@@ -188,15 +227,27 @@ export type Player = {
 	getFullscreen: () => boolean;
 	getFloating: () => boolean;
 	plugins: Plugins;
+	getPlugin: (name: string) => BasePluginInterface;
 	getQualityLevels: () => QualityObject[];
 	load: (playlist: string | Playlist) => null;
 	setPlaylistItemCallback: (PlaylistItemCallbackData) => void;
+	pauseAd: (state: boolean) => null;
 };
 export type CreateWirewaxEmbedder = () => Embedder;
 export type WirewaxPluginOptions = {
 	player: Player;
 	ready: JwEventData;
 };
+
+export interface AdTimeData {
+	client: string;
+	creativetype: string;
+	duration: number;
+	position: number;
+	sequence: number;
+	tag: string;
+	viewable: number;
+}
 
 export interface SeekedEmbedderEventData {
 	seekTo: number;
@@ -277,8 +328,43 @@ export interface ArticleVideoDetails {
 	tier3Mapping: boolean;
 }
 
+export interface CanonicalVideoDetails {
+	title: string;
+	feedid: string;
+	description?: string;
+	duration: number;
+	mediaid: string;
+	link: string;
+	image: string;
+	images?: Array<JWImages>;
+	sources?: Array<Source>;
+	tracks?: Array<Track>;
+	pubdate: number;
+	tags?: Array<string>;
+}
+
+/** JWPlayer's video source definition  */
+type Source = {
+	file: string;
+	type: string;
+};
+
+/** JWPlayer's video track definition  */
+type Track = {
+	file: string;
+	kind: string;
+};
+
+/** JWPlayer's image object definition  */
+type JWImages = {
+	src: string;
+	type: number;
+	width: number;
+};
+
 export interface CanonicalVideoPlayerProps {
 	currentVideo: string;
+	videoDetails: CanonicalVideoDetails;
 	onComplete: () => void;
 }
 
@@ -287,10 +373,13 @@ export interface JwPlayerWrapperProps {
 	playerUrl?: string;
 	onReady?: (playerInstance: Player) => void;
 	onComplete?: () => void;
+	className?: string;
+	stopAutoAdvanceOnExitViewport?: boolean;
 }
 
 export interface LoadableVideoPlayerWrapperProps {
 	currentVideo: string;
+	videoDetails: CanonicalVideoDetails;
 	config?: PlayerConfig;
 	playerUrl?: string;
 	onReady?: (playerInstance: Player) => void;

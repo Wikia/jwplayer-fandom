@@ -8,6 +8,8 @@ export { default as JWCanonicalVideoPlayer } from 'jwplayer/players/CanonicalVid
 
 export { default as YoutubeDesktopArticleVideoPlayer } from 'youtube/players/YoutubeDesktopArticleVideoPlayer';
 
+export { default as JWDesktopReskinnedArticleVideoPlayer } from 'experimental/players/DesktopReskinnedArticleVideoPlayer/DesktopReskinnedArticleVideoPlayer';
+
 export { default as YoutubeMobileArticleVideoPlayer } from 'youtube/players/YoutubeMobileArticleVideoPlayer';
 
 export { default as DesktopArticleVideoLoader } from 'loaders/DesktopArticleVideoLoader';

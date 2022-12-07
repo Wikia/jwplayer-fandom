@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.0.5-test-youtube-10",
+	"version": "2.1.1-test-youtube-10",
 	"description": "JWPlayer for Fandom",
 	"exports": {
 		".": "./main.js",
@@ -78,6 +78,7 @@
 		"@babel/preset-env": "^7.16.5",
 		"@babel/preset-react": "^7.16.5",
 		"@babel/preset-typescript": "^7.16.5",
+		"@fandom/pathfinder-lite": "1.0.5",
 		"@fandom-frontend/eslint-config": "^3.0.0",
 		"@fandom-frontend/prettier-config": "^2.1.0",
 		"@rollup/plugin-babel": "5.3.0",
@@ -115,7 +116,7 @@
 		"@fandom-frontend/design-system": "9.0.0",
 		"@fandom-frontend/react-common": "6.35.0",
 		"@fandom/context": "^0.6.1",
-		"@fandom/tracking-metrics": "0.0.18-alpha-2",
+		"@fandom/tracking-metrics": "0.0.27",
 		"@wikia/post-quecast": "2.0.1",
 		"js-cookie": "3.0.1",
 		"rxjs": "7.5.4",
