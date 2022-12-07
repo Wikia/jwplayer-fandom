@@ -11,6 +11,7 @@ const JWEvents = {
 	COMPLETE: 'complete',
 	TIME: 'time',
 	VIEWABLE: 'viewable',
+	BUFFER_CHANGE: 'bufferChange',
 
 	// Navigation
 	NEXT: 'nextClick',
@@ -20,11 +21,15 @@ const JWEvents = {
 	// Ad Events
 	AD_LOADED: 'adLoaded',
 	AD_PLAY: 'adPlay',
+	AD_PAUSE: 'adPause',
 	AD_STARTED: 'adStarted',
 	AD_FINISHED: 'adComplete',
 	AD_TIME: 'adTime',
 	AD_BREAK_START: 'adBreakStart',
 	AD_BREAK_END: 'adBreakEnd',
+	AD_IMPRESSION: 'adImpression',
+	AD_COMPLETE: 'adComplete',
+	AD_SKIPPED: 'adSkipped',
 
 	// Playlist
 	PLAYLIST_LOADED: 'playlist',

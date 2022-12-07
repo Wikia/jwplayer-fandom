@@ -6,6 +6,8 @@ export { default as JWMobileArticleVideoPlayer } from 'jwplayer/players/MobileAr
 
 export { default as JWCanonicalVideoPlayer } from 'jwplayer/players/CanonicalVideoPlayer/CanonicalVideoPlayer';
 
+export { default as JWDesktopReskinnedArticleVideoPlayer } from 'experimental/players/DesktopReskinnedArticleVideoPlayer/DesktopReskinnedArticleVideoPlayer';
+
 export { default as TwitchDesktopArticleVideoPlayer } from 'twitch/players/DesktopArticleVideoPlayer';
 
 export { default as TwitchMobileArticleVideoPlayer } from 'twitch/players/MobileArticleVideoPlayer';

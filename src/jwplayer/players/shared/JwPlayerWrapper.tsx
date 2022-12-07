@@ -30,6 +30,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	playerUrl,
 	onReady,
 	onComplete,
+	className,
 	stopAutoAdvanceOnExitViewport,
 }) => {
 	const { setPlayer, setConfig } = useContext(PlayerContext);
@@ -136,7 +137,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	};
 
 	return (
-		<div>
+		<div className={className}>
 			<div id="featured-video__player" />
 		</div>
 	);
