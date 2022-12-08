@@ -5,7 +5,7 @@ import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
 import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
 import { DesktopPlayerFullOverlayWrapper } from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/shared/DesktopPlayerFullOverlayWrapper';
 import usePlaylistItem from 'jwplayer/utils/usePlaylistItem';
-import PlayerFullOverlayTopText from 'experimental/shared/FullOverlay/PlayerFullOverlayTopText';
+import PlayerFullOverlayTopText from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/shared/PlayerFullOverlayTopText';
 import PlayerCTAButton from 'experimental/shared/PlayerCTAButton';
 import TimeRemaining from 'experimental/shared/TimeRemaining';
 

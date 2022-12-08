@@ -5,8 +5,8 @@ import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
 import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
 import { MobilePlayerFullOverlayWrapper } from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/shared/MobilePlayerFullOverlayWrapper';
 import usePlaylistItem from 'jwplayer/utils/usePlaylistItem';
-import PlayerFullOverlayTopText from 'experimental/shared/FullOverlay/PlayerFullOverlayTopText';
-import PlayerCTAButton from 'experimental/shared/PlayerCTAButton';
+import PlayerFullOverlayTopText from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/shared/PlayerFullOverlayTopText';
+// import PlayerCTAButton from 'experimental/shared/PlayerCTAButton';
 import TimeRemaining from 'experimental/shared/TimeRemaining';
 
 const ControlWrapper = styled.div`
@@ -24,7 +24,7 @@ const PlayVolumeWrapper = styled.div`
 
 const ContentOverlayTimeSlider = styled(TimeSlider)`
 	align-items: center;
-	height: 17px;
+	height: 25px;
 `;
 
 const BottomWrapper = styled.div`
@@ -34,6 +34,7 @@ const BottomWrapper = styled.div`
 
 const TimeRemainingPadded = styled(TimeRemaining)`
 	padding-left: 10px;
+	font-size: 13px;
 `;
 
 const PlayStateWrapperStyled = styled(PlayStateWrapper)`
@@ -56,12 +57,12 @@ const ContentPlayerFullOverlay: React.FC = () => {
 						<VolumeStateWrapper iconColor={'#fff'} hasSlider={false} hasLabel={false} />
 						<TimeRemainingPadded />
 					</PlayVolumeWrapper>
-					<PlayerCTAButton
+					{/* <PlayerCTAButton
 						text={'Watch More'}
 						onClick={() => {
 							window.open(`https://www.fandom.com/video/${playlistItem.mediaid}`, '_blank');
 						}}
-					/>
+					/> */}
 				</ControlWrapper>
 			</BottomWrapper>
 		</MobilePlayerFullOverlayWrapper>

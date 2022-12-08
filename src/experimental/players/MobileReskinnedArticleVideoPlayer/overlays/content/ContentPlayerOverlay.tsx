@@ -8,7 +8,7 @@ import usePlaying from 'jwplayer/utils/usePlaying';
 import useRelatedOpen from 'jwplayer/utils/useRelatedOpen';
 
 const PlayerOverlayAllowClick = styled(PlayerOverlay)`
-	pointer-events: auto;
+	pointer-events: ${(props) => (props.showOverlay ? 'auto' : 'none')};
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 	-webkit-tap-highlight-color: transparent;
 `;

@@ -4,7 +4,7 @@ import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
 import usePlaylistItem from 'jwplayer/utils/usePlaylistItem';
 import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
 import useAdTime from 'jwplayer/utils/useAdTime';
-import PlayerFullOverlayTopText from 'experimental/shared/FullOverlay/PlayerFullOverlayTopText';
+import PlayerFullOverlayTopText from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/shared/PlayerFullOverlayTopText';
 import { DesktopPlayerFullOverlayWrapper } from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/shared/DesktopPlayerFullOverlayWrapper';
 
 const ControlWrapper = styled.div`

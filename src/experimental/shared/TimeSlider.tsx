@@ -201,22 +201,20 @@ const TimeSlider: React.FC<TimeSliderProps> = ({
 		document.addEventListener('mouseup', onMouseUp);
 	};
 
-	const onTouchStart = () => {
+	const onTouchStart = (event) => {
+		event.stopPropagation();
 		setTouch(true);
 		document.addEventListener('touchmove', onDrag);
 		document.addEventListener('touchend', onTouchEnd);
 	};
 
 	const onTouchEnd = (event) => {
+		event.stopPropagation();
 		document.removeEventListener('touchmove', onDrag);
 		document.removeEventListener('touchend', onTouchEnd);
 
 		if (wasPlaying.current) {
 			player.play();
-		}
-
-		if (!dragging) {
-			seek(event);
 		}
 
 		setTouch(false);
@@ -231,6 +229,7 @@ const TimeSlider: React.FC<TimeSliderProps> = ({
 	const handlers = isMobile
 		? {
 				onTouchStart: handleTouchStart,
+				onClick: handleSeek,
 		  }
 		: {
 				onMouseEnter: () => setHover(true),
