@@ -5,6 +5,7 @@ export interface VolumeStateWrapperProps {
 	sliderColor?: string;
 	hasLabel?: boolean;
 	hasSlider?: boolean;
+	callback?: () => void;
 }
 
 export interface VolumeSliderProps {
@@ -15,6 +16,12 @@ export interface VolumeSliderProps {
 export interface ContentPlayerOverlayProps {
 	showOverlay: boolean;
 	isScrollPlayer: boolean;
+}
+
+export interface MobileContentPlayerOverlayProps {
+	showOverlay: boolean;
+	isScrollPlayer: boolean;
+	resetOverlayTimeout: () => void;
 }
 
 export interface PrerollPlayerOverlayProps {
@@ -65,6 +72,7 @@ export interface PlayerOverlayProps {
 export interface MobileReskinnedArticleVideoPlayerOverlayProps {
 	isScrollPlayer: boolean;
 	showOverlay: boolean;
+	resetOverlayTimeout: () => void;
 }
 
 export interface MobileReskinnedArticleVideoPlayerContentOverlayProps {
@@ -75,4 +83,8 @@ export interface MobileReskinnedArticleVideoPlayerContentOverlayProps {
 export interface MobileReskinnedArticleVideoPlayerPrerollOverlayProps {
 	isScrollPlayer: boolean;
 	showOverlay: boolean;
+}
+
+export interface MobileContentPlayerFullOverlay {
+	resetOverlayTimeout: () => void;
 }

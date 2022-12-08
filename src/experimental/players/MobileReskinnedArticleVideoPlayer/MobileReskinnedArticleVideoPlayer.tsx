@@ -72,6 +72,11 @@ const MobileReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlay
 		setOverlayTimeout(hideOverlayTimeout());
 	}, []);
 
+	const resetOverlayTimeout = () => {
+		clearTimeout(overlayTimeout);
+		setOverlayTimeout(hideOverlayTimeout());
+	};
+
 	const handleClick = () => {
 		if (overlayTimeout) {
 			setShowOverlay(false);
@@ -94,7 +99,11 @@ const MobileReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlay
 						isScrollPlayer={isScrollPlayer}
 					>
 						<MobileReskinnedVideoContentContainer onClick={handleClick}>
-							<MobileReskinnedArticleVideoPlayerOverlay isScrollPlayer={isScrollPlayer} showOverlay={showOverlay} />
+							<MobileReskinnedArticleVideoPlayerOverlay
+								isScrollPlayer={isScrollPlayer}
+								showOverlay={showOverlay}
+								resetOverlayTimeout={resetOverlayTimeout}
+							/>
 							<JwPlayerWrapper
 								playerUrl={'https://cdn.jwplayer.com/libraries/v46VcUMb.js'}
 								config={getArticleVideoConfig(videoDetails)}

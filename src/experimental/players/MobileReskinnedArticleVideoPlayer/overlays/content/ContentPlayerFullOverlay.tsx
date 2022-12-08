@@ -8,6 +8,7 @@ import usePlaylistItem from 'jwplayer/utils/usePlaylistItem';
 import PlayerFullOverlayTopText from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/shared/PlayerFullOverlayTopText';
 // import PlayerCTAButton from 'experimental/shared/PlayerCTAButton';
 import TimeRemaining from 'experimental/shared/TimeRemaining';
+import { MobileContentPlayerFullOverlay } from 'experimental/types';
 
 const ControlWrapper = styled.div`
 	width: 100%;
@@ -41,20 +42,21 @@ const PlayStateWrapperStyled = styled(PlayStateWrapper)`
 	align-self: center;
 `;
 
-const ContentPlayerFullOverlay: React.FC = () => {
+const ContentPlayerFullOverlay: React.FC<MobileContentPlayerFullOverlay> = ({ resetOverlayTimeout }) => {
 	const playlistItem = usePlaylistItem();
 	const upperText = 'Now Playing';
 	const lowerText = playlistItem?.title;
+	const playPauseCallback = { onClickCallback: resetOverlayTimeout };
 
 	return (
 		<MobilePlayerFullOverlayWrapper>
 			<PlayerFullOverlayTopText upperText={upperText} lowerText={lowerText} />
-			<PlayStateWrapperStyled iconColor={'#fff'} />
+			<PlayStateWrapperStyled playConfig={playPauseCallback} pauseConfig={playPauseCallback} iconColor={'#fff'} />
 			<BottomWrapper>
 				<ContentOverlayTimeSlider railHeight={'4px'} isMobile={true} />
 				<ControlWrapper>
 					<PlayVolumeWrapper>
-						<VolumeStateWrapper iconColor={'#fff'} hasSlider={false} hasLabel={false} />
+						<VolumeStateWrapper iconColor={'#fff'} hasSlider={false} hasLabel={false} callback={resetOverlayTimeout} />
 						<TimeRemainingPadded />
 					</PlayVolumeWrapper>
 					{/* <PlayerCTAButton

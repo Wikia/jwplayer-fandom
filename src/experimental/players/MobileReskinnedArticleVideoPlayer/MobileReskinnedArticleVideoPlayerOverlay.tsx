@@ -7,13 +7,20 @@ import useAdStarted from 'jwplayer/utils/useAdStarted';
 const MobileReskinnedArticleVideoPlayerOverlay: React.FC<MobileReskinnedArticleVideoPlayerOverlayProps> = ({
 	isScrollPlayer,
 	showOverlay,
+	resetOverlayTimeout,
 }) => {
 	const adStarted = useAdStarted();
 
 	if (adStarted) {
 		return <PrerollPlayerOverlay isScrollPlayer={isScrollPlayer} showOverlay={showOverlay} />;
 	} else {
-		return <ContentPlayerOverlay isScrollPlayer={isScrollPlayer} showOverlay={showOverlay} />;
+		return (
+			<ContentPlayerOverlay
+				isScrollPlayer={isScrollPlayer}
+				showOverlay={showOverlay}
+				resetOverlayTimeout={resetOverlayTimeout}
+			/>
+		);
 	}
 };
 

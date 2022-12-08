@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PlayerOverlay from 'experimental/shared/PlayerOverlay';
-import { ContentPlayerOverlayProps } from 'experimental/types';
+import { MobileContentPlayerOverlayProps } from 'experimental/types';
 import ContentPlayerFullOverlay from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/content/ContentPlayerFullOverlay';
 import ContentPlayerScrollOverlay from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/content/ContentPlayerScrollOverlay';
 import usePlaying from 'jwplayer/utils/usePlaying';
@@ -13,13 +13,21 @@ const PlayerOverlayAllowClick = styled(PlayerOverlay)`
 	-webkit-tap-highlight-color: transparent;
 `;
 
-const ContentPlayerOverlay: React.FC<ContentPlayerOverlayProps> = ({ isScrollPlayer, showOverlay }) => {
+const ContentPlayerOverlay: React.FC<MobileContentPlayerOverlayProps> = ({
+	isScrollPlayer,
+	showOverlay,
+	resetOverlayTimeout,
+}) => {
 	const isPlaying = usePlaying();
 	const isRelatedOpen = useRelatedOpen();
 
 	return (
 		<PlayerOverlayAllowClick showOverlay={(showOverlay && !isRelatedOpen) || !isPlaying}>
-			{isScrollPlayer ? <ContentPlayerScrollOverlay /> : <ContentPlayerFullOverlay />}
+			{isScrollPlayer ? (
+				<ContentPlayerScrollOverlay />
+			) : (
+				<ContentPlayerFullOverlay resetOverlayTimeout={resetOverlayTimeout} />
+			)}
 		</PlayerOverlayAllowClick>
 	);
 };

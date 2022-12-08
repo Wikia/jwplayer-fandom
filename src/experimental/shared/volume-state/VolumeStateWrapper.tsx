@@ -48,6 +48,7 @@ const VolumeStateWrapper: React.FC<VolumeStateWrapperProps> = ({
 	sliderColor = 'rgb(0, 214, 214)',
 	hasSlider = false,
 	hasLabel = false,
+	callback,
 }) => {
 	const { player } = useContext(PlayerContext);
 	const mute = useMute();
@@ -56,6 +57,9 @@ const VolumeStateWrapper: React.FC<VolumeStateWrapperProps> = ({
 	const onClick = (event) => {
 		player?.setMute(!mute);
 		event.stopPropagation();
+		if (callback) {
+			callback();
+		}
 	};
 
 	return (
