@@ -13,7 +13,7 @@ import CloseButton from 'jwplayer/players/shared/CloseButton';
 
 const MobileReskinnedArticleVideoTopPlaceholder = styled.div`
 	width: 100%;
-	height: 56.25vw;
+	aspect-ratio: 16 / 9;
 	position: relative;
 `;
 
@@ -24,10 +24,11 @@ interface MobileReskinnedArticleVideoWrapperProps {
 }
 
 const MobileReskinnedArticleVideoWrapper = styled.div<MobileReskinnedArticleVideoWrapperProps>`
+	height: max-content;
+
 	${(props) =>
 		props.isScrollPlayer
 			? css`
-					height: max-content;
 					right: 1em;
 					bottom: 1em;
 					width: 50%;
@@ -45,6 +46,8 @@ const MobileReskinnedArticleVideoWrapper = styled.div<MobileReskinnedArticleVide
 const MobileReskinnedVideoContentContainer = styled.div`
 	position: relative;
 	flex-grow: 2;
+	aspect-ratio: 16 / 9;
+	width: 100%;
 `;
 
 const MobileReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
