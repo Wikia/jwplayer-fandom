@@ -115,7 +115,7 @@ const MobileReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlay
 						isScrollPlayer={isScrollPlayer}
 					>
 						<MobileReskinnedVideoContentContainer onClick={handleClick}>
-							{isScrollPlayer && showOverlay && (
+							{isScrollPlayer && (
 								<CloseButtonCorner iconColor={'#000'} dismiss={() => setDismissed(true)} iconSize={'10px'} />
 							)}
 							<MobileReskinnedArticleVideoPlayerOverlay
