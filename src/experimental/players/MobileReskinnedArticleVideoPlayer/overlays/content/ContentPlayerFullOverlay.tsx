@@ -6,7 +6,7 @@ import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrap
 import { MobilePlayerFullOverlayWrapper } from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/shared/MobilePlayerFullOverlayWrapper';
 import usePlaylistItem from 'jwplayer/utils/usePlaylistItem';
 import PlayerFullOverlayTopText from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/shared/PlayerFullOverlayTopText';
-// import PlayerCTAButton from 'experimental/shared/PlayerCTAButton';
+import MobilePlayerCTAButton from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/content/MobilePlayerCTAButton';
 import TimeRemaining from 'experimental/shared/TimeRemaining';
 import { MobileContentPlayerFullOverlay } from 'experimental/types';
 
@@ -14,7 +14,6 @@ const ControlWrapper = styled.div`
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
-	margin-top: 5px;
 `;
 
 const PlayVolumeWrapper = styled.div`
@@ -59,12 +58,12 @@ const ContentPlayerFullOverlay: React.FC<MobileContentPlayerFullOverlay> = ({ re
 						<VolumeStateWrapper iconColor={'#fff'} hasSlider={false} hasLabel={false} callback={resetOverlayTimeout} />
 						<TimeRemainingPadded />
 					</PlayVolumeWrapper>
-					{/* <PlayerCTAButton
+					<MobilePlayerCTAButton
 						text={'Watch More'}
 						onClick={() => {
 							window.open(`https://www.fandom.com/video/${playlistItem.mediaid}`, '_blank');
 						}}
-					/> */}
+					/>
 				</ControlWrapper>
 			</BottomWrapper>
 		</MobilePlayerFullOverlayWrapper>
