@@ -85,6 +85,6 @@ export interface MobileReskinnedArticleVideoPlayerPrerollOverlayProps {
 	showOverlay: boolean;
 }
 
-export interface MobileContentPlayerFullOverlay {
+export interface MobileContentPlayerOverlay {
 	resetOverlayTimeout: () => void;
 }

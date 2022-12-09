@@ -24,7 +24,7 @@ const ContentPlayerOverlay: React.FC<MobileContentPlayerOverlayProps> = ({
 	return (
 		<PlayerOverlayAllowClick showOverlay={(showOverlay && !isRelatedOpen) || !isPlaying}>
 			{isScrollPlayer ? (
-				<ContentPlayerScrollOverlay />
+				<ContentPlayerScrollOverlay resetOverlayTimeout={resetOverlayTimeout} />
 			) : (
 				<ContentPlayerFullOverlay resetOverlayTimeout={resetOverlayTimeout} />
 			)}

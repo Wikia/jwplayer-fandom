@@ -7,6 +7,8 @@ import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoC
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import MobileReskinnedArticleVideoPlayerOverlay from 'experimental/players/MobileReskinnedArticleVideoPlayer/MobileReskinnedArticleVideoPlayerOverlay';
+import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
+import CloseButton from 'jwplayer/players/shared/CloseButton';
 // import useAdComplete from 'jwplayer/utils/useAdComplete';
 
 const MobileReskinnedArticleVideoTopPlaceholder = styled.div`
@@ -50,8 +52,8 @@ const MobileReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlay
 	// const adComplete = useAdComplete();
 	const adComplete = true;
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
-	// const [dismissed, setDismissed] = useState(false);
-	const isScrollPlayer = !(/* dismissed || */ onScreen);
+	const [dismissed, setDismissed] = useState(false);
+	const isScrollPlayer = !(dismissed || onScreen);
 	const boundingClientRect = placeholderRef.current?.getBoundingClientRect();
 	const right = boundingClientRect?.right;
 	const width = boundingClientRect?.width;
@@ -88,6 +90,17 @@ const MobileReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlay
 		}
 	};
 
+	const CloseButtonCorner = styled(CloseButton)`
+		width: 26px;
+		height: 26px;
+		position: absolute;
+		background-color: #fff;
+		top: -10px;
+		right: -10px;
+		border-radius: 50%;
+		z-index: ${Number(WDSVariables.z7) + 3};
+	`;
+
 	return (
 		<>
 			<MobileReskinnedArticleVideoTopPlaceholder ref={placeholderRef}>
@@ -99,6 +112,9 @@ const MobileReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlay
 						isScrollPlayer={isScrollPlayer}
 					>
 						<MobileReskinnedVideoContentContainer onClick={handleClick}>
+							{isScrollPlayer && showOverlay && (
+								<CloseButtonCorner iconColor={'#000'} dismiss={() => setDismissed(true)} iconSize={'10px'} />
+							)}
 							<MobileReskinnedArticleVideoPlayerOverlay
 								isScrollPlayer={isScrollPlayer}
 								showOverlay={showOverlay}

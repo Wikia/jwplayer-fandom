@@ -8,7 +8,7 @@ import usePlaylistItem from 'jwplayer/utils/usePlaylistItem';
 import PlayerFullOverlayTopText from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/shared/PlayerFullOverlayTopText';
 import MobilePlayerCTAButton from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/content/MobilePlayerCTAButton';
 import TimeRemaining from 'experimental/shared/TimeRemaining';
-import { MobileContentPlayerFullOverlay } from 'experimental/types';
+import { MobileContentPlayerOverlay } from 'experimental/types';
 
 const ControlWrapper = styled.div`
 	width: 100%;
@@ -41,7 +41,7 @@ const PlayStateWrapperStyled = styled(PlayStateWrapper)`
 	align-self: center;
 `;
 
-const ContentPlayerFullOverlay: React.FC<MobileContentPlayerFullOverlay> = ({ resetOverlayTimeout }) => {
+const ContentPlayerFullOverlay: React.FC<MobileContentPlayerOverlay> = ({ resetOverlayTimeout }) => {
 	const playlistItem = usePlaylistItem();
 	const upperText = 'Now Playing';
 	const lowerText = playlistItem?.title;
