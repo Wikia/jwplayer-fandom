@@ -1,21 +1,19 @@
 import React, { useEffect } from 'react';
 import PlayerOverlay from 'experimental/shared/PlayerOverlay';
 import { PrerollPlayerOverlayProps } from 'experimental/types';
-import PrerollPlayerFullOverlay from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/preroll/PrerollPlayerFullOverlay';
-import PrerollPlayerScrollOverlay from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/preroll/PrerollPlayerScrollOverlay';
 import OverlayTimeSliderBottom from 'experimental/shared/OverlayTimeSliderBottom';
-import useAdPlaying from 'jwplayer/utils/useAdPlaying';
+import PrerollPlayerFullOverlay from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/preroll/PrerollPlayerFullOverlay';
 
-const PrerollPlayerOverlay: React.FC<PrerollPlayerOverlayProps> = ({ isScrollPlayer, showOverlay }) => {
-	const adPlaying = useAdPlaying();
-
+const PrerollPlayerOverlay: React.FC<PrerollPlayerOverlayProps> = ({ isScrollPlayer }) => {
 	useEffect(() => {
 		document.querySelector<HTMLElement>('#featured-video__player_ad iframe').style.position = null;
 	}, []);
 
+	if (isScrollPlayer) return <OverlayTimeSliderBottom progressColor={'#FFC500'} canSeek={false} />;
+
 	return (
-		<PlayerOverlay showOverlay={showOverlay || !adPlaying}>
-			{isScrollPlayer ? <PrerollPlayerScrollOverlay /> : <PrerollPlayerFullOverlay />}
+		<PlayerOverlay showOverlay={true}>
+			<PrerollPlayerFullOverlay />
 			<OverlayTimeSliderBottom progressColor={'#FFC500'} canSeek={false} />
 		</PlayerOverlay>
 	);

@@ -26,7 +26,6 @@ export interface MobileContentPlayerOverlayProps {
 
 export interface PrerollPlayerOverlayProps {
 	isScrollPlayer: boolean;
-	showOverlay: boolean;
 }
 
 export interface TimeSliderProps {

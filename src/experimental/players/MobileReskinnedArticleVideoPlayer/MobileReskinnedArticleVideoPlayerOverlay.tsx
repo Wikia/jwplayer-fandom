@@ -12,7 +12,7 @@ const MobileReskinnedArticleVideoPlayerOverlay: React.FC<MobileReskinnedArticleV
 	const adStarted = useAdStarted();
 
 	if (adStarted) {
-		return <PrerollPlayerOverlay isScrollPlayer={isScrollPlayer} showOverlay={showOverlay} />;
+		return <PrerollPlayerOverlay isScrollPlayer={isScrollPlayer} />;
 	} else {
 		return (
 			<ContentPlayerOverlay
