@@ -30,12 +30,18 @@ const ContentPlayerScrollOverlay: React.FC<MobileContentPlayerOverlay> = ({ rese
 	return (
 		<ScrollOverlayWrapper>
 			<PlayPauseWrapper>
-				<PlayStateWrapperStyled playConfig={playPauseCallback} pauseConfig={playPauseCallback} iconColor={'#fff'} />
+				<PlayStateWrapperStyled
+					playConfig={playPauseCallback}
+					pauseConfig={playPauseCallback}
+					iconColor={'#fff'}
+					iconSize={'32px'}
+				/>
 				<VolumeStateWrapperStyled
 					iconColor={'#fff'}
 					hasSlider={false}
 					hasLabel={false}
 					callback={resetOverlayTimeout}
+					iconSize={'32px'}
 				/>
 			</PlayPauseWrapper>
 			<OverlayTimeSliderBottom canSeek={false} />

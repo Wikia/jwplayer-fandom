@@ -6,6 +6,36 @@ export interface VolumeStateWrapperProps {
 	hasLabel?: boolean;
 	hasSlider?: boolean;
 	callback?: () => void;
+	iconSize?: string;
+}
+
+export interface PlayButtonProps {
+	/** Optional, additional events that should fire whenever the Play button is pressed.
+	 *  The actual video player "play" event will already be handled in the onClickPlay function.
+	 *
+	 *  There is no need to call the player.play() event in this callback */
+	onClickCallback?: () => void;
+	isAd?: boolean;
+	iconSize?: string;
+}
+
+export interface PauseButtonProps {
+	/** Optional, additional events that should fire whenever the pause button is pressed.
+	 *  The actual video player "pause" event will already be handled in the onClickPause function.
+	 *
+	 *  There is no need to call the player.pause() event in this callback */
+	onClickCallback?: () => void;
+	isAd?: boolean;
+	iconSize?: string;
+}
+
+export interface PlayStateWrapperProps {
+	playConfig?: PlayButtonProps;
+	pauseConfig?: PauseButtonProps;
+	iconColor?: string;
+	isAd?: boolean;
+	className?: string;
+	iconSize?: string;
 }
 
 export interface VolumeSliderProps {

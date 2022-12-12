@@ -50,7 +50,12 @@ const ContentPlayerFullOverlay: React.FC<MobileContentPlayerOverlay> = ({ resetO
 	return (
 		<MobilePlayerFullOverlayWrapper>
 			<PlayerFullOverlayTopText upperText={upperText} lowerText={lowerText} />
-			<PlayStateWrapperStyled playConfig={playPauseCallback} pauseConfig={playPauseCallback} iconColor={'#fff'} />
+			<PlayStateWrapperStyled
+				playConfig={playPauseCallback}
+				pauseConfig={playPauseCallback}
+				iconColor={'#fff'}
+				iconSize={'32px'}
+			/>
 			<BottomWrapper>
 				<ContentOverlayTimeSlider railHeight={'4px'} isMobile={true} />
 				<ControlWrapper>
