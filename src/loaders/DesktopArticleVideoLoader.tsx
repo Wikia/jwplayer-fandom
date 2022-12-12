@@ -32,28 +32,28 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 
 		const currentExperiment: Experiment = getExperiment([desktopReskinnedExperiment]);
 
-    if (currentExperiment?.name === desktopReskinnedExperiment?.name) {
+		if (currentExperiment?.name === desktopReskinnedExperiment?.name) {
 			currentExperiment.log.info('Loading re-skinned Desktop Article Video Player');
 			import('experimental/players/DesktopReskinnedArticleVideoPlayer/DesktopReskinnedArticleVideoPlayer').then(
 				({ default: JWDesktopReskinnedArticleVideoPlayer }) =>
 					setPlayer(<JWDesktopReskinnedArticleVideoPlayer videoDetails={videoDetails} />),
 			);
-      return;
+			return;
 		}
 
-    const youtubeTakeoverDetails = await getYoutubeTakeoverDetails({ deviceType: 'desktop' });
+		const youtubeTakeoverDetails = await getYoutubeTakeoverDetails({ deviceType: 'desktop' });
 
 		if (eligibleForYoutubeTakeover(youtubeTakeoverDetails)) {
 			console.debug('Youtube takeover - loading Desktop youtube embed.');
 			import('youtube/players/YoutubeDesktopArticleVideoPlayer').then(({ default: YoutubeDesktopArticleVideoPlayer }) =>
 				setPlayer(<YoutubeDesktopArticleVideoPlayer youtubeTakeoverDetails={youtubeTakeoverDetails} />),
 			);
-      return;
+			return;
 		}
 
 		// By default if there is no experiment just set the base player
 		if (!currentExperiment) {
-      console.debug('Loading plain Desktop Article Video Player');
+			console.debug('Loading plain Desktop Article Video Player');
 			import('jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer').then(
 				({ default: JWDesktopArticleVideoPlayer }) =>
 					setPlayer(<JWDesktopArticleVideoPlayer videoDetails={videoDetails} />),
