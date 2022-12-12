@@ -1,16 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {
-	/* CanonicalVideoDetails,
-	CanonicalVideoPlayerProps, */
-	DesktopArticleVideoPlayerProps,
-} from 'jwplayer/types';
-/* import RedVentureVideoPlayer from 'jwplayer/players/RedVentureVideoPlayer/RedVentureVideoPlayer'; */
-import DesktopArticleVideoPlayer from 'jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer';
+import { RedVentureVideoPlayerProps } from 'jwplayer/types';
+import RedVentureVideoPlayer from 'jwplayer/players/RedVentureVideoPlayer/RedVentureVideoPlayer';
 
 import { ARTICLE_VIDEO_DETAILS } from './videoConfigs';
 
-console.log('Outside of the DesktopArticleVideoLoader.');
+console.debug('Standalone RedVenture Video Player ...');
 
 interface RedVenturePlayerContextProps {
 	contextName: string;
@@ -62,20 +57,20 @@ window.loadPlayer = (context: RedVenturePlayerContextProps) => {
 	if (!context?.mediaId) {
 		console.error('A mediaId has to be provided in the context object.');
 	}
-	console.log('context object: ', context);
+	console.debug('context object: ', context);
 
 	/* let videoDetails: CanonicalVideoDetails = null;
 	getVideoDetails(context.mediaId).then((videoContent) => {
 		videoDetails = videoContent.playlist[0] as CanonicalVideoDetails;
-		console.log('videoDetails from inside the getVideoDetails promise: ', videoDetails);
+		console.debug('videoDetails from inside the getVideoDetails promise: ', videoDetails);
 	});
 
-	console.log('videoDetails from outside the getVideoDetails promise: ', videoDetails); */
+	console.debug('videoDetails from outside the getVideoDetails promise: ', videoDetails); */
 	const reactRoot = document.createElement('div');
 	const videoWrapperEl = document.querySelector(context?.embedSelector);
 	videoWrapperEl.innerHTML = '';
-	// console.log('\t */\n: ', ARTICLE_VIDEO_DETAILS);
-	// console.log('Added currentVideo with: ', videoId);
+	// console.debug('\t */\n: ', ARTICLE_VIDEO_DETAILS);
+	// console.debug('Added currentVideo with: ', videoId);
 	/* ReactDOM.render(
 		React.createElement(RedVentureVideoPlayer, {
 			currentVideo: `https://cdn.jwplayer.com/v2/media/${context.mediaId}`,
@@ -83,13 +78,13 @@ window.loadPlayer = (context: RedVenturePlayerContextProps) => {
 		} as CanonicalVideoPlayerProps),
 		reactRoot,
 	); */
-	console.log('Loading in the DesktopArticleVideoPlayer in the standalone-loader');
+	console.debug('Loading in the RedVentureVideoPlayer in the standalone-loader');
 	ReactDOM.render(
-		React.createElement(DesktopArticleVideoPlayer, {
+		React.createElement(RedVentureVideoPlayer, {
 			videoDetails: ARTICLE_VIDEO_DETAILS,
-		} as DesktopArticleVideoPlayerProps),
+		} as RedVentureVideoPlayerProps),
 		reactRoot,
 	);
 	videoWrapperEl.appendChild(reactRoot);
-	console.log("Should've loaded RedVentureVideoPlayer with preconfigured video.");
+	console.debug("Should've loaded RedVentureVideoPlayer with preconfigured video.");
 };

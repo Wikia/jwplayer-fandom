@@ -341,6 +341,10 @@ export interface DesktopArticleVideoPlayerProps {
 	videoDetails: ArticleVideoDetails;
 }
 
+export interface RedVentureVideoPlayerProps {
+	videoDetails: ArticleVideoDetails;
+}
+
 export interface MobileArticleVideoPlayerProps {
 	hasPartnerSlot?: boolean;
 	isFullScreen?: boolean;

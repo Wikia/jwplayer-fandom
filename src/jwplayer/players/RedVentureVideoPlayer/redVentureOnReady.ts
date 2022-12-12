@@ -1,9 +1,14 @@
 import { communicationService } from 'jwplayer/utils/communication';
+import { setVideoSeenInSession } from 'jwplayer/utils/articleVideo/articleVideoSession';
 import { willAutoplay, willMute } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
 
-export default function redVenturelOnReady(videoDetails, playerInstance): void {
+export default function useOnArticlePlayerReady(videoDetails, playerInstance): void {
 	const playerKey = 'aeJWPlayerKey';
+
+	if (!videoDetails.isDedicatedForArticle) {
+		setVideoSeenInSession();
+	}
 
 	window.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', { detail: playerInstance }));
 	window[playerKey] = playerInstance;
@@ -15,13 +20,14 @@ export default function redVenturelOnReady(videoDetails, playerInstance): void {
 		playerKey,
 		targeting: {
 			plist: videoDetails.feedid || '',
-			vtags: videoDetails.tags || '',
+			vtags: videoDetails.videoTags || '',
+			videoScope: videoDetails.isDedicatedForArticle ? 'article' : 'wiki',
 		},
 		options: {
 			audio: !willMute(),
 			ctp: !willAutoplay(),
-			featured: false,
-			videoId: videoDetails.mediaid,
+			slotName: 'featured',
+			videoId: videoDetails.playlist[0].mediaid,
 		},
 	});
 }
