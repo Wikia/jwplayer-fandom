@@ -7,3 +7,4 @@ dev
 .eslintcache
 yarn-error.log
 dist
+standalone-dist
