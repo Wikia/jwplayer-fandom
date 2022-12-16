@@ -7,6 +7,7 @@ export interface VolumeStateWrapperProps {
 	hasSlider?: boolean;
 	callback?: () => void;
 	iconSize?: string;
+	className?: string;
 }
 
 export interface PlayButtonProps {
