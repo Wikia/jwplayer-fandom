@@ -62,7 +62,9 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 
 		const onload = () => {
 			// Set the max_resolution param for related videos
-			window.jwplayer.defaults.related.file = window.jwplayer.defaults.related.file + '&max_resolution=1280';
+			if (typeof window?.jwplayer?.defaults?.related?.file === 'string') {
+				window.jwplayer.defaults.related.file = window.jwplayer.defaults.related.file + '&max_resolution=1280';
+			}
 
 			jwPlayerPlaybackTracker({ event_name: 'video_player_load' });
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY);
