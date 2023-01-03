@@ -11,6 +11,7 @@ interface RedVenturePlayerContextProps {
 	contextName: string;
 	embedSelector: string;
 	mediaId?: string;
+	showMiniPlayer?: boolean;
 }
 
 interface WindowWithRedVentureJWPlayer extends Window {
@@ -59,6 +60,8 @@ window.loadPlayer = (context: RedVenturePlayerContextProps) => {
 	}
 	console.debug('context object: ', context);
 
+	console.debug('Will show mini player: ', context?.showMiniPlayer ?? false);
+
 	/* let videoDetails: CanonicalVideoDetails = null;
 	getVideoDetails(context.mediaId).then((videoContent) => {
 		videoDetails = videoContent.playlist[0] as CanonicalVideoDetails;
@@ -82,6 +85,7 @@ window.loadPlayer = (context: RedVenturePlayerContextProps) => {
 	ReactDOM.render(
 		React.createElement(RedVentureVideoPlayer, {
 			videoDetails: ARTICLE_VIDEO_DETAILS,
+			showMiniPlayer: context?.showMiniPlayer ?? false,
 		} as RedVentureVideoPlayerProps),
 		reactRoot,
 	);

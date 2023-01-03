@@ -391,6 +391,7 @@ export interface DesktopArticleVideoPlayerProps {
 
 export interface RedVentureVideoPlayerProps {
 	videoDetails: ArticleVideoDetails;
+	showMiniPlayer: boolean;
 }
 
 export interface MobileArticleVideoPlayerProps {
