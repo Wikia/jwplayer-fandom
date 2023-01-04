@@ -1,7 +1,17 @@
 import FandomWirewaxPlugin from './plugins/fandom-wirewax.plugin';
 
 // export type FeaturedVideoApi = (targetContainer: string, playerURL: string) => void;
-export type JWPlayerApi = (target?: string) => Player;
+interface PlayerDefaults {
+	related: {
+		file: string;
+	};
+}
+
+export interface JWPlayerApi {
+	(target?: string): Player;
+	defaults: PlayerDefaults;
+}
+
 export type PlayerConfig = {
 	playlist?: Playlist;
 	plugins?: Record<string, unknown>;

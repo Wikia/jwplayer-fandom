@@ -9,6 +9,7 @@ import JWEvents from 'jwplayer/players/shared/JWEvents';
 import addBaseTrackingEvents from 'jwplayer/players/shared/addBaseTrackingEvents';
 import slugify from 'jwplayer/utils/slugify';
 import getSponsoredVideos from 'utils/getSponsoredVideos';
+
 interface WindowJWPlayer extends Window {
 	jwplayer?: JWPlayerApi;
 	sponsoredVideos?: string[];
@@ -60,6 +61,11 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 		jwPlayerPlaybackTracker({ event_name: 'video_player_start_load' });
 
 		const onload = () => {
+			// Set the max_resolution param for related videos
+			if (typeof window?.jwplayer?.defaults?.related?.file === 'string') {
+				window.jwplayer.defaults.related.file = window.jwplayer.defaults.related.file + '&max_resolution=1280';
+			}
+
 			jwPlayerPlaybackTracker({ event_name: 'video_player_load' });
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY);
 			triggerVideoMetric('loaded');
