@@ -95,6 +95,7 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({ videoDeta
 							config={getArticleVideoConfig(videoDetails)}
 							onReady={(playerInstance) => redVentureOnReady(videoDetails, playerInstance)}
 							stopAutoAdvanceOnExitViewport={false}
+							shouldLoadSponsoredContentList={false}
 						/>
 						{isScrollPlayer && <VideoDetails />}
 					</RedVentureVideoWrapper>

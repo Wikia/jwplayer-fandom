@@ -374,6 +374,7 @@ export interface JwPlayerWrapperProps {
 	onComplete?: () => void;
 	className?: string;
 	stopAutoAdvanceOnExitViewport?: boolean;
+	shouldLoadSponsoredContentList?: boolean;
 }
 
 export interface LoadableVideoPlayerWrapperProps {
