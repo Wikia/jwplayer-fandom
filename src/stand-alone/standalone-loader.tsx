@@ -51,7 +51,22 @@ const buildRedVentureVideoDetails = (jwDetails): RedVentureVideoDetails => {
 	};
 };
 
-window.loadPlayer = (context: RedVenturePlayerContextProps) => {
+// TODO: Investigate the following
+/*
+ *
+ * -Figure out if the videos should have an item link to the video-platform. Given that
+ * the PlayerOne videos might be hosted in a different Workspace on the JW Platform, they won't be available
+ * on the video-platform.
+ *
+ * -Figure out mediaQuery breakpoints between desktop vs mobile on all the sites.
+ * Do all the sites have the same exact breakpoints?
+ * Is there a table version of any of the sites?
+ * Should the sites provide a function that can be used by the player to determine whether
+ * it should display a mobile/desktop typo of player?
+ *
+ * */
+
+window.loadPlayer = async (context: RedVenturePlayerContextProps) => {
 	if (!context) {
 		console.error('A context object was not provided for the RedVenture JW Player.');
 		return;
@@ -71,23 +86,20 @@ window.loadPlayer = (context: RedVenturePlayerContextProps) => {
 	console.debug('context object: ', context);
 	console.debug('Will show mini player: ', context?.showScrollPlayer ?? false);
 
-	getVideoDetails(context.mediaId).then((videoContent) => {
-		const videoDetails: RedVentureVideoDetails = buildRedVentureVideoDetails(videoContent);
-		console.debug('videoDetails from inside the getVideoDetails promise: ', videoDetails);
+	const jwMediaDetails = await getVideoDetails(context.mediaId);
+	const redVentureVideoDetails: RedVentureVideoDetails = buildRedVentureVideoDetails(jwMediaDetails);
 
-		const reactRoot = document.createElement('div');
-		const videoWrapperEl = document.querySelector(context?.embedSelector);
-		videoWrapperEl.innerHTML = '';
+	const reactRoot = document.createElement('div');
+	const videoWrapperEl = document.querySelector(context?.embedSelector);
+	videoWrapperEl.innerHTML = '';
 
-		console.debug('Loading in the RedVentureVideoPlayer in the standalone-loader');
-		ReactDOM.render(
-			React.createElement(RedVentureVideoPlayer, {
-				videoDetails: videoDetails,
-				showScrollPlayer: context?.showScrollPlayer ?? false,
-			} as RedVentureVideoPlayerProps),
-			reactRoot,
-		);
-		videoWrapperEl.appendChild(reactRoot);
-		console.debug("Should've loaded RedVentureVideoPlayer with preconfigured video.");
-	});
+	console.debug('Loading in the RedVentureVideoPlayer in the standalone-loader');
+	ReactDOM.render(
+		React.createElement(RedVentureVideoPlayer, {
+			videoDetails: redVentureVideoDetails,
+			showScrollPlayer: context?.showScrollPlayer ?? false,
+		} as RedVentureVideoPlayerProps),
+		reactRoot,
+	);
+	videoWrapperEl.appendChild(reactRoot);
 };
