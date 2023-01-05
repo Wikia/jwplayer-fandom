@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { RedVentureVideoPlayerProps } from 'jwplayer/types';
+import { RedVentureVideoDetails, RedVentureVideoPlayerProps } from 'jwplayer/types';
 import RedVentureVideoPlayer from 'jwplayer/players/RedVentureVideoPlayer/RedVentureVideoPlayer';
-
-import { ARTICLE_VIDEO_DETAILS } from './videoConfigs';
 
 console.debug('Standalone RedVenture Video Player ...');
 
@@ -20,12 +18,9 @@ interface WindowWithRedVentureJWPlayer extends Window {
 
 declare let window: WindowWithRedVentureJWPlayer;
 
-/* async function getVideoDetails(mediaId: string) {
+async function getVideoDetails(mediaId: string) {
 	try {
 		const response = await fetch('https://cdn.jwplayer.com/v2/media' + '/' + mediaId, {
-			headers: {
-				// 'cache-control': 'public, s-maxage=60, stale-while-revalidate=300',
-			},
 			method: 'get',
 		});
 
@@ -36,10 +31,25 @@ declare let window: WindowWithRedVentureJWPlayer;
 
 		return await response.json();
 	} catch (e) {
-		console.error(e);
+		console.error(`Could not fetch the video details for mediaId: ${mediaId}`, e);
+	}
+}
+
+const buildRedVentureVideoDetails = (jwDetails): RedVentureVideoDetails => {
+	if (!jwDetails) {
 		return null;
 	}
-} */
+	return {
+		title: jwDetails?.title,
+		description: jwDetails?.description,
+		kind: jwDetails?.kind,
+		playlist: jwDetails?.playlist,
+		feed_instance_id: jwDetails?.feed_instance_id,
+		videoTags: jwDetails?.playlist?.[0]?.tags,
+		duration: jwDetails?.playlist?.[0]?.duration,
+		mediaId: jwDetails?.playlist?.[0]?.mediaId,
+	};
+};
 
 window.loadPlayer = (context: RedVenturePlayerContextProps) => {
 	if (!context) {
@@ -59,36 +69,25 @@ window.loadPlayer = (context: RedVenturePlayerContextProps) => {
 		console.error('A mediaId has to be provided in the context object.');
 	}
 	console.debug('context object: ', context);
-
 	console.debug('Will show mini player: ', context?.showScrollPlayer ?? false);
 
-	/* let videoDetails: CanonicalVideoDetails = null;
 	getVideoDetails(context.mediaId).then((videoContent) => {
-		videoDetails = videoContent.playlist[0] as CanonicalVideoDetails;
+		const videoDetails: RedVentureVideoDetails = buildRedVentureVideoDetails(videoContent);
 		console.debug('videoDetails from inside the getVideoDetails promise: ', videoDetails);
-	});
 
-	console.debug('videoDetails from outside the getVideoDetails promise: ', videoDetails); */
-	const reactRoot = document.createElement('div');
-	const videoWrapperEl = document.querySelector(context?.embedSelector);
-	videoWrapperEl.innerHTML = '';
-	// console.debug('\t */\n: ', ARTICLE_VIDEO_DETAILS);
-	// console.debug('Added currentVideo with: ', videoId);
-	/* ReactDOM.render(
-		React.createElement(RedVentureVideoPlayer, {
-			currentVideo: `https://cdn.jwplayer.com/v2/media/${context.mediaId}`,
-			videoDetails: videoDetails,
-		} as CanonicalVideoPlayerProps),
-		reactRoot,
-	); */
-	console.debug('Loading in the RedVentureVideoPlayer in the standalone-loader');
-	ReactDOM.render(
-		React.createElement(RedVentureVideoPlayer, {
-			videoDetails: ARTICLE_VIDEO_DETAILS,
-			showScrollPlayer: context?.showScrollPlayer ?? false,
-		} as RedVentureVideoPlayerProps),
-		reactRoot,
-	);
-	videoWrapperEl.appendChild(reactRoot);
-	console.debug("Should've loaded RedVentureVideoPlayer with preconfigured video.");
+		const reactRoot = document.createElement('div');
+		const videoWrapperEl = document.querySelector(context?.embedSelector);
+		videoWrapperEl.innerHTML = '';
+
+		console.debug('Loading in the RedVentureVideoPlayer in the standalone-loader');
+		ReactDOM.render(
+			React.createElement(RedVentureVideoPlayer, {
+				videoDetails: videoDetails,
+				showScrollPlayer: context?.showScrollPlayer ?? false,
+			} as RedVentureVideoPlayerProps),
+			reactRoot,
+		);
+		videoWrapperEl.appendChild(reactRoot);
+		console.debug("Should've loaded RedVentureVideoPlayer with preconfigured video.");
+	});
 };

@@ -1,14 +1,9 @@
 import { communicationService } from 'jwplayer/utils/communication';
-import { setVideoSeenInSession } from 'jwplayer/utils/articleVideo/articleVideoSession';
-import { willAutoplay, willMute } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
+import { RedVentureVideoDetails } from 'jwplayer/types';
 
-export default function useOnArticlePlayerReady(videoDetails, playerInstance): void {
+export default function useOnRedVenturePlayerReady(videoDetails: RedVentureVideoDetails, playerInstance): void {
 	const playerKey = 'aeJWPlayerKey';
-
-	if (!videoDetails.isDedicatedForArticle) {
-		setVideoSeenInSession();
-	}
 
 	window.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', { detail: playerInstance }));
 	window[playerKey] = playerInstance;
@@ -19,14 +14,9 @@ export default function useOnArticlePlayerReady(videoDetails, playerInstance): v
 		type: '[JWPlayer] Player Ready',
 		playerKey,
 		targeting: {
-			plist: videoDetails.feedid || '',
-			vtags: videoDetails.videoTags || '',
-			videoScope: videoDetails.isDedicatedForArticle ? 'article' : 'wiki',
+			plist: videoDetails.feed_instance_id || '',
 		},
 		options: {
-			audio: !willMute(),
-			ctp: !willAutoplay(),
-			slotName: 'featured',
 			videoId: videoDetails.playlist[0].mediaid,
 		},
 	});

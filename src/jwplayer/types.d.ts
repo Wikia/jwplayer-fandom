@@ -327,6 +327,17 @@ export interface ArticleVideoDetails {
 	videoTags: string;
 }
 
+export interface RedVentureVideoDetails {
+	title: string;
+	description: string;
+	duration: string;
+	feed_instance_id: string;
+	kind: string;
+	mediaId: string;
+	playlist: Playlist;
+	videoTags: string;
+}
+
 export interface CanonicalVideoDetails {
 	title: string;
 	feedid: string;

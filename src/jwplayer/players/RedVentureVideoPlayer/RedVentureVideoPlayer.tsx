@@ -9,8 +9,8 @@ import useOnScreen from 'utils/useOnScreen';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import { RedVentureVideoPlayerProps } from 'jwplayer/types';
 import CloseButton from 'jwplayer/players/shared/CloseButton';
-import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
-import redVentureOnReady from 'jwplayer/players/RedVentureVideoPlayer/redVentureOnReady';
+import redVenturePlayerOnReady from 'jwplayer/players/RedVentureVideoPlayer/redVenturePlayerOnReady';
+import { getRedVentureVideoConfig } from 'jwplayer/players/RedVentureVideoPlayer/getRedVentureVideoConfig';
 
 const RedVentureVideoTopPlaceholder = styled.div`
 	z-index: ${Number(WDSVariables.z2) + 2};
@@ -92,8 +92,8 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({ videoDeta
 							{isScrollPlayer && <CloseButton dismiss={() => setDismissed(true)} />}
 						</TopBar>
 						<JwPlayerWrapper
-							config={getArticleVideoConfig(videoDetails)}
-							onReady={(playerInstance) => redVentureOnReady(videoDetails, playerInstance)}
+							config={getRedVentureVideoConfig(videoDetails)}
+							onReady={(playerInstance) => redVenturePlayerOnReady(videoDetails, playerInstance)}
 							stopAutoAdvanceOnExitViewport={false}
 							shouldLoadSponsoredContentList={false}
 						/>
