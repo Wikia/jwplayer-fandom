@@ -33,6 +33,27 @@ declare let window: WindowWithRedVentureJWPlayer;
  *
  * */
 
+let jwPlayerContainerIdIncrementCounter = 0;
+
+const getJwPlayerContainerEmbedId = (context: RedVenturePlayerContextProps): string => {
+	if (context?.autoIncrementJwPlayerContainerId) {
+		jwPlayerContainerIdIncrementCounter += 1;
+		console.debug(
+			`Auto increment option for the JWPlayer Container Id has been enabled. The next increment value is ${jwPlayerContainerIdIncrementCounter}.`,
+		);
+		return `featured-video__player_${jwPlayerContainerIdIncrementCounter}`;
+	}
+
+	if (context?.jwPlayerContainerEmbedId) {
+		console.debug(
+			`A jwPlayerContainerEmbedId value has been found. The JW Player container's id will be ${context?.jwPlayerContainerEmbedId}`,
+		);
+		return context?.jwPlayerContainerEmbedId;
+	}
+
+	return null;
+};
+
 window.loadPlayer = async (context: RedVenturePlayerContextProps) => {
 	const canProceed = canPlayerRender(context);
 
@@ -47,11 +68,11 @@ window.loadPlayer = async (context: RedVenturePlayerContextProps) => {
 	const videoWrapperElement = getVideoWrapperElement(context);
 	videoWrapperElement.innerHTML = '';
 
-	console.debug('Loading in the RedVentureVideoPlayer in the standalone-loader');
 	ReactDOM.render(
 		React.createElement(RedVentureVideoPlayer, {
 			videoDetails: redVentureVideoDetails,
 			showScrollPlayer: context?.showScrollPlayer ?? false,
+			jwPlayerContainerEmbedId: getJwPlayerContainerEmbedId(context),
 		} as RedVentureVideoPlayerProps),
 		reactRoot,
 	);

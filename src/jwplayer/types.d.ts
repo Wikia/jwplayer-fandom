@@ -378,7 +378,7 @@ export interface CanonicalVideoPlayerProps {
 	onComplete: () => void;
 }
 
-export interface JwPlayerWrapperProps {
+export interface JwPlayerWrapperProps extends JwPlayerContainerId {
 	config?: PlayerConfig;
 	playerUrl?: string;
 	onReady?: (playerInstance: Player) => void;
@@ -386,6 +386,18 @@ export interface JwPlayerWrapperProps {
 	className?: string;
 	stopAutoAdvanceOnExitViewport?: boolean;
 	shouldLoadSponsoredContentList?: boolean;
+}
+
+export interface JwPlayerContainerId {
+	/**
+	 * @description An optional parameter that sets the id of the div element on which the JW Player embeds itself on.
+	 * @default featured-video__player
+	 * @example
+	 * {
+	 *   embedElementId: 'featured-video__player1'
+	 * }
+	 * */
+	jwPlayerContainerEmbedId?: string;
 }
 
 export interface LoadableVideoPlayerWrapperProps {
@@ -401,7 +413,7 @@ export interface DesktopArticleVideoPlayerProps {
 	videoDetails: ArticleVideoDetails;
 }
 
-export interface RedVentureVideoPlayerProps {
+export interface RedVentureVideoPlayerProps extends JwPlayerContainerId {
 	videoDetails: ArticleVideoDetails;
 	showScrollPlayer: boolean;
 }

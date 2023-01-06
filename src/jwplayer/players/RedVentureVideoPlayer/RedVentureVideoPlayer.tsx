@@ -54,7 +54,11 @@ const TopBar = styled.div`
 	position: relative;
 `;
 
-const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({ videoDetails, showScrollPlayer }) => {
+const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
+	videoDetails,
+	showScrollPlayer,
+	jwPlayerContainerEmbedId,
+}) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	console.debug('RedVentureVideoPlayer: ad complete always true');
 	// const adComplete = useAdComplete();
@@ -96,6 +100,7 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({ videoDeta
 							onReady={(playerInstance) => redVenturePlayerOnReady(videoDetails, playerInstance)}
 							stopAutoAdvanceOnExitViewport={false}
 							shouldLoadSponsoredContentList={false}
+							jwPlayerContainerEmbedId={jwPlayerContainerEmbedId}
 						/>
 						{isScrollPlayer && <VideoDetails />}
 					</RedVentureVideoWrapper>

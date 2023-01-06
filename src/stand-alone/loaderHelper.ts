@@ -1,6 +1,6 @@
-import { RedVentureVideoDetails, RequireOnlyOne } from 'jwplayer/types';
+import { JwPlayerContainerId, RedVentureVideoDetails, RequireOnlyOne } from 'jwplayer/types';
 
-export interface RedVenturePlayerContext {
+export interface RedVenturePlayerContext extends JwPlayerContainerId {
 	/**
 	 * @description Describes the location where the video player is being embedded. Useful for adding context to video tracking events
 	 */
@@ -40,6 +40,17 @@ export interface RedVenturePlayerContext {
 	 * }
 	 * */
 	showScrollPlayer?: boolean;
+	/**
+	 * @description An option that allows the JwPlayer Container Id to be auto incremented, by keeping track of how many times the window.loadPlayer function has been called.
+	 * When this option is enabled, it'll ignore the jwPlayerContainerEmbedId option, and use the default value of 'featured-video__player'. When the first player is instantiated,
+	 * the JWPlayer Container Id will be set to 'featured-video__player_1', to prevent clashes with the default id of 'featured-video__player'. If at any point, a player gets instantiated
+	 * on the same page with this option turned off, the player id number counter will not be incremented.
+	 * @example
+	 * {
+	 *   autoIncrementJwPlayerContainerId: true
+	 * }
+	 * */
+	autoIncrementJwPlayerContainerId?: boolean;
 }
 
 export type RedVenturePlayerContextProps = RequireOnlyOne<
