@@ -394,7 +394,7 @@ export interface JwPlayerContainerId {
 	 * @default featured-video__player
 	 * @example
 	 * {
-	 *   jwPlayerContainerEmbedId: 'featured-video__player1'
+	 *   jwPlayerContainerEmbedId: 'customContainerId'
 	 * }
 	 * */
 	jwPlayerContainerEmbedId?: string;
