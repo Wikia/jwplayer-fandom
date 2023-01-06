@@ -9,8 +9,8 @@ import useOnScreen from 'utils/useOnScreen';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import { RedVentureVideoPlayerProps } from 'jwplayer/types';
 import CloseButton from 'jwplayer/players/shared/CloseButton';
-import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
-import redVentureOnReady from 'jwplayer/players/RedVentureVideoPlayer/redVentureOnReady';
+import redVenturePlayerOnReady from 'jwplayer/players/RedVentureVideoPlayer/redVenturePlayerOnReady';
+import { getRedVentureVideoConfig } from 'jwplayer/players/RedVentureVideoPlayer/getRedVentureVideoConfig';
 
 const RedVentureVideoTopPlaceholder = styled.div`
 	z-index: ${Number(WDSVariables.z2) + 2};
@@ -54,14 +54,14 @@ const TopBar = styled.div`
 	position: relative;
 `;
 
-const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({ videoDetails }) => {
+const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({ videoDetails, showScrollPlayer }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	console.debug('RedVentureVideoPlayer: ad complete always true');
 	// const adComplete = useAdComplete();
 	const adComplete = true;
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
-	const isScrollPlayer = !(dismissed || onScreen);
+	const isScrollPlayer = showScrollPlayer ? !(dismissed || onScreen) : false;
 	const boundingClientRect = placeholderRef.current?.getBoundingClientRect();
 	const right = boundingClientRect?.right;
 	const width = boundingClientRect?.width;
@@ -92,9 +92,10 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({ videoDeta
 							{isScrollPlayer && <CloseButton dismiss={() => setDismissed(true)} />}
 						</TopBar>
 						<JwPlayerWrapper
-							config={getArticleVideoConfig(videoDetails)}
-							onReady={(playerInstance) => redVentureOnReady(videoDetails, playerInstance)}
+							config={getRedVentureVideoConfig(videoDetails)}
+							onReady={(playerInstance) => redVenturePlayerOnReady(videoDetails, playerInstance)}
 							stopAutoAdvanceOnExitViewport={false}
+							shouldLoadSponsoredContentList={false}
 						/>
 						{isScrollPlayer && <VideoDetails />}
 					</RedVentureVideoWrapper>

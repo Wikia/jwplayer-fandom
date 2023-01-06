@@ -32,6 +32,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	onComplete,
 	className,
 	stopAutoAdvanceOnExitViewport,
+	shouldLoadSponsoredContentList = true,
 }) => {
 	const { setPlayer, setConfig } = useContext(PlayerContext);
 	const videoIndexRef = React.useRef(0);
@@ -40,17 +41,23 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	};
 
 	useEffect(() => {
-		const retrieveSponsoredVideo = async () => {
-			const sponsoredVideoResponse = await getSponsoredVideos();
-			if (sponsoredVideoResponse && typeof window !== undefined) {
-				window.sponsoredVideos = sponsoredVideoResponse;
-			} else {
-				console.debug('Could not set sponsored videos. Either window the fetched sponsoredVideo list were undefined.');
-			}
-		};
-		retrieveSponsoredVideo().catch((e) => {
-			console.error('There was an issue with retrieving Sponsored Videos. ', e);
-		});
+		if (shouldLoadSponsoredContentList) {
+			const retrieveSponsoredVideo = async () => {
+				const sponsoredVideoResponse = await getSponsoredVideos();
+				if (sponsoredVideoResponse && typeof window !== undefined) {
+					window.sponsoredVideos = sponsoredVideoResponse;
+				} else {
+					console.debug(
+						'Could not set sponsored videos. Either window the fetched sponsoredVideo list were undefined.',
+					);
+				}
+			};
+			retrieveSponsoredVideo().catch((e) => {
+				console.error('There was an issue with retrieving Sponsored Videos. ', e);
+			});
+		} else {
+			console.debug('Loading of Sponsored Content Video List was disabled.');
+		}
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_INIT_RENDER);
 		initPlayer('featured-video__player', playerUrl);
 	}, []);

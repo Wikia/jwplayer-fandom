@@ -327,6 +327,17 @@ export interface ArticleVideoDetails {
 	videoTags: string;
 }
 
+export interface RedVentureVideoDetails {
+	title: string;
+	description: string;
+	duration: string;
+	feed_instance_id: string;
+	kind: string;
+	mediaId: string;
+	playlist: Playlist;
+	videoTags: string;
+}
+
 export interface CanonicalVideoDetails {
 	title: string;
 	feedid: string;
@@ -374,6 +385,7 @@ export interface JwPlayerWrapperProps {
 	onComplete?: () => void;
 	className?: string;
 	stopAutoAdvanceOnExitViewport?: boolean;
+	shouldLoadSponsoredContentList?: boolean;
 }
 
 export interface LoadableVideoPlayerWrapperProps {
@@ -391,6 +403,7 @@ export interface DesktopArticleVideoPlayerProps {
 
 export interface RedVentureVideoPlayerProps {
 	videoDetails: ArticleVideoDetails;
+	showScrollPlayer: boolean;
 }
 
 export interface MobileArticleVideoPlayerProps {
@@ -398,3 +411,8 @@ export interface MobileArticleVideoPlayerProps {
 	isFullScreen?: boolean;
 	videoDetails: ArticleVideoDetails;
 }
+
+export type RequireOnlyOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclude<keyof T, Keys>> &
+	{
+		[K in Keys]-?: Required<Pick<T, K>> & Partial<Record<Exclude<Keys, K>, undefined>>;
+	}[Keys];
