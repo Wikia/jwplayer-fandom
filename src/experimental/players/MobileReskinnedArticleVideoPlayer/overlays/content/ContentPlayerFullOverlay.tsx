@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import TimeSlider from 'experimental/shared/TimeSlider';
 import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
@@ -10,7 +10,9 @@ import MobilePlayerCTAButton from 'experimental/players/MobileReskinnedArticleVi
 import TimeRemaining from 'experimental/shared/TimeRemaining';
 import { MobileContentPlayerOverlay } from 'experimental/types';
 import useCaptionsList from 'jwplayer/utils/useCaptionsList';
-import CaptionsSelect from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/content/CaptionsSelect';
+import CaptionsSelect from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/content/CaptionsSelectOpen';
+import CaptionSelectList from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/content/CaptionSelectList';
+
 const ControlWrapper = styled.div`
 	width: 100%;
 	display: flex;
@@ -48,9 +50,11 @@ const ContentPlayerFullOverlay: React.FC<MobileContentPlayerOverlay> = ({ resetO
 	const lowerText = playlistItem?.title;
 	const playPauseCallback = { onClickCallback: resetOverlayTimeout };
 	const captionsList = useCaptionsList();
+	const [captionsOpen, setCaptionsOpen] = useState(false);
 
 	return (
 		<MobilePlayerFullOverlayWrapper>
+			{captionsOpen && <CaptionSelectList tracksList={captionsList} />}
 			<PlayerFullOverlayTopText upperText={upperText} lowerText={lowerText} />
 			<PlayStateWrapperStyled
 				playConfig={playPauseCallback}
@@ -66,7 +70,7 @@ const ContentPlayerFullOverlay: React.FC<MobileContentPlayerOverlay> = ({ resetO
 						<TimeRemainingPadded />
 					</ControlWrapperSection>
 					<ControlWrapperSection>
-						{captionsList?.length > 1 && <CaptionsSelect tracksList={captionsList} />}
+						{captionsList?.length > 1 && <CaptionsSelect handleOpen={() => setCaptionsOpen(true)} />}
 						<MobilePlayerCTAButton
 							text={'Watch More'}
 							onClick={() => {

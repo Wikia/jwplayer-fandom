@@ -121,6 +121,10 @@ export interface MobileContentPlayerOverlay {
 	resetOverlayTimeout: () => void;
 }
 
-export interface CaptionsSelectProps {
+export interface CaptionsSelectListProps {
 	tracksList: CaptionsList;
+}
+
+export interface CaptionsSelectOpenProps {
+	handleOpen: () => void;
 }
