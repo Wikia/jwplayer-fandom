@@ -1,4 +1,5 @@
 import React from 'react';
+import { CaptionsList } from 'jwplayer/types';
 
 export interface VolumeStateWrapperProps {
 	iconColor?: string;
@@ -118,4 +119,8 @@ export interface MobileReskinnedArticleVideoPlayerPrerollOverlayProps {
 
 export interface MobileContentPlayerOverlay {
 	resetOverlayTimeout: () => void;
+}
+
+export interface CaptionsSelectProps {
+	tracksList: CaptionsList;
 }

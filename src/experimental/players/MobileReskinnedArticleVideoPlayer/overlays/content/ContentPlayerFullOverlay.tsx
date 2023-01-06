@@ -9,14 +9,15 @@ import PlayerFullOverlayTopText from 'experimental/players/MobileReskinnedArticl
 import MobilePlayerCTAButton from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/content/MobilePlayerCTAButton';
 import TimeRemaining from 'experimental/shared/TimeRemaining';
 import { MobileContentPlayerOverlay } from 'experimental/types';
-
+import useCaptionsList from 'jwplayer/utils/useCaptionsList';
+import CaptionsSelect from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/content/CaptionsSelect';
 const ControlWrapper = styled.div`
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
 `;
 
-const PlayVolumeWrapper = styled.div`
+const ControlWrapperSection = styled.div`
 	display: flex;
 	position: relative;
 	left: -15px;
@@ -46,6 +47,7 @@ const ContentPlayerFullOverlay: React.FC<MobileContentPlayerOverlay> = ({ resetO
 	const upperText = 'Now Playing';
 	const lowerText = playlistItem?.title;
 	const playPauseCallback = { onClickCallback: resetOverlayTimeout };
+	const captionsList = useCaptionsList();
 
 	return (
 		<MobilePlayerFullOverlayWrapper>
@@ -59,16 +61,19 @@ const ContentPlayerFullOverlay: React.FC<MobileContentPlayerOverlay> = ({ resetO
 			<BottomWrapper>
 				<ContentOverlayTimeSlider railHeight={'4px'} isMobile={true} />
 				<ControlWrapper>
-					<PlayVolumeWrapper>
+					<ControlWrapperSection>
 						<VolumeStateWrapper iconColor={'#fff'} hasSlider={false} hasLabel={false} callback={resetOverlayTimeout} />
 						<TimeRemainingPadded />
-					</PlayVolumeWrapper>
-					<MobilePlayerCTAButton
-						text={'Watch More'}
-						onClick={() => {
-							window.open(`https://www.fandom.com/video/${playlistItem.mediaid}`, '_blank');
-						}}
-					/>
+					</ControlWrapperSection>
+					<ControlWrapperSection>
+						{captionsList?.length > 1 && <CaptionsSelect tracksList={captionsList} />}
+						<MobilePlayerCTAButton
+							text={'Watch More'}
+							onClick={() => {
+								window.open(`https://www.fandom.com/video/${playlistItem.mediaid}`, '_blank');
+							}}
+						/>
+					</ControlWrapperSection>
 				</ControlWrapper>
 			</BottomWrapper>
 		</MobilePlayerFullOverlayWrapper>

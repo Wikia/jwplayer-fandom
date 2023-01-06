@@ -155,6 +155,22 @@ export interface OnPlaylistItemEventData {
 	item: PlaylistItem;
 }
 
+interface CaptionTrack {
+	id: number | string;
+	label: string;
+	language?: string;
+}
+
+export type CaptionsList = CaptionTrack[];
+
+export interface OnCaptionsEventData {
+	track: number;
+	tracks: CaptionsList;
+	type: string;
+}
+
+type onCaptionsChangedEventData = number;
+
 type JwEventData =
 	| PlayPlayerEventData
 	| PausePlayerEventData
@@ -172,7 +188,8 @@ type JwEventData =
 	| ShareEventData
 	| TimeEventData
 	| AdImpressionEventData
-	| OnPlaylistItemEventData;
+	| OnPlaylistItemEventData
+	| OnCaptionsEventData;
 
 type JwEventHandler = (event?: JwEventData) => void;
 
@@ -232,6 +249,9 @@ export type Player = {
 	load: (playlist: string | Playlist) => null;
 	setPlaylistItemCallback: (PlaylistItemCallbackData) => void;
 	pauseAd: (state: boolean) => null;
+	getCaptionsList: () => CaptionsList;
+	setCurrentCaptions: (index: number) => null;
+	getCurrentCaptions: () => number;
 };
 export type CreateWirewaxEmbedder = () => Embedder;
 export type WirewaxPluginOptions = {
