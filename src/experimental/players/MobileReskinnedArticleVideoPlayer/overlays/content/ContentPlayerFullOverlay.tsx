@@ -54,7 +54,7 @@ const ContentPlayerFullOverlay: React.FC<MobileContentPlayerOverlay> = ({ resetO
 
 	return (
 		<MobilePlayerFullOverlayWrapper>
-			{captionsOpen && <CaptionSelectList tracksList={captionsList} />}
+			{captionsOpen && <CaptionSelectList tracksList={captionsList} handleClose={() => setCaptionsOpen(false)} />}
 			<PlayerFullOverlayTopText upperText={upperText} lowerText={lowerText} />
 			<PlayStateWrapperStyled
 				playConfig={playPauseCallback}

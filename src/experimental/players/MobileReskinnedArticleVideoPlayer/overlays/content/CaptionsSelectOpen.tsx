@@ -13,7 +13,12 @@ const StyledIconBubble = styled(IconBubble)`
 `;
 
 const CaptionsSelectOpen: React.FC<CaptionsSelectOpenProps> = ({ handleOpen }) => {
-	return <StyledIconBubble onClick={handleOpen} />;
+	const handleOpenCaptions = (event) => {
+		event.stopPropagation();
+		handleOpen();
+	};
+
+	return <StyledIconBubble onClick={handleOpenCaptions} />;
 };
 
 export default CaptionsSelectOpen;

@@ -16,6 +16,7 @@ const CaptionSelectContainer = styled.div`
 	width: 100%;
 	background: rgb(51, 51, 51);
 	z-index: 802;
+	pointer-events: auto;
 `;
 
 const CaptionsList = styled.ul``;
@@ -24,12 +25,14 @@ const CaptionTrack = styled.li<{ active: boolean }>`
 	${(props) => !props.active && `list-style-type: none;`}
 `;
 
-const CaptionsSelectList: React.FC<CaptionsSelectListProps> = ({ tracksList }) => {
+const CaptionsSelectList: React.FC<CaptionsSelectListProps> = ({ tracksList, handleClose }) => {
 	const { player } = useContext(PlayerContext);
 	const currentCaption = useCurrentCaption();
 
-	const setActiveTrack = (newTrackIndex) => {
+	const handleTrackClick = (event, newTrackIndex) => {
+		event.stopPropagation();
 		player.setCurrentCaptions(newTrackIndex);
+		handleClose();
 	};
 
 	return (
@@ -37,7 +40,11 @@ const CaptionsSelectList: React.FC<CaptionsSelectListProps> = ({ tracksList }) =
 			<CaptionsList>
 				{tracksList.map((track, index) => {
 					return (
-						<CaptionTrack key={index} active={currentCaption === index} onClick={() => setActiveTrack(index)}>
+						<CaptionTrack
+							key={index}
+							active={currentCaption === index}
+							onClick={(event) => handleTrackClick(event, index)}
+						>
 							{track.label}
 						</CaptionTrack>
 					);

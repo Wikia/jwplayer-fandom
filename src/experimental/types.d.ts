@@ -123,6 +123,7 @@ export interface MobileContentPlayerOverlay {
 
 export interface CaptionsSelectListProps {
 	tracksList: CaptionsList;
+	handleClose: () => void;
 }
 
 export interface CaptionsSelectOpenProps {
