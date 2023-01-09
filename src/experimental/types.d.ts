@@ -1,5 +1,4 @@
 import React from 'react';
-import { CaptionsList } from 'jwplayer/types';
 
 export interface VolumeStateWrapperProps {
 	iconColor?: string;
@@ -121,11 +120,6 @@ export interface MobileContentPlayerOverlay {
 	resetOverlayTimeout: () => void;
 }
 
-export interface CaptionsSelectListProps {
-	tracksList: CaptionsList;
-	handleClose: () => void;
-}
-
-export interface CaptionsSelectOpenProps {
-	handleOpen: () => void;
+export interface ToggleCaptionsProps {
+	resetOverlayTimeout: () => void;
 }
