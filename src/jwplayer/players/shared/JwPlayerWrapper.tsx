@@ -33,6 +33,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	className,
 	stopAutoAdvanceOnExitViewport,
 	shouldLoadSponsoredContentList = true,
+	jwPlayerContainerEmbedId = 'featured-video__player',
 }) => {
 	const { setPlayer, setConfig } = useContext(PlayerContext);
 	const videoIndexRef = React.useRef(0);
@@ -59,7 +60,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 			console.debug('Loading of Sponsored Content Video List was disabled.');
 		}
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_INIT_RENDER);
-		initPlayer('featured-video__player', playerUrl);
+		initPlayer(jwPlayerContainerEmbedId, playerUrl);
 	}, []);
 
 	const initPlayer = (elementId: string, playerUrl?: string) => {
@@ -145,7 +146,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 
 	return (
 		<div className={className}>
-			<div id="featured-video__player" />
+			<div id={jwPlayerContainerEmbedId} />
 		</div>
 	);
 };
