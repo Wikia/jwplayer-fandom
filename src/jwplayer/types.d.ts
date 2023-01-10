@@ -169,8 +169,6 @@ export interface OnCaptionsEventData {
 	type: string;
 }
 
-type onCaptionsChangedEventData = number;
-
 type JwEventData =
 	| PlayPlayerEventData
 	| PausePlayerEventData

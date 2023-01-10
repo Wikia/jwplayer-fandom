@@ -9,7 +9,7 @@ import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import MobileReskinnedArticleVideoPlayerOverlay from 'experimental/players/MobileReskinnedArticleVideoPlayer/MobileReskinnedArticleVideoPlayerOverlay';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import CloseButton from 'jwplayer/players/shared/CloseButton';
-// import useAdComplete from 'jwplayer/utils/useAdComplete';
+import useAdComplete from 'jwplayer/utils/useAdComplete';
 
 const MobileReskinnedArticleVideoTopPlaceholder = styled.div`
 	width: 100%;
@@ -52,8 +52,7 @@ const MobileReskinnedVideoContentContainer = styled.div`
 
 const MobileReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
-	// const adComplete = useAdComplete();
-	const adComplete = true;
+	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
