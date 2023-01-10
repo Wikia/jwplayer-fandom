@@ -2,8 +2,10 @@ import { communicationService } from 'jwplayer/utils/communication';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
 import { RedVentureVideoDetails } from 'jwplayer/types';
 
+const jwPlayerKeyCounter = 0;
+
 export default function useOnRedVenturePlayerReady(videoDetails: RedVentureVideoDetails, playerInstance): void {
-	const playerKey = 'aeJWPlayerKey';
+	const playerKey = 'aeJWPlayerKey' + (jwPlayerKeyCounter === 0 ? '' : jwPlayerKeyCounter);
 
 	window.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', { detail: playerInstance }));
 	window[playerKey] = playerInstance;
