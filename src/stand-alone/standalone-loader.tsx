@@ -51,7 +51,7 @@ const getJwPlayerContainerEmbedId = (context: RedVenturePlayerContextProps): str
 		return context?.jwPlayerContainerEmbedId;
 	}
 
-	return null;
+	return undefined;
 };
 
 window.loadPlayer = async (context: RedVenturePlayerContextProps) => {

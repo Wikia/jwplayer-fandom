@@ -40,6 +40,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	const defaultConfig = {
 		plugins: { fandomWirewax: {} },
 	};
+	console.debug('jwPlayerContainerEmbedId: ', jwPlayerContainerEmbedId);
 
 	useEffect(() => {
 		if (shouldLoadSponsoredContentList) {

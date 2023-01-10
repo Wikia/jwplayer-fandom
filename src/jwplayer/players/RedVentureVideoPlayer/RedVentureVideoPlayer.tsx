@@ -60,7 +60,6 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 	jwPlayerContainerEmbedId,
 }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
-	console.debug('RedVentureVideoPlayer: ad complete always true');
 	// const adComplete = useAdComplete();
 	const adComplete = true;
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
