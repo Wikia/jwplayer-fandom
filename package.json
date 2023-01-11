@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.0.2-playerReskin-27",
+	"version": "2.0.2-playerReskin-30",
 	"description": "JWPlayer for Fandom",
 	"exports": {
 		".": "./main.js",
