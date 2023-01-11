@@ -33,6 +33,7 @@ const MobileReskinnedArticleVideoWrapper = styled.div<MobileReskinnedArticleVide
 					bottom: 1em;
 					width: 50%;
 					position: fixed;
+					z-index: ${Number(WDSVariables.z7) + 2};
 			  `
 			: css`
 					transform: translateZ(0);
@@ -108,7 +109,7 @@ const MobileReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlay
 			<MobileReskinnedArticleVideoTopPlaceholder ref={placeholderRef}>
 				{adComplete && (
 					<MobileReskinnedArticleVideoWrapper
-						className={'desktop-article-video-wrapper'}
+						className={'mobile-article-video-wrapper'}
 						right={right}
 						width={width}
 						isScrollPlayer={isScrollPlayer}

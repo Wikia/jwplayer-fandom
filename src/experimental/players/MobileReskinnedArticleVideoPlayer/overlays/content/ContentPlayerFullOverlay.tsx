@@ -39,8 +39,13 @@ const TimeRemainingPadded = styled(TimeRemaining)`
 	font-size: 13px;
 `;
 
-const PlayStateWrapperStyled = styled(PlayStateWrapper)`
-	align-self: center;
+const PlayStateWrapperContainer = styled.div`
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 `;
 
 const ContentPlayerFullOverlay: React.FC<MobileContentPlayerOverlay> = ({ resetOverlayTimeout }) => {
@@ -53,12 +58,14 @@ const ContentPlayerFullOverlay: React.FC<MobileContentPlayerOverlay> = ({ resetO
 	return (
 		<MobilePlayerFullOverlayWrapper>
 			<PlayerFullOverlayTopText upperText={upperText} lowerText={lowerText} />
-			<PlayStateWrapperStyled
-				playConfig={playPauseCallback}
-				pauseConfig={playPauseCallback}
-				iconColor={'#fff'}
-				iconSize={'32px'}
-			/>
+			<PlayStateWrapperContainer>
+				<PlayStateWrapper
+					playConfig={playPauseCallback}
+					pauseConfig={playPauseCallback}
+					iconColor={'#fff'}
+					iconSize={'32px'}
+				/>
+			</PlayStateWrapperContainer>
 			<BottomWrapper>
 				<ContentOverlayTimeSlider railHeight={'4px'} isMobile={true} />
 				<ControlWrapper>
