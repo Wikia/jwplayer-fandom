@@ -6,11 +6,15 @@ import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrap
 import { MobilePlayerFullOverlayWrapper } from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/shared/MobilePlayerFullOverlayWrapper';
 import usePlaylistItem from 'jwplayer/utils/usePlaylistItem';
 import PlayerFullOverlayTopText from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/shared/PlayerFullOverlayTopText';
-import MobilePlayerCTAButton from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/content/MobilePlayerCTAButton';
 import TimeRemaining from 'experimental/shared/TimeRemaining';
 import { MobileContentPlayerOverlay } from 'experimental/types';
+import MobilePlayerCTAButton from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/content/MobilePlayerCTAButton';
 import useCaptionsList from 'jwplayer/utils/useCaptionsList';
 import ToggleCaptions from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/content/ToggleCaptions';
+
+const PlayStateWrapperStyled = styled(PlayStateWrapper)`
+	align-self: center;
+`;
 
 const ControlWrapper = styled.div`
 	width: 100%;
@@ -37,10 +41,6 @@ const BottomWrapper = styled.div`
 const TimeRemainingPadded = styled(TimeRemaining)`
 	padding-left: 10px;
 	font-size: 13px;
-`;
-
-const PlayStateWrapperStyled = styled(PlayStateWrapper)`
-	align-self: center;
 `;
 
 const ContentPlayerFullOverlay: React.FC<MobileContentPlayerOverlay> = ({ resetOverlayTimeout }) => {
