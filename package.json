@@ -31,7 +31,7 @@
 		"lint:eslint:tests": "eslint --cache --fix tests",
 		"lint:eslint": "npm-run-all --continue-on-error --parallel lint:eslint:src",
 		"test": "echo 'No Tests yet'",
-		"prepare": "",
+		"prepare": "husky install",
 		"pub:patch": "npm version patch && rm -rf dist && yarn pub",
 		"pub:minor": "npm version minor && rm -rf dist && yarn pub",
 		"pub:major": "npm version major && rm -rf dist && yarn pub",
