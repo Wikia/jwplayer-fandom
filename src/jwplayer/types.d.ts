@@ -87,6 +87,11 @@ export interface OnVideoTimeEventData {
 	viewable: number;
 }
 
+export interface ProgressUpdateData extends OnVideoTimeEventData {
+	// Calculated param, does not come directly from the JW API
+	positionPercent: number;
+}
+
 export interface OnErrorEventData {
 	code: number;
 	message: string;
