@@ -9,6 +9,7 @@ export default function useAdComplete(): boolean {
 	const [adComplete, setAdComplete] = useState(false);
 
 	useEffect(() => {
+		// TODO: Remove before deploying final version. Keep during dev cycle.
 		if (window.location.search.includes('skip_ad_complete')) {
 			console.debug("JW Player skip_ad_complete was found. setAdComplete will resolve to 'true'.");
 			setAdComplete(true);
