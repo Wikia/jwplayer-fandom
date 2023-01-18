@@ -10,4 +10,5 @@ export const DESTINATION_MAPPING: Record<Env, string> = {
 };
 
 export const BUCKET_NAME = 'silversurfer';
-export const VIDEO_PREFIX = 'video'
+export const VIDEO_PREFIX = 'video';
+export const VIDEO_DIR = 'standalone-dist';
