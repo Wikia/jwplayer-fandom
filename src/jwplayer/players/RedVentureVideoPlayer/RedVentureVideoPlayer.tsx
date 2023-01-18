@@ -5,7 +5,7 @@ import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButto
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import VideoDetails from 'jwplayer/players/DesktopArticleVideoPlayer/VideoDetails';
 import useOnScreen from 'utils/useOnScreen';
-/* import useAdComplete from 'jwplayer/utils/useAdComplete'; */
+import useAdComplete from 'jwplayer/utils/useAdComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import { RedVentureVideoPlayerProps } from 'jwplayer/types';
 import CloseButton from 'jwplayer/players/shared/CloseButton';
@@ -60,8 +60,9 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 	jwPlayerContainerEmbedId,
 }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
-	// const adComplete = useAdComplete();
-	const adComplete = true;
+	const adComplete = useAdComplete();
+	// TODO: Remove before deploying final version. Keep during dev cycle.
+	console.debug('adComplete state: ', adComplete);
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = showScrollPlayer ? !(dismissed || onScreen) : false;
