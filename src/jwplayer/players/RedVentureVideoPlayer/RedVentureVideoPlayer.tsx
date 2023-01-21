@@ -58,6 +58,7 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 	videoDetails,
 	showScrollPlayer,
 	jwPlayerContainerEmbedId,
+	playerUrl,
 }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
@@ -101,6 +102,7 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 							stopAutoAdvanceOnExitViewport={false}
 							shouldLoadSponsoredContentList={false}
 							jwPlayerContainerEmbedId={jwPlayerContainerEmbedId}
+							playerUrl={playerUrl}
 						/>
 						{isScrollPlayer && <VideoDetails />}
 					</RedVentureVideoWrapper>
