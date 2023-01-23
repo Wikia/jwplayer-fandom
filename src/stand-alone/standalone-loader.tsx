@@ -61,7 +61,7 @@ window.loadPlayer = async (context: RedVenturePlayerContextProps) => {
 		throw new Error('Could not render the video player. The requirements for initialization were not met.');
 	}
 
-	const jwMediaDetails = await getVideoDetails(context.mediaId);
+	const jwMediaDetails = await getVideoDetails(context);
 	const redVentureVideoDetails: RedVentureVideoDetails = buildRedVentureVideoDetails(jwMediaDetails);
 
 	const reactRoot = document.createElement('div');
@@ -73,6 +73,7 @@ window.loadPlayer = async (context: RedVenturePlayerContextProps) => {
 			videoDetails: redVentureVideoDetails,
 			showScrollPlayer: context?.showScrollPlayer ?? false,
 			jwPlayerContainerEmbedId: getJwPlayerContainerEmbedId(context),
+			playerUrl: context?.playerUrl,
 		} as RedVentureVideoPlayerProps),
 		reactRoot,
 	);

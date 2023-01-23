@@ -51,6 +51,31 @@ export interface RedVenturePlayerContext extends JwPlayerContainerId {
 	 * }
 	 * */
 	autoIncrementJwPlayerContainerId?: boolean;
+	/**
+	 * @description An optional parameter that allows the JW Player URL to be passed in, and used by the JW Player library. The player URL will decide which player should be loaded.
+	 * The JW Players have different properties, and could be spread across different workspaces. The playerUrl can also take in a signed url, for workspaces
+	 * where the player is protected by signed urls. The signed player urls are non-jwt signed urls.
+	 * More information on this can be found at - https://docs.jwplayer.com/platform/reference/protect-your-content-with-signed-urls#types-of-signed-urls
+	 * @example - unsigned URL example
+	 * {
+	 *   playerUrl: 'https://cdn.jwplayer.com/libraries/VXc5h4Tf.js'
+	 * },
+	 * @example - signed URL example
+	 * {
+	 *   playerUrl: 'https://cdn.jwplayer.com/libraries/5cvxbGL3.js?sig=abc123zzzaaa&exp=1674168554'
+	 * }
+	 * */
+	playerUrl?: string;
+	/**
+	 * @description A JSON Web Token (JWT) for use with JW Player media ids that are Externally Hosted.
+	 * This token must be passed in whenever the JW Workspace that the mediaId is associated with is protected.
+	 * You can find out more details about content protection with signed urls by following this link - https://docs.jwplayer.com/platform/reference/protect-your-content-with-signed-urls
+	 * @example
+	 * {
+	 *   jwtSignedContentAuth: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NzQyNjIzODA2MDAsInJlc291cmNlIjoiL3YyL21lZGlhL2dic25YOW9KIiwiaWF0IjoxNjc0MjYyMzc2fQ.uZs5BYQe-_4IrDeMJCeEMcLF41RmpgrVyzt6PEKi1_I'
+	 * }
+	 * */
+	jwtSignedContentAuth?: string;
 }
 
 export type RedVenturePlayerContextProps = RequireOnlyOne<
@@ -58,9 +83,22 @@ export type RedVenturePlayerContextProps = RequireOnlyOne<
 	'embedSelector' | 'embedHtmlElement'
 >;
 
-export async function getVideoDetails(mediaId: string) {
+/*
+ * If a JW Auth Token is passed in, then generate the correct query String.
+ * If nothing is passed in, then just return a blank string.
+ * */
+const getJWMediaAuthToken = (context: RedVenturePlayerContextProps) => {
+	if (context?.jwtSignedContentAuth) {
+		return `?token=${context.jwtSignedContentAuth}`;
+	}
+	return '';
+};
+
+export async function getVideoDetails(context: RedVenturePlayerContextProps) {
+	const mediaId = context?.mediaId;
+	const mediaUrl = `https://cdn.jwplayer.com/v2/media/${mediaId}${getJWMediaAuthToken(context)}`;
 	try {
-		const response = await fetch('https://cdn.jwplayer.com/v2/media' + '/' + mediaId, {
+		const response = await fetch(mediaUrl, {
 			method: 'get',
 		});
 
