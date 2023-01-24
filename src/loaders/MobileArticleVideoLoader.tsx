@@ -15,7 +15,7 @@ const mobileReskinnedExperiment = defineExperiment({
 	// TODO: Change this before MERGING!! Used for testing purposes.
 	// TODO: figure out date to release
 	startDate: Date.parse('2023-01-09T08:00:00'),
-	endDate: Date.parse('2023-01-20T11:59:00'),
+	endDate: Date.parse('2023-02-20T11:59:00'),
 });
 
 export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> = ({ videoDetails }) => {
