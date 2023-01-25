@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import styled, { css } from 'styled-components';
 import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButton';
@@ -12,6 +12,8 @@ import CloseButton from 'jwplayer/players/shared/CloseButton';
 import Attribution from 'jwplayer/players/DesktopArticleVideoPlayer/Attribution';
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
+import defineExperiment from '@fandom/pathfinder-lite/experiments/defineExperiment';
+import getExperiment from '@fandom/pathfinder-lite/experiments/getExperiment';
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
 	z-index: ${Number(WDSVariables.z2) + 2};
@@ -61,7 +63,28 @@ const CloseButtonPositioned = styled(CloseButton)`
 	top: 0;
 `;
 
+const desktopJwFloatOnScrollExperiment = defineExperiment({
+	name: 'desktop-jw-float-on-scroll-experiment',
+	buckets: ['q'],
+	// startDate: Date.parse('2023-01-30T08:00:00'),
+	startDate: Date.parse('2023-01-24T08:00:00'),
+	endDate: Date.parse('2023-02-06T11:59:00'),
+});
+
+console.log('outside desktopJwFloatOnScrollExperiment: ', desktopJwFloatOnScrollExperiment);
+
+function isFloatOnScrollExperiment(): boolean {
+	const currentExperiment = getExperiment([desktopJwFloatOnScrollExperiment]);
+	console.log('currentExperiment: ', currentExperiment);
+	console.log('desktopJwFloatOnScrollExperiment:', desktopJwFloatOnScrollExperiment);
+	return currentExperiment?.name === desktopJwFloatOnScrollExperiment.name;
+}
+
 const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
+	// Memoize this value so its not always re-computed
+	const isExperiment = useMemo(isFloatOnScrollExperiment, []);
+	console.log('isFloatOnScroll experiment: ', isExperiment);
+
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
@@ -95,18 +118,19 @@ const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ v
 						className={'desktop-article-video-wrapper'}
 						right={right}
 						width={width}
-						isScrollPlayer={isScrollPlayer}
+						isScrollPlayer={!isExperiment && isScrollPlayer}
 					>
 						<TopBar>
 							{!isScrollPlayer && <UnmuteButton />}
-							{isScrollPlayer && <CloseButtonPositioned dismiss={() => setDismissed(true)} />}
+							{!isExperiment && isScrollPlayer && <CloseButtonPositioned dismiss={() => setDismissed(true)} />}
 						</TopBar>
 						<JwPlayerWrapper
+							playerUrl={isExperiment ? 'https://cdn.jwplayer.com/libraries/UKcdkcuf.js' : undefined}
 							config={getArticleVideoConfig(videoDetails)}
 							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
 							stopAutoAdvanceOnExitViewport={false}
 						/>
-						{isScrollPlayer && <VideoDetails />}
+						{!isExperiment && isScrollPlayer && <VideoDetails />}
 					</DesktopArticleVideoWrapper>
 				)}
 			</DesktopArticleVideoTopPlaceholder>
