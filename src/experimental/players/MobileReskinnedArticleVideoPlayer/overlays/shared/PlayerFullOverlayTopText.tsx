@@ -9,6 +9,7 @@ const TextWrapper = styled.div`
 const UpperText = styled.div`
 	font-weight: 400;
 	font-size: 12px;
+	margin-bottom: 5px;
 `;
 
 const LowerText = styled.div`

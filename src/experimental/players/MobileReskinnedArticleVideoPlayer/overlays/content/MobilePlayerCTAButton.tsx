@@ -3,6 +3,12 @@ import styled from 'styled-components';
 import { PlayerCTAButtonProps } from 'experimental/types';
 import IconExternal from '@fandom-frontend/react-common/dist/icons/IconExternal';
 
+const IconStyled = styled(IconExternal)<{ isScrollPlayer: boolean }>`
+	width: 12px;
+	height: 12px;
+	margin-left: 6px;
+`;
+
 const ButtonStyled = styled.div<{ isScrollPlayer: boolean }>`
 	background: rgba(0, 0, 0, 0.5);
 	color: #fff;
@@ -12,16 +18,10 @@ const ButtonStyled = styled.div<{ isScrollPlayer: boolean }>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	height: 21px;
+	height: 31px;
 	font-size: 12px;
 	font-weight: 500px;
 	padding: 5px 10px;
-`;
-
-const IconStyled = styled(IconExternal)<{ isScrollPlayer: boolean }>`
-	width: 12px;
-	height: 12px;
-	margin-left: 5px;
 `;
 
 const PlayerCTAButton: React.FC<PlayerCTAButtonProps> = ({ text, onClick, isScrollPlayer = false }) => {

@@ -5,6 +5,10 @@ import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
 import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
 import { MobileContentPlayerOverlay } from 'experimental/types';
 
+const PlayStateWrapperStyled = styled(PlayStateWrapper)``;
+
+const VolumeStateWrapperStyled = styled(VolumeStateWrapper)``;
+
 const ScrollOverlayWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -19,10 +23,6 @@ const PlayPauseWrapper = styled.div`
 	align-items: center;
 	justify-content: center;
 `;
-
-const PlayStateWrapperStyled = styled(PlayStateWrapper)``;
-
-const VolumeStateWrapperStyled = styled(VolumeStateWrapper)``;
 
 const ContentPlayerScrollOverlay: React.FC<MobileContentPlayerOverlay> = ({ resetOverlayTimeout }) => {
 	const playPauseCallback = { onClickCallback: resetOverlayTimeout };

@@ -7,6 +7,14 @@ import usePlaylistItem from 'jwplayer/utils/usePlaylistItem';
 import PlayerFullOverlayTopText from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/shared/PlayerFullOverlayTopText';
 import useAdTime from 'jwplayer/utils/useAdTime';
 
+const PlayStateWrapperStyled = styled(PlayStateWrapper)`
+	filter: drop-shadow(0 0 3px #000);
+`;
+
+const VolumeStateWrapperStyled = styled(VolumeStateWrapper)`
+	filter: drop-shadow(0 0 3px #000);
+`;
+
 const ControlWrapper = styled.div`
 	width: 100%;
 	display: flex;
@@ -23,14 +31,6 @@ const PlayVolumeWrapper = styled.div`
 const BottomWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
-`;
-
-const PlayStateWrapperStyled = styled(PlayStateWrapper)`
-	filter: drop-shadow(0 0 3px #000);
-`;
-
-const VolumeStateWrapperStyled = styled(VolumeStateWrapper)`
-	filter: drop-shadow(0 0 3px #000);
 `;
 
 const PrerollPlayerFullOverlay: React.FC = () => {

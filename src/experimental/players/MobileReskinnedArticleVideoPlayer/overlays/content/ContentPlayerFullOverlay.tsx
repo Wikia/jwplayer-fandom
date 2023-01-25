@@ -16,6 +16,16 @@ const PlayStateWrapperStyled = styled(PlayStateWrapper)`
 	align-self: center;
 `;
 
+const ContentOverlayTimeSlider = styled(TimeSlider)`
+	align-items: center;
+	height: 25px;
+`;
+
+const TimeRemainingPadded = styled(TimeRemaining)`
+	padding-left: 10px;
+	font-size: 13px;
+`;
+
 const ControlWrapper = styled.div`
 	width: 100%;
 	display: flex;
@@ -28,19 +38,9 @@ const ControlWrapperSection = styled.div`
 	left: -15px;
 `;
 
-const ContentOverlayTimeSlider = styled(TimeSlider)`
-	align-items: center;
-	height: 25px;
-`;
-
 const BottomWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
-`;
-
-const TimeRemainingPadded = styled(TimeRemaining)`
-	padding-left: 10px;
-	font-size: 13px;
 `;
 
 const ContentPlayerFullOverlay: React.FC<MobileContentPlayerOverlay> = ({ resetOverlayTimeout }) => {

@@ -36,10 +36,6 @@ const MobileReskinnedArticleVideoWrapper = styled.div<MobileReskinnedArticleVide
 					z-index: ${Number(WDSVariables.z7) + 2};
 			  `
 			: css`
-					transform: translateZ(0);
-					-webkit-transform: translateZ(0);
-					-webkit-transition: padding 0.3s;
-					transition: padding 0.3s;
 					padding: 0;
 			  `}
 `;
