@@ -38,7 +38,14 @@ const StyledSoundIcon = styled(IconSoundOff)`
 
 const UnmuteButton: React.FC = () => {
 	const { player } = useContext(PlayerContext);
-	const [muted, setMuted] = useState(true);
+	/* Getting the player mute state instead of just setting it to true prevents the UNMUTE button from showing up again.
+	 * This UNMUTE button shows up again when the floating/scroll player activates after the user has already clicked the UNMUTE button.
+	 * Once the user scrolls back up, the UNMUTE button show up again, even though the player is already in an unmuted state.
+	 *
+	 * In case the player object is not set for whatever reason, then we just default to true until the player does get set.
+	 * */
+	const initialMuteState = player?.getMute ? player.getMute : true;
+	const [muted, setMuted] = useState(initialMuteState);
 	const unmute = () => {
 		player?.setMute(false);
 		setMuted(false);

@@ -71,19 +71,14 @@ const desktopJwFloatOnScrollExperiment = defineExperiment({
 	endDate: Date.parse('2023-02-06T11:59:00'),
 });
 
-console.log('outside desktopJwFloatOnScrollExperiment: ', desktopJwFloatOnScrollExperiment);
-
-function isFloatOnScrollExperiment(): boolean {
+function isDesktopFloatOnScrollExperiment(): boolean {
 	const currentExperiment = getExperiment([desktopJwFloatOnScrollExperiment]);
-	console.log('currentExperiment: ', currentExperiment);
-	console.log('desktopJwFloatOnScrollExperiment:', desktopJwFloatOnScrollExperiment);
 	return currentExperiment?.name === desktopJwFloatOnScrollExperiment.name;
 }
 
 const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	// Memoize this value so its not always re-computed
-	const isExperiment = useMemo(isFloatOnScrollExperiment, []);
-	console.log('isFloatOnScroll experiment: ', isExperiment);
+	const isExperiment = useMemo(isDesktopFloatOnScrollExperiment, [desktopJwFloatOnScrollExperiment]);
 
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
