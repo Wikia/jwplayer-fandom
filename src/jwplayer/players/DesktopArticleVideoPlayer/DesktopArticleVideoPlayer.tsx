@@ -93,16 +93,29 @@ const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ v
 	const moreVideosIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-related-btn');
 	const pipIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-icon-pip');
 
+	let jwWrapper;
+	let floatingWrapper;
+	if (isExperiment) {
+		jwWrapper = document.querySelector<HTMLElement>('.jw-wrapper.jw-reset');
+		floatingWrapper = document.querySelector<HTMLElement>('.jw-float-bar.jw-reset');
+	}
+
 	if (onScreen) {
 		if (controlbar) controlbar.style.background = 'rgba(0, 0, 0, 0.5)';
 		if (shareIcon) shareIcon.style.display = 'flex';
 		if (moreVideosIcon) moreVideosIcon.style.display = 'flex';
 		if (pipIcon) pipIcon.style.display = 'flex';
+		// Floating player experiment only. Needed to prevent wiki toolbar from cover the close button. This reset the styles once the player is not 'floating'.
+		if (jwWrapper) jwWrapper.style.marginBottom = '';
+		if (floatingWrapper) floatingWrapper.style.flexDirection = '';
 	} else {
 		if (controlbar) controlbar.style.background = 'linear-gradient(0,#000,transparent)';
 		if (shareIcon) shareIcon.style.display = 'none';
 		if (moreVideosIcon) moreVideosIcon.style.display = 'none';
 		if (pipIcon) pipIcon.style.display = 'none';
+		// Floating player experiment only. Needed to prevent wiki toolbar from cover the close button. This applies the styles once the player is 'floating'.
+		if (jwWrapper) jwWrapper.style.marginBottom = '27px';
+		if (floatingWrapper) floatingWrapper.style.flexDirection = 'row-reverse';
 	}
 
 	return (
