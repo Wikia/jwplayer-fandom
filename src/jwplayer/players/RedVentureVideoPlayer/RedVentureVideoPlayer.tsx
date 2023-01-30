@@ -62,8 +62,6 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
-	// TODO: Remove before deploying final version. Keep during dev cycle.
-	console.debug('adComplete state: ', adComplete);
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = showScrollPlayer ? !(dismissed || onScreen) : false;
