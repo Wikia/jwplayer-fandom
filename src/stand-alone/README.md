@@ -1,6 +1,15 @@
 #Notes on semi-automated deploying with a script
 
-1.
+1. The semi-automated deploying script is called `deploy-stand-alone` and can be found in the main `package.json` file.
+2. Run `yarn deploy-stand-alone --env [env]`
+3. There is a set of env that are available in the `src/deploy/envs.ts` file.
+4. Example: `yarn deploy-stand-alone --env test` will run the `build-stand-alone` command from the `package.json` file,
+   and place all the files in the `standalone-dist` directory.
+   - The script will find all files that end with a `.js` extension and try to upload them to the to GCS
+   - Based on the `test`, the stand-alone video player files will be uploaded to the following URL: `https://static.wikia.nocookie.net/silversurfer/video/test/standalone-dist/standAlone_RV_VideoPlayer.js`
+   - If the `prod` env was specified, then the file would've been deployed to `https://static.wikia.nocookie.net/silversurfer/video/prod/standalone-dist/standAlone_RV_VideoPlayer.js`
+   - The general deployment URL pattern is `https://static.wikia.nocookie.net/silversurfer/video/[env]/standalone-dist/standAlone_RV_VideoPlayer.js`
+   - The deployment envs can be expanded by adding additional environment to the `envs.ts` file
 
 #Notes on how to do manual deployments:
 
@@ -22,6 +31,20 @@
    ```
    The `standAlone_RV_VideoPlayer` can be renamed to `standAlone_RV_VideoPlayer1` for example.
 8. Repeat steps 2-7 to redeploy new builds
+
+#Purging a file deployed to GCS
+In some instances, we may want to instantly purge a file that's hosted on GCS, and cached through Fandom's CDNs.
+This is not a simple thing to do, as it requires purging multiple CDN nodes at once.
+Fortunately, there is a script provided that can purge all the caches on which the stand-alone video player is cached on.
+
+You can easily purge this file by running the the `purgeSingleFile` command, that's located in the main `package.json`.
+You can run this command by using `yarn purgeSingleFile [fileUrl]`
+
+Example:
+`yarn purgeSingleFile https://static.wikia.nocookie.net/silversurfer/video/test/standalone-dist/standAlone_RV_VideoPlayer.js`
+
+This will purge all the caches on which this file is stored. This is very useful in cases where the video package has to be applied instantly.
+Currently during deployment, a 30 minute default cache time is applied on the files that are uploaded to GCS.
 
 ## Steps for installing google-cloud-sdk, and some other Fandom dependencies
 

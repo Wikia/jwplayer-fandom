@@ -35,7 +35,8 @@
 		"pub:patch": "npm version patch && rm -rf dist && yarn pub",
 		"pub:minor": "npm version minor && rm -rf dist && yarn pub",
 		"pub:major": "npm version major && rm -rf dist && yarn pub",
-		"pub": "yarn install && yarn build && cd dist && npm publish --tag beta"
+		"pub": "yarn install && yarn build && cd dist && npm publish --tag beta",
+		"purgeSingleFile": "ts-node src/deploy/purge/purgeSingleFile.ts"
 	},
 	"lint-staged": {
 		"src/**/*.(ts|tsx|js)": [
