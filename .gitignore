@@ -8,3 +8,4 @@ dev
 yarn-error.log
 dist
 standalone-dist
+/vault-gcs.json
