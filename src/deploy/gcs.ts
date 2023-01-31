@@ -11,7 +11,7 @@ const PROD_PATH = `https://static.wikia.nocookie.net/`;
 process.env.GOOGLE_APPLICATION_CREDENTIALS = 'vault-gcs.json';
 const storage = new Storage();
 
-async function uploadFile(destination: string, file: string, cacheTime = 60): Promise<void> {
+async function uploadFile(destination: string, file: string, cacheTime = 1800): Promise<void> {
 	const fileNameOnly = file.match(/[^\\/]+$/)[0];
 	await storage.bucket(BUCKET_NAME).upload(file, {
 		destination: `${destination}/${fileNameOnly}`,

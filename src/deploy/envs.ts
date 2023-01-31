@@ -4,8 +4,11 @@ export enum Env {
 }
 export const VALID_ENVS = Object.values(Env);
 
+// These environments may need to be matured a bit.
+// It might be useful to add a dev, dev-branch and maybe a prod branch environment
+// to make use of this stand-alone (News & Rating / RedVenture) video player across different envs.
 export const DESTINATION_MAPPING: Record<Env, string> = {
-	[Env.PROD]: 'prod/latest',
+	[Env.PROD]: 'prod',
 	[Env.TEST]: 'test',
 };
 
