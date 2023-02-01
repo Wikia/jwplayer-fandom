@@ -6,3 +6,4 @@
 *.sh
 **/temp/**
 test-jw
+standalone-dist

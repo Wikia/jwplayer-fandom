@@ -20,20 +20,18 @@ if (!isDev) {
 const config = [
 	{
 		input: {
-			main: 'src/main.ts',
-			DesktopArticleVideoLoader: 'src/loaders/DesktopArticleVideoLoader.tsx',
-			MobileArticleVideoLoader: 'src/loaders/MobileArticleVideoLoader.tsx',
-			CanonicalVideoLoader: 'src/loaders/CanonicalVideoLoader.tsx',
+			standAlone_RV_VideoPlayer: 'src/stand-alone/standalone-loader.tsx',
 		},
 		output: [
 			{
-				dir: 'dist',
+				dir: 'standalone-dist',
 				compact: true,
+				name: 'iife',
 				plugins: plugins,
-				format: 'es',
-				globals: {
+				format: 'iife',
+				/*				globals: {
 					react: 'React',
-				},
+				}, */
 			},
 		],
 		watch: {
@@ -49,19 +47,22 @@ const config = [
 			babel({
 				babelHelpers: 'bundled',
 				extensions: ['.js', '.jsx', '.es6', '.es', '.mjs', '.ts', '.tsx'],
-				exclude: ['node_modules', 'src/old', 'src/locales', 'src/jwplayer/players/RedVentureVideoPlayer', 'scripts'],
+				exclude: ['node_modules', 'src/old', 'src/locales', 'scripts'],
 				include: ['src/**/*.(ts|tsx|js)'],
 			}),
-			typescript({ tsconfig: './tsconfig.json' }),
-			resolve(),
+			typescript({ tsconfig: './tsconfig-stand-alone.json' }),
+			resolve({
+				browser: true,
+				dedupe: ['react', 'react-dom', 'react-i18next', 'react-i18next'],
+			}),
 			json(),
 			commonjs(),
 		],
-		external: ['react', 'react-dom', 'react-i18next', 'react-i18next'],
+		/* external: ['react', 'react-dom', 'react-i18next', 'react-i18next'], */
 	},
 	{
 		input: './src/types.d.ts',
-		output: [{ file: 'dist/main.d.ts', format: 'es' }],
+		output: [{ file: 'standalone-dist/main.d.ts', format: 'es' }],
 		plugins: [dts()],
 	},
 ];

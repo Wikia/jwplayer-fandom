@@ -1,4 +1,5 @@
 node_modules
 dist
+standalone-dist
 test-jw
 src/main.ts

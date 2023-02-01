@@ -33,27 +33,36 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	onComplete,
 	className,
 	stopAutoAdvanceOnExitViewport,
+	shouldLoadSponsoredContentList = true,
+	jwPlayerContainerEmbedId = 'featured-video__player',
 }) => {
 	const { setPlayer, setConfig } = useContext(PlayerContext);
 	const videoIndexRef = React.useRef(0);
 	const defaultConfig = {
 		plugins: { fandomWirewax: {} },
 	};
+	console.debug('jwPlayerContainerEmbedId: ', jwPlayerContainerEmbedId);
 
 	useEffect(() => {
-		const retrieveSponsoredVideo = async () => {
-			const sponsoredVideoResponse = await getSponsoredVideos();
-			if (sponsoredVideoResponse && typeof window !== undefined) {
-				window.sponsoredVideos = sponsoredVideoResponse;
-			} else {
-				console.debug('Could not set sponsored videos. Either window the fetched sponsoredVideo list were undefined.');
-			}
-		};
-		retrieveSponsoredVideo().catch((e) => {
-			console.error('There was an issue with retrieving Sponsored Videos. ', e);
-		});
+		if (shouldLoadSponsoredContentList) {
+			const retrieveSponsoredVideo = async () => {
+				const sponsoredVideoResponse = await getSponsoredVideos();
+				if (sponsoredVideoResponse && typeof window !== undefined) {
+					window.sponsoredVideos = sponsoredVideoResponse;
+				} else {
+					console.debug(
+						'Could not set sponsored videos. Either window the fetched sponsoredVideo list were undefined.',
+					);
+				}
+			};
+			retrieveSponsoredVideo().catch((e) => {
+				console.error('There was an issue with retrieving Sponsored Videos. ', e);
+			});
+		} else {
+			console.debug('Loading of Sponsored Content Video List was disabled.');
+		}
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_INIT_RENDER);
-		initPlayer('featured-video__player', playerUrl);
+		initPlayer(jwPlayerContainerEmbedId, playerUrl);
 	}, []);
 
 	const initPlayer = (elementId: string, playerUrl?: string) => {
@@ -144,7 +153,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 
 	return (
 		<div className={className}>
-			<div id="featured-video__player" />
+			<div id={jwPlayerContainerEmbedId} />
 		</div>
 	);
 };
