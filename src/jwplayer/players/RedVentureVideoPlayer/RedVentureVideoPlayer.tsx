@@ -5,12 +5,22 @@ import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButto
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import VideoDetails from 'jwplayer/players/DesktopArticleVideoPlayer/VideoDetails';
 import useOnScreen from 'utils/useOnScreen';
-import useAdComplete from 'jwplayer/utils/useAdComplete';
+import useRvAdComplete from 'stand-alone/useRvAdComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import { RedVentureVideoPlayerProps } from 'jwplayer/types';
 import CloseButton from 'jwplayer/players/shared/CloseButton';
 import redVenturePlayerOnReady from 'jwplayer/players/RedVentureVideoPlayer/redVenturePlayerOnReady';
 import { getRedVentureVideoConfig } from 'jwplayer/players/RedVentureVideoPlayer/getRedVentureVideoConfig';
+
+interface Phoenix {
+	hasAds?: () => boolean;
+}
+
+interface WindowWithPhoenix extends Window {
+	Phoenix?: Phoenix;
+}
+
+declare let window: WindowWithPhoenix;
 
 const RedVentureVideoTopPlaceholder = styled.div`
 	z-index: ${Number(WDSVariables.z2) + 2};
@@ -61,7 +71,8 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 	playerUrl,
 }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
-	const adComplete = useAdComplete();
+	const hasAds = window?.Phoenix?.hasAds() ?? true;
+	const adComplete = useRvAdComplete(hasAds);
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = showScrollPlayer ? !(dismissed || onScreen) : false;
