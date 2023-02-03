@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import styled, { css } from 'styled-components';
 import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButton';
@@ -11,6 +11,7 @@ import { RedVentureVideoPlayerProps } from 'jwplayer/types';
 import CloseButton from 'jwplayer/players/shared/CloseButton';
 import redVenturePlayerOnReady from 'jwplayer/players/RedVentureVideoPlayer/redVenturePlayerOnReady';
 import { getRedVentureVideoConfig } from 'jwplayer/players/RedVentureVideoPlayer/getRedVentureVideoConfig';
+import { disableTimingEventsSamplingRate } from 'jwplayer/utils/videoTimingEvents';
 
 interface Phoenix {
 	hasAds?: () => boolean;
@@ -83,6 +84,12 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 	const shareIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-settings-sharing');
 	const moreVideosIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-related-btn');
 	const pipIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-icon-pip');
+
+	useEffect(() => {
+		// Remove this once the browser-tracking-metrics library (tracking-metrics package) is fixed,
+		// and the proper App value is sourced.
+		disableTimingEventsSamplingRate();
+	}, []);
 
 	if (onScreen) {
 		if (controlbar) controlbar.style.background = 'rgba(0, 0, 0, 0.5)';
