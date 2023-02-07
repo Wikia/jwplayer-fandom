@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 // @ts-ignore (This package does exist, after the fandom player is built with 'yarn build-fandom-player')
-import { RedVentureVideoPlayer } from '@fandom/jwplayer-fandom';
+import RedVentureVideoPlayer from '@fandom/jwplayer-fandom/RedVentureVideoPlayer';
 import {
 	buildRedVentureVideoDetails,
 	canPlayerRender,
@@ -18,21 +18,6 @@ interface WindowWithRedVentureJWPlayer extends Window {
 }
 
 declare let window: WindowWithRedVentureJWPlayer;
-
-// TODO: Investigate the following
-/*
- *
- * -Figure out if the videos should have an item link to the video-platform. Given that
- * the PlayerOne videos might be hosted in a different Workspace on the JW Platform, they won't be available
- * on the video-platform.
- *
- * -Figure out mediaQuery breakpoints between desktop vs mobile on all the sites.
- * Do all the sites have the same exact breakpoints?
- * Is there a table version of any of the sites?
- * Should the sites provide a function that can be used by the player to determine whether
- * it should display a mobile/desktop typo of player?
- *
- * */
 
 let jwPlayerContainerIdIncrementCounter = 0;
 
