@@ -1,7 +1,7 @@
 import { argv } from 'zx';
 
-import { deployToEnv } from 'deploy/deployToEnv';
-import { VALID_ENVS, Env } from 'deploy/envs';
+import { deployToEnv } from './deployToEnv';
+import { VALID_ENVS, Env } from './envs';
 
 const env = argv['env'] as Env;
 

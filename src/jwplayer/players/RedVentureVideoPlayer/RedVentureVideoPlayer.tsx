@@ -5,7 +5,7 @@ import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButto
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import VideoDetails from 'jwplayer/players/DesktopArticleVideoPlayer/VideoDetails';
 import useOnScreen from 'utils/useOnScreen';
-import useRvAdComplete from 'stand-alone/useRvAdComplete';
+import useRvAdComplete from 'jwplayer/utils/useRvAdComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import { RedVentureVideoPlayerProps } from 'jwplayer/types';
 import CloseButton from 'jwplayer/players/shared/CloseButton';

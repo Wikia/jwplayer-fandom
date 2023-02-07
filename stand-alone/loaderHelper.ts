@@ -1,4 +1,8 @@
-import { JwPlayerContainerId, RedVentureVideoDetails, RequireOnlyOne } from 'jwplayer/types';
+import {
+	JwPlayerContainerId,
+	RedVentureVideoDetails,
+	RequireOnlyOne
+} from './types';
 
 export interface RedVenturePlayerContext extends JwPlayerContainerId {
 	/**
