@@ -1,7 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import IconSoundOff from '@fandom-frontend/react-common/dist/icons/IconSoundOff';
+import useMute from 'jwplayer/utils/useMute';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 
 interface Props {
@@ -38,10 +39,10 @@ const StyledSoundIcon = styled(IconSoundOff)`
 
 const UnmuteButton: React.FC = () => {
 	const { player } = useContext(PlayerContext);
-	const [muted, setMuted] = useState(true);
+	const muted = useMute();
+
 	const unmute = () => {
 		player?.setMute(false);
-		setMuted(false);
 	};
 
 	if (!muted) return null;
