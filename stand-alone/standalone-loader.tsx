@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { RedVentureVideoDetails, RedVentureVideoPlayerProps } from 'jwplayer/types';
-import RedVentureVideoPlayer from 'jwplayer/players/RedVentureVideoPlayer/RedVentureVideoPlayer';
+// @ts-ignore (This package does exist, after the fandom player is built with 'yarn build-fandom-player')
+import { RedVentureVideoPlayer } from '@fandom/jwplayer-fandom';
 import {
 	buildRedVentureVideoDetails,
 	canPlayerRender,
 	getVideoDetails,
 	getVideoWrapperElement,
-} from 'stand-alone/loaderHelper';
-import { RedVenturePlayerContextProps } from 'stand-alone/loaderHelper';
+	RedVenturePlayerContextProps
+} from './loaderHelper';
+import { RedVentureVideoDetails, RedVentureVideoPlayerProps } from "./types";
 
 console.debug('Standalone RedVenture Video Player ...');
 

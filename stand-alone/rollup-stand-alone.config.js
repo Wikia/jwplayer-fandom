@@ -20,7 +20,7 @@ if (!isDev) {
 const config = [
 	{
 		input: {
-			standAlone_RV_VideoPlayer: 'src/stand-alone/standalone-loader.tsx',
+			standAlone_RV_VideoPlayer: 'standalone-loader.tsx',
 		},
 		output: [
 			{
@@ -29,9 +29,6 @@ const config = [
 				name: 'iife',
 				plugins: plugins,
 				format: 'iife',
-				/*				globals: {
-					react: 'React',
-				}, */
 			},
 		],
 		watch: {
@@ -47,8 +44,10 @@ const config = [
 			babel({
 				babelHelpers: 'bundled',
 				extensions: ['.js', '.jsx', '.es6', '.es', '.mjs', '.ts', '.tsx'],
-				exclude: ['node_modules', 'src/old', 'src/locales', 'scripts'],
-				include: ['src/**/*.(ts|tsx|js)'],
+				// exclude: ['node_modules', 'src/old', 'src/locales', 'scripts'],
+				exclude: ['node_modules'],
+				// include: ['src/**/*.(ts|tsx|js)'],
+				include: ['**/*.(ts|tsx|js)'],
 			}),
 			typescript({ tsconfig: './tsconfig-stand-alone.json' }),
 			resolve({
@@ -61,7 +60,7 @@ const config = [
 		/* external: ['react', 'react-dom', 'react-i18next', 'react-i18next'], */
 	},
 	{
-		input: './src/types.d.ts',
+		input: '../src/types.d.ts',
 		output: [{ file: 'standalone-dist/main.d.ts', format: 'es' }],
 		plugins: [dts()],
 	},
