@@ -72,7 +72,9 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 	playerUrl,
 }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
-	const hasAds = window?.Phoenix?.hasAds() ?? true;
+	// Check if Ads are disabled on any of the N&R Games sites. If the resolving function is not present, then always resolve to connecting with AdEng.
+	const hasAds =
+		window?.Phoenix?.hasAds && typeof window?.Phoenix?.hasAds === 'function' ? window.Phoenix.hasAds() : true;
 	const adComplete = useRvAdComplete(hasAds);
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
