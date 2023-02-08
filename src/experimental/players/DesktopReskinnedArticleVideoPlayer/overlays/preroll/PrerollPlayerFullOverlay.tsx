@@ -4,8 +4,8 @@ import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
 import usePlaylistItem from 'jwplayer/utils/usePlaylistItem';
 import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
 import useAdTime from 'jwplayer/utils/useAdTime';
-import PlayerFullOverlayTopText from 'experimental/shared/FullOverlay/PlayerFullOverlayTopText';
-import { PlayerFullOverlayWrapper } from 'experimental/shared/FullOverlay/PlayerFullOverlayWrapper';
+import PlayerFullOverlayTopText from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/shared/PlayerFullOverlayTopText';
+import { DesktopPlayerFullOverlayWrapper } from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/shared/DesktopPlayerFullOverlayWrapper';
 
 const ControlWrapper = styled.div`
 	width: 100%;
@@ -28,15 +28,15 @@ const PrerollPlayerFullOverlay: React.FC = () => {
 	const lowerText = playlistItem?.title;
 
 	return (
-		<PlayerFullOverlayWrapper>
+		<DesktopPlayerFullOverlayWrapper>
 			<PlayerFullOverlayTopText upperText={upperText} lowerText={lowerText} />
 			<ControlWrapper>
 				<PlayVolumeWrapper>
 					<PlayStateWrapper iconColor={'#fff'} isAd={true} />
-					<VolumeStateWrapper iconColor={'#fff'} sliderColor={'#FFC500'} isScrollPlayer={false} hasLabel={false} />
+					<VolumeStateWrapper iconColor={'#fff'} sliderColor={'#FFC500'} hasSlider={true} hasLabel={false} />
 				</PlayVolumeWrapper>
 			</ControlWrapper>
-		</PlayerFullOverlayWrapper>
+		</DesktopPlayerFullOverlayWrapper>
 	);
 };
 

@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
-import { Player, PlayerConfig } from 'jwplayer/types';
+import { AdTimeData, Player, PlayerConfig, TimeEventData, ProgressUpdateData } from 'jwplayer/types';
 
 const PlayerWrapper: React.FC<{ playerName: string }> = ({ playerName, children }) => {
 	const [jwPlayer, setJwPlayer] = useState<Player>(null);
 	const [jwPlayerConfig, setJwPlayerConfig] = useState<PlayerConfig>(null);
 	const [jwPlayerAdPlaying, setjwPlayerAdPlaying] = useState(false);
 	const [jwPlayerRelatedOpen, setjwPlayerRelatedOpen] = useState(false);
+	const [jwPlayerAdTime, setJwPlayerAdTime] = useState<AdTimeData>(null);
+	const [jwPlayerTime, setJwPlayerTime] = useState<TimeEventData>({ duration: 0, position: 0, viewable: 0 });
+	const [jwProgressData, setJwProgressData] = useState<ProgressUpdateData>({
+		duration: 0,
+		position: 0,
+		viewable: 0,
+		positionPercent: 0,
+	});
 
 	const setPlayer = (player: Player) => {
 		setJwPlayer(player);
@@ -24,6 +32,18 @@ const PlayerWrapper: React.FC<{ playerName: string }> = ({ playerName, children 
 		setjwPlayerRelatedOpen(relatedOpen);
 	};
 
+	const setAdTime = (adTime: AdTimeData) => {
+		setJwPlayerAdTime(adTime);
+	};
+
+	const setTime = (time: TimeEventData) => {
+		setJwPlayerTime(time);
+	};
+
+	const setProgressData = (progressData: ProgressUpdateData) => {
+		setJwProgressData(progressData);
+	};
+
 	return (
 		<PlayerContext.Provider
 			value={{
@@ -36,6 +56,12 @@ const PlayerWrapper: React.FC<{ playerName: string }> = ({ playerName, children 
 				adPlaying: jwPlayerAdPlaying,
 				setRelatedOpen: setRelatedOpen,
 				relatedOpen: jwPlayerRelatedOpen,
+				setAdTime: setAdTime,
+				adTime: jwPlayerAdTime,
+				setTime: setTime,
+				time: jwPlayerTime,
+				setProgressData: setProgressData,
+				progressData: jwProgressData,
 			}}
 		>
 			{children}

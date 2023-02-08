@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.1.6",
+	"version": "2.1.7",
 	"description": "JWPlayer for Fandom",
 	"exports": {
 		".": "./main.js",
