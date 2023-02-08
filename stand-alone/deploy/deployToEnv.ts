@@ -13,7 +13,7 @@ function getGCSDestination(location: string): string {
 }
 
 export async function deployToEnv(env: Env) {
-	await $`yarn build-stand-alone`;
+	await $`yarn build`;
 
 	// Uploading to Google Cloud Storage
 	const gCSLocation = getGCSDestination(env);

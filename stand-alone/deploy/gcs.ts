@@ -27,7 +27,7 @@ async function uploadFile(destination: string, file: string, cacheTime = 1800): 
 }
 
 export async function uploadDistTo(destination: string, env: string): Promise<void> {
-	const distJSFiles = globby.globbySync(['./standalone-dist/*.js']);
+	const distJSFiles = globby.globbySync(['./stand-alone/standalone-dist/*.js']);
 
 	console.log('distJSFiles: ', distJSFiles);
 
