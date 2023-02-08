@@ -9,6 +9,7 @@ import JWEvents from 'jwplayer/players/shared/JWEvents';
 import addBaseTrackingEvents from 'jwplayer/players/shared/addBaseTrackingEvents';
 import slugify from 'jwplayer/utils/slugify';
 import getSponsoredVideos from 'utils/getSponsoredVideos';
+
 interface WindowJWPlayer extends Window {
 	jwplayer?: JWPlayerApi;
 	sponsoredVideos?: string[];
@@ -32,27 +33,36 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	onComplete,
 	className,
 	stopAutoAdvanceOnExitViewport,
+	shouldLoadSponsoredContentList = true,
+	jwPlayerContainerEmbedId = 'featured-video__player',
 }) => {
 	const { setPlayer, setConfig } = useContext(PlayerContext);
 	const videoIndexRef = React.useRef(0);
 	const defaultConfig = {
 		plugins: { fandomWirewax: {} },
 	};
+	console.debug('jwPlayerContainerEmbedId: ', jwPlayerContainerEmbedId);
 
 	useEffect(() => {
-		const retrieveSponsoredVideo = async () => {
-			const sponsoredVideoResponse = await getSponsoredVideos();
-			if (sponsoredVideoResponse && typeof window !== undefined) {
-				window.sponsoredVideos = sponsoredVideoResponse;
-			} else {
-				console.debug('Could not set sponsored videos. Either window the fetched sponsoredVideo list were undefined.');
-			}
-		};
-		retrieveSponsoredVideo().catch((e) => {
-			console.error('There was an issue with retrieving Sponsored Videos. ', e);
-		});
+		if (shouldLoadSponsoredContentList) {
+			const retrieveSponsoredVideo = async () => {
+				const sponsoredVideoResponse = await getSponsoredVideos();
+				if (sponsoredVideoResponse && typeof window !== undefined) {
+					window.sponsoredVideos = sponsoredVideoResponse;
+				} else {
+					console.debug(
+						'Could not set sponsored videos. Either window the fetched sponsoredVideo list were undefined.',
+					);
+				}
+			};
+			retrieveSponsoredVideo().catch((e) => {
+				console.error('There was an issue with retrieving Sponsored Videos. ', e);
+			});
+		} else {
+			console.debug('Loading of Sponsored Content Video List was disabled.');
+		}
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_INIT_RENDER);
-		initPlayer('featured-video__player', playerUrl);
+		initPlayer(jwPlayerContainerEmbedId, playerUrl);
 	}, []);
 
 	const initPlayer = (elementId: string, playerUrl?: string) => {
@@ -60,6 +70,11 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 		jwPlayerPlaybackTracker({ event_name: 'video_player_start_load' });
 
 		const onload = () => {
+			// Set the max_resolution param for related videos
+			if (typeof window?.jwplayer?.defaults?.related?.file === 'string') {
+				window.jwplayer.defaults.related.file = window.jwplayer.defaults.related.file + '&max_resolution=1280';
+			}
+
 			jwPlayerPlaybackTracker({ event_name: 'video_player_load' });
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY);
 			triggerVideoMetric('loaded');
@@ -138,7 +153,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 
 	return (
 		<div className={className}>
-			<div id="featured-video__player" />
+			<div id={jwPlayerContainerEmbedId} />
 		</div>
 	);
 };

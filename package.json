@@ -11,10 +11,14 @@
 	"types": "main.d.ts",
 	"install-peers": "install-peers",
 	"scripts": {
-		"build": "yarn run create-dist && rollup -c && cp package.json dist/ && cd dist && npm set-script prepare ''",
+		"build": "yarn build-fandom-player && yarn build-stand-alone",
+		"build-fandom-player": "yarn run create-dist && rollup -c && cp package.json dist/ && cd dist && npm set-script prepare ''",
+		"build-stand-alone": "yarn run create-standalone-dist && rollup -c rollup-stand-alone.config.js && cp package.json standalone-dist && npm set-script prepare ''",
+		"deploy-stand-alone": "ts-node --project tsconfig-stand-alone.json src/deploy/deploy.ts",
 		"watch": "yarn run create-dist && NODE_ENV=development rollup -c --watch",
 		"app": "cd test-jw && yarn && yarn start",
 		"create-dist": "rm -rf dist && mkdir -p dist",
+		"create-standalone-dist": "rm -rf standalone-dist && mkdir -p standalone-dist",
 		"cp:loop": " while true; do cp dist/bundle.esm.js test-jw/src; sleep 10; done",
 		"lint": "yarn eslint src && yarn prettier --check src",
 		"lint:fix": "npm-run-all --continue-on-error --parallel lint:prettier lint:eslint",
@@ -31,7 +35,8 @@
 		"pub:patch": "npm version patch && rm -rf dist && yarn pub",
 		"pub:minor": "npm version minor && rm -rf dist && yarn pub",
 		"pub:major": "npm version major && rm -rf dist && yarn pub",
-		"pub": "yarn install && yarn build && cd dist && npm publish --tag beta"
+		"pub": "yarn install && yarn build && cd dist && npm publish --tag beta",
+		"purgeSingleFile": "ts-node --project tsconfig-stand-alone.json src/deploy/purge/purgeSingleFile.ts"
 	},
 	"lint-staged": {
 		"src/**/*.(ts|tsx|js)": [
@@ -103,7 +108,15 @@
 		"rollup-plugin-dts": "4.2.0",
 		"rollup-plugin-terser": "7.0.2",
 		"tslib": "^2.3.1",
-		"typescript": "^4.5.4"
+		"ts-node": "^10.4.0",
+		"tsconfig-paths": "^3.12.0",
+		"typescript": "^4.5.4",
+		"i18next": "^19.7.0",
+		"react": "^16.14.0 || ^17.0.2 || ^18.0.0",
+		"react-dom": "^16.14.0 || ^17.0.2 || ^18.0.0",
+		"react-i18next": "^11.7.1",
+		"zx": "^4.2.0",
+		"@google-cloud/storage": "^5.16.1"
 	},
 	"peerDependencies": {
 		"i18next": "^19.7.0",
@@ -115,7 +128,7 @@
 		"@fandom-frontend/design-system": "9.0.0",
 		"@fandom-frontend/react-common": "6.35.0",
 		"@fandom/context": "^0.6.1",
-		"@fandom/tracking-metrics": "0.0.18-alpha-2",
+		"@fandom/tracking-metrics": "0.0.28",
 		"@wikia/post-quecast": "2.0.1",
 		"js-cookie": "3.0.1",
 		"rxjs": "7.5.4",

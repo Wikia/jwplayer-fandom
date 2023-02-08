@@ -1,7 +1,17 @@
 import FandomWirewaxPlugin from './plugins/fandom-wirewax.plugin';
 
 // export type FeaturedVideoApi = (targetContainer: string, playerURL: string) => void;
-export type JWPlayerApi = (target?: string) => Player;
+interface PlayerDefaults {
+	related: {
+		file: string;
+	};
+}
+
+export interface JWPlayerApi {
+	(target?: string): Player;
+	defaults: PlayerDefaults;
+}
+
 export type PlayerConfig = {
 	playlist?: Playlist;
 	plugins?: Record<string, unknown>;
@@ -350,6 +360,17 @@ export interface ArticleVideoDetails {
 	videoTags: string;
 }
 
+export interface RedVentureVideoDetails {
+	title: string;
+	description: string;
+	duration: string;
+	feed_instance_id: string;
+	kind: string;
+	mediaId: string;
+	playlist: Playlist;
+	videoTags: string;
+}
+
 export interface CanonicalVideoDetails {
 	title: string;
 	feedid: string;
@@ -390,13 +411,26 @@ export interface CanonicalVideoPlayerProps {
 	onComplete: () => void;
 }
 
-export interface JwPlayerWrapperProps {
+export interface JwPlayerWrapperProps extends JwPlayerContainerId {
 	config?: PlayerConfig;
 	playerUrl?: string;
 	onReady?: (playerInstance: Player) => void;
 	onComplete?: () => void;
 	className?: string;
 	stopAutoAdvanceOnExitViewport?: boolean;
+	shouldLoadSponsoredContentList?: boolean;
+}
+
+export interface JwPlayerContainerId {
+	/**
+	 * @description An optional parameter that sets the id of the div element on which the JW Player embeds itself on.
+	 * @default featured-video__player
+	 * @example
+	 * {
+	 *   jwPlayerContainerEmbedId: 'customContainerId'
+	 * }
+	 * */
+	jwPlayerContainerEmbedId?: string;
 }
 
 export interface LoadableVideoPlayerWrapperProps {
@@ -412,8 +446,19 @@ export interface DesktopArticleVideoPlayerProps {
 	videoDetails: ArticleVideoDetails;
 }
 
+export interface RedVentureVideoPlayerProps extends JwPlayerContainerId {
+	videoDetails: ArticleVideoDetails;
+	showScrollPlayer: boolean;
+	playerUrl?: string;
+}
+
 export interface MobileArticleVideoPlayerProps {
 	hasPartnerSlot?: boolean;
 	isFullScreen?: boolean;
 	videoDetails: ArticleVideoDetails;
 }
+
+export type RequireOnlyOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclude<keyof T, Keys>> &
+	{
+		[K in Keys]-?: Required<Pick<T, K>> & Partial<Record<Exclude<Keys, K>, undefined>>;
+	}[Keys];
