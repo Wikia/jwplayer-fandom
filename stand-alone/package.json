@@ -1,7 +1,7 @@
 {
 	"name": "@fandom/rv-jwplayer",
-	"version": "2.1.5",
-	"description": "JWPlayer for Fandom",
+	"version": "1.0.0",
+	"description": "JWPlayer for News and Rating sites (previously RedVenture) e.g. GameSpot, GameFAQs, GiantBomb, ComicVine, TVGuide and Metacritic",
 	"types": "types.d.ts",
 	"install-peers": "install-peers",
 	"scripts": {
@@ -13,7 +13,7 @@
 		"prepare": ""
 	},
 	"repository": "git+https://github.com/Wikia/jwplayer-fandom.git",
-	"author": "Warren Leaverton <wleaverton@fandom.com>",
+	"author": "Pawel Forfa <pforfa@fandom.com>",
 	"license": "ISC",
 	"bugs": {
 		"url": "https://github.com/Wikia/jwplayer-fandom/issues"
