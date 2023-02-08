@@ -10,11 +10,8 @@ export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
 const mobileReskinnedExperiment = defineExperiment({
 	name: 'mobile-reskinned-player',
-	// TODO: figure out bucket for release
 	buckets: ['p'],
-	// TODO: Change this before MERGING!! Used for testing purposes.
-	// TODO: figure out date to release
-	startDate: Date.parse('2023-01-09T08:00:00'),
+	startDate: Date.parse('2023-02-09T08:00:00'),
 	endDate: Date.parse('2023-02-20T11:59:00'),
 });
 
