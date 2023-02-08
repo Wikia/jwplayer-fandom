@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.1.7",
+	"version": "2.1.8",
 	"description": "JWPlayer for Fandom",
 	"exports": {
 		".": "./main.js",
@@ -31,7 +31,7 @@
 		"lint:eslint:tests": "eslint --cache --fix tests",
 		"lint:eslint": "npm-run-all --continue-on-error --parallel lint:eslint:src",
 		"test": "echo 'No Tests yet'",
-		"prepare": "husky install",
+		"prepare": "",
 		"pub:patch": "npm version patch && rm -rf dist && yarn pub",
 		"pub:minor": "npm version minor && rm -rf dist && yarn pub",
 		"pub:major": "npm version major && rm -rf dist && yarn pub",
