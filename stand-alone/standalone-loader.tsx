@@ -48,10 +48,7 @@ window.loadPlayer = async (context: RedVenturePlayerContextProps) => {
 	}
 
 	const jwMediaDetails = await getVideoDetails(context);
-	const redVentureVideoDetails: RedVentureVideoDetails = buildRedVentureVideoDetails(
-		jwMediaDetails,
-		context?.autoStart,
-	);
+	const redVentureVideoDetails: RedVentureVideoDetails = buildRedVentureVideoDetails(jwMediaDetails);
 
 	const reactRoot = document.createElement('div');
 	const videoWrapperElement = getVideoWrapperElement(context);
@@ -63,6 +60,7 @@ window.loadPlayer = async (context: RedVenturePlayerContextProps) => {
 			showScrollPlayer: context?.showScrollPlayer ?? false,
 			jwPlayerContainerEmbedId: getJwPlayerContainerEmbedId(context),
 			playerUrl: context?.playerUrl,
+			autoPlay: context?.autoPlay,
 		} as RedVentureVideoPlayerProps),
 		reactRoot,
 	);

@@ -2,12 +2,12 @@ import { wikiaJWPlayeri18n } from 'jwplayer/i18n';
 import { willAutoplay, willMute } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import { RedVentureVideoDetails } from 'jwplayer/types';
 
-export const getRedVentureVideoConfig = (videoDetails: RedVentureVideoDetails) => {
+export const getRedVentureVideoConfig = (videoDetails: RedVentureVideoDetails, autoPlay: boolean) => {
 	if (!videoDetails) return {};
 
 	const videoId = videoDetails.playlist[0].mediaid;
 	const lang = 'en';
-	const autoStart = videoDetails.autoStart ?? (willAutoplay() && !document.hidden);
+	const autoStart = autoPlay ?? (willAutoplay() && !document.hidden);
 	const i18n = wikiaJWPlayeri18n[lang] || wikiaJWPlayeri18n['en'];
 	const langForAds = lang.substr(0, 2);
 
