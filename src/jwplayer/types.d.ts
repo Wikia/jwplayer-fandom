@@ -369,7 +369,6 @@ export interface RedVentureVideoDetails {
 	mediaId: string;
 	playlist: Playlist;
 	videoTags: string;
-	autoStart?: boolean;
 }
 
 export interface CanonicalVideoDetails {
