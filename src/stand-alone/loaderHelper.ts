@@ -77,14 +77,14 @@ export interface RedVenturePlayerContext extends JwPlayerContainerId {
 	 * */
 	jwtSignedContentAuth?: string;
 	/**
-	 * @description An optional parameter that determines whether the video should autostart.
-	 * If left blank, the video will only autostart based on certain cookies being set and the tab being visible.
+	 * @description An optional parameter that determines whether the video should autoplay.
+	 * If left blank, the video will only autoplay based on certain cookies being set and the tab being visible.
 	 * @example
 	 * {
-	 *		autoStart: false
+	 *		autoPlay: false
 	 * }
 	 * */
-	autoStart?: boolean;
+	autoPlay?: boolean;
 }
 
 export type RedVenturePlayerContextProps = RequireOnlyOne<
@@ -129,7 +129,7 @@ export const getVideoWrapperElement = ({ embedSelector, embedHtmlElement }: RedV
 	return embedHtmlElement;
 };
 
-export const buildRedVentureVideoDetails = (jwDetails, autoStartOverride: boolean): RedVentureVideoDetails => {
+export const buildRedVentureVideoDetails = (jwDetails): RedVentureVideoDetails => {
 	if (!jwDetails) {
 		return null;
 	}
@@ -142,11 +142,6 @@ export const buildRedVentureVideoDetails = (jwDetails, autoStartOverride: boolea
 		videoTags: jwDetails?.playlist?.[0]?.tags,
 		duration: jwDetails?.playlist?.[0]?.duration,
 		mediaId: jwDetails?.playlist?.[0]?.mediaId,
-		// Do a null and undefined check with != . If the autoStartOverride was set,
-		// then create an object with a key of autoStart into the RedVentureVideoDetails object
-		// with the value of autoStartOverride, and use the spread operator (...) to apply the object's keys and values.
-		// Reference for null and undefined checks through loose equality (==) - https://www.programiz.com/javascript/examples/check-undefined-null
-		...(autoStartOverride != null && { autoStart: autoStartOverride }),
 	};
 };
 

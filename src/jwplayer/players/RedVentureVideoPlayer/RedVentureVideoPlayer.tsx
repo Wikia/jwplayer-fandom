@@ -70,6 +70,7 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 	showScrollPlayer,
 	jwPlayerContainerEmbedId,
 	playerUrl,
+	autoPlay,
 }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	// Check if Ads are disabled on any of the N&R Games sites. If the resolving function is not present, then always resolve to connecting with AdEng.
@@ -115,7 +116,7 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 							{isScrollPlayer && <CloseButton dismiss={() => setDismissed(true)} />}
 						</TopBar>
 						<JwPlayerWrapper
-							config={getRedVentureVideoConfig(videoDetails)}
+							config={getRedVentureVideoConfig(videoDetails, autoPlay)}
 							onReady={(playerInstance) => redVenturePlayerOnReady(videoDetails, playerInstance)}
 							stopAutoAdvanceOnExitViewport={false}
 							shouldLoadSponsoredContentList={false}

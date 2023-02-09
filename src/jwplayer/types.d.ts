@@ -369,7 +369,6 @@ export interface RedVentureVideoDetails {
 	mediaId: string;
 	playlist: Playlist;
 	videoTags: string;
-	autoStart?: boolean;
 }
 
 export interface CanonicalVideoDetails {
@@ -451,6 +450,7 @@ export interface RedVentureVideoPlayerProps extends JwPlayerContainerId {
 	videoDetails: RedVentureVideoDetails;
 	showScrollPlayer: boolean;
 	playerUrl?: string;
+	autoPlay?: boolean;
 }
 
 export interface MobileArticleVideoPlayerProps {
