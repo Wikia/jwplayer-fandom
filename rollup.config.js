@@ -24,6 +24,7 @@ const config = [
 			DesktopArticleVideoLoader: 'src/loaders/DesktopArticleVideoLoader.tsx',
 			MobileArticleVideoLoader: 'src/loaders/MobileArticleVideoLoader.tsx',
 			CanonicalVideoLoader: 'src/loaders/CanonicalVideoLoader.tsx',
+			RedVentureVideoPlayer: 'src/jwplayer/players/RedVentureVideoPlayer/RedVentureVideoPlayer.tsx',
 		},
 		output: [
 			{
@@ -49,7 +50,7 @@ const config = [
 			babel({
 				babelHelpers: 'bundled',
 				extensions: ['.js', '.jsx', '.es6', '.es', '.mjs', '.ts', '.tsx'],
-				exclude: ['node_modules', 'src/old', 'src/locales', 'src/jwplayer/players/RedVentureVideoPlayer', 'scripts'],
+				exclude: ['node_modules', 'src/old', 'src/locales', 'scripts'],
 				include: ['src/**/*.(ts|tsx|js)'],
 			}),
 			typescript({ tsconfig: './tsconfig.json' }),
