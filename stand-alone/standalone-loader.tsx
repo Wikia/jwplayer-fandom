@@ -60,6 +60,7 @@ window.loadPlayer = async (context: RedVenturePlayerContextProps) => {
 			showScrollPlayer: context?.showScrollPlayer ?? false,
 			jwPlayerContainerEmbedId: getJwPlayerContainerEmbedId(context),
 			playerUrl: context?.playerUrl,
+			autoPlay: context?.autoPlay,
 		} as RedVentureVideoPlayerProps),
 		reactRoot,
 	);

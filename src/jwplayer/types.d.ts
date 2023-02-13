@@ -447,9 +447,10 @@ export interface DesktopArticleVideoPlayerProps {
 }
 
 export interface RedVentureVideoPlayerProps extends JwPlayerContainerId {
-	videoDetails: ArticleVideoDetails;
+	videoDetails: RedVentureVideoDetails;
 	showScrollPlayer: boolean;
 	playerUrl?: string;
+	autoPlay?: boolean;
 }
 
 export interface MobileArticleVideoPlayerProps {

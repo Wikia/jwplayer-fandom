@@ -80,6 +80,15 @@ export interface RedVenturePlayerContext extends JwPlayerContainerId {
 	 * }
 	 * */
 	jwtSignedContentAuth?: string;
+	/**
+	 * @description An optional parameter that determines whether the video should autoplay.
+	 * If left blank, the video will only autoplay based on certain cookies being set and the tab being visible.
+	 * @example
+	 * {
+	 *		autoPlay: false
+	 * }
+	 * */
+	autoPlay?: boolean;
 }
 
 export type RedVenturePlayerContextProps = RequireOnlyOne<
