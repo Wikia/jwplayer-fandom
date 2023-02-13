@@ -64,6 +64,7 @@ export interface RedVentureVideoPlayerProps extends JwPlayerContainerId {
 	videoDetails: ArticleVideoDetails;
 	showScrollPlayer: boolean;
 	playerUrl?: string;
+	autoPlay?: boolean;
 }
 
 export type RequireOnlyOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclude<keyof T, Keys>> &
