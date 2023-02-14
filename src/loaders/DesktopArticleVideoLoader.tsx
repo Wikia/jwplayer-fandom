@@ -8,11 +8,11 @@ import { shouldLoadUcpPlayer } from 'loaders/utils/shouldLoadPlayer';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
-const desktopReskinnedExperiment = defineExperiment({
-	name: 'desktop-reskinned-player',
-	buckets: ['p'],
-	startDate: Date.parse('2022-12-05T08:00:00'),
-	endDate: Date.parse('2022-12-14T11:59:00'),
+const desktopPauseAfterPlayExperiment = defineExperiment({
+	name: 'desktop-pause-after-play-player',
+	buckets: ['j'],
+	startDate: Date.parse('2023-2-13T08:00:00'),
+	endDate: Date.parse('2023-2-20T11:59:00'),
 });
 
 export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps> = ({ videoDetails }) => {
@@ -27,7 +27,7 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 	}, []);
 
 	const getPlayer = async () => {
-		const currentExperiment: Experiment = getExperiment([desktopReskinnedExperiment]);
+		const currentExperiment: Experiment = getExperiment([desktopPauseAfterPlayExperiment]);
 
 		// By default if there is no experiment just set the base player
 		if (!currentExperiment) {
@@ -39,11 +39,11 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 			return;
 		}
 
-		if (currentExperiment?.name === desktopReskinnedExperiment?.name) {
-			currentExperiment.log.info('Loading re-skinned Desktop Article Video Player');
-			import('experimental/players/DesktopReskinnedArticleVideoPlayer/DesktopReskinnedArticleVideoPlayer').then(
-				({ default: JWDesktopReskinnedArticleVideoPlayer }) =>
-					setPlayer(<JWDesktopReskinnedArticleVideoPlayer videoDetails={videoDetails} />),
+		if (currentExperiment?.name === desktopPauseAfterPlayExperiment?.name) {
+			currentExperiment.log.info('Loading pause after play Desktop Article Video Player');
+			import('experimental/players/DesktopPauseAfterPlayPlayer/DesktopPauseAfterPlayPlayer').then(
+				({ default: DesktopPauseAfterPlayPlayer }) =>
+					setPlayer(<DesktopPauseAfterPlayPlayer videoDetails={videoDetails} />),
 			);
 		}
 	};

@@ -15,6 +15,13 @@ const mobileReskinnedExperiment = defineExperiment({
 	endDate: Date.parse('2023-02-20T11:59:00'),
 });
 
+const mobilePauseAfterPlayExperiment = defineExperiment({
+	name: 'mobile-pause-after-play-player',
+	buckets: ['j'],
+	startDate: Date.parse('2023-2-13T08:00:00'),
+	endDate: Date.parse('2023-2-20T11:59:00'),
+});
+
 export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> = ({ videoDetails }) => {
 	const [player, setPlayer] = useState(undefined);
 
@@ -27,7 +34,7 @@ export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> =
 	}, []);
 
 	const getPlayer = async () => {
-		const currentExperiment: Experiment = getExperiment([mobileReskinnedExperiment]);
+		const currentExperiment: Experiment = getExperiment([mobileReskinnedExperiment, mobilePauseAfterPlayExperiment]);
 
 		// By default if there is no experiment just set the base player
 		if (!currentExperiment) {
@@ -44,6 +51,14 @@ export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> =
 			import('experimental/players/MobileReskinnedArticleVideoPlayer/MobileReskinnedArticleVideoPlayer').then(
 				({ default: JWMobileReskinnedArticleVideoPlayer }) =>
 					setPlayer(<JWMobileReskinnedArticleVideoPlayer videoDetails={videoDetails} />),
+			);
+		}
+
+		if (currentExperiment?.name === mobilePauseAfterPlayExperiment?.name) {
+			currentExperiment.log.info('Loading pause after play Mobile Article Video Player');
+			import('experimental/players/MobilePauseAfterPlayPlayer/MobilePauseAfterPlayPlayer').then(
+				({ default: MobilePauseAfterPlayPlayer }) =>
+					setPlayer(<MobilePauseAfterPlayPlayer videoDetails={videoDetails} />),
 			);
 		}
 	};

@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
       {/*<CanonicalVideoLoader currentVideo={CANONICAL_VIDEO} />*/}
-		  <DesktopArticleVideoLoader videoDetails={ARTICLE_VIDEO_DETAILS} />
+		  <MobileArticleVideoLoader videoDetails={ARTICLE_VIDEO_DETAILS} />
       <button style={{ position: 'absolute', bottom: 0 }} onClick={triggerAd}>
 				TEST
 			</button>
