@@ -106,12 +106,14 @@ const TimeSlider: React.FC<TimeSliderProps> = ({
 	progressColor,
 	railHeight,
 	canSeek = true,
+	isMobile = false,
 }) => {
 	const { player } = useContext(PlayerContext);
 	const { bufferPercent } = useBufferUpdate();
 	const { positionPercent, duration } = useProgressUpdate();
 	const isPlayingRef = usePlayingStateRef()[1];
 	const [mouseDown, setMouseDown] = useState(false);
+	const [touch, setTouch] = useState(false);
 	const [dragging, setDragging, draggingRef] = useStateRef(false);
 	const [dragPosition, setDragPosition] = useState(0);
 	const [hover, setHover] = useState(false);
@@ -150,14 +152,16 @@ const TimeSlider: React.FC<TimeSliderProps> = ({
 		return seekUpdate;
 	};
 
-	const seek = (event: React.MouseEvent<HTMLDivElement>) => {
+	const seek = (event) => {
 		event.stopPropagation();
-		const elementRelativePosition = event.clientX - sliderRef.current.getBoundingClientRect().left;
+
+		const clientX = event.clientX || event.changedTouches[0].clientX;
+		const elementRelativePosition = clientX - sliderRef.current.getBoundingClientRect().left;
 		const seekTimeUpdate = calculateSeekUpdate(elementRelativePosition);
 		player.seek(seekTimeUpdate);
 	};
 
-	const onMouseMove = (event) => {
+	const onDrag = (event) => {
 		event.preventDefault();
 
 		if (!draggingRef.current) {
@@ -169,8 +173,8 @@ const TimeSlider: React.FC<TimeSliderProps> = ({
 		if (throttleDragRef.current) return;
 
 		throttleDragRef.current = true;
-
-		const elementRelativePosition = limitDragPosition(event.clientX - sliderRef.current.getBoundingClientRect().left);
+		const clientX = event.clientX || event.changedTouches[0].clientX;
+		const elementRelativePosition = limitDragPosition(clientX - sliderRef.current.getBoundingClientRect().left);
 		setDragPosition(elementRelativePosition);
 		seekTimeoutRef.current = seekUpdateTimeout(elementRelativePosition);
 
@@ -180,7 +184,7 @@ const TimeSlider: React.FC<TimeSliderProps> = ({
 	};
 
 	const onMouseUp = () => {
-		document.removeEventListener('mousemove', onMouseMove);
+		document.removeEventListener('mousemove', onDrag);
 		document.removeEventListener('mouseup', onMouseUp);
 
 		if (wasPlaying.current) {
@@ -193,27 +197,54 @@ const TimeSlider: React.FC<TimeSliderProps> = ({
 
 	const onMouseDown = () => {
 		setMouseDown(true);
-		document.addEventListener('mousemove', onMouseMove);
+		document.addEventListener('mousemove', onDrag);
 		document.addEventListener('mouseup', onMouseUp);
+	};
+
+	const onTouchStart = (event) => {
+		event.stopPropagation();
+		setTouch(true);
+		document.addEventListener('touchmove', onDrag);
+		document.addEventListener('touchend', onTouchEnd);
+	};
+
+	const onTouchEnd = (event) => {
+		event.stopPropagation();
+		document.removeEventListener('touchmove', onDrag);
+		document.removeEventListener('touchend', onTouchEnd);
+
+		if (wasPlaying.current) {
+			player.play();
+		}
+
+		setTouch(false);
+		setDragging(false);
 	};
 
 	const handleSeek = canSeek ? seek : undefined;
 	const handleMouseDown = canSeek ? onMouseDown : undefined;
+	const handleTouchStart = canSeek ? onTouchStart : undefined;
 	const progress = dragging ? dragPosition : positionPercent;
 
+	const handlers = isMobile
+		? {
+				onTouchStart: handleTouchStart,
+				onClick: handleSeek,
+		  }
+		: {
+				onMouseEnter: () => setHover(true),
+				onMouseLeave: () => setHover(false),
+				onMouseDown: handleMouseDown,
+				onClick: handleSeek,
+		  };
+
 	return (
-		<TimeSliderWrapper
-			className={className}
-			onMouseEnter={() => setHover(true)}
-			onMouseLeave={() => setHover(false)}
-			onMouseDown={handleMouseDown}
-			onClick={handleSeek}
-		>
+		<TimeSliderWrapper className={className} {...handlers}>
 			<TimeSliderContainer ref={sliderRef} height={railHeight}>
 				<Rail color={railColor} />
 				{canSeek && <Buffer percentageBuffered={bufferPercent} bufferBackgroundColor={bufferColor} />}
 				<Progress progress={progress} dragging={dragging} progressBackgroundColor={progressColor} />
-				{canSeek && (hover || mouseDown) && (
+				{canSeek && (hover || mouseDown || touch) && (
 					<ProgressKnob progress={progress} dragging={dragging} progressKnobColor={knobColor} />
 				)}
 			</TimeSliderContainer>

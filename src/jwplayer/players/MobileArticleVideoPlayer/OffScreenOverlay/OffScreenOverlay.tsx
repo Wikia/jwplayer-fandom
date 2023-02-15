@@ -47,7 +47,7 @@ const OffScreenOverlay: React.FC<OffScreenOverlayProps> = ({ dismiss, isScrollPl
 		closeButtonOffset = 0;
 	}
 
-	if (!playing) {
+	if (!playing && !adBreak) {
 		if (controlbar) controlbar.style.visibility = 'hidden';
 	} else {
 		if (controlbar) controlbar.style.visibility = 'visible';

@@ -17,17 +17,14 @@ const CloseWrapper = styled.div`
 	z-index: ${Number(WDSVariables.z7) + 1};
 `;
 
-const CrossIcon = styled(IconCrossTiny)`
-	fill: ${(props) => (props.fill ? props.fill : WDSVariables.wdsColorWhite)};
-`;
-
 interface CloseButtonProps {
 	className?: string;
 	dismiss: () => void;
 	iconColor?: string;
+	iconSize?: string;
 }
 
-const CloseButton: React.FC<CloseButtonProps> = ({ className, dismiss, iconColor }) => {
+const CloseButton: React.FC<CloseButtonProps> = ({ className, dismiss, iconColor, iconSize }) => {
 	const { player } = useContext(PlayerContext);
 	const onClickClose = (event) => {
 		event.stopPropagation();
@@ -38,7 +35,7 @@ const CloseButton: React.FC<CloseButtonProps> = ({ className, dismiss, iconColor
 
 	return (
 		<CloseWrapper className={className} onClick={onClickClose}>
-			<CrossIcon fill={iconColor} />
+			<IconCrossTiny fill={iconColor} width={iconSize || '1em'} height={iconSize || '1em'} />
 		</CloseWrapper>
 	);
 };

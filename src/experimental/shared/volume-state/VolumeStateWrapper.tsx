@@ -46,8 +46,11 @@ const Label = styled.div`
 const VolumeStateWrapper: React.FC<VolumeStateWrapperProps> = ({
 	iconColor = '#fff',
 	sliderColor = 'rgb(0, 214, 214)',
-	isScrollPlayer = false,
+	hasSlider = false,
 	hasLabel = false,
+	callback,
+	iconSize,
+	className,
 }) => {
 	const { player } = useContext(PlayerContext);
 	const mute = useMute();
@@ -56,13 +59,20 @@ const VolumeStateWrapper: React.FC<VolumeStateWrapperProps> = ({
 	const onClick = (event) => {
 		player?.setMute(!mute);
 		event.stopPropagation();
+		if (callback) {
+			callback();
+		}
 	};
 
 	return (
-		<Wrapper onClick={onClick} color={iconColor}>
+		<Wrapper className={className} onClick={onClick} color={iconColor}>
 			<SoundButtonWrapper onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-				{!isScrollPlayer && <VolumeSlider color={sliderColor} hover={hover} />}
-				{mute ? <StyledSoundOffIcon fill={iconColor} /> : <StyledSoundIcon fill={iconColor} />}
+				{hasSlider && <VolumeSlider color={sliderColor} hover={hover} />}
+				{mute ? (
+					<StyledSoundOffIcon fill={iconColor} width={iconSize || '16px'} height={iconSize || '16px'} />
+				) : (
+					<StyledSoundIcon fill={iconColor} width={iconSize || '16px'} height={iconSize || '16px'} />
+				)}
 			</SoundButtonWrapper>
 			{mute && hasLabel && <Label>Play Sound</Label>}
 		</Wrapper>
