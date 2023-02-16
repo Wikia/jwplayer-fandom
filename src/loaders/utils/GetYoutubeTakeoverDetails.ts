@@ -67,15 +67,12 @@ export async function getYoutubeTakeoverDetails({
 	// If the wikiId is not found for some reason or if the wiki is a tier3 wiki,
 	// then just return the default youtubeTakeoverDetails that include the isYoutubeTakeover set to false
 	if (!wikiId || isTier3Wiki) {
-		console.debug(`Youtube Takeover: Youtube video embed check. wikiId: ${wikiId} | isTier3Wiki: ${isTier3Wiki}`);
 		return youtubeTakeoverDetails;
 	}
 
 	const response = await fetch(getYoutubeTakeoverUrl(wikiId));
 	const dataArray = (await response.json()) as YoutubeTakeoverResponse[];
-	console.debug(`Youtube Takeover: dataArray - ${dataArray}`);
 	const wikiYoutubeTakeoverDetails = dataArray?.length === 1 ? dataArray[0] : null;
-	console.debug(`Youtube Takeover: wikiYoutubeTakeoverDetails - ${wikiYoutubeTakeoverDetails}`);
 
 	if (
 		wikiYoutubeTakeoverDetails?.youtube_take_over &&
@@ -94,8 +91,5 @@ export const eligibleForYoutubeTakeover = (youtubeTakeoverDetails: YoutubeTakeOv
 	const youtubeTakeoverFlag = youtubeTakeoverDetails.isYoutubeTakeover;
 	const isVideoIdValidLength =
 		youtubeTakeoverDetails?.youtubeVideoId && youtubeTakeoverDetails?.youtubeVideoId?.length !== 0;
-	console.log(
-		`Youtube Takeover: eligibleForYoutubeTakeover - youtubeTakeoverFlag: ${youtubeTakeoverFlag} | isVideoIdValidLength: ${isVideoIdValidLength}`,
-	);
 	return youtubeTakeoverFlag && isVideoIdValidLength;
 };
