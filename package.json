@@ -37,7 +37,8 @@
 		"pub:minor": "npm version minor && rm -rf dist && yarn pub",
 		"pub:major": "npm version major && rm -rf dist && yarn pub",
 		"pub": "yarn install && yarn build && cd dist && npm publish --tag beta",
-		"purgeSingleFile": "ts-node --project stand-alone/tsconfig-stand-alone.json stand-alone/deploy/purge/purgeSingleFile.ts"
+		"purgeSingleFile": "ts-node --project stand-alone/tsconfig-stand-alone.json stand-alone/deploy/purge/purgeSingleFile.ts",
+		"serveFilesOnBrowser": "npx browser-sync start --server --files \"**/.js\""
 	},
 	"lint-staged": {
 		"src/**/*.(ts|tsx|js)": [

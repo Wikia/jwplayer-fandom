@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/rv-jwplayer",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"description": "JWPlayer for News and Rating sites (previously RedVenture) e.g. GameSpot, GameFAQs, GiantBomb, ComicVine, TVGuide and Metacritic",
 	"types": "types.d.ts",
 	"install-peers": "install-peers",
