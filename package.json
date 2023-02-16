@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.2.0",
+	"version": "2.1.8-testYouTubeEmbed1",
 	"description": "JWPlayer for Fandom",
 	"exports": {
 		".": "./main.js",
