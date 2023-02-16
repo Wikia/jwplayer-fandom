@@ -68,7 +68,6 @@ const YoutubeDesktopArticleVideoPlayer: React.FC<YoutubeArticleVideoPlayerProps>
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.1);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
-	// const isScrollPlayer = !onScreen;
 	const boundingClientRect = placeholderRef.current?.getBoundingClientRect();
 	const right = boundingClientRect?.right;
 	const width = boundingClientRect?.width;
