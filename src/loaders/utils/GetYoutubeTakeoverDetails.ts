@@ -2,6 +2,7 @@ import { isServerSide } from 'utils/getEnv';
 import getValueFromQuery from 'utils/getValuefromQuery';
 import { getArticleVideoServiceBaseUrl } from 'utils/getPandoraDetails';
 import { trackYoutubeTakeoverDetails, YoutubePlayerTrackingProps } from 'youtube/players/shared/youtubeTrackingEvents';
+import { WindowWithMW, YoutubeTakeOverDetails, YoutubeTakeoverResponse } from 'youtube/types';
 
 function getYoutubeTakeoverUrl(wikiId?: string): string {
 	const articleVideoBaseUrl = getArticleVideoServiceBaseUrl();
@@ -12,31 +13,6 @@ function getYoutubeTakeoverUrl(wikiId?: string): string {
 		return '';
 	}
 	return `${articleVideoBaseUrl}youtube/v1/youtube-takeover-mappings/${wikiId}`;
-}
-
-interface MWConfig {
-	get: (key: string) => any;
-}
-
-interface MW {
-	config: MWConfig;
-}
-
-interface WindowWithMW extends Window {
-	mw: MW;
-}
-
-export interface YoutubeTakeoverResponse {
-	product: string;
-	id: string;
-	impression_per_session: number;
-	youtube_take_over: boolean;
-	youtube_video_id: string;
-}
-
-export interface YoutubeTakeOverDetails {
-	isYoutubeTakeover?: boolean;
-	youtubeVideoId?: string;
 }
 
 declare let window: WindowWithMW;

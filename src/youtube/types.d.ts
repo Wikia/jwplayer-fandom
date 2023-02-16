@@ -1,5 +1,4 @@
 import 'react';
-import { YoutubeTakeOverDetails } from 'loaders/utils/GetYoutubeTakeoverDetails';
 
 // eslint-disable-line @typescript-eslint/no-unused-vars
 declare module 'react' {
@@ -10,8 +9,29 @@ declare module 'react' {
 	}
 }
 
-export interface TwitchApi {
-	Player;
+interface MWConfig {
+	get: (key: string) => any;
+}
+
+interface MW {
+	config: MWConfig;
+}
+
+interface WindowWithMW extends Window {
+	mw: MW;
+}
+
+export interface YoutubeTakeoverResponse {
+	product: string;
+	id: string;
+	impression_per_session: number;
+	youtube_take_over: boolean;
+	youtube_video_id: string;
+}
+
+export interface YoutubeTakeOverDetails {
+	isYoutubeTakeover?: boolean;
+	youtubeVideoId?: string;
 }
 
 export interface PlayerInstance {
