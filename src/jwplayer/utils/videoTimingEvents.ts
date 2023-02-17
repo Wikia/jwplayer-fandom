@@ -21,6 +21,10 @@ export const VIDEO_RECORD_EVENTS = {
 
 const recordOptions = { sampleRate: 0.3 };
 
+export function disableTimingEventsSamplingRate() {
+	delete recordOptions.sampleRate;
+}
+
 export function recordVideoEvent(event: string) {
 	return recordOnce(event, recordOptions);
 }

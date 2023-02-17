@@ -1,0 +1,36 @@
+{
+  "include": ["**/*.ts", "**/*.tsx", "*.d.ts"],
+  "exclude": [
+    "node_modules", "standalone-dist"],
+  "compilerOptions": {
+    "outDir": "standalone-dist",
+    "lib": ["es5", "es6", "es7", "es2017", "dom"],
+    "module": "es2020",
+    "target": "es5",
+    "jsx": "react",
+    "allowJs": true,
+    "checkJs": false,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "paths": {
+      "*": ["node_modules", "*"]
+    },
+    "baseUrl": "./",
+    "typeRoots": [
+      "../src/types", "node_modules/@types"],
+    "resolveJsonModule": true
+  },
+  "ts-node": {
+    // these options are overrides used only by ts-node
+    // same as the --compilerOptions flag and the TS_NODE_COMPILER_OPTIONS environment variable
+    "transpileOnly": true,
+    "files": true,
+    "require": ["tsconfig-paths/register"],
+    "compilerOptions": {
+      "module": "commonjs",
+      "target": "es2017",
+      "esModuleInterop": true,
+      "skipLibCheck": true
+    }
+  }
+}

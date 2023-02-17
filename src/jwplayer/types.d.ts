@@ -97,6 +97,11 @@ export interface OnVideoTimeEventData {
 	viewable: number;
 }
 
+export interface ProgressUpdateData extends OnVideoTimeEventData {
+	// Calculated param, does not come directly from the JW API
+	positionPercent: number;
+}
+
 export interface OnErrorEventData {
 	code: number;
 	message: string;
@@ -165,6 +170,20 @@ export interface OnPlaylistItemEventData {
 	item: PlaylistItem;
 }
 
+interface CaptionTrack {
+	id: number | string;
+	label: string;
+	language?: string;
+}
+
+export type CaptionsList = CaptionTrack[];
+
+export interface OnCaptionsEventData {
+	track: number;
+	tracks: CaptionsList;
+	type: string;
+}
+
 type JwEventData =
 	| PlayPlayerEventData
 	| PausePlayerEventData
@@ -182,7 +201,8 @@ type JwEventData =
 	| ShareEventData
 	| TimeEventData
 	| AdImpressionEventData
-	| OnPlaylistItemEventData;
+	| OnPlaylistItemEventData
+	| OnCaptionsEventData;
 
 type JwEventHandler = (event?: JwEventData) => void;
 
@@ -242,6 +262,9 @@ export type Player = {
 	load: (playlist: string | Playlist) => null;
 	setPlaylistItemCallback: (PlaylistItemCallbackData) => void;
 	pauseAd: (state: boolean) => null;
+	getCaptionsList: () => CaptionsList;
+	setCurrentCaptions: (index: number) => null;
+	getCurrentCaptions: () => number;
 };
 export type CreateWirewaxEmbedder = () => Embedder;
 export type WirewaxPluginOptions = {
@@ -337,6 +360,17 @@ export interface ArticleVideoDetails {
 	videoTags: string;
 }
 
+export interface RedVentureVideoDetails {
+	title: string;
+	description: string;
+	duration: string;
+	feed_instance_id: string;
+	kind: string;
+	mediaId: string;
+	playlist: Playlist;
+	videoTags: string;
+}
+
 export interface CanonicalVideoDetails {
 	title: string;
 	feedid: string;
@@ -377,13 +411,26 @@ export interface CanonicalVideoPlayerProps {
 	onComplete: () => void;
 }
 
-export interface JwPlayerWrapperProps {
+export interface JwPlayerWrapperProps extends JwPlayerContainerId {
 	config?: PlayerConfig;
 	playerUrl?: string;
 	onReady?: (playerInstance: Player) => void;
 	onComplete?: () => void;
 	className?: string;
 	stopAutoAdvanceOnExitViewport?: boolean;
+	shouldLoadSponsoredContentList?: boolean;
+}
+
+export interface JwPlayerContainerId {
+	/**
+	 * @description An optional parameter that sets the id of the div element on which the JW Player embeds itself on.
+	 * @default featured-video__player
+	 * @example
+	 * {
+	 *   jwPlayerContainerEmbedId: 'customContainerId'
+	 * }
+	 * */
+	jwPlayerContainerEmbedId?: string;
 }
 
 export interface LoadableVideoPlayerWrapperProps {
@@ -397,6 +444,13 @@ export interface LoadableVideoPlayerWrapperProps {
 
 export interface DesktopArticleVideoPlayerProps {
 	videoDetails: ArticleVideoDetails;
+}
+
+export interface RedVentureVideoPlayerProps extends JwPlayerContainerId {
+	videoDetails: RedVentureVideoDetails;
+	showScrollPlayer: boolean;
+	playerUrl?: string;
+	autoPlay?: boolean;
 }
 
 export interface MobileArticleVideoPlayerProps {
