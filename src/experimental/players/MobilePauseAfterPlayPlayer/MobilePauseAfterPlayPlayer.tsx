@@ -1,19 +1,25 @@
 import React from 'react';
-import { MobileArticleVideoPlayerProps } from 'jwplayer/types';
+import { MobilePauseAfterPlayPlayerProps } from 'experimental/types';
 import { MobileArticleVideoPlayerContent } from 'jwplayer/players/MobileArticleVideoPlayer/MobileArticleVideoPlayer';
 import usePauseAfterPlays from 'experimental/utils/usePauseAfterPlays';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 
-const MobilePauseAfterPlayPlayerContent: React.FC<MobileArticleVideoPlayerProps> = ({ videoDetails }) => {
-	// TODO: set actual pause after play amount
-	usePauseAfterPlays(1);
+const MobilePauseAfterPlayPlayerContent: React.FC<MobilePauseAfterPlayPlayerProps> = ({
+	videoDetails,
+	playsBeforePause,
+}) => {
+	usePauseAfterPlays(playsBeforePause);
 
 	return <MobileArticleVideoPlayerContent videoDetails={videoDetails} />;
 };
 
-const MobilePauseAfterPlayPlayer: React.FC<MobileArticleVideoPlayerProps> = ({ videoDetails }) => (
-	<PlayerWrapper playerName="jw-mobile-article-video-pause-after-play">
-		<MobilePauseAfterPlayPlayerContent videoDetails={videoDetails} />;
+const MobilePauseAfterPlayPlayer: React.FC<MobilePauseAfterPlayPlayerProps> = ({
+	videoDetails,
+	playsBeforePause,
+	playerName,
+}) => (
+	<PlayerWrapper playerName={playerName}>
+		<MobilePauseAfterPlayPlayerContent videoDetails={videoDetails} playsBeforePause={playsBeforePause} />;
 	</PlayerWrapper>
 );
 

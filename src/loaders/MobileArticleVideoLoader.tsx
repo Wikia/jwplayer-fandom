@@ -15,9 +15,23 @@ const mobileReskinnedExperiment = defineExperiment({
 	endDate: Date.parse('2023-02-20T11:59:00'),
 });
 
-const mobilePauseAfterPlayExperiment = defineExperiment({
-	name: 'mobile-pause-after-play-player',
-	buckets: ['j'],
+const mobilePauseAfterThreePlaysExperiment = defineExperiment({
+	name: 'mobile-pause-after-three-plays-player',
+	buckets: ['q'],
+	startDate: Date.parse('2023-2-13T08:00:00'),
+	endDate: Date.parse('2023-2-20T11:59:00'),
+});
+
+const mobilePauseAfterFivePlaysExperiment = defineExperiment({
+	name: 'mobile-pause-after-five-plays-player',
+	buckets: ['r'],
+	startDate: Date.parse('2023-2-13T08:00:00'),
+	endDate: Date.parse('2023-2-20T11:59:00'),
+});
+
+const mobilePauseAfterTenPlaysExperiment = defineExperiment({
+	name: 'mobile-pause-after-ten-plays-player',
+	buckets: ['s'],
 	startDate: Date.parse('2023-2-13T08:00:00'),
 	endDate: Date.parse('2023-2-20T11:59:00'),
 });
@@ -34,7 +48,12 @@ export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> =
 	}, []);
 
 	const getPlayer = async () => {
-		const currentExperiment: Experiment = getExperiment([mobileReskinnedExperiment, mobilePauseAfterPlayExperiment]);
+		const currentExperiment: Experiment = getExperiment([
+			mobileReskinnedExperiment,
+			mobilePauseAfterThreePlaysExperiment,
+			mobilePauseAfterFivePlaysExperiment,
+			mobilePauseAfterTenPlaysExperiment,
+		]);
 
 		// By default if there is no experiment just set the base player
 		if (!currentExperiment) {
@@ -54,11 +73,45 @@ export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> =
 			);
 		}
 
-		if (currentExperiment?.name === mobilePauseAfterPlayExperiment?.name) {
-			currentExperiment.log.info('Loading pause after play Mobile Article Video Player');
+		if (currentExperiment?.name === mobilePauseAfterThreePlaysExperiment?.name) {
+			currentExperiment.log.info('Loading pause after three plays Mobile Article Video Player');
 			import('experimental/players/MobilePauseAfterPlayPlayer/MobilePauseAfterPlayPlayer').then(
 				({ default: MobilePauseAfterPlayPlayer }) =>
-					setPlayer(<MobilePauseAfterPlayPlayer videoDetails={videoDetails} />),
+					setPlayer(
+						<MobilePauseAfterPlayPlayer
+							videoDetails={videoDetails}
+							playerName="jw-mobile-article-video-pause-after-three-plays"
+							playsBeforePause={3}
+						/>,
+					),
+			);
+		}
+
+		if (currentExperiment?.name === mobilePauseAfterFivePlaysExperiment?.name) {
+			currentExperiment.log.info('Loading pause after five plays Mobile Article Video Player');
+			import('experimental/players/MobilePauseAfterPlayPlayer/MobilePauseAfterPlayPlayer').then(
+				({ default: MobilePauseAfterPlayPlayer }) =>
+					setPlayer(
+						<MobilePauseAfterPlayPlayer
+							videoDetails={videoDetails}
+							playerName="jw-mobile-article-video-pause-after-five-plays"
+							playsBeforePause={5}
+						/>,
+					),
+			);
+		}
+
+		if (currentExperiment?.name === mobilePauseAfterTenPlaysExperiment?.name) {
+			currentExperiment.log.info('Loading pause after ten plays Mobile Article Video Player');
+			import('experimental/players/MobilePauseAfterPlayPlayer/MobilePauseAfterPlayPlayer').then(
+				({ default: MobilePauseAfterPlayPlayer }) =>
+					setPlayer(
+						<MobilePauseAfterPlayPlayer
+							videoDetails={videoDetails}
+							playerName="jw-mobile-article-video-pause-after-ten-plays"
+							playsBeforePause={10}
+						/>,
+					),
 			);
 		}
 	};
