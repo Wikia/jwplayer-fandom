@@ -56,6 +56,7 @@ const TopBar = styled.div`
 `;
 
 const CloseButtonPositioned = styled(CloseButton)`
+	filter: drop-shadow(1px 2px 2px rgb(0 0 0 / 0.7));
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -99,7 +100,7 @@ const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ v
 					>
 						<TopBar>
 							{!isScrollPlayer && <UnmuteButton />}
-							{isScrollPlayer && <CloseButtonPositioned dismiss={() => setDismissed(true)} />}
+							{isScrollPlayer && <CloseButtonPositioned dismiss={() => setDismissed(true)} iconColor={'#fff'} />}
 						</TopBar>
 						<JwPlayerWrapper
 							config={getArticleVideoConfig(videoDetails)}
