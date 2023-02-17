@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.1.5-floatOnScrollDesktop1",
+	"version": "2.1.5-floatOnScrollDesktop2",
 	"description": "JWPlayer for Fandom",
 	"exports": {
 		".": "./main.js",
