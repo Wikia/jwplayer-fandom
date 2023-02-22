@@ -6,6 +6,8 @@ import getExperiment from '@fandom/pathfinder-lite/experiments/getExperiment';
 import { Experiment } from '@fandom/pathfinder-lite/types';
 import { shouldLoadUcpPlayer } from 'loaders/utils/shouldLoadPlayer';
 
+import { eligibleForYoutubeTakeover, getYoutubeTakeoverDetails } from './utils/GetYoutubeTakeoverDetails';
+
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
 const mobileReskinnedExperiment = defineExperiment({
@@ -29,6 +31,25 @@ export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> =
 	const getPlayer = async () => {
 		const currentExperiment: Experiment = getExperiment([mobileReskinnedExperiment]);
 
+		if (currentExperiment?.name === mobileReskinnedExperiment?.name) {
+			currentExperiment.log.info('Loading re-skinned Mobile Article Video Player');
+			import('experimental/players/MobileReskinnedArticleVideoPlayer/MobileReskinnedArticleVideoPlayer').then(
+				({ default: JWMobileReskinnedArticleVideoPlayer }) =>
+					setPlayer(<JWMobileReskinnedArticleVideoPlayer videoDetails={videoDetails} />),
+			);
+			return;
+		}
+
+		const youtubeTakeoverDetails = await getYoutubeTakeoverDetails({ deviceType: 'mobile' });
+
+		if (eligibleForYoutubeTakeover(youtubeTakeoverDetails)) {
+			console.debug('Youtube takeover - loading Mobile youtube embed.');
+			import('youtube/players/YoutubeMobileArticleVideoPlayer').then(({ default: YoutubeMobileArticleVideoPlayer }) =>
+				setPlayer(<YoutubeMobileArticleVideoPlayer youtubeTakeoverDetails={youtubeTakeoverDetails} />),
+			);
+			return;
+		}
+
 		// By default if there is no experiment just set the base player
 		if (!currentExperiment) {
 			import('jwplayer/players/MobileArticleVideoPlayer/MobileArticleVideoPlayer').then(
@@ -37,14 +58,6 @@ export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> =
 			);
 
 			return;
-		}
-
-		if (currentExperiment?.name === mobileReskinnedExperiment?.name) {
-			currentExperiment.log.info('Loading re-skinned Mobile Article Video Player');
-			import('experimental/players/MobileReskinnedArticleVideoPlayer/MobileReskinnedArticleVideoPlayer').then(
-				({ default: JWMobileReskinnedArticleVideoPlayer }) =>
-					setPlayer(<JWMobileReskinnedArticleVideoPlayer videoDetails={videoDetails} />),
-			);
 		}
 	};
 
