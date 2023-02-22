@@ -34,6 +34,9 @@ const JWEvents = {
 	// Playlist
 	PLAYLIST_LOADED: 'playlist',
 	PLAYLIST_ITEM: 'playlistItem',
+
+	// Playback
+	FIRST_FRAME: 'firstFrame',
 };
 
 export const PLAY_REASONS = {
