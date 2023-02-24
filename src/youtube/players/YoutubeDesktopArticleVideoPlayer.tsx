@@ -1,14 +1,13 @@
-import React, { useRef } from 'react';
-import TwitchPlayerWrapper from 'twitch/players/shared/TwitchPlayerWrapper';
-import PlayerWrapper from 'twitch/players/shared/PlayerWrapper';
+import React, { useRef, useState } from 'react';
+import YoutubePlayerWrapper from 'youtube/players/shared/YoutubePlayerWrapper';
+import PlayerWrapper from 'youtube/players/shared/PlayerWrapper';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import styled, { css, keyframes } from 'styled-components';
-// import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButton';
 import useOnScreen from 'utils/useOnScreen';
-// import { ArticleVideoDetails } from 'jwplayer/types';
-// import CloseButton from 'jwplayer/players/shared/CloseButton';
+import CloseButton from 'youtube/players/shared/CloseButton';
+import { YoutubeArticleVideoPlayerProps } from 'youtube/types';
 
-const DesktopArticleVideoTopPlaceholder = styled.div`
+const YoutubeDesktopArticleVideoTopPlaceholder = styled.div`
 	position: absolute;
 	width: 100%;
 	padding-top: 56.25%;
@@ -33,13 +32,13 @@ const moveDownAnimation = (right: number, width: number) => keyframes`
 	}
 `;
 
-interface DesktopArticleVideoWrapperProps {
+interface YoutubeDesktopArticleVideoWrapperProps {
 	isScrollPlayer: boolean;
 	right?: number;
 	width?: number;
 }
 
-const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
+const DesktopArticleVideoWrapper = styled.div<YoutubeDesktopArticleVideoWrapperProps>`
 	height: max-content;
 	${(props) =>
 		props.isScrollPlayer
@@ -59,34 +58,30 @@ const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
 			  `}
 `;
 
-// const TopBar = styled.div`
-// 	width: 100%;
-// 	position: relative;
-// `;
+const TopBar = styled.div`
+	width: 100%;
+	position: relative;
+`;
 
-const DesktopArticleVideoPlayer: React.FC = () => {
+const YoutubeDesktopArticleVideoPlayer: React.FC<YoutubeArticleVideoPlayerProps> = ({ youtubeTakeoverDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.1);
-	// const [dismissed, setDismissed] = useState(false);
-	// const isScrollPlayer = !(dismissed || onScreen);
-	const isScrollPlayer = !onScreen;
+	const [dismissed, setDismissed] = useState(false);
+	const isScrollPlayer = !(dismissed || onScreen);
 	const boundingClientRect = placeholderRef.current?.getBoundingClientRect();
 	const right = boundingClientRect?.right;
 	const width = boundingClientRect?.width;
 
 	return (
-		<PlayerWrapper playerName="twitch-desktop-article-video">
-			<DesktopArticleVideoTopPlaceholder ref={placeholderRef}>
+		<PlayerWrapper playerName="youtube-desktop-article-video">
+			<YoutubeDesktopArticleVideoTopPlaceholder ref={placeholderRef}>
 				<DesktopArticleVideoWrapper right={right} width={width} isScrollPlayer={isScrollPlayer}>
-					{/* <TopBar>
-							{!isScrollPlayer && <UnmuteButton />}
-							{isScrollPlayer && <CloseButton dismiss={() => setDismissed(true)} />}
-						</TopBar> */}
-					<TwitchPlayerWrapper deviceType={'desktop'} />
+					<TopBar>{isScrollPlayer && <CloseButton deviceType={'desktop'} dismiss={() => setDismissed(true)} />}</TopBar>
+					<YoutubePlayerWrapper deviceType={'desktop'} youtubeTakeoverDetails={youtubeTakeoverDetails} />
 				</DesktopArticleVideoWrapper>
-			</DesktopArticleVideoTopPlaceholder>
+			</YoutubeDesktopArticleVideoTopPlaceholder>
 		</PlayerWrapper>
 	);
 };
 
-export default DesktopArticleVideoPlayer;
+export default YoutubeDesktopArticleVideoPlayer;

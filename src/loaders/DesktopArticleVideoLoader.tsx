@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { DesktopArticleVideoLoaderProps } from 'loaders/types';
 import { setVersionWindowVar } from 'loaders/utils/GetVersion';
-import defineExperiment from '@fandom/pathfinder-lite/experiments/defineExperiment';
-import getExperiment from '@fandom/pathfinder-lite/experiments/getExperiment';
-import { Experiment } from '@fandom/pathfinder-lite/types';
 import { shouldLoadUcpPlayer } from 'loaders/utils/shouldLoadPlayer';
+import { eligibleForYoutubeTakeover, getYoutubeTakeoverDetails } from 'loaders/utils/GetYoutubeTakeoverDetails';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
@@ -46,57 +44,65 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 			desktopPauseAfterFivePlaysExperiment,
 			desktopPauseAfterTenPlaysExperiment,
 		]);
+    
+		const youtubeTakeoverDetails = await getYoutubeTakeoverDetails({ deviceType: 'desktop' });
 
-		// By default if there is no experiment just set the base player
-		if (!currentExperiment) {
+		if (eligibleForYoutubeTakeover(youtubeTakeoverDetails)) {
+			console.debug('Youtube takeover - loading Desktop youtube embed.');
+			import('youtube/players/YoutubeDesktopArticleVideoPlayer').then(({ default: YoutubeDesktopArticleVideoPlayer }) =>
+				setPlayer(<YoutubeDesktopArticleVideoPlayer youtubeTakeoverDetails={youtubeTakeoverDetails} />),
+			);
+			return;
+		} else {
+      if (currentExperiment?.name === desktopPauseAfterThreePlaysExperiment?.name) {
+        currentExperiment.log.info('Loading pause after three plays Desktop Article Video Player');
+        import('experimental/players/DesktopPauseAfterPlayPlayer/DesktopPauseAfterPlayPlayer').then(
+          ({ default: DesktopPauseAfterPlayPlayer }) =>
+            setPlayer(
+              <DesktopPauseAfterPlayPlayer
+                videoDetails={videoDetails}
+                playerName="jw-desktop-article-video-pause-after-three-plays"
+                playsBeforePause={3}
+              />,
+            ),
+        );
+      }
+
+      if (currentExperiment?.name === desktopPauseAfterFivePlaysExperiment?.name) {
+        currentExperiment.log.info('Loading pause after five plays Desktop Article Video Player');
+        import('experimental/players/DesktopPauseAfterPlayPlayer/DesktopPauseAfterPlayPlayer').then(
+          ({ default: DesktopPauseAfterPlayPlayer }) =>
+            setPlayer(
+              <DesktopPauseAfterPlayPlayer
+                videoDetails={videoDetails}
+                playerName="jw-desktop-article-video-pause-after-five-plays"
+                playsBeforePause={5}
+              />,
+            ),
+        );
+      }
+
+      if (currentExperiment?.name === desktopPauseAfterTenPlaysExperiment?.name) {
+        currentExperiment.log.info('Loading pause after ten plays Desktop Article Video Player');
+        import('experimental/players/DesktopPauseAfterPlayPlayer/DesktopPauseAfterPlayPlayer').then(
+          ({ default: DesktopPauseAfterPlayPlayer }) =>
+            setPlayer(
+              <DesktopPauseAfterPlayPlayer
+                videoDetails={videoDetails}
+                playerName="jw-desktop-article-video-pause-after-ten-plays"
+                playsBeforePause={10}
+              />,
+            ),
+        );
+      }
+      
+			// By default if there is no experiment or youtube embed, then just set the base player
+			console.debug('Loading plain Desktop Article Video Player');
 			import('jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer').then(
 				({ default: JWDesktopArticleVideoPlayer }) =>
 					setPlayer(<JWDesktopArticleVideoPlayer videoDetails={videoDetails} />),
 			);
-
 			return;
-		}
-
-		if (currentExperiment?.name === desktopPauseAfterThreePlaysExperiment?.name) {
-			currentExperiment.log.info('Loading pause after three plays Desktop Article Video Player');
-			import('experimental/players/DesktopPauseAfterPlayPlayer/DesktopPauseAfterPlayPlayer').then(
-				({ default: DesktopPauseAfterPlayPlayer }) =>
-					setPlayer(
-						<DesktopPauseAfterPlayPlayer
-							videoDetails={videoDetails}
-							playerName="jw-desktop-article-video-pause-after-three-plays"
-							playsBeforePause={3}
-						/>,
-					),
-			);
-		}
-
-		if (currentExperiment?.name === desktopPauseAfterFivePlaysExperiment?.name) {
-			currentExperiment.log.info('Loading pause after five plays Desktop Article Video Player');
-			import('experimental/players/DesktopPauseAfterPlayPlayer/DesktopPauseAfterPlayPlayer').then(
-				({ default: DesktopPauseAfterPlayPlayer }) =>
-					setPlayer(
-						<DesktopPauseAfterPlayPlayer
-							videoDetails={videoDetails}
-							playerName="jw-desktop-article-video-pause-after-five-plays"
-							playsBeforePause={5}
-						/>,
-					),
-			);
-		}
-
-		if (currentExperiment?.name === desktopPauseAfterTenPlaysExperiment?.name) {
-			currentExperiment.log.info('Loading pause after ten plays Desktop Article Video Player');
-			import('experimental/players/DesktopPauseAfterPlayPlayer/DesktopPauseAfterPlayPlayer').then(
-				({ default: DesktopPauseAfterPlayPlayer }) =>
-					setPlayer(
-						<DesktopPauseAfterPlayPlayer
-							videoDetails={videoDetails}
-							playerName="jw-desktop-article-video-pause-after-ten-plays"
-							playsBeforePause={10}
-						/>,
-					),
-			);
 		}
 	};
 

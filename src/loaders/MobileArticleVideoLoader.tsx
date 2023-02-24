@@ -6,6 +6,8 @@ import getExperiment from '@fandom/pathfinder-lite/experiments/getExperiment';
 import { Experiment } from '@fandom/pathfinder-lite/types';
 import { shouldLoadUcpPlayer } from 'loaders/utils/shouldLoadPlayer';
 
+import { eligibleForYoutubeTakeover, getYoutubeTakeoverDetails } from './utils/GetYoutubeTakeoverDetails';
+
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
 const mobileReskinnedExperiment = defineExperiment({
@@ -55,7 +57,75 @@ export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> =
 			mobilePauseAfterTenPlaysExperiment,
 		]);
 
-		// By default if there is no experiment just set the base player
+		if (currentExperiment?.name === mobileReskinnedExperiment?.name) {
+			currentExperiment.log.info('Loading re-skinned Mobile Article Video Player');
+			import('experimental/players/MobileReskinnedArticleVideoPlayer/MobileReskinnedArticleVideoPlayer').then(
+				({ default: JWMobileReskinnedArticleVideoPlayer }) =>
+					setPlayer(<JWMobileReskinnedArticleVideoPlayer videoDetails={videoDetails} />),
+			);
+			return;
+		}
+
+		const youtubeTakeoverDetails = await getYoutubeTakeoverDetails({ deviceType: 'mobile' });
+
+		if (eligibleForYoutubeTakeover(youtubeTakeoverDetails)) {
+			console.debug('Youtube takeover - loading Mobile youtube embed.');
+			import('youtube/players/YoutubeMobileArticleVideoPlayer').then(({ default: YoutubeMobileArticleVideoPlayer }) =>
+				setPlayer(<YoutubeMobileArticleVideoPlayer youtubeTakeoverDetails={youtubeTakeoverDetails} />),
+			);
+			return;
+		} else {
+      if (currentExperiment?.name === mobileReskinnedExperiment?.name) {
+        currentExperiment.log.info('Loading re-skinned Mobile Article Video Player');
+        import('experimental/players/MobileReskinnedArticleVideoPlayer/MobileReskinnedArticleVideoPlayer').then(
+          ({ default: JWMobileReskinnedArticleVideoPlayer }) =>
+            setPlayer(<JWMobileReskinnedArticleVideoPlayer videoDetails={videoDetails} />),
+        );
+      }
+
+      if (currentExperiment?.name === mobilePauseAfterThreePlaysExperiment?.name) {
+        currentExperiment.log.info('Loading pause after three plays Mobile Article Video Player');
+        import('experimental/players/MobilePauseAfterPlayPlayer/MobilePauseAfterPlayPlayer').then(
+          ({ default: MobilePauseAfterPlayPlayer }) =>
+            setPlayer(
+              <MobilePauseAfterPlayPlayer
+                videoDetails={videoDetails}
+                playerName="jw-mobile-article-video-pause-after-three-plays"
+                playsBeforePause={3}
+              />,
+            ),
+        );
+      }
+
+      if (currentExperiment?.name === mobilePauseAfterFivePlaysExperiment?.name) {
+        currentExperiment.log.info('Loading pause after five plays Mobile Article Video Player');
+        import('experimental/players/MobilePauseAfterPlayPlayer/MobilePauseAfterPlayPlayer').then(
+          ({ default: MobilePauseAfterPlayPlayer }) =>
+            setPlayer(
+              <MobilePauseAfterPlayPlayer
+                videoDetails={videoDetails}
+                playerName="jw-mobile-article-video-pause-after-five-plays"
+                playsBeforePause={5}
+              />,
+            ),
+        );
+      }
+
+      if (currentExperiment?.name === mobilePauseAfterTenPlaysExperiment?.name) {
+        currentExperiment.log.info('Loading pause after ten plays Mobile Article Video Player');
+        import('experimental/players/MobilePauseAfterPlayPlayer/MobilePauseAfterPlayPlayer').then(
+          ({ default: MobilePauseAfterPlayPlayer }) =>
+            setPlayer(
+              <MobilePauseAfterPlayPlayer
+                videoDetails={videoDetails}
+                playerName="jw-mobile-article-video-pause-after-ten-plays"
+                playsBeforePause={10}
+              />,
+            ),
+        );
+      }
+      
+      		// By default if there is no experiment just set the base player
 		if (!currentExperiment) {
 			import('jwplayer/players/MobileArticleVideoPlayer/MobileArticleVideoPlayer').then(
 				({ default: JWMobileArticleVideoPlayer }) =>
@@ -64,57 +134,8 @@ export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> =
 
 			return;
 		}
-
-		if (currentExperiment?.name === mobileReskinnedExperiment?.name) {
-			currentExperiment.log.info('Loading re-skinned Mobile Article Video Player');
-			import('experimental/players/MobileReskinnedArticleVideoPlayer/MobileReskinnedArticleVideoPlayer').then(
-				({ default: JWMobileReskinnedArticleVideoPlayer }) =>
-					setPlayer(<JWMobileReskinnedArticleVideoPlayer videoDetails={videoDetails} />),
-			);
-		}
-
-		if (currentExperiment?.name === mobilePauseAfterThreePlaysExperiment?.name) {
-			currentExperiment.log.info('Loading pause after three plays Mobile Article Video Player');
-			import('experimental/players/MobilePauseAfterPlayPlayer/MobilePauseAfterPlayPlayer').then(
-				({ default: MobilePauseAfterPlayPlayer }) =>
-					setPlayer(
-						<MobilePauseAfterPlayPlayer
-							videoDetails={videoDetails}
-							playerName="jw-mobile-article-video-pause-after-three-plays"
-							playsBeforePause={3}
-						/>,
-					),
-			);
-		}
-
-		if (currentExperiment?.name === mobilePauseAfterFivePlaysExperiment?.name) {
-			currentExperiment.log.info('Loading pause after five plays Mobile Article Video Player');
-			import('experimental/players/MobilePauseAfterPlayPlayer/MobilePauseAfterPlayPlayer').then(
-				({ default: MobilePauseAfterPlayPlayer }) =>
-					setPlayer(
-						<MobilePauseAfterPlayPlayer
-							videoDetails={videoDetails}
-							playerName="jw-mobile-article-video-pause-after-five-plays"
-							playsBeforePause={5}
-						/>,
-					),
-			);
-		}
-
-		if (currentExperiment?.name === mobilePauseAfterTenPlaysExperiment?.name) {
-			currentExperiment.log.info('Loading pause after ten plays Mobile Article Video Player');
-			import('experimental/players/MobilePauseAfterPlayPlayer/MobilePauseAfterPlayPlayer').then(
-				({ default: MobilePauseAfterPlayPlayer }) =>
-					setPlayer(
-						<MobilePauseAfterPlayPlayer
-							videoDetails={videoDetails}
-							playerName="jw-mobile-article-video-pause-after-ten-plays"
-							playsBeforePause={10}
-						/>,
-					),
-			);
-		}
 	};
+    }
 
 	return player;
 };
