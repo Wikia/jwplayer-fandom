@@ -19,7 +19,7 @@ const MobilePauseAfterPlayPlayer: React.FC<MobilePauseAfterPlayPlayerProps> = ({
 	playerName,
 }) => (
 	<PlayerWrapper playerName={playerName}>
-		<MobilePauseAfterPlayPlayerContent videoDetails={videoDetails} playsBeforePause={playsBeforePause} />;
+		<MobilePauseAfterPlayPlayerContent videoDetails={videoDetails} playsBeforePause={playsBeforePause} />
 	</PlayerWrapper>
 );
 

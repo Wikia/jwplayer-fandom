@@ -19,7 +19,7 @@ const DesktopPauseAfterPlayPlayer: React.FC<DesktopPauseAfterPlayPlayerProps> = 
 	playerName,
 }) => (
 	<PlayerWrapper playerName={playerName}>
-		<DesktopPauseAfterPlayPlayerContent videoDetails={videoDetails} playsBeforePause={playsBeforePause} />;
+		<DesktopPauseAfterPlayPlayerContent videoDetails={videoDetails} playsBeforePause={playsBeforePause} />
 	</PlayerWrapper>
 );
 
