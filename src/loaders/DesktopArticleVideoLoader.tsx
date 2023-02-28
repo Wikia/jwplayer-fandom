@@ -3,8 +3,32 @@ import { DesktopArticleVideoLoaderProps } from 'loaders/types';
 import { setVersionWindowVar } from 'loaders/utils/GetVersion';
 import { shouldLoadUcpPlayer } from 'loaders/utils/shouldLoadPlayer';
 import { eligibleForYoutubeTakeover, getYoutubeTakeoverDetails } from 'loaders/utils/GetYoutubeTakeoverDetails';
+import defineExperiment from '@fandom/pathfinder-lite/experiments/defineExperiment';
+import getExperiment from '@fandom/pathfinder-lite/experiments/getExperiment';
+import { Experiment } from '@fandom/pathfinder-lite/types';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
+
+const desktopPauseAfterThreePlaysExperiment = defineExperiment({
+	name: 'desktop-pause-after-three-plays-player',
+	buckets: ['q'],
+	startDate: Date.parse('2023-03-02T08:00:00'),
+	endDate: Date.parse('2023-03-10T11:59:00'),
+});
+
+const desktopPauseAfterFivePlaysExperiment = defineExperiment({
+	name: 'desktop-pause-after-five-plays-player',
+	buckets: ['r'],
+	startDate: Date.parse('2023-03-02T08:00:00'),
+	endDate: Date.parse('2023-03-10T11:59:00'),
+});
+
+const desktopPauseAfterTenPlaysExperiment = defineExperiment({
+	name: 'desktop-pause-after-ten-plays-player',
+	buckets: ['s'],
+	startDate: Date.parse('2023-03-02T08:00:00'),
+	endDate: Date.parse('2023-03-10T11:59:00'),
+});
 
 export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps> = ({ videoDetails }) => {
 	const [player, setPlayer] = useState(undefined);
@@ -18,6 +42,12 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 	}, []);
 
 	const getPlayer = async () => {
+		const currentExperiment: Experiment = getExperiment([
+			desktopPauseAfterThreePlaysExperiment,
+			desktopPauseAfterFivePlaysExperiment,
+			desktopPauseAfterTenPlaysExperiment,
+		]);
+
 		const youtubeTakeoverDetails = await getYoutubeTakeoverDetails({ deviceType: 'desktop' });
 
 		if (eligibleForYoutubeTakeover(youtubeTakeoverDetails)) {
@@ -27,13 +57,53 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 			);
 			return;
 		} else {
-			// By default if there is no experiment or youtube embed, then just set the base player
-			console.debug('Loading plain Desktop Article Video Player');
-			import('jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer').then(
-				({ default: JWDesktopArticleVideoPlayer }) =>
-					setPlayer(<JWDesktopArticleVideoPlayer videoDetails={videoDetails} />),
-			);
-			return;
+			switch (currentExperiment?.name) {
+				case desktopPauseAfterThreePlaysExperiment.name:
+					currentExperiment.log.info('Loading pause after three plays Desktop Article Video Player');
+					import('experimental/players/DesktopPauseAfterPlayPlayer/DesktopPauseAfterPlayPlayer').then(
+						({ default: DesktopPauseAfterPlayPlayer }) =>
+							setPlayer(
+								<DesktopPauseAfterPlayPlayer
+									videoDetails={videoDetails}
+									playerName="jw-desktop-article-video-pause-after-three-plays"
+									playsBeforePause={3}
+								/>,
+							),
+					);
+					break;
+				case desktopPauseAfterFivePlaysExperiment.name:
+					currentExperiment.log.info('Loading pause after five plays Desktop Article Video Player');
+					import('experimental/players/DesktopPauseAfterPlayPlayer/DesktopPauseAfterPlayPlayer').then(
+						({ default: DesktopPauseAfterPlayPlayer }) =>
+							setPlayer(
+								<DesktopPauseAfterPlayPlayer
+									videoDetails={videoDetails}
+									playerName="jw-desktop-article-video-pause-after-five-plays"
+									playsBeforePause={5}
+								/>,
+							),
+					);
+					break;
+				case desktopPauseAfterTenPlaysExperiment.name:
+					currentExperiment.log.info('Loading pause after ten plays Desktop Article Video Player');
+					import('experimental/players/DesktopPauseAfterPlayPlayer/DesktopPauseAfterPlayPlayer').then(
+						({ default: DesktopPauseAfterPlayPlayer }) =>
+							setPlayer(
+								<DesktopPauseAfterPlayPlayer
+									videoDetails={videoDetails}
+									playerName="jw-desktop-article-video-pause-after-ten-plays"
+									playsBeforePause={10}
+								/>,
+							),
+					);
+					break;
+				default:
+					console.debug('Loading default Desktop Article Video Player');
+					import('jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer').then(
+						({ default: JWDesktopArticleVideoPlayer }) =>
+							setPlayer(<JWDesktopArticleVideoPlayer videoDetails={videoDetails} />),
+					);
+			}
 		}
 	};
 

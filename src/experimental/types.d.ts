@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { MobileArticleVideoPlayerProps, DesktopArticleVideoPlayerProps } from '../jwplayer/types';
 export interface VolumeStateWrapperProps {
 	iconColor?: string;
 	sliderColor?: string;
@@ -122,4 +123,14 @@ export interface MobileContentPlayerOverlay {
 
 export interface ToggleCaptionsProps {
 	resetOverlayTimeout: () => void;
+}
+
+export interface DesktopPauseAfterPlayPlayerProps extends DesktopArticleVideoPlayerProps {
+	playerName?: string;
+	playsBeforePause: number;
+}
+
+export interface MobilePauseAfterPlayPlayerProps extends MobileArticleVideoPlayerProps {
+	playerName?: string;
+	playsBeforePause: number;
 }
