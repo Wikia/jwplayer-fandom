@@ -120,7 +120,7 @@ There are some cases where non JW Players will be loaded on the pages. The Youtu
 
 ## Developing
 
-The first thing you need to do is to install the dependencies & run `watch`.
+The first thing you need to do is to clone repo, install dependencies and run `yarn build`.
 
 - Clone repo
 - Run `yarn install`
@@ -145,6 +145,19 @@ The first thing you need to do is to install the dependencies & run `watch`.
 - When the JWPlayer changes are ready to be tested on other apps, such as [unified-platform](https://github.com/Wikia/unified-platform), then you can change
   the `version` variable in the `package.json`, and add in `test-1` or something along those lines. There's no easy way to test the jwplayer package
   without deploying it to artifactory. Deployment steps are covered below. For testing packages on other apps, a plain `yarn pub` works. No need to add params to it.
+
+### Standalone player
+
+Instead of using `/test-jw/src` app for testing the standalone player you can work on it in a slightly different way using [Requestly](https://requestly.io/).
+
+- Clone repo
+- Run `yarn install`
+- Run `yarn build` to build the player inside the `/stand-alone/standalone-dist` directory
+- Run `yarn run serveFilesOnBrowser` to serve files from your localhost
+- At this point visiting `http://localhost:3000/stand-alone/standalone-dist/standAlone_RV_VideoPlayer.js` should result in loading JS content
+- Setup Requestly (add new rule -> Redirect Request) so it replaces calls to `https://static.wikia.nocookie.net/silversurfer/video/prod/standalone-dist/standAlone_RV_VideoPlayer.js` with the localhost version
+- Open a page that calls for the original player asset for example `https://www.gamespot.com/articles/lies-of-p-everything-we-know-about-the-pinocchio-souls-like/1100-6510117/`
+- In Requestly tab in the dev tools a record about the redirect should appear and the player loaded on the page is your localhost version
 
 ## Publishing a new version
 
