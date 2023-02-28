@@ -13,22 +13,22 @@ export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 const mobilePauseAfterThreePlaysExperiment = defineExperiment({
 	name: 'mobile-pause-after-three-plays-player',
 	buckets: ['q'],
-	startDate: Date.parse('2023-02-22T08:00:00'),
-	endDate: Date.parse('2023-03-01T11:59:00'),
+	startDate: Date.parse('2023-03-02T08:00:00'),
+	endDate: Date.parse('2023-03-10T11:59:00'),
 });
 
 const mobilePauseAfterFivePlaysExperiment = defineExperiment({
 	name: 'mobile-pause-after-five-plays-player',
 	buckets: ['r'],
-	startDate: Date.parse('2023-02-22T08:00:00'),
-	endDate: Date.parse('2023-03-01T11:59:00'),
+	startDate: Date.parse('2023-03-02T08:00:00'),
+	endDate: Date.parse('2023-03-10T11:59:00'),
 });
 
 const mobilePauseAfterTenPlaysExperiment = defineExperiment({
 	name: 'mobile-pause-after-ten-plays-player',
 	buckets: ['s'],
-	startDate: Date.parse('2023-02-22T08:00:00'),
-	endDate: Date.parse('2023-03-01T11:59:00'),
+	startDate: Date.parse('2023-03-02T08:00:00'),
+	endDate: Date.parse('2023-03-10T11:59:00'),
 });
 
 export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> = ({ videoDetails }) => {
