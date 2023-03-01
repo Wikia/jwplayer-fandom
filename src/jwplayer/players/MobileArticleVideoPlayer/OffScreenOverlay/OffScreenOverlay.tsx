@@ -25,6 +25,7 @@ const CloseButtonStyled = styled(CloseButton).attrs((props: { topOffset: number 
 	position: absolute;
 	right: 0;
 	top: ${(props) => (props.topOffset ? `${props.topOffset}px` : 0)};
+	filter: drop-shadow(1px 2px 2px rgb(0 0 0 / 0.7));
 `;
 
 interface OffScreenOverlayProps {
@@ -57,7 +58,7 @@ const OffScreenOverlay: React.FC<OffScreenOverlayProps> = ({ dismiss, isScrollPl
 
 	return (
 		<OffScreenOverlayWrapper className={'article-featured-video__on-scroll-video-wrapper'} playing={playing}>
-			<CloseButtonStyled dismiss={dismiss} topOffset={closeButtonOffset} />
+			<CloseButtonStyled dismiss={dismiss} topOffset={closeButtonOffset} iconColor={'#fff'} />
 			<VideoDetails playing={playing} />
 		</OffScreenOverlayWrapper>
 	);

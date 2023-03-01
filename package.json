@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.1.5-floatOnScrollDesktop2",
+	"version": "2.2.2",
 	"description": "JWPlayer for Fandom",
 	"exports": {
 		".": "./main.js",
@@ -32,7 +32,7 @@
 		"lint:eslint:tests": "eslint --cache --fix tests",
 		"lint:eslint": "npm-run-all --continue-on-error --parallel lint:eslint:src",
 		"test": "echo 'No Tests yet'",
-		"prepare": "",
+		"prepare": "husky install",
 		"pub:patch": "npm version patch && rm -rf dist && yarn pub",
 		"pub:minor": "npm version minor && rm -rf dist && yarn pub",
 		"pub:major": "npm version major && rm -rf dist && yarn pub",
@@ -96,6 +96,7 @@
 		"@rollup/plugin-typescript": "8.3.0",
 		"@types/react": "17.0.39",
 		"@types/styled-components": "^5.1.18",
+		"@types/youtube": "^0.0.47",
 		"@typescript-eslint/eslint-plugin": "5.16.0",
 		"@typescript-eslint/parser": "5.16.0",
 		"babel-plugin-styled-components": "^2.0.2",

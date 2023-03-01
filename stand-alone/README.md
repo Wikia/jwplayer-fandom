@@ -1,3 +1,21 @@
+#How the stand-alone app is structured
+
+1. Currently the `/src` folder at the root of the project and the `/stand-alone` folder at the root of the project
+   are separate apps. The main JWPlayer code is all located in the `/src` folder.
+2. The stand-alone folder relies on the main JWPlayer code being compiled.
+3. In the /stand-alone/package.json file you'll notice that `"@fandom/jwplayer-fandom": "link:../dist"`
+   entry is linked to the root project's `/dist` folder.
+4. You'll notice that the following `import` statement in the `/stand-alone/standalone-loader.tsx` file has a `@ts-ignore`
+   annotation added, due to some typing issues that came up when doing local package linking:
+
+```
+// @ts-ignore (This package does exist, after the fandom player is built with 'yarn build-fandom-player')
+import RedVentureVideoPlayer from '@fandom/jwplayer-fandom/RedVentureVideoPlayer';
+```
+
+5. This issue may need to be fixed in the future, specifically when trying to automate deployments through tools
+   such as Jenkins.
+
 #Notes on semi-automated deploying with a script
 
 1. The semi-automated deploying script is called `deploy-stand-alone` and can be found in the main `package.json` file.

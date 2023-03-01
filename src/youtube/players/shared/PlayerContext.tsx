@@ -1,5 +1,5 @@
 import React from 'react';
-import { Player } from 'twitch/types';
+import { Player } from 'youtube/types';
 
 interface PlayerContextInterface {
 	player: Player;

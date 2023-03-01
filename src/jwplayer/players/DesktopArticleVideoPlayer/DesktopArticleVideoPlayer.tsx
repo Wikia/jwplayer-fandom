@@ -56,12 +56,13 @@ const TopBar = styled.div`
 `;
 
 const CloseButtonPositioned = styled(CloseButton)`
+	filter: drop-shadow(1px 2px 2px rgb(0 0 0 / 0.7));
 	position: absolute;
 	right: 0;
 	top: 0;
 `;
 
-const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
+export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
@@ -88,7 +89,7 @@ const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ v
 	}
 
 	return (
-		<PlayerWrapper playerName="jw-desktop-article-video">
+		<>
 			<DesktopArticleVideoTopPlaceholder ref={placeholderRef}>
 				{adComplete && (
 					<DesktopArticleVideoWrapper
@@ -99,7 +100,7 @@ const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ v
 					>
 						<TopBar>
 							{!isScrollPlayer && <UnmuteButton />}
-							{isScrollPlayer && <CloseButtonPositioned dismiss={() => setDismissed(true)} />}
+							{isScrollPlayer && <CloseButtonPositioned dismiss={() => setDismissed(true)} iconColor={'#fff'} />}
 						</TopBar>
 						<JwPlayerWrapper
 							config={getArticleVideoConfig(videoDetails)}
@@ -111,8 +112,14 @@ const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ v
 				)}
 			</DesktopArticleVideoTopPlaceholder>
 			<Attribution />
-		</PlayerWrapper>
+		</>
 	);
 };
+
+export const DesktopArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => (
+	<PlayerWrapper playerName="jw-desktop-article-video">
+		<DesktopArticleVideoPlayerContent videoDetails={videoDetails} />
+	</PlayerWrapper>
+);
 
 export default DesktopArticleVideoPlayer;
