@@ -34,8 +34,8 @@ const desktopPauseAfterTenPlaysExperiment = defineExperiment({
 const desktopJwFloatOnScrollExperiment = defineExperiment({
 	name: 'desktop-jw-float-on-scroll-experiment',
 	buckets: ['u'],
-	startDate: Date.parse('2023-03-06T08:00:00'),
-	endDate: Date.parse('2023-03-13T11:59:00'),
+	startDate: Date.parse('2023-03-13T06:00:00'),
+	endDate: Date.parse('2023-03-19T11:59:00'),
 });
 
 export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps> = ({ videoDetails }) => {
@@ -54,7 +54,7 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 			desktopPauseAfterThreePlaysExperiment,
 			desktopPauseAfterFivePlaysExperiment,
 			desktopPauseAfterTenPlaysExperiment,
-      desktopJwFloatOnScrollExperiment
+			desktopJwFloatOnScrollExperiment,
 		]);
 
 		const youtubeTakeoverDetails = await getYoutubeTakeoverDetails({ deviceType: 'desktop' });
@@ -70,8 +70,7 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 				({ default: DesktopFloatOnScrollArticleVideoPlayer }) =>
 					setPlayer(<DesktopFloatOnScrollArticleVideoPlayer videoDetails={videoDetails} />),
 			);
-		}
-    else {
+		} else {
 			switch (currentExperiment?.name) {
 				case desktopPauseAfterThreePlaysExperiment.name:
 					currentExperiment.log.info('Loading pause after three plays Desktop Article Video Player');
