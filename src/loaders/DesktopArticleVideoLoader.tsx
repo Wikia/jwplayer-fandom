@@ -6,6 +6,7 @@ import { eligibleForYoutubeTakeover, getYoutubeTakeoverDetails } from 'loaders/u
 import defineExperiment from '@fandom/pathfinder-lite/experiments/defineExperiment';
 import getExperiment from '@fandom/pathfinder-lite/experiments/getExperiment';
 import { Experiment } from '@fandom/pathfinder-lite/types';
+import checkUserGeo from 'utils/experiments/checkUserGeo';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
@@ -30,6 +31,13 @@ const desktopPauseAfterTenPlaysExperiment = defineExperiment({
 	endDate: Date.parse('2023-03-10T11:59:00'),
 });
 
+const desktopJwFloatOnScrollExperiment = defineExperiment({
+	name: 'desktop-jw-float-on-scroll-experiment',
+	buckets: ['u'],
+	startDate: Date.parse('2023-03-13T06:00:00'),
+	endDate: Date.parse('2023-03-19T11:59:00'),
+});
+
 export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps> = ({ videoDetails }) => {
 	const [player, setPlayer] = useState(undefined);
 
@@ -46,6 +54,7 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 			desktopPauseAfterThreePlaysExperiment,
 			desktopPauseAfterFivePlaysExperiment,
 			desktopPauseAfterTenPlaysExperiment,
+			desktopJwFloatOnScrollExperiment,
 		]);
 
 		const youtubeTakeoverDetails = await getYoutubeTakeoverDetails({ deviceType: 'desktop' });
@@ -56,6 +65,11 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 				setPlayer(<YoutubeDesktopArticleVideoPlayer youtubeTakeoverDetails={youtubeTakeoverDetails} />),
 			);
 			return;
+		} else if (currentExperiment?.name === desktopJwFloatOnScrollExperiment?.name && checkUserGeo(['us'])) {
+			import('experimental/players/DesktopFloatOnScrollArticleVideoPlayer/DesktopFloatOnScrollArticleVideoPlayer').then(
+				({ default: DesktopFloatOnScrollArticleVideoPlayer }) =>
+					setPlayer(<DesktopFloatOnScrollArticleVideoPlayer videoDetails={videoDetails} />),
+			);
 		} else {
 			switch (currentExperiment?.name) {
 				case desktopPauseAfterThreePlaysExperiment.name:
