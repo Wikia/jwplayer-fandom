@@ -1,5 +1,5 @@
 import { track } from '@fandom/tracking-metrics/tracking/dataLayer';
-import { YoutubeTakeOverDetails } from 'loaders/utils/GetYoutubeTakeoverDetails';
+import { YoutubeTakeOverDetails } from 'youtube/types';
 
 export interface YoutubePlayerTrackingProps {
 	deviceType: 'desktop' | 'mobile';

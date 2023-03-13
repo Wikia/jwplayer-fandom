@@ -7,7 +7,7 @@ import {
 	trackYoutubePlayerStateChange,
 	YoutubePlayerTrackingProps,
 } from 'youtube/players/shared/youtubeTrackingEvents';
-import { YoutubeTakeOverDetails } from 'loaders/utils/GetYoutubeTakeoverDetails';
+import { YoutubeTakeOverDetails } from 'youtube/types';
 
 import OnStateChangeEvent = YT.OnStateChangeEvent;
 

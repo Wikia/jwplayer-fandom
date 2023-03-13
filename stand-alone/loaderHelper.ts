@@ -184,3 +184,14 @@ export const canPlayerRender = (context: RedVenturePlayerContextProps): boolean 
 
 	return true;
 };
+
+const newsAndRatingsNamesWithDefaultPlayer = [ 'gamespot', 'gamefaqs', 'comicvine', 'tvguide', 'metacritic' ];
+export const assurePlayerUrl = (context: RedVenturePlayerContextProps): RedVenturePlayerContextProps => {
+	const newContext = { ...context };
+
+	if (!context.playerUrl && newsAndRatingsNamesWithDefaultPlayer.includes(context.contextName)) {
+		newContext.playerUrl = 'https://cdn.jwplayer.com/libraries/0YAHnB5r.js';
+	}
+
+	return newContext
+};
