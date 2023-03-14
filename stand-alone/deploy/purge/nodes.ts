@@ -1,11 +1,5 @@
 // knife search roles:cdn-node* -a hostname | grep hostname | awk '{print $2}' | sort | sed "s/\(.*\)/\t'\1',/g"
 export const NODES: Array<string> = [
-	'dev-wk-cdn-s1',
-	'dev-wk-cdn-s2',
-	'dev-wk-cdn-s3',
-	'dev-wk-cdn-s4',
-	'dev-wk-cdn-s5',
-	'dev-wk-cdn-s6',
 	'wk-cdn-f1',
 	'wk-cdn-f2',
 	'wk-cdn-f3',
