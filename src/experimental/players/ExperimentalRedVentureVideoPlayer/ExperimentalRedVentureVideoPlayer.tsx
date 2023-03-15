@@ -65,13 +65,15 @@ const TopBar = styled.div`
 	position: relative;
 `;
 
-const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
+// TODO: This can be deleted before merging. This is just used for testing purposes
+
+const ExperimentalRedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 	videoDetails,
 	showScrollPlayer,
 	jwPlayerContainerEmbedId,
 	playerUrl,
 }) => {
-	console.debug('This is a message from the usual RedVentureVideoPlayer');
+	console.debug('This is a message from the ExperimentalRedVentureVideoPlayer');
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	// Check if Ads are disabled on any of the N&R Games sites. If the resolving function is not present, then always resolve to connecting with AdEng.
 	const hasAds =
@@ -131,4 +133,4 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 	);
 };
 
-export default RedVentureVideoPlayer;
+export default ExperimentalRedVentureVideoPlayer;

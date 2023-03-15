@@ -8,6 +8,8 @@ export { default as JWCanonicalVideoPlayer } from 'jwplayer/players/CanonicalVid
 
 export { default as JWDesktopReskinnedArticleVideoPlayer } from 'experimental/players/DesktopReskinnedArticleVideoPlayer/DesktopReskinnedArticleVideoPlayer';
 
+export { default as ExperimentalRedVentureVideoPlayer } from 'experimental/players/ExperimentalRedVentureVideoPlayer/ExperimentalRedVentureVideoPlayer';
+
 export { default as RedVentureVideoPlayer } from 'jwplayer/players/RedVentureVideoPlayer/RedVentureVideoPlayer';
 
 export { default as TwitchDesktopArticleVideoPlayer } from 'twitch/players/DesktopArticleVideoPlayer';
@@ -19,6 +21,8 @@ export { default as DesktopArticleVideoLoader } from 'loaders/DesktopArticleVide
 export { default as MobileArticleVideoLoader } from 'loaders/MobileArticleVideoLoader';
 
 export { default as CanonicalVideoLoader } from 'loaders/CanonicalVideoLoader';
+
+export { default as RedVentureVideoLoader } from 'loaders/RedVentureVideoLoader';
 
 // @ts-ignore
 window.__fandom_jw_player_version = process.env.VIDEO_VERSION;

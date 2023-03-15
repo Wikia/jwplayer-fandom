@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 // @ts-ignore (This package does exist, after the fandom player is built with 'yarn build-fandom-player')
-import RedVentureVideoPlayer from '@fandom/jwplayer-fandom/RedVentureVideoPlayer';
+import RedVentureVideoLoader from '@fandom/jwplayer-fandom/RedVentureVideoLoader';
 import {
 	buildRedVentureVideoDetails,
 	canPlayerRender,
@@ -55,7 +55,7 @@ window.loadPlayer = async (context: RedVenturePlayerContextProps) => {
 	videoWrapperElement.innerHTML = '';
 
 	ReactDOM.render(
-		React.createElement(RedVentureVideoPlayer, {
+		React.createElement(RedVentureVideoLoader, {
 			videoDetails: redVentureVideoDetails,
 			showScrollPlayer: context?.showScrollPlayer ?? false,
 			jwPlayerContainerEmbedId: getJwPlayerContainerEmbedId(context),

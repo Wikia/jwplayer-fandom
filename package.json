@@ -7,7 +7,7 @@
 		"./DesktopArticleVideoLoader": "./DesktopArticleVideoLoader.js",
 		"./MobileArticleVideoLoader": "./MobileArticleVideoLoader.js",
 		"./CanonicalVideoLoader": "./CanonicalVideoLoader.js",
-		"./RedVentureVideoPlayer": "./RedVentureVideoPlayer.js"
+		"./RedVentureVideoLoader": "./RedVentureVideoLoader.js"
 	},
 	"types": "main.d.ts",
 	"install-peers": "install-peers",
