@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 // @ts-ignore (This package does exist, after the fandom player is built with 'yarn build-fandom-player')
 import RedVentureVideoLoader from '@fandom/jwplayer-fandom/RedVentureVideoLoader';
 import {
+	assurePlayerUrl,
 	buildRedVentureVideoDetails,
 	canPlayerRender,
 	getVideoDetails,
@@ -47,6 +48,8 @@ window.loadPlayer = async (context: RedVenturePlayerContextProps) => {
 		throw new Error('Could not render the video player. The requirements for initialization were not met.');
 	}
 
+	context = assurePlayerUrl(context);
+
 	const jwMediaDetails = await getVideoDetails(context);
 	const redVentureVideoDetails: RedVentureVideoDetails = buildRedVentureVideoDetails(jwMediaDetails);
 
@@ -60,6 +63,7 @@ window.loadPlayer = async (context: RedVenturePlayerContextProps) => {
 			showScrollPlayer: context?.showScrollPlayer ?? false,
 			jwPlayerContainerEmbedId: getJwPlayerContainerEmbedId(context),
 			playerUrl: context?.playerUrl,
+			autoPlay: context?.autoPlay,
 		} as RedVentureVideoPlayerProps),
 		reactRoot,
 	);

@@ -358,6 +358,7 @@ export interface ArticleVideoDetails {
 	playlist: Playlist;
 	title: string;
 	videoTags: string;
+	tier3Mapping: boolean;
 }
 
 export interface RedVentureVideoDetails {
@@ -447,9 +448,10 @@ export interface DesktopArticleVideoPlayerProps {
 }
 
 export interface RedVentureVideoPlayerProps extends JwPlayerContainerId {
-	videoDetails: ArticleVideoDetails;
+	videoDetails: RedVentureVideoDetails;
 	showScrollPlayer: boolean;
 	playerUrl?: string;
+	autoPlay?: boolean;
 }
 
 export interface MobileArticleVideoPlayerProps {
@@ -457,8 +459,3 @@ export interface MobileArticleVideoPlayerProps {
 	isFullScreen?: boolean;
 	videoDetails: ArticleVideoDetails;
 }
-
-export type RequireOnlyOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclude<keyof T, Keys>> &
-	{
-		[K in Keys]-?: Required<Pick<T, K>> & Partial<Record<Exclude<Keys, K>, undefined>>;
-	}[Keys];

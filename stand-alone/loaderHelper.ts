@@ -80,6 +80,15 @@ export interface RedVenturePlayerContext extends JwPlayerContainerId {
 	 * }
 	 * */
 	jwtSignedContentAuth?: string;
+	/**
+	 * @description An optional parameter that determines whether the video should autoplay.
+	 * If left blank, the video will only autoplay based on certain cookies being set and the tab being visible.
+	 * @example
+	 * {
+	 *		autoPlay: false
+	 * }
+	 * */
+	autoPlay?: boolean;
 }
 
 export type RedVenturePlayerContextProps = RequireOnlyOne<
@@ -174,4 +183,15 @@ export const canPlayerRender = (context: RedVenturePlayerContextProps): boolean 
 	/* End optional configuration prop checks */
 
 	return true;
+};
+
+const newsAndRatingsNamesWithDefaultPlayer = [ 'gamespot', 'gamefaqs', 'comicvine', 'tvguide', 'metacritic' ];
+export const assurePlayerUrl = (context: RedVenturePlayerContextProps): RedVenturePlayerContextProps => {
+	const newContext = { ...context };
+
+	if (!context.playerUrl && newsAndRatingsNamesWithDefaultPlayer.includes(context.contextName)) {
+		newContext.playerUrl = 'https://cdn.jwplayer.com/libraries/0YAHnB5r.js';
+	}
+
+	return newContext
 };

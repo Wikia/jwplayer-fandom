@@ -43,7 +43,7 @@ const MobileArticleVideoWrapper = styled.div<MobileArticleVideoWrapperProps>`
 			  `}
 `;
 
-const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
+export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerProps> = ({
 	hasPartnerSlot,
 	isFullScreen,
 	videoDetails,
@@ -89,7 +89,7 @@ const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
 	}, [onScreen, adComplete]);
 
 	return (
-		<PlayerWrapper playerName="jw-mobile-article-video">
+		<>
 			<MobileArticleVideoTopPlaceholder className={isScrollPlayer ? ' is-on-scroll-active ' : ''} ref={ref}>
 				{adComplete && (
 					<MobileArticleVideoWrapper
@@ -107,8 +107,22 @@ const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
 				)}
 			</MobileArticleVideoTopPlaceholder>
 			<Attribution />
-		</PlayerWrapper>
+		</>
 	);
 };
+
+export const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
+	hasPartnerSlot,
+	isFullScreen,
+	videoDetails,
+}) => (
+	<PlayerWrapper playerName="jw-mobile-article-video">
+		<MobileArticleVideoPlayerContent
+			hasPartnerSlot={hasPartnerSlot}
+			isFullScreen={isFullScreen}
+			videoDetails={videoDetails}
+		/>
+	</PlayerWrapper>
+);
 
 export default MobileArticleVideoPlayer;

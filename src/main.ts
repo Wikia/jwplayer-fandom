@@ -10,11 +10,13 @@ export { default as JWDesktopReskinnedArticleVideoPlayer } from 'experimental/pl
 
 export { default as ExperimentalRedVentureVideoPlayer } from 'experimental/players/ExperimentalRedVentureVideoPlayer/ExperimentalRedVentureVideoPlayer';
 
+export { default as DesktopFloatOnScrollArticleVideoPlayer } from 'experimental/players/DesktopFloatOnScrollArticleVideoPlayer/DesktopFloatOnScrollArticleVideoPlayer';
+
 export { default as RedVentureVideoPlayer } from 'jwplayer/players/RedVentureVideoPlayer/RedVentureVideoPlayer';
 
-export { default as TwitchDesktopArticleVideoPlayer } from 'twitch/players/DesktopArticleVideoPlayer';
+export { default as YoutubeDesktopArticleVideoPlayer } from 'youtube/players/YoutubeDesktopArticleVideoPlayer';
 
-export { default as TwitchMobileArticleVideoPlayer } from 'twitch/players/MobileArticleVideoPlayer';
+export { default as YoutubeMobileArticleVideoPlayer } from 'youtube/players/YoutubeMobileArticleVideoPlayer';
 
 export { default as DesktopArticleVideoLoader } from 'loaders/DesktopArticleVideoLoader';
 
