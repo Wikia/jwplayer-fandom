@@ -13,8 +13,12 @@ import redVenturePlayerOnReady from 'jwplayer/players/RedVentureVideoPlayer/redV
 import { getRedVentureVideoConfig } from 'jwplayer/players/RedVentureVideoPlayer/getRedVentureVideoConfig';
 import { disableTimingEventsSamplingRate } from 'jwplayer/utils/videoTimingEvents';
 
+interface PhoenixUser {
+	isPremium?: () => boolean;
+}
+
 interface Phoenix {
-	hasAds?: () => boolean;
+	User?: PhoenixUser;
 }
 
 interface WindowWithPhoenix extends Window {
@@ -72,12 +76,17 @@ const ExperimentalRedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = 
 	showScrollPlayer,
 	jwPlayerContainerEmbedId,
 	playerUrl,
+	autoPlay,
 }) => {
 	console.debug('This is a message from the ExperimentalRedVentureVideoPlayer');
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	// Check if Ads are disabled on any of the N&R Games sites. If the resolving function is not present, then always resolve to connecting with AdEng.
+	// This check should only apply to the GiantBomb N&R site. Safeguards are added in for other sites, where this function may not be defined.
+	// If the user is a GiantBomb premium user, then let's flag the video player as not having ads. Premium users should not see video ads.
 	const hasAds =
-		window?.Phoenix?.hasAds && typeof window?.Phoenix?.hasAds === 'function' ? window.Phoenix.hasAds() : true;
+		window?.Phoenix?.User?.isPremium && typeof window?.Phoenix?.User?.isPremium === 'function'
+			? !window.Phoenix.User.isPremium()
+			: true;
 	const adComplete = useRvAdComplete(hasAds);
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
@@ -118,7 +127,7 @@ const ExperimentalRedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = 
 							{isScrollPlayer && <CloseButton dismiss={() => setDismissed(true)} />}
 						</TopBar>
 						<JwPlayerWrapper
-							config={getRedVentureVideoConfig(videoDetails)}
+							config={getRedVentureVideoConfig(videoDetails, autoPlay)}
 							onReady={(playerInstance) => redVenturePlayerOnReady(videoDetails, playerInstance)}
 							stopAutoAdvanceOnExitViewport={false}
 							shouldLoadSponsoredContentList={false}
