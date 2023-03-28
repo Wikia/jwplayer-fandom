@@ -201,20 +201,14 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 			});
 		})
 
-		// Ads TODO - Ask if we need this
-		// .on(JWEvents.AD_PLAY, () => {
-		// 	console.log('Ad Play');
-		// })
-
+		// Ads
 		.on(JWEvents.AD_LOADED, (event: AdEvents) => {
-			console.log('ads', event);
 			jwPlayerAdTracker({
 				event_name: 'video_ad_loaded',
 				...getAdPropsFromAdEvent(event),
 			});
 		})
 		.on(JWEvents.AD_STARTED, (event: AdEvents) => {
-			console.log('ad_started', event);
 			jwPlayerAdTracker({
 				event_name: 'video_ad_started',
 				...getAdPropsFromAdEvent(event),
@@ -222,7 +216,6 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 			triggerVideoMetric('adstarted');
 		})
 		.on(JWEvents.AD_FINISHED, (event: AdEvents) => {
-			console.log('ad_finished', event);
 			jwPlayerAdTracker({
 				event_name: 'video_ad_completed',
 				...getAdPropsFromAdEvent(event),
@@ -231,7 +224,6 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 		})
 		.on(JWEvents.AD_TIME, (event: OnAdTimeEventData) => {
 			const mediaId = getAssetId();
-			console.log('ad_time', event);
 			const additionalAdProps = getAdPropsFromAdEvent(event);
 
 			if (event.position >= event.duration * 0.25 && singleTrack('jw-player-ad-25-' + mediaId)) {
