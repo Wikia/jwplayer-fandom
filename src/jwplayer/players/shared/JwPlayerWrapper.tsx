@@ -33,6 +33,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	onComplete,
 	className,
 	stopAutoAdvanceOnExitViewport,
+	skipAdOnMediaIds,
 	shouldLoadSponsoredContentList = true,
 	jwPlayerContainerEmbedId = 'featured-video__player',
 }) => {
@@ -48,6 +49,8 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 			const retrieveSponsoredVideo = async () => {
 				const sponsoredVideoResponse = await getSponsoredVideos();
 				if (sponsoredVideoResponse && typeof window !== undefined) {
+					sponsoredVideoResponse.push('HmjhpQRV');
+					console.log('SponsoredVideoResponse with HmjhpQRV added: ', sponsoredVideoResponse);
 					window.sponsoredVideos = sponsoredVideoResponse;
 				} else {
 					console.debug(
@@ -86,6 +89,30 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 			const playerInstance = window.jwplayer(elementId).setup({
 				...defaultConfig,
 				...config,
+			});
+
+			playerInstance.on('adStarted', () => {
+				console.log('adStarted - event found.');
+				if (skipAdOnMediaIds) {
+					console.log('adStarted - skipAdOnMediaIds was set with: ', skipAdOnMediaIds);
+					console.log('adStarted - config.playlistItem.mediaid is: ', config.playlist?.[0]?.mediaid);
+					if (skipAdOnMediaIds.includes(config.playlist?.[0]?.mediaid)) {
+						console.log('Should skip current playing ad.');
+						playerInstance.skipAd();
+					}
+				}
+			});
+
+			playerInstance.on('adPlay', () => {
+				console.log('adPlay - event found.');
+				if (skipAdOnMediaIds) {
+					console.log('adPlay - skipAdOnMediaIds was set with: ', skipAdOnMediaIds);
+					console.log('adPlay - config.playlistItem.mediaid is: ', config.playlist?.[0]?.mediaid);
+					if (skipAdOnMediaIds.includes(config.playlist?.[0]?.mediaid)) {
+						console.log('Should skip current playing ad.');
+						playerInstance.skipAd();
+					}
+				}
 			});
 
 			playerInstance.on(JWEvents.READY, (event) => {

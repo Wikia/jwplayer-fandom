@@ -235,6 +235,7 @@ export type Player = {
 	pause: () => null;
 	play: () => null;
 	setMute: (mute: boolean | null) => null;
+	skipAd: () => null;
 	setFullscreen: () => null;
 	getPlaylistItem: () => PlaylistItem;
 	on: (name: string, handler: JwEventHandler) => Player;
@@ -420,6 +421,7 @@ export interface JwPlayerWrapperProps extends JwPlayerContainerId {
 	className?: string;
 	stopAutoAdvanceOnExitViewport?: boolean;
 	shouldLoadSponsoredContentList?: boolean;
+	skipAdOnMediaIds?: string[];
 }
 
 export interface JwPlayerContainerId {
