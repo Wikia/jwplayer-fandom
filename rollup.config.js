@@ -59,7 +59,9 @@ const config = [
 			json(),
 			commonjs(),
 			postcss({
+				minimize: true,
 				modules: true,
+				sourceMap: isDev,
 			}),
 		],
 		external: ['react', 'react-dom', 'react-i18next', 'react-i18next'],
