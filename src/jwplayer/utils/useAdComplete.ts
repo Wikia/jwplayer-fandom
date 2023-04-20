@@ -16,7 +16,7 @@ export default function useAdComplete(): boolean {
 			waitForAdEngine().then(() => {
 				recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_CONFIG_MESSAGE_RECIEVED);
 				recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_SETUP_JW_LISTEN_START);
-				listenSetupJWPlayer(function () {
+				listenSetupJWPlayer().then(() => {
 					recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_SETUP_JW_MESSAGE_RECIEVED);
 					setAdComplete(true);
 				});
@@ -34,8 +34,14 @@ export default function useAdComplete(): boolean {
 		return race(adEngineConfigured$, adEngineTimeout$).toPromise();
 	};
 
-	const listenSetupJWPlayer = (callback) => {
-		communicationService.action$.pipe(ofType('[Ad Engine] Setup JWPlayer'), first()).subscribe(callback);
+	const listenSetupJWPlayer = () => {
+		// to prevent prettier reformatting this line and then spitting out errors
+		// prettier-ignore
+		const adEngineVideoAdSlotSetup$ = communicationService.action$.pipe(ofType('[Ad Engine] Setup JWPlayer'), first());
+		const videoAdSlotSetupTimeout = 1000;
+		const videoAdSlotSetupTimeout$ = timer(videoAdSlotSetupTimeout);
+
+		return race(adEngineVideoAdSlotSetup$, videoAdSlotSetupTimeout$).toPromise();
 	};
 
 	return adComplete;
