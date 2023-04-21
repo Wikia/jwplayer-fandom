@@ -8,6 +8,13 @@ import dts from 'rollup-plugin-dts';
 import replace from '@rollup/plugin-replace';
 import postcss from 'rollup-plugin-postcss';
 
+import postcssDesignTokens from 'postcss-design-tokens';
+import simplevars from 'postcss-simple-vars';
+import nested from 'postcss-nested';
+import cssnext from 'postcss-cssnext';
+import cssnano from 'cssnano';
+import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
+
 import packageJson from './package.json';
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -62,6 +69,14 @@ const config = [
 				minimize: true,
 				modules: true,
 				sourceMap: isDev,
+				extensions: ['.css', '.scss'],
+				plugins: [
+					postcssDesignTokens({ tokens: WDSVariables }),
+					simplevars(),
+					nested(),
+					cssnext({ warnForDuplicates: false }),
+					cssnano(),
+				],
 			}),
 		],
 		external: ['react', 'react-dom', 'react-i18next', 'react-i18next'],
