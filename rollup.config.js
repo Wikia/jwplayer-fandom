@@ -9,6 +9,7 @@ import replace from '@rollup/plugin-replace';
 import postcss from 'rollup-plugin-postcss';
 
 import postcssDesignTokens from 'postcss-design-tokens';
+import autoprefixer from 'autoprefixer';
 import simplevars from 'postcss-simple-vars';
 import nested from 'postcss-nested';
 import cssnext from 'postcss-cssnext';
@@ -66,12 +67,13 @@ const config = [
 			json(),
 			commonjs(),
 			postcss({
-				minimize: true,
 				modules: true,
+				minimize: !isDev,
 				sourceMap: isDev,
 				extensions: ['.css', '.scss'],
 				plugins: [
 					postcssDesignTokens({ tokens: WDSVariables }),
+					autoprefixer(),
 					simplevars(),
 					nested(),
 					cssnext({ warnForDuplicates: false }),
