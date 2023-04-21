@@ -1,6 +1,4 @@
 import React, { useRef, useState } from 'react';
-import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
-import styled, { css } from 'styled-components';
 import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButton';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import VideoDetails from 'jwplayer/players/DesktopArticleVideoPlayer/VideoDetails';
@@ -13,54 +11,7 @@ import Attribution from 'jwplayer/players/DesktopArticleVideoPlayer/Attribution'
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
 
-const DesktopArticleVideoTopPlaceholder = styled.div`
-	z-index: ${Number(WDSVariables.z2) + 2};
-	position: absolute;
-	width: 100%;
-	padding-top: 56.25%;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	z-index: 2;
-`;
-
-interface DesktopArticleVideoWrapperProps {
-	isScrollPlayer: boolean;
-	right?: number;
-	width?: number;
-}
-
-const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
-	height: max-content;
-	${(props) =>
-		props.isScrollPlayer
-			? css`
-					position: fixed;
-					right: 18px;
-					bottom: 45px;
-					width: 300px;
-			  `
-			: css`
-					position: absolute;
-					bottom: 0;
-					right: 0;
-					top: 0;
-					left: 0;
-			  `}
-`;
-
-const TopBar = styled.div`
-	width: 100%;
-	position: relative;
-`;
-
-const CloseButtonPositioned = styled(CloseButton)`
-	filter: drop-shadow(1px 2px 2px rgb(0 0 0 / 0.7));
-	position: absolute;
-	right: 0;
-	top: 0;
-`;
+import styles from './DesktopArticleVideoPlayer.module.css';
 
 export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
@@ -68,9 +19,6 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
-	const boundingClientRect = placeholderRef.current?.getBoundingClientRect();
-	const right = boundingClientRect?.right;
-	const width = boundingClientRect?.width;
 	const controlbar = document.querySelector<HTMLElement>('.jw-controlbar');
 	const shareIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-settings-sharing');
 	const moreVideosIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-related-btn');
@@ -90,27 +38,28 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 
 	return (
 		<>
-			<DesktopArticleVideoTopPlaceholder ref={placeholderRef}>
+			<div className={styles.desktopArticleVideoTopPlaceholder} ref={placeholderRef}>
 				{adComplete && (
-					<DesktopArticleVideoWrapper
-						className={'desktop-article-video-wrapper'}
-						right={right}
-						width={width}
-						isScrollPlayer={isScrollPlayer}
+					<div
+						className={
+							isScrollPlayer ? styles.desktopArticleVideoWrapperScrollPlayer : styles.desktopArticleVideoWrapper
+						}
 					>
-						<TopBar>
+						<div className={styles.topBar}>
 							{!isScrollPlayer && <UnmuteButton />}
-							{isScrollPlayer && <CloseButtonPositioned dismiss={() => setDismissed(true)} iconColor={'#fff'} />}
-						</TopBar>
+							{isScrollPlayer && (
+								<CloseButton dismiss={() => setDismissed(true)} iconColor={'#fff'} className={styles.closeButton} />
+							)}
+						</div>
 						<JwPlayerWrapper
 							config={getArticleVideoConfig(videoDetails)}
 							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
 							stopAutoAdvanceOnExitViewport={false}
 						/>
 						{isScrollPlayer && <VideoDetails />}
-					</DesktopArticleVideoWrapper>
+					</div>
 				)}
-			</DesktopArticleVideoTopPlaceholder>
+			</div>
 			<Attribution />
 		</>
 	);

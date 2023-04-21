@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
 import PlayerOverlay from 'experimental/shared/PlayerOverlay';
 import { ContentPlayerOverlayProps } from 'experimental/types';
 import ContentPlayerFullOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/content/ContentPlayerFullOverlay';
@@ -8,9 +7,7 @@ import usePlaying from 'jwplayer/utils/usePlaying';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import useRelatedOpen from 'jwplayer/utils/useRelatedOpen';
 
-const PlayerOverlayAllowClick = styled(PlayerOverlay)`
-	${(props) => props.showOverlay && `pointer-events: auto;`}
-`;
+import styles from './ContentPlayerOverlay.module.css';
 
 const ContentPlayerOverlay: React.FC<ContentPlayerOverlayProps> = ({ isScrollPlayer, showOverlay }) => {
 	const { player } = useContext(PlayerContext);
@@ -18,12 +15,13 @@ const ContentPlayerOverlay: React.FC<ContentPlayerOverlayProps> = ({ isScrollPla
 	const isRelatedOpen = useRelatedOpen();
 
 	return (
-		<PlayerOverlayAllowClick
+		<PlayerOverlay
+			className={showOverlay ? styles.playerOverlayAllowClick : ''}
 			showOverlay={(showOverlay && !isRelatedOpen) || !isPlaying}
 			handleOverlayClick={isPlaying ? player?.pause : player?.play}
 		>
 			{isScrollPlayer ? <ContentPlayerScrollOverlay /> : <ContentPlayerFullOverlay />}
-		</PlayerOverlayAllowClick>
+		</PlayerOverlay>
 	);
 };
 

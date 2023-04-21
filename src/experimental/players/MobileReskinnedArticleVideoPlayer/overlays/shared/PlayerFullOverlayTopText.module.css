@@ -1,0 +1,13 @@
+.textWrapper {
+	color: #eee;
+}
+
+.upperText {
+	font-weight: 400;
+	font-size: 12px;
+	margin-bottom: 5px;
+}
+.lowerText {
+	font-weight: 400;
+	font-size: 16px;
+}
