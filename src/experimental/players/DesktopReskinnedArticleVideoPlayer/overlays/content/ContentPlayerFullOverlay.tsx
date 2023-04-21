@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import TimeSlider from 'experimental/shared/TimeSlider';
 import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
 import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
@@ -9,32 +8,7 @@ import PlayerFullOverlayTopText from 'experimental/players/DesktopReskinnedArtic
 import PlayerCTAButton from 'experimental/shared/PlayerCTAButton';
 import TimeRemaining from 'experimental/shared/TimeRemaining';
 
-const ControlWrapper = styled.div`
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	margin-top: 5px;
-`;
-
-const PlayVolumeWrapper = styled.div`
-	display: flex;
-	position: relative;
-	left: -15px;
-`;
-
-const ContentOverlayTimeSlider = styled(TimeSlider)`
-	align-items: center;
-	height: 17px;
-`;
-
-const BottomWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-`;
-
-const TimeRemainingPadded = styled(TimeRemaining)`
-	padding-left: 10px;
-`;
+import styles from './ContentPlayerFullOverlay.module.css';
 
 const ContentPlayerFullOverlay: React.FC = () => {
 	const playlistItem = usePlaylistItem();
@@ -44,22 +18,22 @@ const ContentPlayerFullOverlay: React.FC = () => {
 	return (
 		<DesktopPlayerFullOverlayWrapper>
 			<PlayerFullOverlayTopText upperText={upperText} lowerText={lowerText} />
-			<BottomWrapper>
-				<ContentOverlayTimeSlider railHeight={'2px'} />
-				<ControlWrapper>
-					<PlayVolumeWrapper>
+			<div className={styles.bottomWrapper}>
+				<TimeSlider railHeight={'2px'} className={styles.contentOverlayTimeSlider} />
+				<div className={styles.controlWrapper}>
+					<div className={styles.playVolumeWrapper}>
 						<PlayStateWrapper iconColor={'#fff'} />
 						<VolumeStateWrapper iconColor={'#fff'} hasLabel={false} hasSlider={true} />
-						<TimeRemainingPadded />
-					</PlayVolumeWrapper>
+						<TimeRemaining className={styles.timeRemainingPadded} />
+					</div>
 					<PlayerCTAButton
 						text={'Watch More'}
 						onClick={() => {
 							window.open(`https://www.fandom.com/video/${playlistItem.mediaid}`, '_blank');
 						}}
 					/>
-				</ControlWrapper>
-			</BottomWrapper>
+				</div>
+			</div>
 		</DesktopPlayerFullOverlayWrapper>
 	);
 };

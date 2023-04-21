@@ -1,0 +1,25 @@
+.desktopArticleVideoTopPlaceholder {
+	position: absolute;
+	width: 100%;
+	padding-top: 56.25%;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	z-index: 2;
+}
+
+.desktopArticleVideoWrapper {
+	height: max-content;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	top: 0;
+	left: 0;
+}
+
+.topBar {
+	width: 100%;
+	position: relative;
+	background: blue;
+}

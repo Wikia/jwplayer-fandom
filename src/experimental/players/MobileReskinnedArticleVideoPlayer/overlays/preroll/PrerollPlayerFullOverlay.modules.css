@@ -1,0 +1,25 @@
+.playStateWrapper {
+	filter: drop-shadow(0 0 3px #000);
+}
+
+.volumeStateWrapperStyled {
+	filter: drop-shadow(0 0 3px #000);
+}
+
+.controlWrapper {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.playVolumeWrapper {
+	pointer-events: auto;
+	display: flex;
+	position: relative;
+	left: -15px;
+}
+
+.bottomWrapper {
+	display: flex;
+	flex-direction: column;
+}

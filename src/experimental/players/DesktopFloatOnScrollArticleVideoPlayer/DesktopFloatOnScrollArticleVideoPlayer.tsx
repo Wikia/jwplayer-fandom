@@ -1,6 +1,4 @@
 import React, { useRef } from 'react';
-import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
-import styled from 'styled-components';
 import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButton';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
@@ -11,45 +9,12 @@ import Attribution from 'jwplayer/players/DesktopArticleVideoPlayer/Attribution'
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
 
-const DesktopArticleVideoTopPlaceholder = styled.div`
-	z-index: ${Number(WDSVariables.z2) + 2};
-	position: absolute;
-	width: 100%;
-	padding-top: 56.25%;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	z-index: 2;
-`;
-
-interface DesktopArticleVideoWrapperProps {
-	isScrollPlayer: boolean;
-	right?: number;
-	width?: number;
-}
-
-const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
-	height: max-content;
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	top: 0;
-	left: 0;
-`;
-
-const TopBar = styled.div`
-	width: 100%;
-	position: relative;
-`;
+import styles from './DesktopFloatOnScrollArticleVideoPlayer.module.css';
 
 const DesktopFloatOnScrollArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
-	const boundingClientRect = placeholderRef.current?.getBoundingClientRect();
-	const right = boundingClientRect?.right;
-	const width = boundingClientRect?.width;
 	const controlbar = document.querySelector<HTMLElement>('.jw-controlbar');
 	const shareIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-settings-sharing');
 	const moreVideosIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-related-btn');
@@ -77,24 +42,19 @@ const DesktopFloatOnScrollArticleVideoPlayer: React.FC<DesktopArticleVideoPlayer
 
 	return (
 		<PlayerWrapper playerName="jw-desktop-article-video">
-			<DesktopArticleVideoTopPlaceholder ref={placeholderRef}>
+			<div className={styles.desktopArticleVideoTopPlaceholder} ref={placeholderRef}>
 				{adComplete && (
-					<DesktopArticleVideoWrapper
-						className={'desktop-article-video-wrapper'}
-						right={right}
-						width={width}
-						isScrollPlayer={false}
-					>
-						<TopBar>{!onScreen && <UnmuteButton />}</TopBar>
+					<div className={styles.desktopArticleVideoWrapper}>
+						<div className={styles.topBar}>{!onScreen && <UnmuteButton />}</div>
 						<JwPlayerWrapper
 							playerUrl={'https://cdn.jwplayer.com/libraries/UKcdkcuf.js'}
 							config={getArticleVideoConfig(videoDetails)}
 							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
 							stopAutoAdvanceOnExitViewport={false}
 						/>
-					</DesktopArticleVideoWrapper>
+					</div>
 				)}
-			</DesktopArticleVideoTopPlaceholder>
+			</div>
 			<Attribution />
 		</PlayerWrapper>
 	);

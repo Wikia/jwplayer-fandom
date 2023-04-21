@@ -1,0 +1,11 @@
+.controlWrapper {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	pointer-events: auto;
+	height: 44px;
+}
+
+.playVolumeWrapper {
+	display: flex;
+}

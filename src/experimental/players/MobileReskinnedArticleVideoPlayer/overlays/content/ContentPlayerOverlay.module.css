@@ -1,0 +1,8 @@
+.playerOverlay {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	-webkit-tap-highlight-color: transparent;
+}
+
+.playerOverlayAllowClick {
+	pointer-events: auto;
+}

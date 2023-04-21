@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from 'react';
-import styled, { css } from 'styled-components';
 import useOnScreen from 'utils/useOnScreen';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import { DesktopArticleVideoPlayerProps } from 'jwplayer/types';
@@ -7,45 +6,10 @@ import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoC
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import MobileReskinnedArticleVideoPlayerOverlay from 'experimental/players/MobileReskinnedArticleVideoPlayer/MobileReskinnedArticleVideoPlayerOverlay';
-import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import CloseButton from 'jwplayer/players/shared/CloseButton';
 import useAdComplete from 'jwplayer/utils/useAdComplete';
 
-const MobileReskinnedArticleVideoTopPlaceholder = styled.div`
-	width: 100%;
-	aspect-ratio: 16 / 9;
-	position: relative;
-`;
-
-interface MobileReskinnedArticleVideoWrapperProps {
-	isScrollPlayer: boolean;
-	right?: number;
-	width?: number;
-}
-
-const MobileReskinnedArticleVideoWrapper = styled.div<MobileReskinnedArticleVideoWrapperProps>`
-	height: max-content;
-
-	${(props) =>
-		props.isScrollPlayer
-			? css`
-					right: 1em;
-					bottom: 1em;
-					width: 50%;
-					position: fixed;
-					z-index: ${Number(WDSVariables.z7) + 2};
-			  `
-			: css`
-					padding: 0;
-			  `}
-`;
-
-const MobileReskinnedVideoContentContainer = styled.div`
-	position: relative;
-	flex-grow: 2;
-	aspect-ratio: 16 / 9;
-	width: 100%;
-`;
+import styles from './MobileReskinnedArticleVideoPlayer.module.css';
 
 const MobileReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
@@ -53,9 +17,6 @@ const MobileReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlay
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
-	const boundingClientRect = placeholderRef.current?.getBoundingClientRect();
-	const right = boundingClientRect?.right;
-	const width = boundingClientRect?.width;
 
 	const hideOverlayTimeout = () => {
 		const timeout: ReturnType<typeof setTimeout> = setTimeout(() => {
@@ -89,30 +50,25 @@ const MobileReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlay
 		}
 	};
 
-	const CloseButtonCorner = styled(CloseButton)`
-		width: 26px;
-		height: 26px;
-		position: absolute;
-		background-color: #fff;
-		top: -10px;
-		right: -10px;
-		border-radius: 50%;
-		z-index: ${Number(WDSVariables.z7) + 3};
-	`;
-
 	return (
 		<>
-			<MobileReskinnedArticleVideoTopPlaceholder ref={placeholderRef}>
+			<div className={styles.mobileReskinnedArticleVideoTopPlaceholder} ref={placeholderRef}>
 				{adComplete && (
-					<MobileReskinnedArticleVideoWrapper
-						className={'mobile-article-video-wrapper'}
-						right={right}
-						width={width}
-						isScrollPlayer={isScrollPlayer}
+					<div
+						className={
+							isScrollPlayer
+								? styles.mobileReskinnedArticleVideoWrapperScrollPlayer
+								: styles.mobileReskinnedArticleVideoWrapper
+						}
 					>
-						<MobileReskinnedVideoContentContainer onClick={handleClick}>
+						<div onClick={handleClick} className={styles.MobileReskinnedVideoContentContainer}>
 							{isScrollPlayer && (
-								<CloseButtonCorner iconColor={'#000'} dismiss={() => setDismissed(true)} iconSize={'10px'} />
+								<CloseButton
+									className={styles.closeButtonCorner}
+									iconColor={'#000'}
+									dismiss={() => setDismissed(true)}
+									iconSize={'10px'}
+								/>
 							)}
 							<MobileReskinnedArticleVideoPlayerOverlay
 								isScrollPlayer={isScrollPlayer}
@@ -126,10 +82,10 @@ const MobileReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlay
 									articlePlayerOnReady(videoDetails, playerInstance);
 								}}
 							/>
-						</MobileReskinnedVideoContentContainer>
-					</MobileReskinnedArticleVideoWrapper>
+						</div>
+					</div>
 				)}
-			</MobileReskinnedArticleVideoTopPlaceholder>
+			</div>
 			{/* <Attribution /> */}
 		</>
 	);

@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
 import usePlaylistItem from 'jwplayer/utils/usePlaylistItem';
 import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
@@ -7,17 +6,7 @@ import useAdTime from 'jwplayer/utils/useAdTime';
 import PlayerFullOverlayTopText from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/shared/PlayerFullOverlayTopText';
 import { DesktopPlayerFullOverlayWrapper } from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/shared/DesktopPlayerFullOverlayWrapper';
 
-const ControlWrapper = styled.div`
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	pointer-events: auto;
-	height: 44px;
-`;
-
-const PlayVolumeWrapper = styled.div`
-	display: flex;
-`;
+import styles from './PrerollPlayerFullOverlay.module.css';
 
 const PrerollPlayerFullOverlay: React.FC = () => {
 	const playlistItem = usePlaylistItem();
@@ -30,12 +19,12 @@ const PrerollPlayerFullOverlay: React.FC = () => {
 	return (
 		<DesktopPlayerFullOverlayWrapper>
 			<PlayerFullOverlayTopText upperText={upperText} lowerText={lowerText} />
-			<ControlWrapper>
-				<PlayVolumeWrapper>
+			<div className={styles.controlWrapper}>
+				<div className={styles.playVolumeWrapper}>
 					<PlayStateWrapper iconColor={'#fff'} isAd={true} />
 					<VolumeStateWrapper iconColor={'#fff'} sliderColor={'#FFC500'} hasSlider={true} hasLabel={false} />
-				</PlayVolumeWrapper>
-			</ControlWrapper>
+				</div>
+			</div>
 		</DesktopPlayerFullOverlayWrapper>
 	);
 };
