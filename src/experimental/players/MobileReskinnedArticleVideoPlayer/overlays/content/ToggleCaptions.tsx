@@ -4,6 +4,8 @@ import IconBubble from '@fandom-frontend/react-common/dist/icons/IconBubble';
 import useCurrentCaption from 'jwplayer/utils/useCurrentCaption';
 import { ToggleCaptionsProps } from 'experimental/types';
 
+import clsx from 'clsx';
+
 import styles from './ToggleCaptions.module.css';
 
 const ToggleCaptions: React.FC<ToggleCaptionsProps> = ({ resetOverlayTimeout }) => {
@@ -20,7 +22,11 @@ const ToggleCaptions: React.FC<ToggleCaptionsProps> = ({ resetOverlayTimeout }) 
 
 	return (
 		<div className={styles.iconWrapper} onClick={handleToggleCaptions}>
-			<IconBubble className={`${styles.iconBubble} ${() => (isActive ? styles.iconBubbleActive : '')}`} />
+			<IconBubble
+				className={clsx(styles.iconBubble, {
+					[styles['iconBubbleActive']]: isActive,
+				})}
+			/>
 		</div>
 	);
 };

@@ -6,6 +6,8 @@ import ContentPlayerScrollOverlay from 'experimental/players/MobileReskinnedArti
 import usePlaying from 'jwplayer/utils/usePlaying';
 import useRelatedOpen from 'jwplayer/utils/useRelatedOpen';
 
+import clsx from 'clsx';
+
 import styles from './ContentPlayerOverlay.module.css';
 
 const ContentPlayerOverlay: React.FC<MobileContentPlayerOverlayProps> = ({
@@ -19,7 +21,9 @@ const ContentPlayerOverlay: React.FC<MobileContentPlayerOverlayProps> = ({
 
 	return (
 		<PlayerOverlay
-			className={`${styles.playerOverlay} ${() => (allowPointerEvents ? styles.playerOverlayAllowClick : '')}`}
+			className={clsx(styles.playerOverlay, {
+				[styles['playerOverlayAllowClick']]: allowPointerEvents,
+			})}
 		>
 			{isScrollPlayer ? (
 				<ContentPlayerScrollOverlay resetOverlayTimeout={resetOverlayTimeout} />

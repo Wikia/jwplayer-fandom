@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import useOnScreen from 'utils/useOnScreen';
+import clsx from 'clsx';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import { DesktopArticleVideoPlayerProps } from 'jwplayer/types';
 import Attribution from 'jwplayer/players/DesktopArticleVideoPlayer/Attribution';
@@ -63,8 +64,9 @@ const DesktopReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPla
 			<div className={styles.desktopArticleVideoTopPlaceholder} ref={placeholderRef}>
 				{adComplete && (
 					<div
-						className={`${styles.desktopArticleVideoWrapper} ${() =>
-							isScrollPlayer ? styles.desktopArticleVideoWrapperScrollPlayer : ''}`}
+						className={clsx(styles.desktopArticleVideoWrapper, {
+							[styles.desktopArticleVideoWrapperScrollPlayer]: isScrollPlayer,
+						})}
 					>
 						<DesktopScrollVideoTopContent
 							isScrollPlayer={isScrollPlayer}
