@@ -3,7 +3,7 @@ import IconSoundOff from '@fandom-frontend/react-common/dist/icons/IconSoundOff'
 import useMute from 'jwplayer/utils/useMute';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 
-import styles from './UnmuteButton.module.css';
+import styles from './UnmuteButton.module.scss';
 
 const UnmuteButton: React.FC = () => {
 	const { player } = useContext(PlayerContext);

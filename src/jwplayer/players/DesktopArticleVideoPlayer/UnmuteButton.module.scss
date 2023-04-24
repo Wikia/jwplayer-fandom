@@ -1,11 +1,12 @@
 .unmuteButtonWrapper {
-	align-items: center;
+  	--z7: token(z7);
+  	align-items: center;
 	background-color: rgba(255, 255, 255, 0.9);
 	border-radius: 2px;
-	/*color: var(--wdsColorDarkBlueGray);*/
+	color: token(wdsColorDarkBlueGray);
 	cursor: pointer;
-	/*font-size: var(--wdsFontSizeXs);*/
-	/*font-weight: var(--wdsFontWeightBold);*/
+	font-size: token(wdsFontSizeXs);
+	font-weight: token(wdsFontWeightBold);
 	max-width: 90%;
 	padding: 5px 8px;
 	position: absolute;
@@ -14,11 +15,11 @@
 	height: 31px;
 	box-sizing: border-box;
 	display: flex;
-	z-index: 3;
+  	z-index: calc(var(--z7) + 3);
 }
 
 .soundIcon {
-	/*fill: var(--wdsColorDarkBlueGray);*/
+	fill: token(wdsColorDarkBlueGray);
 	flex-shrink: 0;
 	height: 14px;
 	margin-right: 6px;

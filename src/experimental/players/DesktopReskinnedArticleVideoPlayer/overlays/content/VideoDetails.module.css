@@ -26,6 +26,6 @@
 }
 
 .videoTitle {
-	/*color: ${WDSVariables.wdsColorWhite};*/
+	color: token(wdsColorWhite);
 	font-size: 14px;
 }
