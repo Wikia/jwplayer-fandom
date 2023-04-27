@@ -1,21 +1,10 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
-import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
+import clsx from 'clsx';
 import IconCrossTiny from '@fandom-frontend/react-common/dist/icons/IconCrossTiny';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { jwPlayerPlaybackTracker } from 'jwplayer/utils/videoTracking';
 
-const CloseWrapper = styled.div`
-	cursor: pointer;
-	pointer-events: initial;
-	height: 36px;
-	width: 36px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	opacity: 0.98;
-	z-index: ${Number(WDSVariables.z7) + 1};
-`;
+import styles from './closeButton.module.scss';
 
 interface CloseButtonProps {
 	className?: string;
@@ -34,9 +23,9 @@ const CloseButton: React.FC<CloseButtonProps> = ({ className, dismiss, iconColor
 	};
 
 	return (
-		<CloseWrapper className={className} onClick={onClickClose}>
+		<div className={clsx(className, styles.closeWrapper)} onClick={onClickClose}>
 			<IconCrossTiny fill={iconColor} width={iconSize || '1em'} height={iconSize || '1em'} />
-		</CloseWrapper>
+		</div>
 	);
 };
 

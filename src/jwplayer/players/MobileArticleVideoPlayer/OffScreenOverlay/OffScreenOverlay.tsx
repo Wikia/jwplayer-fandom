@@ -2,7 +2,7 @@ import React from 'react';
 import usePlaying from 'jwplayer/utils/usePlaying';
 import styled from 'styled-components';
 import VideoDetails from 'jwplayer/players/MobileArticleVideoPlayer/OffScreenOverlay/VideoDetails';
-import CloseButton from 'jwplayer/players/shared/CloseButton';
+import CloseButton from 'jwplayer/players/shared/CloseButton/CloseButton';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import useAdBreak from 'utils/useAdBreak';
 
