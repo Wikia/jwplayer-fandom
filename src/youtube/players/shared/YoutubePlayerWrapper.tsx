@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
 import {
 	trackYoutubePlayerInit,
 	trackYoutubePlayerReady,
@@ -9,22 +8,9 @@ import {
 } from 'youtube/players/shared/youtubeTrackingEvents';
 import { YoutubeTakeOverDetails } from 'youtube/types';
 
+import styles from './YoutubePlayerWrapper.module.css';
+
 import OnStateChangeEvent = YT.OnStateChangeEvent;
-
-const YoutubePlayerTarget = styled.div`
-	iframe {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-	}
-`;
-
-const YoutubePlayerTargetWrapper = styled.div`
-	padding-top: 56.25%;
-	position: relative;
-	height: 0;
-`;
 
 export interface YoutubeVideoDetails extends YoutubePlayerTrackingProps {
 	youtubeTakeoverDetails?: YoutubeTakeOverDetails;
@@ -99,11 +85,11 @@ const YoutubePlayerWrapper: React.FC<YoutubeVideoDetails> = ({ deviceType, youtu
 	};
 
 	return (
-		<YoutubePlayerTargetWrapper>
-			<YoutubePlayerTarget>
+		<div className={styles.youtubePlayerTargetWrapper}>
+			<div className={styles.youtubePlayerTarget}>
 				<div id={youtubeTargetId} />
-			</YoutubePlayerTarget>
-		</YoutubePlayerTargetWrapper>
+			</div>
+		</div>
 	);
 };
 
