@@ -1,11 +1,11 @@
 import React from 'react';
-import TimeSlider from 'experimental/shared/TimeSlider';
+import TimeSlider from 'experimental/shared/TimeSlider/TimeSlider';
 import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
 import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
 import { MobilePlayerFullOverlayWrapper } from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/shared/MobilePlayerFullOverlayWrapper';
 import usePlaylistItem from 'jwplayer/utils/usePlaylistItem';
 import PlayerFullOverlayTopText from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/shared/PlayerFullOverlayTopText';
-import TimeRemaining from 'experimental/shared/TimeRemaining';
+import TimeRemaining from 'experimental/shared/TimeRemaining/TimeRemaining';
 import { MobileContentPlayerOverlay } from 'experimental/types';
 import MobilePlayerCTAButton from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/content/MobilePlayerCTAButton';
 import useCaptionsList from 'jwplayer/utils/useCaptionsList';

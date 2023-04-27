@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import PlayerOverlay from 'experimental/shared/PlayerOverlay';
+import PlayerOverlay from 'experimental/shared/PlayerOverlay/PlayerOverlay';
 import { ContentPlayerOverlayProps } from 'experimental/types';
 import ContentPlayerFullOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/content/ContentPlayerFullOverlay';
 import ContentPlayerScrollOverlay from 'experimental/players/DesktopReskinnedArticleVideoPlayer/overlays/content/ContentPlayerScrollOverlay';

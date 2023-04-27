@@ -1,5 +1,5 @@
 import React from 'react';
-import PlayerOverlay from 'experimental/shared/PlayerOverlay';
+import PlayerOverlay from 'experimental/shared/PlayerOverlay/PlayerOverlay';
 import { MobileContentPlayerOverlayProps } from 'experimental/types';
 import ContentPlayerFullOverlay from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/content/ContentPlayerFullOverlay';
 import ContentPlayerScrollOverlay from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/content/ContentPlayerScrollOverlay';

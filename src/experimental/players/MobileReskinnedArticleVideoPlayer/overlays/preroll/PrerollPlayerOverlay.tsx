@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import PlayerOverlay from 'experimental/shared/PlayerOverlay';
+import PlayerOverlay from 'experimental/shared/PlayerOverlay/PlayerOverlay';
 import { PrerollPlayerOverlayProps } from 'experimental/types';
-import OverlayTimeSliderBottom from 'experimental/shared/OverlayTimeSliderBottom';
+import OverlayTimeSliderBottom from 'experimental/shared/OverlayTimeSliderBottom/OverlayTimeSliderBottom';
 import PrerollPlayerFullOverlay from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/preroll/PrerollPlayerFullOverlay';
 
 import styles from './PrerollPlayerOverlay.module.css';

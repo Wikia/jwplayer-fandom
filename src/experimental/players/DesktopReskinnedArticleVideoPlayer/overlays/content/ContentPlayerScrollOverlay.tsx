@@ -1,8 +1,8 @@
 import React from 'react';
 import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
 import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
-import PlayerCTAButton from 'experimental/shared/PlayerCTAButton';
-import OverlayTimeSliderBottom from 'experimental/shared/OverlayTimeSliderBottom';
+import PlayerCTAButton from 'experimental/shared/PlayerCTAButton/PlayerCTAButton';
+import OverlayTimeSliderBottom from 'experimental/shared/OverlayTimeSliderBottom/OverlayTimeSliderBottom';
 import usePlaylistItem from 'jwplayer/utils/usePlaylistItem';
 
 import styles from './ContentPlayerScrollOverlay.module.css';

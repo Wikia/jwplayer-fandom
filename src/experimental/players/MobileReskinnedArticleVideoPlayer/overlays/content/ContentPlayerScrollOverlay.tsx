@@ -1,5 +1,5 @@
 import React from 'react';
-import OverlayTimeSliderBottom from 'experimental/shared/OverlayTimeSliderBottom';
+import OverlayTimeSliderBottom from 'experimental/shared/OverlayTimeSliderBottom/OverlayTimeSliderBottom';
 import PlayStateWrapper from 'experimental/shared/play-state/PlayStateWrapper';
 import VolumeStateWrapper from 'experimental/shared/volume-state/VolumeStateWrapper';
 import { MobileContentPlayerOverlay } from 'experimental/types';

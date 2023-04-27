@@ -1,14 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
+import clsx from 'clsx';
 import useTime from 'jwplayer/utils/useTime';
 
-const TimeRemainingWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-content: center;
-	justify-content: center;
-	color: #fff;
-`;
+import styles from './timeRemaining.module.scss';
 
 interface TimeRemainingProps {
 	className?: string;
@@ -26,9 +20,9 @@ const TimeRemaining: React.FC<TimeRemainingProps> = ({ className }) => {
 	};
 
 	return (
-		<TimeRemainingWrapper className={className}>
+		<div className={clsx(className, styles.timeRemainingWrapper)}>
 			{formatTime(time.position)} / {formatTime(time.duration)}
-		</TimeRemainingWrapper>
+		</div>
 	);
 };
 
