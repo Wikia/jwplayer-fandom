@@ -6,6 +6,7 @@ import json from '@rollup/plugin-json';
 import { terser } from 'rollup-plugin-terser';
 import dts from 'rollup-plugin-dts';
 import replace from '@rollup/plugin-replace';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 import packageJson from './package.json';
 
@@ -57,6 +58,7 @@ const config = [
 			resolve(),
 			json(),
 			commonjs(),
+			visualizer(),
 		],
 		external: ['react', 'react-dom', 'react-i18next', 'react-i18next'],
 	},
