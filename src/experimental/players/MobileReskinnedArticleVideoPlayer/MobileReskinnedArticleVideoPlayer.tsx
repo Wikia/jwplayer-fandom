@@ -6,7 +6,7 @@ import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoC
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import MobileReskinnedArticleVideoPlayerOverlay from 'experimental/players/MobileReskinnedArticleVideoPlayer/MobileReskinnedArticleVideoPlayerOverlay';
-import CloseButton from 'jwplayer/players/shared/CloseButton';
+import CloseButton from 'jwplayer/players/shared/CloseButton/CloseButton';
 import useAdComplete from 'jwplayer/utils/useAdComplete';
 
 import styles from './MobileReskinnedArticleVideoPlayer.module.css';

@@ -1,0 +1,12 @@
+.closeWrapper {
+	--z7: token(z7);
+	cursor: pointer;
+	pointer-events: initial;
+	height: 36px;
+	width: 36px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0.98;
+	z-index: calc(var(--z7) + 1);
+}

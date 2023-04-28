@@ -3,7 +3,7 @@ import React from 'react';
 import useAdStarted from 'jwplayer/utils/useAdStarted';
 import usePlaylistItem from 'jwplayer/utils/usePlaylistItem';
 import useAdTime from 'jwplayer/utils/useAdTime';
-import CloseButton from 'jwplayer/players/shared/CloseButton';
+import CloseButton from 'jwplayer/players/shared/CloseButton/CloseButton';
 
 import styles from './DesktopScrollVideoTopContent.module.css';
 

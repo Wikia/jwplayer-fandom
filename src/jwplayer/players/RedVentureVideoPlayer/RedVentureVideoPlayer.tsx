@@ -8,7 +8,7 @@ import useOnScreen from 'utils/useOnScreen';
 import useRvAdComplete from 'jwplayer/utils/useRvAdComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import { RedVentureVideoPlayerProps } from 'jwplayer/types';
-import CloseButton from 'jwplayer/players/shared/CloseButton';
+import CloseButton from 'jwplayer/players/shared/CloseButton/CloseButton';
 import redVenturePlayerOnReady from 'jwplayer/players/RedVentureVideoPlayer/redVenturePlayerOnReady';
 import { getRedVentureVideoConfig } from 'jwplayer/players/RedVentureVideoPlayer/getRedVentureVideoConfig';
 import { disableTimingEventsSamplingRate } from 'jwplayer/utils/videoTimingEvents';
