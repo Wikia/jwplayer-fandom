@@ -1,7 +1,7 @@
 import { TrackData } from '@fandom/tracking-metrics/tracking/dataLayer';
 
 interface MWConfig {
-	get: (key: string) => any;
+	get: (key: string) => unknown;
 }
 
 interface MW {
