@@ -1,43 +1,33 @@
 import React, { useRef, useState } from 'react';
-import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
-import styled, { css } from 'styled-components';
 import YoutubePlayerWrapper from 'youtube/players/shared/YoutubePlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
 import PlayerWrapper from 'youtube/players/shared/PlayerWrapper';
 
+import clsx from 'clsx';
+
 import { YoutubeArticleVideoPlayerProps } from '../types';
 
-import MobileYoutubeOffScreenOverlay from './overlays/MobileYoutubeOffScreenOverlay';
+import styles from './youtubeMobileArticleVideoPlayer.module.scss';
 
-const MobileArticleVideoTopPlaceholder = styled.div`
-	width: 100%;
-	height: 56.25vw;
-	position: relative;
-`;
+import MobileYoutubeOffScreenOverlay from './overlays/MobileYoutubeOffScreenOverlay';
 
 interface MobileArticleVideoWrapperProps {
 	isScrollPlayer: boolean;
 	topPosition: string;
 }
 
-const MobileArticleVideoWrapper = styled.div<MobileArticleVideoWrapperProps>`
-	${(props) =>
-		props.isScrollPlayer
-			? css`
-					box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
-					position: fixed;
-					top: ${props.topPosition};
-					width: 100%;
-					z-index: ${Number(WDSVariables.z2) + 1};
-			  `
-			: css`
-					transform: translateZ(0);
-					-webkit-transform: translateZ(0);
-					-webkit-transition: padding 0.3s;
-					transition: padding 0.3s;
-					padding: 0;
-			  `}
-`;
+const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({ isScrollPlayer, topPosition }) => (
+	<div
+		className={clsx(
+			isScrollPlayer
+				? styles.mobileArticleVideoWrapperIsScrollPlayer
+				: styles.mobileArticleVideoWrapperIsNotScrollPlayer,
+		)}
+		style={{
+			...(isScrollPlayer && { top: topPosition }),
+		}}
+	/>
+);
 
 interface MobileArticleVideoPlayerProps extends YoutubeArticleVideoPlayerProps {
 	hasPartnerSlot?: boolean;
@@ -68,12 +58,12 @@ const YoutubeMobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> =
 
 	return (
 		<PlayerWrapper playerName="youtube-mobile-article-video">
-			<MobileArticleVideoTopPlaceholder ref={ref}>
+			<div className={styles.mobileArticleVideoTopPlaceholder} ref={ref}>
 				<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer} topPosition={getTopPosition()}>
 					<MobileYoutubeOffScreenOverlay dismiss={() => setDismissed(true)} isScrollPlayer={isScrollPlayer} />
 					<YoutubePlayerWrapper deviceType={'mobile'} youtubeTakeoverDetails={youtubeTakeoverDetails} />
 				</MobileArticleVideoWrapper>
-			</MobileArticleVideoTopPlaceholder>
+			</div>
 		</PlayerWrapper>
 	);
 };

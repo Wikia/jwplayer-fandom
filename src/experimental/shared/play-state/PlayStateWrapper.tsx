@@ -4,28 +4,12 @@ import PauseButton from 'experimental/shared/play-state/PauseButton';
 import { PlayStateWrapperProps } from 'experimental/types';
 import usePlaying from 'jwplayer/utils/usePlaying';
 import useAdPlaying from 'jwplayer/utils/useAdPlaying';
-import styled from 'styled-components';
 
-export const IconWrapper = styled.div`
-	cursor: pointer;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-`;
+import clsx from 'clsx';
 
-const Wrapper = styled.div<{ color?: string }>`
-	width: 44px;
-	align-items: center;
-	display: flex;
-	justify-content: center;
-	position: relative;
-	color: ${(props) => (props.color ? props.color : '#ffffff')};
+import styles from './playStateWrapper.module.scss';
 
-	&::hover {
-		// Change this!
-		color: green;
-	}
-`;
+export const IconWrapper: React.FC = () => <div className={styles.iconWrapper} />;
 
 const PlayStateWrapper: React.FC<PlayStateWrapperProps> = ({
 	playConfig,
@@ -38,13 +22,13 @@ const PlayStateWrapper: React.FC<PlayStateWrapperProps> = ({
 	const isPlaying = isAd ? useAdPlaying() : usePlaying();
 
 	return (
-		<Wrapper color={iconColor} className={className}>
+		<div className={clsx(className, styles.wrapper)} style={{ ...(iconColor && { color: iconColor }) }}>
 			{isPlaying ? (
 				<PauseButton onClickCallback={pauseConfig?.onClickCallback} isAd={isAd} iconSize={iconSize} />
 			) : (
 				<PlayButton onClickCallback={playConfig?.onClickCallback} isAd={isAd} iconSize={iconSize} />
 			)}
-		</Wrapper>
+		</div>
 	);
 };
 
