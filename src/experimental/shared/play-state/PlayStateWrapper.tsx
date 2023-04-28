@@ -9,7 +9,11 @@ import clsx from 'clsx';
 
 import styles from './playStateWrapper.module.scss';
 
-export const IconWrapper: React.FC = () => <div className={styles.iconWrapper} />;
+interface IconWrapperProps {
+	onClick: () => void;
+}
+
+export const IconWrapper: React.FC<IconWrapperProps> = () => <div className={styles.iconWrapper} />;
 
 const PlayStateWrapper: React.FC<PlayStateWrapperProps> = ({
 	playConfig,
