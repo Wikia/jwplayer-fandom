@@ -10,7 +10,7 @@ declare module 'react' {
 }
 
 interface MWConfig {
-	get: (key: string) => any;
+	get: (key: string) => unknown;
 }
 
 interface MW {
