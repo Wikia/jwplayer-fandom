@@ -1,32 +1,46 @@
 import React from 'react';
 import usePlaying from 'jwplayer/utils/usePlaying';
-import styled from 'styled-components';
 import VideoDetails from 'jwplayer/players/MobileArticleVideoPlayer/OffScreenOverlay/VideoDetails';
 import CloseButton from 'jwplayer/players/shared/CloseButton/CloseButton';
-import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import useAdBreak from 'utils/useAdBreak';
+
+import clsx from 'clsx';
+
+import styles from './offScreenOverlay.module.scss';
 
 interface OffScreenOverlayWrapperProps {
 	playing: boolean;
 }
 
-const OffScreenOverlayWrapper = styled.div<OffScreenOverlayWrapperProps>`
-	${(props) => !props.playing && `background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));`}
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	pointer-events: none;
-	z-index: ${Number(WDSVariables.z7) + 2};
-`;
+const OffScreenOverlayWrapper: React.FC<OffScreenOverlayWrapperProps> = ({ playing }) => {
+	const backgroundImage = `linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));`;
+	const styleOverrides = {
+		...(playing && { backgroundImage }),
+	};
 
-const CloseButtonStyled = styled(CloseButton).attrs((props: { topOffset: number }) => props)`
-	position: absolute;
-	right: 0;
-	top: ${(props) => (props.topOffset ? `${props.topOffset}px` : 0)};
-	filter: drop-shadow(1px 2px 2px rgb(0 0 0 / 0.7));
-`;
+	return (
+		<div
+			className={clsx(`article-featured-video__on-scroll-video-wrapper`, styles.offScreenOverlayWrapper)}
+			style={styleOverrides}
+		/>
+	);
+};
+
+interface CloseButtonStyledProps {
+	dismiss: () => void;
+	topOffset: number;
+	iconColor: string;
+}
+
+const CloseButtonStyled: React.FC<CloseButtonStyledProps> = ({ dismiss, topOffset, iconColor }) => {
+	const styleOverrides = {
+		...(topOffset && { top: `${topOffset}px` }),
+	};
+
+	return (
+		<CloseButton className={styles.closeButtonStyled} style={styleOverrides} iconColor={iconColor} dismiss={dismiss} />
+	);
+};
 
 interface OffScreenOverlayProps {
 	dismiss: () => void;
@@ -57,7 +71,7 @@ const OffScreenOverlay: React.FC<OffScreenOverlayProps> = ({ dismiss, isScrollPl
 	if (!isScrollPlayer) return null;
 
 	return (
-		<OffScreenOverlayWrapper className={'article-featured-video__on-scroll-video-wrapper'} playing={playing}>
+		<OffScreenOverlayWrapper playing={playing}>
 			<CloseButtonStyled dismiss={dismiss} topOffset={closeButtonOffset} iconColor={'#fff'} />
 			<VideoDetails playing={playing} />
 		</OffScreenOverlayWrapper>

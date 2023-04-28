@@ -1,6 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
-import styled, { css } from 'styled-components';
 import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButton';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import VideoDetails from 'jwplayer/players/DesktopArticleVideoPlayer/VideoDetails';
@@ -12,6 +10,10 @@ import CloseButton from 'jwplayer/players/shared/CloseButton/CloseButton';
 import redVenturePlayerOnReady from 'jwplayer/players/RedVentureVideoPlayer/redVenturePlayerOnReady';
 import { getRedVentureVideoConfig } from 'jwplayer/players/RedVentureVideoPlayer/getRedVentureVideoConfig';
 import { disableTimingEventsSamplingRate } from 'jwplayer/utils/videoTimingEvents';
+
+import clsx from 'clsx';
+
+import styles from './redVentureVideoPlayer.module.scss';
 
 interface PhoenixUser {
 	isPremium?: () => boolean;
@@ -27,47 +29,19 @@ interface WindowWithPhoenix extends Window {
 
 declare let window: WindowWithPhoenix;
 
-const RedVentureVideoTopPlaceholder = styled.div`
-	z-index: ${Number(WDSVariables.z2) + 2};
-	position: absolute;
-	width: 100%;
-	padding-top: 56.25%;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	z-index: 2;
-`;
-
 interface RedVentureVideoWrapperProps {
 	isScrollPlayer: boolean;
 	right?: number;
 	width?: number;
 }
 
-const RedVentureVideoWrapper = styled.div<RedVentureVideoWrapperProps>`
-	height: max-content;
-	${(props) =>
-		props.isScrollPlayer
-			? css`
-					position: fixed;
-					right: 18px;
-					bottom: 45px;
-					width: 300px;
-			  `
-			: css`
-					position: absolute;
-					bottom: 0;
-					right: 0;
-					top: 0;
-					left: 0;
-			  `}
-`;
-
-const TopBar = styled.div`
-	width: 100%;
-	position: relative;
-`;
+const RedVentureVideoWrapper: React.FC<RedVentureVideoWrapperProps> = ({ isScrollPlayer }) => (
+	<div
+		className={clsx(
+			isScrollPlayer ? styles.redVentureVideoWrapperIsScrollPlayer : styles.redVentureVideoWrapperIsNotScrollPlayer,
+		)}
+	/>
+);
 
 const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 	videoDetails,
@@ -116,13 +90,13 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 
 	return (
 		<PlayerWrapper playerName="jw-red-venture-video">
-			<RedVentureVideoTopPlaceholder ref={placeholderRef}>
+			<div className={styles.redVentureVideoTopPlaceholder} ref={placeholderRef}>
 				{adComplete && (
 					<RedVentureVideoWrapper right={right} width={width} isScrollPlayer={isScrollPlayer}>
-						<TopBar>
+						<div className={styles.topBar}>
 							{!isScrollPlayer && <UnmuteButton />}
 							{isScrollPlayer && <CloseButton dismiss={() => setDismissed(true)} />}
-						</TopBar>
+						</div>
 						<JwPlayerWrapper
 							config={getRedVentureVideoConfig(videoDetails, autoPlay)}
 							onReady={(playerInstance) => redVenturePlayerOnReady(videoDetails, playerInstance)}
@@ -134,7 +108,7 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 						{isScrollPlayer && <VideoDetails />}
 					</RedVentureVideoWrapper>
 				)}
-			</RedVentureVideoTopPlaceholder>
+			</div>
 		</PlayerWrapper>
 	);
 };

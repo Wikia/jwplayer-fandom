@@ -8,6 +8,7 @@ import styles from './closeButton.module.scss';
 
 interface CloseButtonProps {
 	className?: string;
+	style?: Record<string, string>;
 	dismiss: () => void;
 	iconColor?: string;
 	iconSize?: string;

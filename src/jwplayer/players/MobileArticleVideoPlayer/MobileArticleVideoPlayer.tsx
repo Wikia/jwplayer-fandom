@@ -1,6 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
-import styled, { css } from 'styled-components';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'jwplayer/utils/useAdComplete';
@@ -13,35 +11,29 @@ import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimin
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
 
-const MobileArticleVideoTopPlaceholder = styled.div`
-	width: 100%;
-	height: 56.25vw;
-	position: relative;
-`;
+import clsx from 'clsx';
+
+import style from './mobileArticleVideoPlayer.module.scss';
+import styles from './mobileArticleVideoPlayer.module.scss';
 
 interface MobileArticleVideoWrapperProps {
 	isScrollPlayer: boolean;
 	topPosition: string;
 }
 
-const MobileArticleVideoWrapper = styled.div<MobileArticleVideoWrapperProps>`
-	${(props) =>
-		props.isScrollPlayer
-			? css`
-					box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
-					position: fixed;
-					top: ${props.topPosition};
-					width: 100%;
-					z-index: ${Number(WDSVariables.z2) + 1};
-			  `
-			: css`
-					transform: translateZ(0);
-					-webkit-transform: translateZ(0);
-					-webkit-transition: padding 0.3s;
-					transition: padding 0.3s;
-					padding: 0;
-			  `}
-`;
+const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({ isScrollPlayer, topPosition }) => (
+	<div
+		className={clsx(
+			`mobile-article-video-wrapper`,
+			isScrollPlayer
+				? styles.mobileArticleVideoWrapperIsScrollPlayer
+				: styles.mobileArticleVideoWrapperIsNotScrollPlayer,
+		)}
+		style={{
+			...(isScrollPlayer && { top: topPosition }),
+		}}
+	/>
+);
 
 export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerProps> = ({
 	hasPartnerSlot,
@@ -90,13 +82,9 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 
 	return (
 		<>
-			<MobileArticleVideoTopPlaceholder className={isScrollPlayer ? ' is-on-scroll-active ' : ''} ref={ref}>
+			<div ref={ref} className={clsx(style.mobileArticleVideoTopPlaceholder, isScrollPlayer && `is-on-scroll-active`)}>
 				{adComplete && (
-					<MobileArticleVideoWrapper
-						className={'mobile-article-video-wrapper'}
-						isScrollPlayer={isScrollPlayer}
-						topPosition={getTopPosition()}
-					>
+					<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer} topPosition={getTopPosition()}>
 						<JwPlayerWrapper
 							config={getArticleVideoConfig(videoDetails)}
 							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
@@ -105,7 +93,7 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 						<OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />
 					</MobileArticleVideoWrapper>
 				)}
-			</MobileArticleVideoTopPlaceholder>
+			</div>
 			<Attribution />
 		</>
 	);
