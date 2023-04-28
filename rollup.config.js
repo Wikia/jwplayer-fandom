@@ -15,6 +15,7 @@ import nested from 'postcss-nested';
 import cssnext from 'postcss-cssnext';
 import cssnano from 'cssnano';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 import packageJson from './package.json';
 
@@ -80,6 +81,7 @@ const config = [
 					cssnano(),
 				],
 			}),
+			visualizer(),
 		],
 		external: ['react', 'react-dom', 'react-i18next', 'react-i18next'],
 	},
