@@ -9,6 +9,8 @@ import MobileReskinnedArticleVideoPlayerOverlay from 'experimental/players/Mobil
 import CloseButton from 'jwplayer/players/shared/CloseButton/CloseButton';
 import useAdComplete from 'jwplayer/utils/useAdComplete';
 
+import clsx from 'clsx';
+
 import styles from './MobileReskinnedArticleVideoPlayer.module.css';
 
 const MobileReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
@@ -55,11 +57,12 @@ const MobileReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlay
 			<div className={styles.mobileReskinnedArticleVideoTopPlaceholder} ref={placeholderRef}>
 				{adComplete && (
 					<div
-						className={
+						className={clsx(
+							'mobile-article-video-wrapper',
 							isScrollPlayer
 								? styles.mobileReskinnedArticleVideoWrapperScrollPlayer
-								: styles.mobileReskinnedArticleVideoWrapper
-						}
+								: styles.mobileReskinnedArticleVideoWrapper,
+						)}
 					>
 						<div onClick={handleClick} className={styles.MobileReskinnedVideoContentContainer}>
 							{isScrollPlayer && (

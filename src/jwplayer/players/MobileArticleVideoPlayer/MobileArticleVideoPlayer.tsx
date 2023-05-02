@@ -13,7 +13,6 @@ import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnRea
 
 import clsx from 'clsx';
 
-import style from './mobileArticleVideoPlayer.module.scss';
 import styles from './mobileArticleVideoPlayer.module.scss';
 
 interface MobileArticleVideoWrapperProps {
@@ -21,7 +20,11 @@ interface MobileArticleVideoWrapperProps {
 	topPosition: string;
 }
 
-const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({ isScrollPlayer, topPosition }) => (
+const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({
+	isScrollPlayer,
+	topPosition,
+	children,
+}) => (
 	<div
 		className={clsx(
 			`mobile-article-video-wrapper`,
@@ -32,7 +35,9 @@ const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({ i
 		style={{
 			...(isScrollPlayer && { top: topPosition }),
 		}}
-	/>
+	>
+		{children}
+	</div>
 );
 
 export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerProps> = ({
@@ -82,7 +87,7 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 
 	return (
 		<>
-			<div ref={ref} className={clsx(style.mobileArticleVideoTopPlaceholder, isScrollPlayer && `is-on-scroll-active`)}>
+			<div ref={ref} className={clsx(styles.mobileArticleVideoTopPlaceholder, isScrollPlayer && `is-on-scroll-active`)}>
 				{adComplete && (
 					<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer} topPosition={getTopPosition()}>
 						<JwPlayerWrapper
