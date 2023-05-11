@@ -46,9 +46,15 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	useEffect(() => {
 		if (shouldLoadSponsoredContentList) {
 			const retrieveSponsoredVideo = async () => {
+				if (window?.sponsoredVideos?.length > 0) {
+					console.debug('sponsoredVideos already retrieved');
+					return;
+				}
+
 				const sponsoredVideoResponse = await getSponsoredVideos();
 				if (sponsoredVideoResponse && typeof window !== undefined) {
 					window.sponsoredVideos = sponsoredVideoResponse;
+					console.debug('Retrieved sponsoredVideos list');
 				} else {
 					console.debug(
 						'Could not set sponsored videos. Either window the fetched sponsoredVideo list were undefined.',
