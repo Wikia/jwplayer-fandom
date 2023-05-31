@@ -9,18 +9,18 @@ export default function useAdComplete(): boolean {
 
 	useEffect(() => {
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_OPT_IN_LISTEN_START);
-		communicationService.on('[AdEngine OptIn] set opt in', () => {
-			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_OPT_IN_MESSAGE_RECIEVED);
-			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_CONFIG_LISTEN_START);
-			waitForAdEngine().then(() => {
-				recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_CONFIG_MESSAGE_RECIEVED);
-				recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_SETUP_JW_LISTEN_START);
-				listenSetupJWPlayer(function () {
-					recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_SETUP_JW_MESSAGE_RECIEVED);
-					setAdComplete(true);
-				});
-			});
+		// communicationService..on('[AdEngine OptIn] set opt in', () => {
+		// 	recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_OPT_IN_MESSAGE_RECIEVED);
+		// 	recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_CONFIG_LISTEN_START);
+		waitForAdEngine().then(() => {
+			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_CONFIG_MESSAGE_RECIEVED);
+			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_SETUP_JW_LISTEN_START);
+			// listenSetupJWPlayer(function () {
+			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_SETUP_JW_MESSAGE_RECIEVED);
+			setAdComplete(true);
+			// });
 		});
+		// });
 	}, []);
 
 	const waitForAdEngine = () => {
@@ -34,11 +34,11 @@ export default function useAdComplete(): boolean {
 		return Promise.race([adEngineConfigured$, adEngineTimeout$]);
 	};
 
-	const listenSetupJWPlayer = (callback) => {
-		communicationService.on('[Ad Engine] Setup JWPlayer', () => {
-			callback();
-		});
-	};
+	// const listenSetupJWPlayer = (callback) => {
+	// 	communicationService.on('[Ad Engine] Setup JWPlayer', () => {
+	// 		callback();
+	// 	});
+	// };
 
 	return adComplete;
 }
