@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { JWPlayerApi, PlaylistItem } from 'jwplayer/types';
+import { JWPauseEvent, JWPlayerApi, JWPlayEvent, PlaylistItem } from 'jwplayer/types';
 import FandomWirewaxPlugin from 'jwplayer/plugins/fandom-wirewax.plugin';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { JwPlayerWrapperProps } from 'jwplayer/types';
@@ -30,6 +30,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	config,
 	playerUrl,
 	onReady,
+	getDismissed = () => false,
 	onComplete,
 	className,
 	stopAutoAdvanceOnExitViewport,
@@ -92,6 +93,22 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 			const playerInstance = window.jwplayer(elementId).setup({
 				...defaultConfig,
 				...config,
+			});
+
+			playerInstance.on(JWEvents.AD_PAUSE, ({ pauseReason }: JWPauseEvent) => {
+				const dismissed = getDismissed();
+				// Keep playing the ad when the user closed the mini player
+				if (dismissed && pauseReason === 'external') {
+					playerInstance.play();
+				}
+			});
+
+			playerInstance.on(JWEvents.PLAY, ({ playReason, viewable }: JWPlayEvent) => {
+				const dismissed = getDismissed();
+				// Pause the content play when the user closed the mini player playing the ad
+				if (dismissed && viewable === 0 && playReason === 'autostart') {
+					playerInstance.pause();
+				}
 			});
 
 			playerInstance.on(JWEvents.READY, (event) => {
