@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import styled, { css } from 'styled-components';
 import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButton';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
@@ -15,7 +14,6 @@ import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnRea
 import { getDismissedFn } from 'jwplayer/utils/utils';
 
 const DesktopArticleVideoTopPlaceholder = styled.div`
-	z-index: ${Number(WDSVariables.z2) + 2};
 	position: absolute;
 	width: 100%;
 	padding-top: 56.25%;
@@ -76,9 +74,9 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 	const shareIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-settings-sharing');
 	const moreVideosIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-related-btn');
 	const pipIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-icon-pip');
-	const dismissedInputElement = useRef<HTMLInputElement | undefined>();
+	const inputName = 'isDismissed';
 
-	const getDismissed = getDismissedFn(dismissedInputElement.current);
+	const getDismissed = getDismissedFn(inputName);
 
 	if (onScreen) {
 		if (controlbar) controlbar.style.background = 'rgba(0, 0, 0, 0.5)';
@@ -113,7 +111,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 							stopAutoAdvanceOnExitViewport={false}
 						/>
 						{isScrollPlayer && <VideoDetails />}
-						<input type="hidden" value={String(dismissed)} ref={dismissedInputElement} />
+						<input type="hidden" value={String(dismissed)} name={inputName} />
 					</DesktopArticleVideoWrapper>
 				)}
 			</DesktopArticleVideoTopPlaceholder>

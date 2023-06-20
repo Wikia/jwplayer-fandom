@@ -1,8 +1,7 @@
-export const getDismissedFn = (ref: HTMLInputElement) => () => {
-	const inputElement = ref;
+export const getDismissedFn = (inputName: string) => () => {
+	const inputElement: HTMLInputElement = document.querySelector(`[name="${inputName}"]`);
 	if (inputElement) {
-		const value = inputElement.value;
-		return Boolean(value);
+		return inputElement.value === 'true';
 	}
 	return false;
 };

@@ -95,10 +95,9 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 				...config,
 			});
 
-			playerInstance.on(JWEvents.AD_PAUSE, ({ pauseReason }: JWPauseEvent) => {
-				const dismissed = getDismissed();
+			playerInstance.on(JWEvents.AD_PAUSE, ({ pauseReason, viewable }: JWPauseEvent) => {
 				// Keep playing the ad when the user closed the mini player
-				if (dismissed && pauseReason === 'external') {
+				if (viewable === 0 && pauseReason === 'external') {
 					playerInstance.play();
 				}
 			});
