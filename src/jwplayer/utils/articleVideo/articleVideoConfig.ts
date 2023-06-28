@@ -50,7 +50,7 @@ const getAdvertisingConfig = (lang: string) => {
 export const getArticleVideoConfig = (videoDetails) => {
 	const lang = videoDetails?.lang || 'en';
 
-	if ('playlistUrl' in window?.videoExperiments) {
+	if (window?.videoExperiments?.playlistUrl && !videoDetails?.isDedicatedForArticle) {
 		// This way we can provide an alternative playlist e.g. by using Optimizely
 		return {
 			autostart: willAutoplay() && !document.hidden,
