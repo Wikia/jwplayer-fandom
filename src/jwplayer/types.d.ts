@@ -52,6 +52,23 @@ export interface PlayPlayerEventData {
 	playReason?: string;
 }
 
+interface JWEvent {
+	type: string;
+	newstate: string;
+	oldstate: string;
+	reason: string;
+	playReason: string;
+	viewable: 0 | 1;
+}
+
+export interface JWPlayEvent extends JWEvent {
+	playReason: string;
+}
+
+export interface JWPauseEvent extends JWEvent {
+	pauseReason: string;
+}
+
 export interface PausePlayerEventData {
 	oldState?: string;
 	viewable?: number;
@@ -413,6 +430,7 @@ export interface CanonicalVideoPlayerProps {
 }
 
 export interface JwPlayerWrapperProps extends JwPlayerContainerId {
+	getDismissed?: () => boolean;
 	config?: PlayerConfig;
 	playerUrl?: string;
 	onReady?: (playerInstance: Player) => void;
