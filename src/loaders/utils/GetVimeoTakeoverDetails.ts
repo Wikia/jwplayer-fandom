@@ -12,7 +12,7 @@ function getVimeoTakeoverUrl(wikiId?: string): string {
 	if (!wikiId) {
 		return '';
 	}
-	return `${articleVideoBaseUrl}vimeo/v1/youtube-takeover-mappings/${wikiId}`;
+	return `${articleVideoBaseUrl}vimeo/v1/vimeo-takeover-mappings/${wikiId}`;
 }
 
 export async function getVimeoTakeoverDetails() {
