@@ -7,8 +7,8 @@ import { VimeoArticleVideoPlayerTrackingProps } from 'vimeo/types';
 const CloseWrapper = styled.div<VimeoArticleVideoPlayerTrackingProps>`
 	cursor: pointer;
 	pointer-events: initial;
-	height: ${(props) => (props.deviceType === 'desktop' ? '24px' : '36px')};
-	width: ${(props) => (props.deviceType === 'desktop' ? '24px' : '36px')};
+	height: ${({ deviceType }) => (deviceType === 'desktop' ? '24px' : '36px')};
+	width: ${({ deviceType }) => (deviceType === 'desktop' ? '24px' : '36px')};
 	display: flex;
 	align-items: center;
 	justify-content: center;
