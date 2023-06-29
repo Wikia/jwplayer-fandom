@@ -14,7 +14,6 @@ const CloseWrapper = styled.div<VimeoArticleVideoPlayerTrackingProps>`
 	justify-content: center;
 	opacity: 0.98;
 	position: absolute;
-	right: -3px;
 	right: ${(props) => (props.deviceType === 'desktop' ? '-3px' : '-6px')};
 	top: -3px;
 	z-index: ${Number(WDSVariables.z7) + 1};
