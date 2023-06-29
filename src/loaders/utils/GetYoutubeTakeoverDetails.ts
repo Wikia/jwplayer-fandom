@@ -2,7 +2,8 @@ import { isServerSide } from 'utils/getEnv';
 import getValueFromQuery from 'utils/getValuefromQuery';
 import { getArticleVideoServiceBaseUrl } from 'utils/getPandoraDetails';
 import { trackYoutubeTakeoverDetails, YoutubePlayerTrackingProps } from 'youtube/players/shared/youtubeTrackingEvents';
-import { WindowWithMW, YoutubeTakeOverDetails, YoutubeTakeoverResponse } from 'youtube/types';
+import { YoutubeTakeOverDetails, YoutubeTakeoverResponse } from 'youtube/types';
+import { getMediaWikiConfigDetails } from 'loaders/utils/GetMediaWikiConfigDetails';
 
 function getYoutubeTakeoverUrl(wikiId?: string): string {
 	const articleVideoBaseUrl = getArticleVideoServiceBaseUrl();
@@ -14,8 +15,6 @@ function getYoutubeTakeoverUrl(wikiId?: string): string {
 	}
 	return `${articleVideoBaseUrl}youtube/v1/youtube-takeover-mappings/${wikiId}`;
 }
-
-declare let window: WindowWithMW;
 
 export async function getYoutubeTakeoverDetails({
 	deviceType,
@@ -36,10 +35,7 @@ export async function getYoutubeTakeoverDetails({
 		return youtubeTakeoverDetails;
 	}
 
-	const config = window?.mw?.config;
-	const wikiId = config?.get('wgCityId');
-	const isTier3Wiki = config?.get('wgArticleFeaturedVideo')?.tier3Mapping ?? false;
-
+	const { wikiId, isTier3Wiki } = getMediaWikiConfigDetails();
 	// If the wikiId is not found for some reason or if the wiki is a tier3 wiki,
 	// then just return the default youtubeTakeoverDetails that include the isYoutubeTakeover set to false
 	if (!wikiId || isTier3Wiki) {
