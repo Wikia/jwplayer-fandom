@@ -28,12 +28,8 @@ interface CloseButtonProps extends VimeoArticleVideoPlayerTrackingProps {
 }
 
 const CloseButton: React.FC<CloseButtonProps> = ({ dismiss, deviceType }) => {
-	const onClickClose = () => {
-		dismiss();
-	};
-
 	return (
-		<CloseWrapper deviceType={deviceType} onClick={onClickClose}>
+		<CloseWrapper deviceType={deviceType} onClick={dismiss}>
 			<CrossIcon />
 		</CloseWrapper>
 	);
