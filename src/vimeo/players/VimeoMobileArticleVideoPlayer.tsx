@@ -72,7 +72,7 @@ const VimeoMobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = (
 			<MobileArticleVideoTopPlaceholder ref={ref}>
 				<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer} topPosition={getTopPosition()}>
 					<MobileVimeoOffScreenOverlay dismiss={() => setDismissed(true)} isScrollPlayer={isScrollPlayer} />
-					<VimeoPlayerWrapper deviceType={'mobile'} vimeoDetails={vimeoDetails} />
+					<VimeoPlayerWrapper deviceType="mobile" vimeoDetails={vimeoDetails} />
 				</MobileArticleVideoWrapper>
 			</MobileArticleVideoTopPlaceholder>
 		</PlayerWrapper>

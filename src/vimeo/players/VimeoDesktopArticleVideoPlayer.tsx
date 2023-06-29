@@ -77,7 +77,7 @@ const VimeoDesktopArticleVideoPlayer: React.FC<VimeoArticleVideoPlayerProps> = (
 			<VimeoDesktopArticleVideoTopPlaceholder ref={placeholderRef}>
 				<DesktopArticleVideoWrapper right={right} width={width} isScrollPlayer={isScrollPlayer}>
 					<TopBar>{isScrollPlayer && <CloseButton deviceType={'desktop'} dismiss={() => setDismissed(true)} />}</TopBar>
-					<VimeoPlayerWrapper deviceType={'desktop'} vimeoDetails={vimeoDetails} />
+					<VimeoPlayerWrapper deviceType="desktop" vimeoDetails={vimeoDetails} />
 				</DesktopArticleVideoWrapper>
 			</VimeoDesktopArticleVideoTopPlaceholder>
 		</PlayerWrapper>
