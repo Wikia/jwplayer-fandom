@@ -69,14 +69,16 @@ const TopBar = styled.div`
 	position: relative;
 `;
 
-const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
+// TODO: This can be deleted before merging. This is just used for testing purposes
+
+const ExperimentalRedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 	videoDetails,
 	showScrollPlayer,
 	jwPlayerContainerEmbedId,
 	playerUrl,
 	autoPlay,
 }) => {
-	console.debug('This is a message from the usual RedVentureVideoPlayer');
+	console.debug('This is a message from the ExperimentalRedVentureVideoPlayer');
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	// Check if Ads are disabled on any of the N&R Games sites. If the resolving function is not present, then always resolve to connecting with AdEng.
 	// This check should only apply to the GiantBomb N&R site. Safeguards are added in for other sites, where this function may not be defined.
@@ -128,7 +130,7 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 							config={getRedVentureVideoConfig(videoDetails, autoPlay)}
 							onReady={(playerInstance) => redVenturePlayerOnReady(videoDetails, playerInstance)}
 							stopAutoAdvanceOnExitViewport={false}
-							shouldLoadSponsoredContentList={true}
+							shouldLoadSponsoredContentList={false}
 							jwPlayerContainerEmbedId={jwPlayerContainerEmbedId}
 							playerUrl={playerUrl}
 						/>
@@ -140,4 +142,4 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 	);
 };
 
-export default RedVentureVideoPlayer;
+export default ExperimentalRedVentureVideoPlayer;

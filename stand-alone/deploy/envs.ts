@@ -1,6 +1,7 @@
 export enum Env {
 	PROD = 'prod',
 	TEST = 'test',
+	EXPERIMENTAL = 'experimental',
 }
 export const VALID_ENVS = Object.values(Env);
 
@@ -10,6 +11,7 @@ export const VALID_ENVS = Object.values(Env);
 export const DESTINATION_MAPPING: Record<Env, string> = {
 	[Env.PROD]: 'prod',
 	[Env.TEST]: 'test',
+	[Env.EXPERIMENTAL]: 'experimental',
 };
 
 export const BUCKET_NAME = 'silversurfer';

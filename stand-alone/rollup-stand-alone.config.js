@@ -26,9 +26,8 @@ const config = [
 			{
 				dir: 'standalone-dist',
 				compact: true,
-				name: 'iife',
 				plugins: plugins,
-				format: 'iife',
+				format: 'es',
 			},
 		],
 		watch: {
