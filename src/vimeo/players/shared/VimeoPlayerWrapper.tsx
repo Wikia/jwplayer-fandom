@@ -14,7 +14,7 @@ interface WindowWithVimeo extends Window {
 
 declare let window: WindowWithVimeo;
 
-const vimeoTargetId = 'youtube-embed-target';
+const vimeoTargetId = 'vimeo-embed-target';
 
 const VimeoPlayerTarget = styled.div`
 	iframe {
@@ -42,7 +42,6 @@ const VimeoPlayerWrapper: React.FC<VimeoVideoDetails> = ({ deviceType, vimeoDeta
 	}, []);
 
 	const initPlayer = () => {
-		// If the Youtube iFrame API script are not present, then load them in the header
 		if (!window?.Vimeo) {
 			const script = document.createElement('script');
 			script.src = 'https://player.vimeo.com/api/player.js';
@@ -55,7 +54,6 @@ const VimeoPlayerWrapper: React.FC<VimeoVideoDetails> = ({ deviceType, vimeoDeta
 			firstScriptTag.parentNode.insertBefore(script, firstScriptTag);
 			document.getElementsByTagName('head')[0].appendChild(script);
 		} else {
-			// If the Vimeo script was loaded already for some reason, then just initialize the player
 			initVimeoPlayer();
 		}
 	};
