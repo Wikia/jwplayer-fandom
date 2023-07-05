@@ -110,7 +110,6 @@
 		"prettier": "2.5.1",
 		"rollup": "2.68.0",
 		"rollup-plugin-dts": "4.2.0",
-		"rollup-plugin-terser": "7.0.2",
 		"rollup-plugin-visualizer": "5.9.0",
 		"ts-node": "^10.4.0",
 		"tsconfig-paths": "^3.12.0",
