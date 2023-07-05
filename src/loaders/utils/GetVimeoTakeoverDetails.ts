@@ -53,8 +53,8 @@ export async function getVimeoTakeoverDetails() {
 }
 
 export const eligibleForVimeoTakeover = (vimeoDetails: VimeoTakeOverDetails) => {
-	const youtubeTakeoverFlag = vimeoDetails.isVimeoTakeover;
+	const vimeoTakeoverFlag = vimeoDetails.isVimeoTakeover;
 	const isVideoIdValidLength = vimeoDetails?.videoId && vimeoDetails?.videoId?.length !== 0;
 
-	return youtubeTakeoverFlag && isVideoIdValidLength;
+	return vimeoTakeoverFlag && isVideoIdValidLength;
 };
