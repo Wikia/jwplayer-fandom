@@ -15,7 +15,7 @@ const VimeoDesktopArticleVideoTopPlaceholder = styled.div`
 	left: 0;
 	bottom: 0;
 	right: 0;
-	z-index: 2;
+	z-index: ${Number(WDSVariables.z2)};
 `;
 
 const moveDownAnimation = (right: number, width: number) => keyframes`
