@@ -28,7 +28,7 @@ const MobileArticleVideoWrapper = styled.div<MobileArticleVideoWrapperProps>`
 					position: fixed;
 					top: ${props.topPosition};
 					width: 100%;
-					z-index: ${Number(WDSVariables.z2) + 1};
+					z-index: ${Number(WDSVariables.z7) + 1};
 			  `
 			: css`
 					transform: translateZ(0);
