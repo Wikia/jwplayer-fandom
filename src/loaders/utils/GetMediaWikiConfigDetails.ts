@@ -1,8 +1,13 @@
-import { WindowWithMW } from 'youtube/types';
+import { WindowWithMW } from '../types';
 
 declare let window: WindowWithMW;
 
-export function getMediaWikiConfigDetails() {
+interface MediaWikiConfigDetails {
+	wikiId: string;
+	isTier3Wiki: boolean;
+}
+
+export function getMediaWikiConfigDetails(): MediaWikiConfigDetails {
 	const config = window?.mw?.config;
 	const wikiId = config?.get('wgCityId');
 	const isTier3Wiki = config?.get('wgArticleFeaturedVideo')?.tier3Mapping ?? false;
