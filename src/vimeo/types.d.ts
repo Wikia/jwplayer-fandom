@@ -23,5 +23,5 @@ export interface VimeoTakeoverResponse {
 	id: string;
 	impression_per_session: number;
 	vimeo_take_over: boolean;
-	vimeo_video_id: string;
+	takeover_video_id: string;
 }

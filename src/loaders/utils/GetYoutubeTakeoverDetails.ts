@@ -48,11 +48,11 @@ export async function getYoutubeTakeoverDetails({
 
 	if (
 		wikiYoutubeTakeoverDetails?.youtube_take_over &&
-		wikiYoutubeTakeoverDetails?.youtube_video_id?.trim().length !== 0
+		wikiYoutubeTakeoverDetails?.takeover_video_id?.trim().length !== 0
 	) {
 		console.debug('Youtube Takeover: Eligible for youtube takeover based on the targeting params.');
 		youtubeTakeoverDetails.isYoutubeTakeover = wikiYoutubeTakeoverDetails.youtube_take_over;
-		youtubeTakeoverDetails.youtubeVideoId = wikiYoutubeTakeoverDetails.youtube_video_id;
+		youtubeTakeoverDetails.youtubeVideoId = wikiYoutubeTakeoverDetails.takeover_video_id;
 		trackYoutubeTakeoverDetails({ deviceType: deviceType, youtubeVideoId: youtubeTakeoverDetails.youtubeVideoId });
 	}
 
