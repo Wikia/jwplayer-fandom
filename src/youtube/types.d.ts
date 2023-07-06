@@ -9,18 +9,6 @@ declare module 'react' {
 	}
 }
 
-interface MWConfig {
-	get: (key: string) => any;
-}
-
-interface MW {
-	config: MWConfig;
-}
-
-interface WindowWithMW extends Window {
-	mw: MW;
-}
-
 export interface YoutubeTakeoverResponse {
 	product: string;
 	id: string;
