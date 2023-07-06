@@ -26,12 +26,9 @@ export async function getYoutubeTakeoverDetails({
 
 	const forcedYoutubeEmbedVideoId = getValueFromQuery('youtube_embed_video_id');
 	if (forcedYoutubeEmbedVideoId) {
-		// If we can extract a youtube video id from the URL query params, then we can assume we want the youtube takeover
-		console.debug(
-			`Youtube Takeover: Found the youtube_embed_video_id query param, with a value of ${forcedYoutubeEmbedVideoId}`,
-		);
 		youtubeTakeoverDetails.isYoutubeTakeover = true;
 		youtubeTakeoverDetails.youtubeVideoId = forcedYoutubeEmbedVideoId;
+		console.debug('Youtube Takeover: Found the youtube_embed_video_id query param', youtubeTakeoverDetails);
 		return youtubeTakeoverDetails;
 	}
 
@@ -50,10 +47,14 @@ export async function getYoutubeTakeoverDetails({
 		wikiYoutubeTakeoverDetails?.youtube_take_over &&
 		wikiYoutubeTakeoverDetails?.takeover_video_id?.trim().length !== 0
 	) {
-		console.debug('Youtube Takeover: Eligible for youtube takeover based on the targeting params.');
 		youtubeTakeoverDetails.isYoutubeTakeover = wikiYoutubeTakeoverDetails.youtube_take_over;
 		youtubeTakeoverDetails.youtubeVideoId = wikiYoutubeTakeoverDetails.takeover_video_id;
-		trackYoutubeTakeoverDetails({ deviceType: deviceType, youtubeVideoId: youtubeTakeoverDetails.youtubeVideoId });
+		console.debug(
+			'Youtube Takeover: Eligible for youtube takeover based on the targeting params.',
+			youtubeTakeoverDetails,
+			wikiYoutubeTakeoverDetails,
+		);
+		trackYoutubeTakeoverDetails({ deviceType, youtubeVideoId: youtubeTakeoverDetails.youtubeVideoId });
 	}
 
 	return youtubeTakeoverDetails;

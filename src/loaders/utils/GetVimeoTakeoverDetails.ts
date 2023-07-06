@@ -23,12 +23,9 @@ export async function getVimeoTakeoverDetails() {
 
 	const forcedVimeoEmbedVideoId = getValueFromQuery('vimeo_embed_video_id');
 	if (forcedVimeoEmbedVideoId) {
-		// If we can extract a youtube video id from the URL query params, then we can assume we want the youtube takeover
-		console.debug(
-			`Vimeo Takeover: Found the vimeo_embed_video_id query param, with a value of ${forcedVimeoEmbedVideoId}`,
-		);
 		vimeoDetails.isVimeoTakeover = true;
 		vimeoDetails.videoId = forcedVimeoEmbedVideoId;
+		console.debug('Vimeo Takeover: Found the vimeo_embed_video_id query param', vimeoDetails);
 		return vimeoDetails;
 	}
 
@@ -44,9 +41,13 @@ export async function getVimeoTakeoverDetails() {
 	const wikiVimeoTakeoverDetails = dataArray?.length === 1 ? dataArray[0] : null;
 
 	if (wikiVimeoTakeoverDetails?.vimeo_take_over && wikiVimeoTakeoverDetails?.takeover_video_id?.trim().length !== 0) {
-		console.debug('Vimeo Takeover: Eligible for vimeo takeover based on the targeting params.');
 		vimeoDetails.isVimeoTakeover = wikiVimeoTakeoverDetails.vimeo_take_over;
 		vimeoDetails.videoId = wikiVimeoTakeoverDetails.takeover_video_id;
+		console.debug(
+			'Vimeo Takeover: Eligible for vimeo takeover based on the targeting params.',
+			vimeoDetails,
+			wikiVimeoTakeoverDetails,
+		);
 	}
 
 	return vimeoDetails;
