@@ -15,7 +15,7 @@ const YoutubeDesktopArticleVideoTopPlaceholder = styled.div`
 	left: 0;
 	bottom: 0;
 	right: 0;
-	z-index: 2;
+	z-index: ${Number(WDSVariables.z2)};
 `;
 
 const moveDownAnimation = (right: number, width: number) => keyframes`
@@ -28,7 +28,7 @@ const moveDownAnimation = (right: number, width: number) => keyframes`
 	to {
 		right: 18px;
 		bottom: 45px;
-		width: 300px;  
+		width: 300px;
 	}
 `;
 
