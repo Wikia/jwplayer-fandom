@@ -1,13 +1,14 @@
 import React, { useRef, useState } from 'react';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import styled, { css } from 'styled-components';
-import YoutubePlayerWrapper from 'youtube/players/shared/YoutubePlayerWrapper';
+
+import VimeoPlayerWrapper from 'vimeo/players/shared/VimeoPlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
-import PlayerWrapper from 'youtube/players/shared/PlayerWrapper';
+import PlayerWrapper from 'vimeo/players/shared/PlayerWrapper';
 
-import { YoutubeArticleVideoPlayerProps } from '../types';
+import { VimeoArticleVideoPlayerProps } from 'vimeo/types';
 
-import MobileYoutubeOffScreenOverlay from './overlays/MobileYoutubeOffScreenOverlay';
+import MobileVimeoOffScreenOverlay from './overlays/MobileVimeoOffScreenOverlay';
 
 const MobileArticleVideoTopPlaceholder = styled.div`
 	width: 100%;
@@ -39,15 +40,15 @@ const MobileArticleVideoWrapper = styled.div<MobileArticleVideoWrapperProps>`
 			  `}
 `;
 
-interface MobileArticleVideoPlayerProps extends YoutubeArticleVideoPlayerProps {
+interface MobileArticleVideoPlayerProps extends VimeoArticleVideoPlayerProps {
 	hasPartnerSlot?: boolean;
 	isFullScreen?: boolean;
 }
 
-const YoutubeMobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
+const VimeoMobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
 	hasPartnerSlot,
 	isFullScreen,
-	youtubeTakeoverDetails,
+	vimeoDetails,
 }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const onScreen = useOnScreen(ref, '0px', 1);
@@ -70,12 +71,12 @@ const YoutubeMobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> =
 		<PlayerWrapper playerName="youtube-mobile-article-video">
 			<MobileArticleVideoTopPlaceholder ref={ref}>
 				<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer} topPosition={getTopPosition()}>
-					<MobileYoutubeOffScreenOverlay dismiss={() => setDismissed(true)} isScrollPlayer={isScrollPlayer} />
-					<YoutubePlayerWrapper deviceType={'mobile'} youtubeTakeoverDetails={youtubeTakeoverDetails} />
+					<MobileVimeoOffScreenOverlay dismiss={() => setDismissed(true)} isScrollPlayer={isScrollPlayer} />
+					<VimeoPlayerWrapper deviceType="mobile" vimeoDetails={vimeoDetails} />
 				</MobileArticleVideoWrapper>
 			</MobileArticleVideoTopPlaceholder>
 		</PlayerWrapper>
 	);
 };
 
-export default YoutubeMobileArticleVideoPlayer;
+export default VimeoMobileArticleVideoPlayer;

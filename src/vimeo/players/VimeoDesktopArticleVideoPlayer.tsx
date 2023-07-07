@@ -1,13 +1,13 @@
 import React, { useRef, useState } from 'react';
-import YoutubePlayerWrapper from 'youtube/players/shared/YoutubePlayerWrapper';
-import PlayerWrapper from 'youtube/players/shared/PlayerWrapper';
-import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
-import styled, { css, keyframes } from 'styled-components';
+import { VimeoArticleVideoPlayerProps } from 'vimeo/types';
 import useOnScreen from 'utils/useOnScreen';
-import CloseButton from 'youtube/players/shared/CloseButton';
-import { YoutubeArticleVideoPlayerProps } from 'youtube/types';
+import PlayerWrapper from 'vimeo/players/shared/PlayerWrapper';
+import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
+import CloseButton from 'vimeo/players/shared/CloseButton';
+import VimeoPlayerWrapper from 'vimeo/players/shared/VimeoPlayerWrapper';
+import styled, { css, keyframes } from 'styled-components';
 
-const YoutubeDesktopArticleVideoTopPlaceholder = styled.div`
+const VimeoDesktopArticleVideoTopPlaceholder = styled.div`
 	position: absolute;
 	width: 100%;
 	padding-top: 56.25%;
@@ -32,13 +32,13 @@ const moveDownAnimation = (right: number, width: number) => keyframes`
 	}
 `;
 
-interface YoutubeDesktopArticleVideoWrapperProps {
+interface VimeoDesktopArticleVideoWrapperProps {
 	isScrollPlayer: boolean;
 	right?: number;
 	width?: number;
 }
 
-const DesktopArticleVideoWrapper = styled.div<YoutubeDesktopArticleVideoWrapperProps>`
+const DesktopArticleVideoWrapper = styled.div<VimeoDesktopArticleVideoWrapperProps>`
 	height: max-content;
 	${(props) =>
 		props.isScrollPlayer
@@ -63,7 +63,7 @@ const TopBar = styled.div`
 	position: relative;
 `;
 
-const YoutubeDesktopArticleVideoPlayer: React.FC<YoutubeArticleVideoPlayerProps> = ({ youtubeTakeoverDetails }) => {
+const VimeoDesktopArticleVideoPlayer: React.FC<VimeoArticleVideoPlayerProps> = ({ vimeoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.1);
 	const [dismissed, setDismissed] = useState(false);
@@ -73,15 +73,15 @@ const YoutubeDesktopArticleVideoPlayer: React.FC<YoutubeArticleVideoPlayerProps>
 	const width = boundingClientRect?.width;
 
 	return (
-		<PlayerWrapper playerName="youtube-desktop-article-video">
-			<YoutubeDesktopArticleVideoTopPlaceholder ref={placeholderRef}>
+		<PlayerWrapper playerName="vimeo-desktop-article-video">
+			<VimeoDesktopArticleVideoTopPlaceholder ref={placeholderRef}>
 				<DesktopArticleVideoWrapper right={right} width={width} isScrollPlayer={isScrollPlayer}>
 					<TopBar>{isScrollPlayer && <CloseButton deviceType={'desktop'} dismiss={() => setDismissed(true)} />}</TopBar>
-					<YoutubePlayerWrapper deviceType={'desktop'} youtubeTakeoverDetails={youtubeTakeoverDetails} />
+					<VimeoPlayerWrapper deviceType="desktop" vimeoDetails={vimeoDetails} />
 				</DesktopArticleVideoWrapper>
-			</YoutubeDesktopArticleVideoTopPlaceholder>
+			</VimeoDesktopArticleVideoTopPlaceholder>
 		</PlayerWrapper>
 	);
 };
 
-export default YoutubeDesktopArticleVideoPlayer;
+export default VimeoDesktopArticleVideoPlayer;
