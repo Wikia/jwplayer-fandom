@@ -12,6 +12,10 @@ interface WindowWithVimeo extends Window {
 	};
 }
 
+interface VimeoLoadedData {
+	id: number;
+}
+
 declare let window: WindowWithVimeo;
 
 const vimeoTargetId = 'vimeo-embed-target';
@@ -35,6 +39,13 @@ const VimeoPlayerWrapper: React.FC<VimeoVideoDetails> = ({ deviceType, vimeoDeta
 	const initVimeoPlayer = () => {
 		const player = new window.Vimeo.Player(vimeoTargetId);
 		console.debug(`Vimeo API object initiated - ${!!player}`);
+
+		player.on('loaded', ({ id }: VimeoLoadedData) => {
+			console.debug(`Vimeo video ID: ${id} loaded`);
+			player.setVolume(0).then(() => {
+				player.play();
+			});
+		});
 	};
 
 	useEffect(() => {
