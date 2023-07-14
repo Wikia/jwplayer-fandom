@@ -88,6 +88,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 			const registerPlugin = window.jwplayer().registerPlugin;
 			registerPlugin('wirewax', '8.0', FandomWirewaxPlugin);
 
+			console.debug(`OptimizelyDebug::Loading the player config ${config}...`);
 			setConfig(config);
 
 			const playerInstance = window.jwplayer(elementId).setup({

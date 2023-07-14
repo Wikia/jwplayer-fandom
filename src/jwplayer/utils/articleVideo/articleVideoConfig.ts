@@ -50,8 +50,11 @@ const getAdvertisingConfig = (lang: string) => {
 export const getArticleVideoConfig = (videoDetails) => {
 	const lang = videoDetails?.lang || 'en';
 
+	console.debug(`OptimizelyDebug::isDedicatedForArticle ${videoDetails?.isDedicatedForArticle}.`);
+
 	if (window?.videoExperiments?.playlistUrl && !videoDetails?.isDedicatedForArticle) {
 		// This way we can provide an alternative playlist e.g. by using Optimizely
+		console.debug(`OptimizelyDebug::Loading the video experiment playlist ${window.videoExperiments.playlistUrl}...`);
 		return {
 			autostart: willAutoplay() && !document.hidden,
 			mute: willMute(),
