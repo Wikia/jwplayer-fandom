@@ -10,6 +10,7 @@ import CloseButton from 'jwplayer/players/shared/CloseButton/CloseButton';
 import Attribution from 'jwplayer/players/DesktopArticleVideoPlayer/Attribution';
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
+import { getDismissedFn } from 'jwplayer/utils/utils';
 
 import styles from './DesktopArticleVideoPlayer.module.css';
 
@@ -23,6 +24,9 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 	const shareIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-settings-sharing');
 	const moreVideosIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-related-btn');
 	const pipIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-icon-pip');
+	const inputName = 'isDismissed';
+
+	const getDismissed = getDismissedFn(inputName);
 
 	if (onScreen) {
 		if (controlbar) controlbar.style.background = 'rgba(0, 0, 0, 0.5)';
@@ -52,11 +56,13 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 							)}
 						</div>
 						<JwPlayerWrapper
+							getDismissed={getDismissed}
 							config={getArticleVideoConfig(videoDetails)}
 							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
 							stopAutoAdvanceOnExitViewport={false}
 						/>
 						{isScrollPlayer && <VideoDetails />}
+						<input type="hidden" value={String(dismissed)} name={inputName} />
 					</div>
 				)}
 			</div>

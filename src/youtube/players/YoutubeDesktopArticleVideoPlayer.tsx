@@ -30,11 +30,11 @@ const DesktopArticleVideoWrapper: React.FC<YoutubeDesktopArticleVideoWrapperProp
 							bottom: 100%;
 							width: ${width}px;
 						}
-					
+
 						to {
 							right: 18px;
 							bottom: 45px;
-							width: 300px;  
+							width: 300px;
 						}
 				`}
 			</style>

@@ -10,6 +10,7 @@ import { singleTrack } from 'jwplayer/utils/videoTracking';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
+import { getDismissedFn } from 'jwplayer/utils/utils';
 
 import clsx from 'clsx';
 
@@ -50,6 +51,9 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 	const onScreen = useOnScreen(ref, '0px', 1);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
+	const inputName = 'isDismissed';
+
+	const getDismissed = getDismissedFn(inputName);
 
 	const getTopPosition = () => {
 		if (isFullScreen) {
@@ -91,10 +95,13 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 				{adComplete && (
 					<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer} topPosition={getTopPosition()}>
 						<JwPlayerWrapper
+							getDismissed={getDismissed}
 							config={getArticleVideoConfig(videoDetails)}
 							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
 							stopAutoAdvanceOnExitViewport={false}
 						/>
+						<input type="hidden" value={String(dismissed)} name={inputName} />
+
 						<OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />
 					</MobileArticleVideoWrapper>
 				)}

@@ -7,6 +7,7 @@ import { Experiment } from '@fandom/pathfinder-lite/types';
 import { shouldLoadUcpPlayer } from 'loaders/utils/shouldLoadPlayer';
 
 import { eligibleForYoutubeTakeover, getYoutubeTakeoverDetails } from './utils/GetYoutubeTakeoverDetails';
+import { eligibleForVimeoTakeover, getVimeoTakeoverDetails } from './utils/GetVimeoTakeoverDetails';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
@@ -50,11 +51,18 @@ export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> =
 		]);
 
 		const youtubeTakeoverDetails = await getYoutubeTakeoverDetails({ deviceType: 'mobile' });
+		const vimeoTakeoverDetails = await getVimeoTakeoverDetails();
 
 		if (eligibleForYoutubeTakeover(youtubeTakeoverDetails)) {
 			console.debug('Youtube takeover - loading Mobile youtube embed.');
 			import('youtube/players/YoutubeMobileArticleVideoPlayer').then(({ default: YoutubeMobileArticleVideoPlayer }) =>
 				setPlayer(<YoutubeMobileArticleVideoPlayer youtubeTakeoverDetails={youtubeTakeoverDetails} />),
+			);
+			return;
+		} else if (eligibleForVimeoTakeover(vimeoTakeoverDetails)) {
+			console.debug('Vimeo takeover - loading mobile vimeo embed.');
+			import('vimeo/players/VimeoMobileArticleVideoPlayer').then(({ default: VimeoMobileArticleVideoPlayer }) =>
+				setPlayer(<VimeoMobileArticleVideoPlayer vimeoDetails={vimeoTakeoverDetails} />),
 			);
 			return;
 		} else {

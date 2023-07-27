@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { JWPlayerApi, PlaylistItem } from 'jwplayer/types';
+import { JWPauseEvent, JWPlayerApi, JWPlayEvent, PlaylistItem } from 'jwplayer/types';
 import FandomWirewaxPlugin from 'jwplayer/plugins/fandom-wirewax.plugin';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { JwPlayerWrapperProps } from 'jwplayer/types';
@@ -30,6 +30,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	config,
 	playerUrl,
 	onReady,
+	getDismissed = () => false,
 	onComplete,
 	className,
 	stopAutoAdvanceOnExitViewport,
@@ -46,9 +47,15 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	useEffect(() => {
 		if (shouldLoadSponsoredContentList) {
 			const retrieveSponsoredVideo = async () => {
+				if (window?.sponsoredVideos?.length > 0) {
+					console.debug('sponsoredVideos already retrieved');
+					return;
+				}
+
 				const sponsoredVideoResponse = await getSponsoredVideos();
 				if (sponsoredVideoResponse && typeof window !== undefined) {
 					window.sponsoredVideos = sponsoredVideoResponse;
+					console.debug('Retrieved sponsoredVideos list');
 				} else {
 					console.debug(
 						'Could not set sponsored videos. Either window the fetched sponsoredVideo list were undefined.',
@@ -86,6 +93,21 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 			const playerInstance = window.jwplayer(elementId).setup({
 				...defaultConfig,
 				...config,
+			});
+
+			playerInstance.on(JWEvents.AD_PAUSE, ({ pauseReason, viewable }: JWPauseEvent) => {
+				// Keep playing the ad when the user closed the mini player
+				if (viewable === 0 && pauseReason === 'external') {
+					playerInstance.play();
+				}
+			});
+
+			playerInstance.on(JWEvents.PLAY, ({ playReason, viewable }: JWPlayEvent) => {
+				const dismissed = getDismissed();
+				// Pause the content play when the user closed the mini player playing the ad
+				if (dismissed && viewable === 0 && playReason === 'autostart') {
+					playerInstance.pause();
+				}
 			});
 
 			playerInstance.on(JWEvents.READY, (event) => {

@@ -3,6 +3,7 @@ import { DesktopArticleVideoLoaderProps } from 'loaders/types';
 import { setVersionWindowVar } from 'loaders/utils/GetVersion';
 import { shouldLoadUcpPlayer } from 'loaders/utils/shouldLoadPlayer';
 import { eligibleForYoutubeTakeover, getYoutubeTakeoverDetails } from 'loaders/utils/GetYoutubeTakeoverDetails';
+import { eligibleForVimeoTakeover, getVimeoTakeoverDetails } from 'loaders/utils/GetVimeoTakeoverDetails';
 import defineExperiment from '@fandom/pathfinder-lite/experiments/defineExperiment';
 import getExperiment from '@fandom/pathfinder-lite/experiments/getExperiment';
 import { Experiment } from '@fandom/pathfinder-lite/types';
@@ -58,11 +59,18 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 		]);
 
 		const youtubeTakeoverDetails = await getYoutubeTakeoverDetails({ deviceType: 'desktop' });
+		const vimeoTakeoverDetails = await getVimeoTakeoverDetails();
 
 		if (eligibleForYoutubeTakeover(youtubeTakeoverDetails)) {
 			console.debug('Youtube takeover - loading Desktop youtube embed.');
 			import('youtube/players/YoutubeDesktopArticleVideoPlayer').then(({ default: YoutubeDesktopArticleVideoPlayer }) =>
 				setPlayer(<YoutubeDesktopArticleVideoPlayer youtubeTakeoverDetails={youtubeTakeoverDetails} />),
+			);
+			return;
+		} else if (eligibleForVimeoTakeover(vimeoTakeoverDetails)) {
+			console.debug('Vimeo takeover - loading Desktop vimeo embed.');
+			import('vimeo/players/VimeoDesktopArticleVideoPlayer').then(({ default: VimeoDesktopArticleVideoPlayer }) =>
+				setPlayer(<VimeoDesktopArticleVideoPlayer vimeoDetails={vimeoTakeoverDetails} />),
 			);
 			return;
 		} else if (currentExperiment?.name === desktopJwFloatOnScrollExperiment?.name && checkUserGeo(['us'])) {

@@ -3,7 +3,6 @@ import typescript from '@rollup/plugin-typescript';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
-import { terser } from 'rollup-plugin-terser';
 import dts from 'rollup-plugin-dts';
 import replace from '@rollup/plugin-replace';
 import postcss from 'rollup-plugin-postcss';
@@ -22,11 +21,6 @@ import packageJson from './package.json';
 const isDev = process.env.NODE_ENV === 'development';
 const plugins = [];
 
-// Don't minify when in watch mode
-if (!isDev) {
-	plugins.push(terser());
-}
-
 const config = [
 	{
 		input: {
@@ -39,7 +33,7 @@ const config = [
 		output: [
 			{
 				dir: 'dist',
-				compact: true,
+				compact: false,
 				plugins: plugins,
 				format: 'es',
 				globals: {

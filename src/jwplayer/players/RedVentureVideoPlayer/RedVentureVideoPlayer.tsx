@@ -101,7 +101,7 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 							config={getRedVentureVideoConfig(videoDetails, autoPlay)}
 							onReady={(playerInstance) => redVenturePlayerOnReady(videoDetails, playerInstance)}
 							stopAutoAdvanceOnExitViewport={false}
-							shouldLoadSponsoredContentList={false}
+							shouldLoadSponsoredContentList={true}
 							jwPlayerContainerEmbedId={jwPlayerContainerEmbedId}
 							playerUrl={playerUrl}
 						/>

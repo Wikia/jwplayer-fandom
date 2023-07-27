@@ -26,7 +26,7 @@ export interface YoutubeTakeoverResponse {
 	id: string;
 	impression_per_session: number;
 	youtube_take_over: boolean;
-	youtube_video_id: string;
+	takeover_video_id: string;
 }
 
 export interface YoutubeTakeOverDetails {
