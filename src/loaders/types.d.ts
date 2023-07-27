@@ -9,7 +9,7 @@ export type MobileArticleVideoLoaderProps = MobileArticleVideoPlayerProps | unde
 export type CanonicalVideoLoaderProps = CanonicalVideoPlayerProps | undefined;
 
 interface MWConfig {
-	get: (key: string) => MWConfig;
+	get: (key: string) => any;
 }
 
 interface MW {
