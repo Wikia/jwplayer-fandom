@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.3.1-FCPPT-24",
+	"version": "2.3.6",
 	"description": "JWPlayer for Fandom",
 	"exports": {
 		".": "./main.js",
