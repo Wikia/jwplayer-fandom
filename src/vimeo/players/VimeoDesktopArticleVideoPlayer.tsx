@@ -10,18 +10,22 @@ import clsx from 'clsx';
 import styles from './VimeoDesktopArticleVideoPlayer.module.css';
 
 interface VimeoDesktopArticleVideoWrapperProps {
-	isScrollPlayer: boolean;
-	right?: number;
-	width?: number;
+	vimeoDetails: any;
 }
 
-const DesktopArticleVideoWrapper: React.FC<VimeoDesktopArticleVideoWrapperProps> = ({
-	isScrollPlayer,
-	right,
-	width,
-}) => {
+const TopBar: React.FC = () => <div className={styles.topBar} />;
+
+const DesktopArticleVideoWrapper: React.FC<VimeoDesktopArticleVideoWrapperProps> = ({ vimeoDetails }) => {
+	const placeholderRef = useRef<HTMLDivElement>(null);
+	const [dismissed, setDismissed] = useState(false);
+	const onScreen = useOnScreen(placeholderRef, '0px', 0.1);
+	const isScrollPlayer = !(dismissed || onScreen);
+	const boundingClientRect = placeholderRef.current?.getBoundingClientRect();
+	const right = boundingClientRect?.right;
+	const width = boundingClientRect?.width;
+
 	return (
-		<>
+		<div className={styles.vimeoDesktopArticleVideoTopPlaceholder} ref={placeholderRef}>
 			<style>
 				{`
 					@keyframes moveDownAnimation {
@@ -45,30 +49,18 @@ const DesktopArticleVideoWrapper: React.FC<VimeoDesktopArticleVideoWrapperProps>
 						? styles.desktopArticleVideoWrapperIsScrollPlayer
 						: styles.desktopArticleVideoWrapperIsNotScrollPlayer,
 				)}
-			/>
-		</>
+			>
+				<TopBar>{isScrollPlayer && <CloseButton deviceType={'desktop'} dismiss={() => setDismissed(true)} />}</TopBar>
+				<VimeoPlayerWrapper deviceType="desktop" vimeoDetails={vimeoDetails} />
+			</div>
+		</div>
 	);
 };
 
-const TopBar: React.FC = () => <div className={styles.topBar} />;
-
-const VimeoDesktopArticleVideoPlayer: React.FC<VimeoArticleVideoPlayerProps> = ({ vimeoDetails }) => {
-	const placeholderRef = useRef<HTMLDivElement>(null);
-	const onScreen = useOnScreen(placeholderRef, '0px', 0.1);
-	const [dismissed, setDismissed] = useState(false);
-	const isScrollPlayer = !(dismissed || onScreen);
-	const boundingClientRect = placeholderRef.current?.getBoundingClientRect();
-	const right = boundingClientRect?.right;
-	const width = boundingClientRect?.width;
-
+export const VimeoDesktopArticleVideoPlayer: React.FC<VimeoArticleVideoPlayerProps> = ({ vimeoDetails }) => {
 	return (
 		<PlayerWrapper playerName="vimeo-desktop-article-video">
-			<div className={styles.vimeoDesktopArticleVideoTopPlaceholder} ref={placeholderRef}>
-				<DesktopArticleVideoWrapper right={right} width={width} isScrollPlayer={isScrollPlayer}>
-					<TopBar>{isScrollPlayer && <CloseButton deviceType={'desktop'} dismiss={() => setDismissed(true)} />}</TopBar>
-					<VimeoPlayerWrapper deviceType="desktop" vimeoDetails={vimeoDetails} />
-				</DesktopArticleVideoWrapper>
-			</div>
+			<DesktopArticleVideoWrapper vimeoDetails={vimeoDetails} />
 		</PlayerWrapper>
 	);
 };
