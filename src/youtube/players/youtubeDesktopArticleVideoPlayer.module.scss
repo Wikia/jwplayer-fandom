@@ -18,6 +18,9 @@
 	--z2: token(z2);
 	z-index: calc(var(--z2) + 1);
 	position: fixed;
+  	right: 18px;
+  	bottom: 45px;
+  	width: 300px;
 	animation: moveDownAnimation 0.4s normal forwards;
 }
 
