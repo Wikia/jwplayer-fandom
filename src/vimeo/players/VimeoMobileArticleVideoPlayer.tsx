@@ -10,8 +10,8 @@ import styles from './VimeoMobileArticleVideoPlayer.module.css';
 import MobileVimeoOffScreenOverlay from './overlays/MobileVimeoOffScreenOverlay';
 
 interface MobileArticleVideoWrapperProps {
-	isScrollPlayer: boolean;
 	topPosition: string;
+	vimeoDetails: any;
 }
 
 interface MobileArticleVideoPlayerProps extends VimeoArticleVideoPlayerProps {
@@ -20,35 +20,41 @@ interface MobileArticleVideoPlayerProps extends VimeoArticleVideoPlayerProps {
 }
 
 const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({
-	isScrollPlayer,
+	vimeoDetails,
 	topPosition,
 	children,
-}) => (
-	<div
-		className={clsx(
-			`mobile-article-video-wrapper`,
-			isScrollPlayer
-				? styles.mobileArticleVideoWrapperIsScrollPlayer
-				: styles.mobileArticleVideoWrapperIsNotScrollPlayer,
-		)}
-		style={{
-			...(isScrollPlayer && { top: topPosition }),
-		}}
-	>
-		{children}
-	</div>
-);
-
-const VimeoMobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
-	hasPartnerSlot,
-	isFullScreen,
-	vimeoDetails,
 }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const onScreen = useOnScreen(ref, '0px', 1);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
 
+	return (
+		<div ref={ref} className={clsx(styles.mobileArticleVideoTopPlaceholder, isScrollPlayer && `is-on-scroll-active`)}>
+			<div
+				className={clsx(
+					`mobile-article-video-wrapper`,
+					isScrollPlayer
+						? styles.mobileArticleVideoWrapperIsScrollPlayer
+						: styles.mobileArticleVideoWrapperIsNotScrollPlayer,
+				)}
+				style={{
+					...(isScrollPlayer && { top: topPosition }),
+				}}
+			>
+				<MobileVimeoOffScreenOverlay dismiss={() => setDismissed(true)} isScrollPlayer={isScrollPlayer} />
+				<VimeoPlayerWrapper deviceType="mobile" vimeoDetails={vimeoDetails} />
+				{children}
+			</div>
+		</div>
+	);
+};
+
+const VimeoMobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
+	hasPartnerSlot,
+	isFullScreen,
+	vimeoDetails,
+}) => {
 	const getTopPosition = () => {
 		if (isFullScreen) {
 			return '0px';
@@ -63,12 +69,7 @@ const VimeoMobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = (
 
 	return (
 		<PlayerWrapper playerName="youtube-mobile-article-video">
-			<div ref={ref} className={clsx(styles.mobileArticleVideoTopPlaceholder, isScrollPlayer && `is-on-scroll-active`)}>
-				<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer} topPosition={getTopPosition()}>
-					<MobileVimeoOffScreenOverlay dismiss={() => setDismissed(true)} isScrollPlayer={isScrollPlayer} />
-					<VimeoPlayerWrapper deviceType="mobile" vimeoDetails={vimeoDetails} />
-				</MobileArticleVideoWrapper>
-			</div>
+			<MobileArticleVideoWrapper vimeoDetails={vimeoDetails} topPosition={getTopPosition()} />
 		</PlayerWrapper>
 	);
 };
