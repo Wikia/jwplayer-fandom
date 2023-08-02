@@ -13,7 +13,9 @@ interface CloseWrapperProps extends YoutubePlayerTrackingProps {
 }
 
 const CloseWrapper: React.FC<CloseWrapperProps> = ({ deviceType }) => (
-	<div className={clsx(deviceType ? styles.closeWrapperDesktop : styles.closeWrapperMobile)} />
+	<div className={clsx(deviceType ? styles.closeWrapperDesktop : styles.closeWrapperMobile)}>
+		<IconCrossTiny className={styles.crossIcon} />
+	</div>
 );
 
 interface CloseButtonProps extends YoutubePlayerTrackingProps {
@@ -26,11 +28,7 @@ const CloseButton: React.FC<CloseButtonProps> = ({ dismiss, deviceType }) => {
 		dismiss();
 	};
 
-	return (
-		<CloseWrapper deviceType={deviceType} onClick={onClickClose}>
-			<IconCrossTiny className={styles.crossIcon} />
-		</CloseWrapper>
-	);
+	return <CloseWrapper deviceType={deviceType} onClick={onClickClose} />;
 };
 
 export default CloseButton;
