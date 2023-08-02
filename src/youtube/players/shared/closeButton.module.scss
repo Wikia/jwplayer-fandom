@@ -1,31 +1,31 @@
 .closeWrapper {
-  --z7: token(z7);
-  cursor: pointer;
-  pointer-events: initial;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.98;
-  position: absolute;
-  right: -3px;
-  top: -3px;
-  z-index: calc(var(--z7) + 1);
+	--z7: token(z7);
+	cursor: pointer;
+	pointer-events: initial;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0.98;
+	position: absolute;
+	right: -3px;
+	top: -3px;
+	z-index: calc(var(--z7) + 1);
 }
 
 .closeWrapperDesktop {
-  @extend .closeWrapper;
-  height: 24px;
-  width: 24px;
-  right: -3px;
+	@extend .closeWrapper;
+	height: 24px;
+	width: 24px;
+	right: -3px;
 }
 
 .closeWrapperMobile {
-  @extend .closeWrapper;
-  height: 36px;
-  width: 36px;
-  right: -6px;
+	@extend .closeWrapper;
+	height: 36px;
+	width: 36px;
+	right: -6px;
 }
 
 .crossIcon {
-  fill: token(wdsColorWhite);
+	fill: token(wdsColorWhite);
 }
