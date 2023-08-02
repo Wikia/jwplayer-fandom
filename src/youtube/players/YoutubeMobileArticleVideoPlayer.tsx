@@ -12,22 +12,37 @@ import styles from './youtubeMobileArticleVideoPlayer.module.scss';
 import MobileYoutubeOffScreenOverlay from './overlays/MobileYoutubeOffScreenOverlay';
 
 interface MobileArticleVideoWrapperProps {
-	isScrollPlayer: boolean;
+	youtubeTakeoverDetails: any;
 	topPosition: string;
 }
 
-const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({ isScrollPlayer, topPosition }) => (
-	<div
-		className={clsx(
-			isScrollPlayer
-				? styles.mobileArticleVideoWrapperIsScrollPlayer
-				: styles.mobileArticleVideoWrapperIsNotScrollPlayer,
-		)}
-		style={{
-			...(isScrollPlayer && { top: topPosition }),
-		}}
-	/>
-);
+const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({
+	youtubeTakeoverDetails,
+	topPosition,
+}) => {
+	const ref = useRef<HTMLDivElement>(null);
+	const onScreen = useOnScreen(ref, '0px', 1);
+	const [dismissed, setDismissed] = useState(false);
+	const isScrollPlayer = !(dismissed || onScreen);
+
+	return (
+		<div className={styles.mobileArticleVideoTopPlaceholder} ref={ref}>
+			<div
+				className={clsx(
+					isScrollPlayer
+						? styles.mobileArticleVideoWrapperIsScrollPlayer
+						: styles.mobileArticleVideoWrapperIsNotScrollPlayer,
+				)}
+				style={{
+					...(isScrollPlayer && { top: topPosition }),
+				}}
+			>
+				<MobileYoutubeOffScreenOverlay dismiss={() => setDismissed(true)} isScrollPlayer={isScrollPlayer} />
+				<YoutubePlayerWrapper deviceType={'mobile'} youtubeTakeoverDetails={youtubeTakeoverDetails} />
+			</div>
+		</div>
+	);
+};
 
 interface MobileArticleVideoPlayerProps extends YoutubeArticleVideoPlayerProps {
 	hasPartnerSlot?: boolean;
@@ -39,11 +54,6 @@ const YoutubeMobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> =
 	isFullScreen,
 	youtubeTakeoverDetails,
 }) => {
-	const ref = useRef<HTMLDivElement>(null);
-	const onScreen = useOnScreen(ref, '0px', 1);
-	const [dismissed, setDismissed] = useState(false);
-	const isScrollPlayer = !(dismissed || onScreen);
-
 	const getTopPosition = () => {
 		if (isFullScreen) {
 			return '0px';
@@ -58,12 +68,7 @@ const YoutubeMobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> =
 
 	return (
 		<PlayerWrapper playerName="youtube-mobile-article-video">
-			<div className={styles.mobileArticleVideoTopPlaceholder} ref={ref}>
-				<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer} topPosition={getTopPosition()}>
-					<MobileYoutubeOffScreenOverlay dismiss={() => setDismissed(true)} isScrollPlayer={isScrollPlayer} />
-					<YoutubePlayerWrapper deviceType={'mobile'} youtubeTakeoverDetails={youtubeTakeoverDetails} />
-				</MobileArticleVideoWrapper>
-			</div>
+			<MobileArticleVideoWrapper youtubeTakeoverDetails={youtubeTakeoverDetails} topPosition={getTopPosition()} />
 		</PlayerWrapper>
 	);
 };
