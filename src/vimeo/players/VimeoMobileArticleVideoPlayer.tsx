@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import VimeoPlayerWrapper from 'vimeo/players/shared/VimeoPlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
 import PlayerWrapper from 'vimeo/players/shared/PlayerWrapper';
-import { VimeoArticleVideoPlayerProps } from 'vimeo/types';
+import { VimeoArticleVideoPlayerProps, VimeoTakeOverDetails } from 'vimeo/types';
 
 import clsx from 'clsx';
 
@@ -11,7 +11,7 @@ import MobileVimeoOffScreenOverlay from './overlays/MobileVimeoOffScreenOverlay'
 
 interface MobileArticleVideoWrapperProps {
 	topPosition: string;
-	vimeoDetails: any;
+	vimeoDetails: VimeoTakeOverDetails;
 }
 
 interface MobileArticleVideoPlayerProps extends VimeoArticleVideoPlayerProps {

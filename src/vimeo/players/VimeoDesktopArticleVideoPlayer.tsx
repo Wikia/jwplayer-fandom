@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { VimeoArticleVideoPlayerProps } from 'vimeo/types';
+import { VimeoArticleVideoPlayerProps, VimeoTakeOverDetails } from 'vimeo/types';
 import useOnScreen from 'utils/useOnScreen';
 import PlayerWrapper from 'vimeo/players/shared/PlayerWrapper';
 import CloseButton from 'vimeo/players/shared/CloseButton';
@@ -10,7 +10,7 @@ import clsx from 'clsx';
 import styles from './VimeoDesktopArticleVideoPlayer.module.css';
 
 interface VimeoDesktopArticleVideoWrapperProps {
-	vimeoDetails: any;
+	vimeoDetails: VimeoTakeOverDetails;
 }
 
 const TopBar: React.FC = () => <div className={styles.topBar} />;

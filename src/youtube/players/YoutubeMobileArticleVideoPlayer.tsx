@@ -5,14 +5,14 @@ import PlayerWrapper from 'youtube/players/shared/PlayerWrapper';
 
 import clsx from 'clsx';
 
-import { YoutubeArticleVideoPlayerProps } from '../types';
+import { YoutubeArticleVideoPlayerProps, YoutubeTakeOverDetails } from '../types';
 
 import styles from './youtubeMobileArticleVideoPlayer.module.scss';
 
 import MobileYoutubeOffScreenOverlay from './overlays/MobileYoutubeOffScreenOverlay';
 
 interface MobileArticleVideoWrapperProps {
-	youtubeTakeoverDetails: any;
+	youtubeTakeoverDetails: YoutubeTakeOverDetails;
 	topPosition: string;
 }
 
