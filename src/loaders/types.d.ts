@@ -9,6 +9,7 @@ export type MobileArticleVideoLoaderProps = MobileArticleVideoPlayerProps | unde
 export type CanonicalVideoLoaderProps = CanonicalVideoPlayerProps | undefined;
 
 interface MWConfig {
+	// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 	get: (key: string) => any;
 }
 
