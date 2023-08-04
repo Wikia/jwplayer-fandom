@@ -14,12 +14,13 @@ interface CloseWrapperProps extends VimeoArticleVideoPlayerTrackingProps {
 	onClick: () => void;
 }
 
-const CloseWrapper: React.FC<CloseWrapperProps> = ({ deviceType }) => (
+const CloseWrapper: React.FC<CloseWrapperProps> = ({ deviceType, onClick }) => (
 	<div
 		className={clsx(
 			{ [styles.closeWrapperDesktop]: deviceType === 'desktop' },
 			{ [styles.closeWrapperMobile]: deviceType === 'mobile' },
 		)}
+		onClick={onClick}
 	>
 		<IconCrossTiny className={styles.crossIcon} />
 	</div>
