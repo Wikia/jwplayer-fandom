@@ -48,14 +48,14 @@ const DesktopArticleVideoWrapper: React.FC<YoutubeDesktopArticleVideoWrapperProp
 						: styles.desktopArticleVideoWrapperIsNotScrollPlayer,
 				)}
 			>
-				<TopBar>{isScrollPlayer && <CloseButton deviceType={'desktop'} dismiss={() => setDismissed(true)} />}</TopBar>
+				<div className={styles.topBar}>
+					{isScrollPlayer && <CloseButton deviceType={'desktop'} dismiss={() => setDismissed(true)} />}
+				</div>
 				<YoutubePlayerWrapper deviceType={'desktop'} youtubeTakeoverDetails={youtubeTakeoverDetails} />
 			</div>
 		</div>
 	);
 };
-
-const TopBar: React.FC = () => <div className={styles.topBar} />;
 
 const YoutubeDesktopArticleVideoPlayer: React.FC<YoutubeArticleVideoPlayerProps> = ({ youtubeTakeoverDetails }) => {
 	return (

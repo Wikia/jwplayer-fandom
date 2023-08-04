@@ -13,8 +13,6 @@ interface VimeoDesktopArticleVideoWrapperProps {
 	vimeoDetails: VimeoTakeOverDetails;
 }
 
-const TopBar: React.FC = () => <div className={styles.topBar} />;
-
 const DesktopArticleVideoWrapper: React.FC<VimeoDesktopArticleVideoWrapperProps> = ({ vimeoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const [dismissed, setDismissed] = useState(false);
@@ -50,7 +48,9 @@ const DesktopArticleVideoWrapper: React.FC<VimeoDesktopArticleVideoWrapperProps>
 						: styles.desktopArticleVideoWrapperIsNotScrollPlayer,
 				)}
 			>
-				<TopBar>{isScrollPlayer && <CloseButton deviceType={'desktop'} dismiss={() => setDismissed(true)} />}</TopBar>
+				<div className={styles.topBar}>
+					{isScrollPlayer && <CloseButton deviceType={'desktop'} dismiss={() => setDismissed(true)} />}
+				</div>
 				<VimeoPlayerWrapper deviceType="desktop" vimeoDetails={vimeoDetails} />
 			</div>
 		</div>
