@@ -14,7 +14,7 @@ interface CloseButtonProps {
 	iconSize?: string;
 }
 
-const CloseButton: React.FC<CloseButtonProps> = ({ className, dismiss, iconColor, iconSize }) => {
+const CloseButton: React.FC<CloseButtonProps> = ({ className, dismiss, style, iconColor, iconSize }) => {
 	const { player } = useContext(PlayerContext);
 	const onClickClose = (event) => {
 		event.stopPropagation();
@@ -24,7 +24,7 @@ const CloseButton: React.FC<CloseButtonProps> = ({ className, dismiss, iconColor
 	};
 
 	return (
-		<div className={clsx(className, styles.closeWrapper)} onClick={onClickClose}>
+		<div className={clsx(className, styles.closeWrapper)} onClick={onClickClose} style={style}>
 			<IconCrossTiny fill={iconColor} width={iconSize || '1em'} height={iconSize || '1em'} />
 		</div>
 	);

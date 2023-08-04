@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { VimeoArticleVideoPlayerTrackingProps } from 'vimeo/types';
 import IconCrossTiny from '@fandom-frontend/react-common/dist/icons/IconCrossTiny';
 
-import styles from './CloseButton.module.css';
+import styles from './CloseButton.module.scss';
 
 interface CloseButtonProps extends VimeoArticleVideoPlayerTrackingProps {
 	dismiss: () => void;
@@ -15,15 +15,18 @@ interface CloseWrapperProps extends VimeoArticleVideoPlayerTrackingProps {
 }
 
 const CloseWrapper: React.FC<CloseWrapperProps> = ({ deviceType }) => (
-	<div className={clsx(deviceType ? styles.closeWrapperDesktop : styles.closeWrapperMobile)} />
+	<div
+		className={clsx(
+			{ [styles.closeWrapperDesktop]: deviceType === 'desktop' },
+			{ [styles.closeWrapperMobile]: deviceType === 'mobile' },
+		)}
+	>
+		<IconCrossTiny className={styles.crossIcon} />
+	</div>
 );
 
 const CloseButton: React.FC<CloseButtonProps> = ({ dismiss, deviceType }) => {
-	return (
-		<CloseWrapper deviceType={deviceType} onClick={dismiss}>
-			<IconCrossTiny className={styles.crossIcon} />
-		</CloseWrapper>
-	);
+	return <CloseWrapper deviceType={deviceType} onClick={dismiss} />;
 };
 
 export default CloseButton;

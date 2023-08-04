@@ -1,5 +1,6 @@
 import React from 'react';
-import CloseButton from 'youtube/players/shared/CloseButton';
+
+import CloseButton from '../shared/CloseButton';
 
 import styles from './MobileVimeoOffScreenOverlay.module.css';
 
