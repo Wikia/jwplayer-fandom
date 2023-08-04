@@ -29,26 +29,17 @@ interface WindowWithPhoenix extends Window {
 
 declare let window: WindowWithPhoenix;
 
-interface RedVentureVideoWrapperProps {
-	isScrollPlayer: boolean;
+interface RedVentureVideoWrapperProps extends RedVentureVideoPlayerProps {
 	right?: number;
 	width?: number;
 }
 
-const RedVentureVideoWrapper: React.FC<RedVentureVideoWrapperProps> = ({ isScrollPlayer }) => (
-	<div
-		className={clsx(
-			isScrollPlayer ? styles.redVentureVideoWrapperIsScrollPlayer : styles.redVentureVideoWrapperIsNotScrollPlayer,
-		)}
-	/>
-);
-
-const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
-	videoDetails,
+const RedVentureVideoWrapper: React.FC<RedVentureVideoWrapperProps> = ({
 	showScrollPlayer,
+	videoDetails,
 	jwPlayerContainerEmbedId,
-	playerUrl,
 	autoPlay,
+	playerUrl,
 }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	// Check if Ads are disabled on any of the N&R Games sites. If the resolving function is not present, then always resolve to connecting with AdEng.
@@ -62,9 +53,6 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = showScrollPlayer ? !(dismissed || onScreen) : false;
-	const boundingClientRect = placeholderRef.current?.getBoundingClientRect();
-	const right = boundingClientRect?.right;
-	const width = boundingClientRect?.width;
 	const controlbar = document.querySelector<HTMLElement>('.jw-controlbar');
 	const shareIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-settings-sharing');
 	const moreVideosIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-related-btn');
@@ -89,10 +77,14 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 	}
 
 	return (
-		<PlayerWrapper playerName="jw-red-venture-video">
-			<div className={styles.redVentureVideoTopPlaceholder} ref={placeholderRef}>
+		<div className={styles.redVentureVideoTopPlaceholder} ref={placeholderRef}>
+			<div
+				className={clsx(
+					isScrollPlayer ? styles.redVentureVideoWrapperIsScrollPlayer : styles.redVentureVideoWrapperIsNotScrollPlayer,
+				)}
+			>
 				{adComplete && (
-					<RedVentureVideoWrapper right={right} width={width} isScrollPlayer={isScrollPlayer}>
+					<div>
 						<div className={styles.topBar}>
 							{!isScrollPlayer && <UnmuteButton />}
 							{isScrollPlayer && <CloseButton dismiss={() => setDismissed(true)} />}
@@ -106,9 +98,29 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 							playerUrl={playerUrl}
 						/>
 						{isScrollPlayer && <VideoDetails />}
-					</RedVentureVideoWrapper>
+					</div>
 				)}
 			</div>
+		</div>
+	);
+};
+
+const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
+	videoDetails,
+	showScrollPlayer,
+	jwPlayerContainerEmbedId,
+	playerUrl,
+	autoPlay,
+}) => {
+	return (
+		<PlayerWrapper playerName="jw-red-venture-video">
+			<RedVentureVideoWrapper
+				videoDetails={videoDetails}
+				showScrollPlayer={showScrollPlayer}
+				jwPlayerContainerEmbedId={jwPlayerContainerEmbedId}
+				playerUrl={playerUrl}
+				autoPlay={autoPlay}
+			/>
 		</PlayerWrapper>
 	);
 };
