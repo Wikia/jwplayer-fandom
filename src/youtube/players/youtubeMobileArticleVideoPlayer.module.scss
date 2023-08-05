@@ -1,21 +1,21 @@
 .mobileArticleVideoTopPlaceholder {
-	width: 100%;
-	height: 56.25vw;
-	position: relative;
+  width: 100%;
+  height: 56.25vw;
+  position: relative;
 }
 
 .mobileArticleVideoWrapperIsScrollPlayer {
-	--z2: token(z2);
-	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-	position: fixed;
-	width: 100%;
-	z-index: calc(var(--z2) + 1);
+  --z7: token(z7);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  position: fixed;
+  width: 100%;
+  z-index: calc(var(--z7) + 1);
 }
 
 .mobileArticleVideoWrapperIsNotScrollPlayer {
-	transform: translateZ(0);
-	-webkit-transform: translateZ(0);
-	-webkit-transition: padding 0.3s;
-	transition: padding 0.3s;
-	padding: 0;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -webkit-transition: padding 0.3s;
+  transition: padding 0.3s;
+  padding: 0;
 }
