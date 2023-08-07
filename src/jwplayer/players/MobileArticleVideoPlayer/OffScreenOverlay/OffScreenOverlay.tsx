@@ -17,7 +17,7 @@ const OffScreenOverlayWrapper: React.FC<OffScreenOverlayWrapperProps> = ({ dismi
 	const playing = usePlaying();
 	const adBreak = useAdBreak();
 
-	const backgroundImage = `linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));`;
+	const backgroundImage = `linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1))`;
 	const styleOverrides = {
 		...(playing && { backgroundImage }),
 	};
