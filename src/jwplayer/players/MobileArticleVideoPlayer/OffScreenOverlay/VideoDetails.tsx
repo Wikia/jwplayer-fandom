@@ -20,11 +20,11 @@ const VideoDetailsWrapper: React.FC<VideoDetailsWrapperProps> = ({ collapsed }) 
 	const { duration, title } = playlistItem;
 
 	return (
-		<div className={clsx(styles.videoDetailsWrapper, { [styles.videoDetailsWrapperCollapsed]: collapsed === true })}>
+		<div className={clsx(styles.videoDetailsWrapper, { [styles.videoDetailsWrapperCollapsed]: collapsed === false })}>
 			<h2
 				className={clsx(
-					{ [styles.videoTitleDidCollapsed]: collapsed === false },
-					{ [styles.videoTitleDidNotCollapsed]: collapsed === true },
+					{ [styles.videoTitleDidCollapsed]: collapsed === true },
+					{ [styles.videoTitleDidNotCollapsed]: collapsed === false },
 				)}
 			>
 				{title}
@@ -35,11 +35,11 @@ const VideoDetailsWrapper: React.FC<VideoDetailsWrapperProps> = ({ collapsed }) 
 };
 
 interface VideoDetailsProps {
-	playing: boolean;
+	adBreak: boolean;
 }
 
-const VideoDetails: React.FC<VideoDetailsProps> = ({ playing }) => {
-	return <VideoDetailsWrapper collapsed={!playing} />;
+const VideoDetails: React.FC<VideoDetailsProps> = ({ adBreak }) => {
+	return <VideoDetailsWrapper collapsed={adBreak} />;
 };
 
 export default VideoDetails;

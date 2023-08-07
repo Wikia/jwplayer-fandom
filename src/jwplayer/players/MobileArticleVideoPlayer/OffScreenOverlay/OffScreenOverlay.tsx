@@ -19,7 +19,7 @@ const OffScreenOverlayWrapper: React.FC<OffScreenOverlayWrapperProps> = ({ dismi
 
 	const backgroundImage = `linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1))`;
 	const styleOverrides = {
-		...(playing && { backgroundImage }),
+		...(adBreak && { backgroundImage }),
 	};
 	const controlbar = document.querySelector<HTMLElement>('.jw-controlbar');
 	let closeButtonOffset;
@@ -46,7 +46,7 @@ const OffScreenOverlayWrapper: React.FC<OffScreenOverlayWrapperProps> = ({ dismi
 			style={styleOverrides}
 		>
 			<CloseButtonStyled dismiss={dismiss} topOffset={closeButtonOffset} iconColor={'#fff'} />
-			<VideoDetails playing={playing} />
+			<VideoDetails adBreak={adBreak} />
 		</div>
 	);
 };
