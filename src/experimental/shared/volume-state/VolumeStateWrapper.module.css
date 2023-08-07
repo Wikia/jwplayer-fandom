@@ -1,0 +1,27 @@
+.wrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.soundButtonWrapper {
+	align-items: center;
+	position: relative;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.soundOffIcon {
+	width: 44px;
+}
+
+.soundIcon {
+	width: 44px;
+}
+
+.label {
+	font-size: 12px;
+}

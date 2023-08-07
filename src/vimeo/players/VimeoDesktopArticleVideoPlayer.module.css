@@ -1,0 +1,42 @@
+.vimeoDesktopArticleVideoTopPlaceholder {
+	--z2: token(z2);
+	position: absolute;
+	width: 100%;
+	padding-top: 56.25%;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	z-index: calc(var(--z2) + 1);
+}
+
+.desktopArticleVideoWrapper {
+	height: max-content;
+}
+
+.desktopArticleVideoWrapperIsScrollPlayer {
+	@extend .desktopArticleVideoWrapper;
+	--z2: token(z2);
+	z-index: calc(var(--z2) + 1);
+	position: fixed;
+	right: 18px;
+	bottom: 45px;
+	width: 300px;
+	animation: moveDownAnimation 0.4s normal forwards;
+}
+
+.desktopArticleVideoWrapperIsNotScrollPlayer {
+	@extend .desktopArticleVideoWrapper;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	top: 0;
+	left: 0;
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+}
+
+.topBar {
+	width: 100%;
+	position: relative;
+}

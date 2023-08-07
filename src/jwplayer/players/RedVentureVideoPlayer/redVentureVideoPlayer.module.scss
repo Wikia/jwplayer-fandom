@@ -1,0 +1,38 @@
+.redVentureVideoTopPlaceholder {
+	--z2: token(z2);
+	z-index: calc(var(--z2) + 2);
+	position: absolute;
+	width: 100%;
+	padding-top: 56.25%;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	z-index: 2;
+}
+
+.redVentureVideoWrapper {
+	height: max-content;
+}
+
+.redVentureVideoWrapperIsScrollPlayer {
+	@extend .redVentureVideoWrapper;
+	position: fixed;
+	right: 18px;
+	bottom: 45px;
+	width: 300px;
+}
+
+.redVentureVideoWrapperIsNotScrollPlayer {
+	@extend .redVentureVideoWrapper;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	top: 0;
+	left: 0;
+}
+
+.topBar {
+	width: 100%;
+	position: relative;
+}

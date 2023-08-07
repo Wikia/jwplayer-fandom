@@ -1,8 +1,12 @@
-import { PlayerFullOverlayWrapper } from 'experimental/shared/FullOverlay/PlayerFullOverlayWrapper';
-import styled from 'styled-components';
+import React from 'react';
+import clsx from 'clsx';
 
-export const DesktopPlayerFullOverlayWrapper = styled(PlayerFullOverlayWrapper)`
-	padding: 35px 35px 10px 35px;
-`;
+import shared from '../../../../shared/FullOverlay/playerFullOverlayWrapper.module.scss';
+
+import styles from './DesktopPlayerFullOverlayWrapper.module.css';
+
+export const DesktopPlayerFullOverlayWrapper: React.FC = () => (
+	<div className={clsx(shared.playerFullOverlayWrapper, styles.desktopPlayerFullOverlayWrapper)} />
+);
 
 export default DesktopPlayerFullOverlayWrapper;

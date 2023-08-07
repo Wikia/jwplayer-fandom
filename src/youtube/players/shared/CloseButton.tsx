@@ -1,31 +1,30 @@
 import React from 'react';
-import styled from 'styled-components';
-import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import IconCrossTiny from '@fandom-frontend/react-common/dist/icons/IconCrossTiny';
 import {
 	trackYoutubePlayerScrollClose,
 	YoutubePlayerTrackingProps,
 } from 'youtube/players/shared/youtubeTrackingEvents';
+import clsx from 'clsx';
 
-const CloseWrapper = styled.div<YoutubePlayerTrackingProps>`
-	cursor: pointer;
-	pointer-events: initial;
-	height: ${(props) => (props.deviceType === 'desktop' ? '24px' : '36px')};
-	width: ${(props) => (props.deviceType === 'desktop' ? '24px' : '36px')};
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	opacity: 0.98;
-	position: absolute;
-	right: -3px;
-	right: ${(props) => (props.deviceType === 'desktop' ? '-3px' : '-6px')};
-	top: -3px;
-	z-index: ${Number(WDSVariables.z7) + 1};
-`;
+import styles from './closeButton.module.scss';
 
-const CrossIcon = styled(IconCrossTiny)`
-	fill: ${WDSVariables.wdsColorWhite};
-`;
+interface CloseWrapperProps extends YoutubePlayerTrackingProps {
+	onClick: () => void;
+}
+
+const CloseWrapper: React.FC<CloseWrapperProps> = ({ deviceType, onClick }) => {
+	return (
+		<div
+			className={clsx(
+				{ [styles.closeWrapperDesktop]: deviceType === 'desktop' },
+				{ [styles.closeWrapperMobile]: deviceType === 'mobile' },
+			)}
+			onClick={onClick}
+		>
+			<IconCrossTiny className={styles.crossIcon} />
+		</div>
+	);
+};
 
 interface CloseButtonProps extends YoutubePlayerTrackingProps {
 	dismiss: () => void;
@@ -37,11 +36,7 @@ const CloseButton: React.FC<CloseButtonProps> = ({ dismiss, deviceType }) => {
 		dismiss();
 	};
 
-	return (
-		<CloseWrapper deviceType={deviceType} onClick={onClickClose}>
-			<CrossIcon />
-		</CloseWrapper>
-	);
+	return <CloseWrapper deviceType={deviceType} onClick={onClickClose} />;
 };
 
 export default CloseButton;

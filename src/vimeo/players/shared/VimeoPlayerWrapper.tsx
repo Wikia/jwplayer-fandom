@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
+
 import { VimeoArticleVideoPlayerTrackingProps, VimeoTakeOverDetails } from 'vimeo/types';
-import styled from 'styled-components';
+
+import styles from './VimeoPlayerWrapper.module.css';
 
 export interface VimeoVideoDetails extends VimeoArticleVideoPlayerTrackingProps {
 	vimeoDetails?: VimeoTakeOverDetails;
@@ -19,21 +21,6 @@ interface VimeoLoadedData {
 declare let window: WindowWithVimeo;
 
 const vimeoTargetId = 'vimeo-embed-target';
-
-const VimeoPlayerTarget = styled.div`
-	iframe {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-	}
-`;
-
-const VimeoPlayerTargetWrapper = styled.div`
-	padding-top: 56.25%;
-	position: relative;
-	height: 0;
-`;
 
 const VimeoPlayerWrapper: React.FC<VimeoVideoDetails> = ({ deviceType, vimeoDetails }) => {
 	const initVimeoPlayer = () => {
@@ -72,11 +59,11 @@ const VimeoPlayerWrapper: React.FC<VimeoVideoDetails> = ({ deviceType, vimeoDeta
 	const initialWidth = deviceType === 'desktop' ? 640 : 320;
 
 	return (
-		<VimeoPlayerTargetWrapper>
-			<VimeoPlayerTarget>
+		<div className={styles.vimeoPlayerTargetWrapper}>
+			<div className={styles.vimeoPlayerTarget}>
 				<div id={vimeoTargetId} data-vimeo-id={vimeoDetails.videoId} data-vimeo-width={initialWidth}></div>
-			</VimeoPlayerTarget>
-		</VimeoPlayerTargetWrapper>
+			</div>
+		</div>
 	);
 };
 

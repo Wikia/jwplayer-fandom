@@ -1,0 +1,17 @@
+.offScreenOverlayWrapper {
+	--z7: token(z7);
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	z-index: calc(var(--z7) +2);
+}
+
+.closeButtonStyled {
+	position: absolute;
+	right: 0;
+	top: 0;
+	filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.7));
+}

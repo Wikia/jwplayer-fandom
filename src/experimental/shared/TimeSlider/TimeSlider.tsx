@@ -1,102 +1,15 @@
-import styled from 'styled-components';
 import React, { useContext, useRef, useState } from 'react';
 import useBufferUpdate from 'experimental/utils/useBufferUpdate';
 import useProgressUpdate from 'experimental/utils/useProgressUpdate';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
-import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import { TimeSliderProps } from 'experimental/types';
 import { usePlayingStateRef } from 'jwplayer/utils/usePlaying';
 import useStateRef from 'experimental/utils/useStateRef';
 
-const TimeSliderWrapper = styled.div`
-	z-index: ${Number(WDSVariables.z8) + 1};
-	outline: 0;
+import clsx from 'clsx';
 
-	// TODO: May need to be added in as a prop, especially when using overlays etc
-	height: 5px;
-	width: 100%;
-	background: transparent none;
-
-	// Horizontal class styles
-	display: flex;
-
-	cursor: pointer;
-`;
-
-interface TimeSliderContainerProps {
-	height: string;
-}
-
-const TimeSliderContainer = styled.div<TimeSliderContainerProps>`
-	height: ${(props) => (props.height ? props.height : '5px')};
-	width: 100%;
-	display: flex;
-	align-items: center;
-	position: relative;
-	touch-action: none;
-`;
-
-interface RailProps {
-	railBackgroundColor?: string;
-}
-
-const Rail = styled.div<RailProps>`
-	// Convert this to props in the future
-	background-color: ${(props) => (props.railBackgroundColor ? props.railBackgroundColor : `rgba(255, 255, 255, 0.2)`)};
-
-	// Temporarily use white as the placeholder color for the full rail
-	//background-color: white;
-
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	cursor: pointer;
-`;
-
-interface BufferProps {
-	percentageBuffered: number;
-	bufferBackgroundColor?: string;
-}
-
-const Buffer = styled.div<BufferProps>`
-	width: ${(props) => props.percentageBuffered}%;
-	height: 100%;
-	position: absolute;
-	cursor: pointer;
-	background-color: ${(props) =>
-		props.bufferBackgroundColor ? props.bufferBackgroundColor : `rgba(0, 214, 214, 0.5)`};
-`;
-
-interface ProgressProps {
-	progress: number;
-	dragging: boolean;
-	progressBackgroundColor?: string;
-}
-
-const Progress = styled.div<ProgressProps>`
-	width: ${(props) => (props.dragging ? `${props.progress}px` : `${props.progress}%`)};
-	height: 100%;
-	position: absolute;
-	cursor: pointer;
-	background-color: ${(props) => (props.progressBackgroundColor ? props.progressBackgroundColor : `rgb(0, 214, 214)`)};
-`;
-
-interface ProgressKnobProps {
-	progress: number;
-	dragging: boolean;
-	progressKnobColor?: string;
-}
-
-const ProgressKnob = styled.div<ProgressKnobProps>`
-	left: ${(props) => (props.dragging ? `${props.progress}px` : `${props.progress}%`)};
-	height: 13px;
-	width: 13px;
-	background-color: rgb(0, 214, 214);
-	border-radius: 50%;
-	box-shadow: 0 0 10px rgb(0 0 0 / 40%);
-	opacity: 1;
-	position: absolute;
-`;
+import { Rail, Buffer, Progress, ProgressKnob } from './TimeSliderComponents';
+import styles from './timeSlider.module.scss';
 
 const TimeSlider: React.FC<TimeSliderProps> = ({
 	className,
@@ -239,16 +152,16 @@ const TimeSlider: React.FC<TimeSliderProps> = ({
 		  };
 
 	return (
-		<TimeSliderWrapper className={className} {...handlers}>
-			<TimeSliderContainer ref={sliderRef} height={railHeight}>
+		<div className={clsx(className, styles.timeSliderWrapper)} {...handlers}>
+			<div className={styles.timeSliderContainer} ref={sliderRef} style={railHeight && { height: railHeight }}>
 				<Rail color={railColor} />
 				{canSeek && <Buffer percentageBuffered={bufferPercent} bufferBackgroundColor={bufferColor} />}
 				<Progress progress={progress} dragging={dragging} progressBackgroundColor={progressColor} />
 				{canSeek && (hover || mouseDown || touch) && (
 					<ProgressKnob progress={progress} dragging={dragging} progressKnobColor={knobColor} />
 				)}
-			</TimeSliderContainer>
-		</TimeSliderWrapper>
+			</div>
+		</div>
 	);
 };
 

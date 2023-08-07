@@ -1,0 +1,24 @@
+.canonicalVideoTopPlaceholder {
+	width: 100%;
+	position: relative;
+}
+
+.canonicalVideoWrapperIsScrollPlayer {
+	@media only screen and (max-width: 767px) {
+		box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+		position: fixed;
+		top: 55px;
+		width: 100%;
+		z-index: 10;
+	}
+}
+
+.canonicalVideoWrapperIsNotScrollPlayer {
+	@media only screen and (max-width: 767px) {
+		transform: translateZ(0);
+		-webkit-transform: translateZ(0);
+		-webkit-transition: padding 0.3s;
+		transition: padding 0.3s;
+		padding: 0;
+	}
+}
