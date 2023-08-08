@@ -9,6 +9,7 @@ import JWEvents from 'jwplayer/players/shared/JWEvents';
 import addBaseTrackingEvents from 'jwplayer/players/shared/addBaseTrackingEvents';
 import slugify from 'jwplayer/utils/slugify';
 import getSponsoredVideos from 'utils/getSponsoredVideos';
+import { isInViewportCheck } from 'jwplayer/utils/utils';
 
 interface WindowJWPlayer extends Window {
 	jwplayer?: JWPlayerApi;
@@ -100,9 +101,13 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 				...configWithoutImage,
 			});
 
-			playerInstance.on(JWEvents.AD_PAUSE, ({ pauseReason, viewable }: JWPauseEvent) => {
+			playerInstance.on(JWEvents.AD_PAUSE, ({ pauseReason }: JWPauseEvent) => {
+				const playerElement = document.getElementById('featured-video__player');
+				// The 'viewable' property from the JWPauseEvent is not reliable
+				const isInViewport = isInViewportCheck(playerElement);
+
 				// Keep playing the ad when the user closed the mini player
-				if (viewable === 0 && pauseReason === 'external') {
+				if (isInViewport === false && pauseReason === 'external') {
 					playerInstance.play();
 				}
 			});
