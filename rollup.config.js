@@ -16,6 +16,8 @@ import cssnano from 'cssnano';
 import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import { visualizer } from 'rollup-plugin-visualizer';
 
+import analyzer from 'rollup-plugin-analyzer';
+
 import packageJson from './package.json';
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -46,6 +48,11 @@ const config = [
 			clearScreen: false,
 		},
 		plugins: [
+			analyzer({
+				hideDeps: true,
+				summaryOnly: true,
+				limit: 0,
+			}),
 			replace({
 				'process.env.NODE_ENV': isDev ? JSON.stringify('development') : JSON.stringify('production'),
 				__buildDate__: () => JSON.stringify(new Date()),
