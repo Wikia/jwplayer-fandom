@@ -1,5 +1,5 @@
 name: pr-checks
-run-name: ${{ github.actor }} is learning GitHub Actions
+run-name: ${{ github.actor }} is checking the package size
 on:
   pull_request:
     types: [opened, reopened]
