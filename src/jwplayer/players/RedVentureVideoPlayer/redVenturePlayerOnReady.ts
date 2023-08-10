@@ -1,4 +1,4 @@
-import { communicationService } from 'jwplayer/utils/communication';
+import { getCommunicationService } from 'jwplayer/utils/communication';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
 import { RedVentureVideoDetails } from 'jwplayer/types';
 
@@ -9,6 +9,7 @@ export default function useOnRedVenturePlayerReady(videoDetails: RedVentureVideo
 	// A unique playerKey will allow control of each unique JW Player that's embedded on the page, through the JW Player API.
 	const playerKey = 'aeJWPlayerKey' + (jwPlayerKeyCounter === 0 ? '' : jwPlayerKeyCounter);
 	jwPlayerKeyCounter++;
+	const communicationService = getCommunicationService();
 
 	window.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', { detail: playerInstance }));
 	window[playerKey] = playerInstance;

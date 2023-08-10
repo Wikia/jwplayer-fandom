@@ -1,9 +1,10 @@
-import { communicationService } from 'jwplayer/utils/communication';
+import { getCommunicationService } from 'jwplayer/utils/communication';
 import { willAutoplay, willMute } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
 
 export default function canonicalOnReady(videoDetails, playerInstance): void {
 	const playerKey = 'aeJWPlayerKey';
+	const communicationService = getCommunicationService();
 
 	window.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', { detail: playerInstance }));
 	window[playerKey] = playerInstance;

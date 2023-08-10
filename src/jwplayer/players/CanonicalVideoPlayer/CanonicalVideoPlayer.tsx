@@ -3,7 +3,7 @@ import { CanonicalVideoPlayerProps } from 'jwplayer/types';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import LoadableVideoPlayerWrapper from 'jwplayer/players/shared/LoadableVideoPlayerWrapper';
 import useAdComplete from 'jwplayer/utils/useAdComplete';
-import { communicationService } from 'jwplayer/utils/communication';
+import { getCommunicationService } from 'jwplayer/utils/communication';
 import { isLocalDevelopment, isOnBrowser } from 'jwplayer/utils/envs';
 
 import clsx from 'clsx';
@@ -24,6 +24,7 @@ const CanonicalVideoWrapper: React.FC<CanonicalVideoWrapperProps> = ({ isScrollP
 
 const CanonicalVideoPlayer: React.FC<CanonicalVideoPlayerProps> = ({ currentVideo, videoDetails, onComplete }) => {
 	const ref = useRef<HTMLDivElement>(null);
+	const communicationService = getCommunicationService();
 	const adComplete = useAdComplete();
 
 	useEffect(() => {
