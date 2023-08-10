@@ -7,7 +7,7 @@ let jwPlayerKeyCounter = 0;
 export default function useOnRedVenturePlayerReady(videoDetails: RedVentureVideoDetails, playerInstance): void {
 	// Increment the jwPlayerKeyCounter in cases where multiple video players have to be embedded.
 	// A unique playerKey will allow control of each unique JW Player that's embedded on the page, through the JW Player API.
-	const playerKey = 'aeJWPlayerKey' + (jwPlayerKeyCounter === 0 ? '' : jwPlayerKeyCounter);
+	const playerKey = 'fandom_jwplayer' + (jwPlayerKeyCounter === 0 ? '' : `_${jwPlayerKeyCounter}`);
 	jwPlayerKeyCounter++;
 
 	window.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', { detail: playerInstance }));
