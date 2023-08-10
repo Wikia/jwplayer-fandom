@@ -282,6 +282,7 @@ export type Player = {
 	getCaptionsList: () => CaptionsList;
 	setCurrentCaptions: (index: number) => null;
 	getCurrentCaptions: () => number;
+	id: string;
 };
 export type CreateWirewaxEmbedder = () => Embedder;
 export type WirewaxPluginOptions = {
