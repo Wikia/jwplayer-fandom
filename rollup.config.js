@@ -5,6 +5,15 @@ import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import dts from 'rollup-plugin-dts';
 import replace from '@rollup/plugin-replace';
+import postcss from 'rollup-plugin-postcss';
+
+import postcssDesignTokens from 'postcss-design-tokens';
+import autoprefixer from 'autoprefixer';
+import simplevars from 'postcss-simple-vars';
+import nested from 'postcss-nested';
+import cssnext from 'postcss-cssnext';
+import cssnano from 'cssnano';
+import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import { visualizer } from 'rollup-plugin-visualizer';
 
 import packageJson from './package.json';
@@ -52,6 +61,20 @@ const config = [
 			resolve(),
 			json(),
 			commonjs(),
+			postcss({
+				modules: true,
+				minimize: !isDev,
+				sourceMap: isDev,
+				extensions: ['.css', '.scss'],
+				plugins: [
+					postcssDesignTokens({ tokens: WDSVariables }),
+					autoprefixer(),
+					simplevars(),
+					nested(),
+					cssnext({ warnForDuplicates: false }),
+					cssnano(),
+				],
+			}),
 			visualizer(),
 		],
 		external: ['react', 'react-dom', 'react-i18next', 'react-i18next'],

@@ -1,17 +1,14 @@
 import React from 'react';
-import styled from 'styled-components';
-import PlayerOverlay from 'experimental/shared/PlayerOverlay';
+import PlayerOverlay from 'experimental/shared/PlayerOverlay/PlayerOverlay';
 import { MobileContentPlayerOverlayProps } from 'experimental/types';
 import ContentPlayerFullOverlay from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/content/ContentPlayerFullOverlay';
 import ContentPlayerScrollOverlay from 'experimental/players/MobileReskinnedArticleVideoPlayer/overlays/content/ContentPlayerScrollOverlay';
 import usePlaying from 'jwplayer/utils/usePlaying';
 import useRelatedOpen from 'jwplayer/utils/useRelatedOpen';
 
-const PlayerOverlayAllowClick = styled(PlayerOverlay)`
-	${(props) => props.showOverlay && `pointer-events: auto;`}
-	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-	-webkit-tap-highlight-color: transparent;
-`;
+import clsx from 'clsx';
+
+import styles from './ContentPlayerOverlay.module.css';
 
 const ContentPlayerOverlay: React.FC<MobileContentPlayerOverlayProps> = ({
 	isScrollPlayer,
@@ -20,15 +17,20 @@ const ContentPlayerOverlay: React.FC<MobileContentPlayerOverlayProps> = ({
 }) => {
 	const isPlaying = usePlaying();
 	const isRelatedOpen = useRelatedOpen();
+	const allowPointerEvents = (showOverlay && !isRelatedOpen) || !isPlaying;
 
 	return (
-		<PlayerOverlayAllowClick showOverlay={(showOverlay && !isRelatedOpen) || !isPlaying}>
+		<PlayerOverlay
+			className={clsx(styles.playerOverlay, {
+				[styles['playerOverlayAllowClick']]: allowPointerEvents,
+			})}
+		>
 			{isScrollPlayer ? (
 				<ContentPlayerScrollOverlay resetOverlayTimeout={resetOverlayTimeout} />
 			) : (
 				<ContentPlayerFullOverlay resetOverlayTimeout={resetOverlayTimeout} />
 			)}
-		</PlayerOverlayAllowClick>
+		</PlayerOverlay>
 	);
 };
 

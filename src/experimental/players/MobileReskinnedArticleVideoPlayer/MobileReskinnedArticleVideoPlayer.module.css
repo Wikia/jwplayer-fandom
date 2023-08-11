@@ -1,0 +1,39 @@
+.mobileReskinnedArticleVideoTopPlaceholder {
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	position: relative;
+}
+
+.mobileReskinnedArticleVideoWrapper {
+	height: max-content;
+	padding: 0;
+}
+
+.mobileReskinnedArticleVideoWrapperScrollPlayer {
+	--z7: token(z7);
+	height: max-content;
+	right: 1em;
+	bottom: 1em;
+	width: 50%;
+	position: fixed;
+	z-index: calc(var(--z7) + 2);
+}
+
+.mobileReskinnedVideoContentContainer {
+	position: relative;
+	flex-grow: 2;
+	aspect-ratio: 16 / 9;
+	width: 100%;
+}
+
+.closeButtonCorner {
+	--z7: token(z7);
+	width: 26px;
+	height: 26px;
+	position: absolute;
+	background-color: #fff;
+	top: -10px;
+	right: -10px;
+	border-radius: 50%;
+	z-index: calc(var(--z7) + 3);
+}

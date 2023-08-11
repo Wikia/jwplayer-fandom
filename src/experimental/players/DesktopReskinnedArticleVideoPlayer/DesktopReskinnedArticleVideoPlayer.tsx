@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
-import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
-import styled, { css } from 'styled-components';
 import useOnScreen from 'utils/useOnScreen';
+import clsx from 'clsx';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import { DesktopArticleVideoPlayerProps } from 'jwplayer/types';
 import Attribution from 'jwplayer/players/DesktopArticleVideoPlayer/Attribution';
@@ -12,57 +11,7 @@ import DesktopReskinnedArticleVideoPlayerOverlay from 'experimental/players/Desk
 import DesktopScrollVideoTopContent from 'experimental/players/DesktopReskinnedArticleVideoPlayer/DesktopScrollVideoTopContent';
 import useAdComplete from 'jwplayer/utils/useAdComplete';
 
-const DesktopArticleVideoTopPlaceholder = styled.div`
-	z-index: ${Number(WDSVariables.z2) + 2};
-	position: absolute;
-	width: 100%;
-	aspect-ratio: 16 / 9;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	z-index: 2;
-`;
-
-interface DesktopArticleVideoWrapperProps {
-	isScrollPlayer: boolean;
-	right?: number;
-	width?: number;
-}
-
-const DesktopArticleVideoWrapper = styled.div<DesktopArticleVideoWrapperProps>`
-	height: max-content;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-
-	${(props) =>
-		props.isScrollPlayer
-			? css`
-					right: 18px;
-					bottom: 45px;
-					width: 300px;
-					position: fixed;
-			  `
-			: css`
-					position: absolute;
-					bottom: 0;
-					right: 0;
-					top: 0;
-					left: 0;
-			  `}
-`;
-
-const DesktopReskinnedVideoContentContainer = styled.div`
-	position: relative;
-	flex-grow: 2;
-	aspect-ratio: 16 / 9;
-	width: 100%;
-`;
-
-const JwPlayerWrapperStyled = styled(JwPlayerWrapper)`
-	cursor: pointer;
-`;
+import styles from './DesktopReskinnedArticleVideoPlayer.module.css';
 
 const DesktopReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
@@ -71,8 +20,6 @@ const DesktopReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPla
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
 	const boundingClientRect = placeholderRef.current?.getBoundingClientRect();
-	const right = boundingClientRect?.right;
-	const width = boundingClientRect?.width;
 
 	const hideOverlayTimeout = () => {
 		const timeout: ReturnType<typeof setTimeout> = setTimeout(() => {
@@ -114,32 +61,36 @@ const DesktopReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPla
 
 	return (
 		<>
-			<DesktopArticleVideoTopPlaceholder ref={placeholderRef}>
+			<div className={styles.desktopArticleVideoTopPlaceholder} ref={placeholderRef}>
 				{adComplete && (
-					<DesktopArticleVideoWrapper
-						className={'desktop-article-video-wrapper'}
-						right={right}
-						width={width}
-						isScrollPlayer={isScrollPlayer}
+					<div
+						className={clsx(styles.desktopArticleVideoWrapper, {
+							[styles.desktopArticleVideoWrapperScrollPlayer]: isScrollPlayer,
+						})}
 					>
 						<DesktopScrollVideoTopContent
 							isScrollPlayer={isScrollPlayer}
 							onCloseClick={() => setDismissed(true)}
 							handleClick={scrollToPlaceholder}
 						/>
-						<DesktopReskinnedVideoContentContainer onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+						<div
+							className={styles.desktopReskinnedVideoContentContainer}
+							onMouseEnter={handleMouseEnter}
+							onMouseLeave={handleMouseLeave}
+						>
 							<DesktopReskinnedArticleVideoPlayerOverlay isScrollPlayer={isScrollPlayer} showOverlay={showOverlay} />
-							<JwPlayerWrapperStyled
+							<JwPlayerWrapper
+								className={styles.jwPlayerWrapper}
 								playerUrl={'https://cdn.jwplayer.com/libraries/v46VcUMb.js'}
 								config={getArticleVideoConfig(videoDetails)}
 								onReady={(playerInstance) => {
 									articlePlayerOnReady(videoDetails, playerInstance);
 								}}
 							/>
-						</DesktopReskinnedVideoContentContainer>
-					</DesktopArticleVideoWrapper>
+						</div>
+					</div>
 				)}
-			</DesktopArticleVideoTopPlaceholder>
+			</div>
 			<Attribution />
 		</>
 	);

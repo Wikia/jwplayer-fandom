@@ -1,0 +1,31 @@
+.videoDetailsWrapper {
+	-webkit-font-smoothing: antialiased;
+	background-color: #000;
+	font-weight: 700;
+	padding: 10px 12px;
+}
+
+.videoLabel {
+	color: #999;
+	font-size: 12px;
+	opacity: 0.5;
+	text-transform: uppercase;
+}
+
+.videoTime {
+	border: 0;
+	font: normal normal normal 100% inherit;
+	margin: 0;
+	padding: 0;
+	vertical-align: baseline;
+}
+
+.videoTime:before {
+	content: '•';
+	padding: 0 2px;
+}
+
+.videoTitle {
+	color: token(wdsColorWhite);
+	font-size: 14px;
+}

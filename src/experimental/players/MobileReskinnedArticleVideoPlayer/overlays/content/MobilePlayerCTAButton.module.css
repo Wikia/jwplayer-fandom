@@ -1,0 +1,20 @@
+.icon {
+	width: 12px;
+	height: 12px;
+	margin-left: 6px;
+}
+
+.button {
+	background: rgba(0, 0, 0, 0.5);
+	color: #fff;
+	border-radius: 2px;
+	fill: #fff;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 31px;
+	font-size: 12px;
+	font-weight: 500;
+	padding: 5px 10px;
+}

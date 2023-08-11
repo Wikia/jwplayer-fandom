@@ -1,8 +1,12 @@
-import { PlayerFullOverlayWrapper } from 'experimental/shared/FullOverlay/PlayerFullOverlayWrapper';
-import styled from 'styled-components';
+import React from 'react';
+import clsx from 'clsx';
 
-export const MobilePlayerFullOverlayWrapper = styled(PlayerFullOverlayWrapper)`
-	padding: 15px 20px;
-`;
+import shared from '../../../../shared/FullOverlay/playerFullOverlayWrapper.module.scss';
+
+import styles from './MobilePlayerFullOverlayWrapper.module.css';
+
+export const MobilePlayerFullOverlayWrapper: React.FC = () => (
+	<div className={clsx(shared.playerFullOverlayWrapper, styles.mobilePlayerFullOverlayWrapper)} />
+);
 
 export default MobilePlayerFullOverlayWrapper;

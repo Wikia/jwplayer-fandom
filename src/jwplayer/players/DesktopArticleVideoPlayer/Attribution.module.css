@@ -1,0 +1,17 @@
+.attributionWrapper {
+	border-bottom: 1px solid var(--theme-border-color);
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	padding: 6px;
+}
+
+.usernameLink {
+	color: rgba(var(--theme-page-text-color--rgb), 0.75);
+}
+
+.iconLink {
+	color: rgba(var(--theme-page-text-color--rgb), 0.75);
+	line-height: 0;
+	margin-left: 6px;
+}
