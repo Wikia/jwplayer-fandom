@@ -72,11 +72,11 @@ export const getPlayerId = withTryCatchDefault<string | undefined>((playerId: st
 });
 
 export const getAssetTitle = withTryCatchDefault<string>((playerId: string) => {
-	return window.jwplayer(playerId).getPlaylistItem().title;
+	return !playerId ? '' : window.jwplayer(playerId).getPlaylistItem().title;
 });
 
 export const getAssetId = withTryCatchDefault<string | undefined>((playerId: string) => {
-	return window.jwplayer(playerId).getPlaylistItem().mediaid;
+	return !playerId ? '' : window.jwplayer(playerId).getPlaylistItem().mediaid;
 });
 
 export const getPublishDate = withTryCatchDefault<number | undefined>((playerId: string) => {
