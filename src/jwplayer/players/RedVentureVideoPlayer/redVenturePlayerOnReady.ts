@@ -3,8 +3,6 @@ import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimin
 import { RedVentureVideoDetails } from 'jwplayer/types';
 
 export default function useOnRedVenturePlayerReady(videoDetails: RedVentureVideoDetails, playerInstance): void {
-	// Increment the jwPlayerKeyCounter in cases where multiple video players have to be embedded.
-	// A unique playerKey will allow control of each unique JW Player that's embedded on the page, through the JW Player API.
 	const playerKey = playerInstance.id;
 
 	window.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', { detail: playerInstance }));
