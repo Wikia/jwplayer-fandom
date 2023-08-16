@@ -3,7 +3,6 @@ run-name: PR checks
 on:
   pull_request:
     branches: [master]
-    types: [opened, reopened]
 jobs:
   package-size-report:
     name: Package Size Report
@@ -22,3 +21,5 @@ jobs:
         uses: pkg-size/action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          build-command: false
