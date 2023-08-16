@@ -52,6 +52,7 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
 	const inputName = 'isDismissed';
+	const relatedContainer = document.getElementById('featured-video__player_related') as HTMLDivElement | null;
 
 	const getDismissed = getDismissedFn(inputName);
 
@@ -73,7 +74,14 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 
 	useEffect(() => {
 		if (!onScreen) {
+			if (relatedContainer) {
+				relatedContainer.style.display = 'none';
+			}
 			return;
+		}
+
+		if (relatedContainer) {
+			relatedContainer.style.display = '';
 		}
 
 		if (!adComplete && singleTrack('ad-mobile-video-player-impression')) {
