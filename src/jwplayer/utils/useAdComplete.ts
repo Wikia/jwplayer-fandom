@@ -10,7 +10,6 @@ export default function useAdComplete(): boolean {
 	useEffect(() => {
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_OPT_IN_LISTEN_START);
 		communicationService.on('[AdEngine OptIn] set opt in', () => {
-			console.log(' ---- [AdEngine OptIn] set opt in ---- ');
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_OPT_IN_MESSAGE_RECIEVED);
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_CONFIG_LISTEN_START);
 			waitForAdEngine().then(() => {
@@ -39,7 +38,6 @@ export default function useAdComplete(): boolean {
 		communicationService.on('[Ad Engine] Setup JWPlayer', () => {
 			callback();
 		});
-		console.log(' ---- [Ad Engine] Setup JWPlayer ---- ');
 	};
 
 	return adComplete;
