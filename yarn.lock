@@ -1150,15 +1150,15 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fandom-frontend/design-system@9.0.0":
-  version "9.0.0"
-  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom-frontend/design-system/-/@fandom-frontend/design-system-9.0.0.tgz"
-  integrity sha1-w+2QxtybZ0zmV1hqEIHBf44NRx8=
+"@fandom-frontend/design-system@15.13.1":
+  version "15.13.1"
+  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom-frontend/design-system/-/@fandom-frontend/design-system-15.13.1.tgz#35b0b61cca404c29618df98fd75827df9aa68e20"
+  integrity sha512-PFfaYtqgJQNJwSqSunRdk2LWGEcQdER9PWZfiWp5n+kZgUtwFQOWdZwSgBcOUcIAECVacw7ZJICuPjaD/VT2oA==
 
-"@fandom-frontend/design-system@^8.22.0":
-  version "8.23.0"
-  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom-frontend/design-system/-/@fandom-frontend/design-system-8.23.0.tgz"
-  integrity sha1-+prE+b9CocYPuGeBHyXpXkDhcLs=
+"@fandom-frontend/design-system@^15.15.0":
+  version "15.15.0"
+  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom-frontend/design-system/-/@fandom-frontend/design-system-15.15.0.tgz#f4633e98d6b43394801775ed803e5d222e2618bf"
+  integrity sha512-HFqS5l6njP5rfKhMxAg2GRFVX88FVmvY16LhI1BVf36EQ3nsUBQD6r6iwdV2arvrO25ViiJx9lVQWzxtE0kp7w==
 
 "@fandom-frontend/eslint-config@^3.0.0":
   version "3.0.0"
@@ -1178,28 +1178,32 @@
   resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom-frontend/prettier-config/-/@fandom-frontend/prettier-config-2.6.0.tgz"
   integrity sha1-UQ9DUvIxAC8rl91WYquUD9azg6s=
 
-"@fandom-frontend/react-common@6.35.0":
-  version "6.35.0"
-  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom-frontend/react-common/-/@fandom-frontend/react-common-6.35.0.tgz"
-  integrity sha1-4qBPT4KBCErh86QLIzJUXStjwzA=
+"@fandom-frontend/react-common@13.19.0":
+  version "13.19.0"
+  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom-frontend/react-common/-/@fandom-frontend/react-common-13.19.0.tgz#9ef7af46f4243dc754669e13f3a46ca81c914383"
+  integrity sha512-WAUDeS9yAnChGJA2ZIsO7c1rYQT9dxEgrk9QZMNT/rWfX9NqgcQUMOvkTZPk+fGmJNGX+krsYETftJzjkd2Cvg==
   dependencies:
-    "@fandom-frontend/design-system" "^8.22.0"
+    "@fandom-frontend/design-system" "^15.15.0"
+    "@wikia/vignette-js" "https://github.com/Wikia/vignette-js.git#2.9.0"
     classnames "^2.3.1"
     color "^3.1.2"
     immutable "^4.0.0-rc.12"
+    jwplayer-fandom "github:wikia/jwplayer-fandom#1.7.1"
     lodash.clone "^4.5.0"
     lodash.debounce "^4.0.8"
     lodash.merge "^4.6.2"
     lodash.uniq "^4.5.0"
     lodash.uniqueid "^4.0.1"
     prop-types "^15.7.2"
+    react-multi-carousel "^2.8.2"
     react-redux "^7.2.0"
     react-select "^5.2.1"
+    react-visibility-sensor "^5.1.1"
     styled-components "^5.0.1"
 
 "@fandom/context@^0.6.1", "@fandom/context@^0.6.2":
   version "0.6.3"
-  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/context/-/@fandom/context-0.6.3.tgz"
+  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/context/-/@fandom/context-0.6.3.tgz#810a4993cd6e64f5eff9eb71d9723242d20e0219"
   integrity sha512-6THxJdnEuaqS9q813d+HMEnl55FOlOcIhVW1JL2Wu3OtT47LJBjiJLwCkrtKy1vAYnpnsmvfrm1Cw1ztoSBAwg==
   dependencies:
     lodash "^4.17.21"
@@ -1765,6 +1769,10 @@
   version "2.0.1"
   resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@wikia/post-quecast/-/post-quecast-2.0.1.tgz"
   integrity sha512-RtnDpThAP7i638lsEveLQIjK78YiuUKdZSLjqT1OKtu1oPt9oR+fGfygZbG0+a3DysJdcLnfPgEmgAJ1WVALzA==
+
+"@wikia/vignette-js@https://github.com/Wikia/vignette-js.git#2.9.0":
+  version "2.9.0"
+  resolved "https://github.com/Wikia/vignette-js.git#27ea6b5e9c8e33649f2cf7bac70783469422a0e4"
 
 abbrev@1:
   version "1.1.1"
@@ -4471,6 +4479,10 @@ jwa@^2.0.0:
     ecdsa-sig-formatter "1.0.11"
     safe-buffer "^5.0.1"
 
+"jwplayer-fandom@github:wikia/jwplayer-fandom#1.7.1":
+  version "1.6.1"
+  resolved "https://codeload.github.com/wikia/jwplayer-fandom/tar.gz/8dbd61ddd9508f9137962fe1780c2ff7a95a7dcf"
+
 jws@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/jws/-/jws-4.0.0.tgz"
@@ -6111,6 +6123,11 @@ react-is@^17.0.2:
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-multi-carousel@^2.8.2:
+  version "2.8.4"
+  resolved "https://registry.yarnpkg.com/react-multi-carousel/-/react-multi-carousel-2.8.4.tgz#eee6493878974e372e5aa9944754602ec0f34968"
+  integrity sha512-7Is5Wr+m2ebkR+oq2Su2tjUdBwpVtB2O6Tjb74KDNfxWe/FrsTQwezTJTk/r9cKCrRp9Li308v822/5bZm7XKg==
+
 react-redux@^7.2.0:
   version "7.2.9"
   resolved "https://registry.npmjs.org/react-redux/-/react-redux-7.2.9.tgz"
@@ -6147,6 +6164,13 @@ react-transition-group@^4.3.0:
     dom-helpers "^5.0.1"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
+
+react-visibility-sensor@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/react-visibility-sensor/-/react-visibility-sensor-5.1.1.tgz#5238380960d3a0b2be0b7faddff38541e337f5a9"
+  integrity sha512-cTUHqIK+zDYpeK19rzW6zF9YfT4486TIgizZW53wEZ+/GPBbK7cNS0EHyJVyHYacwFEvvHLEKfgJndbemWhB/w==
+  dependencies:
+    prop-types "^15.7.2"
 
 read-pkg-up@^7.0.1:
   version "7.0.1"
