@@ -46,6 +46,29 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 	return (
 		<>
 			<div className={styles.desktopArticleVideoTopPlaceholder} ref={placeholderRef}>
+				{adComplete && playerWithAdsEnabled && (
+					<div
+						className={
+							isScrollPlayer ? styles.desktopArticleVideoWrapperScrollPlayer : styles.desktopArticleVideoWrapper
+						}
+					>
+						<div className={styles.topBar}>
+							{!isScrollPlayer && <UnmuteButton />}
+							{isScrollPlayer && (
+								<CloseButton dismiss={() => setDismissed(true)} iconColor={'#fff'} className={styles.closeButton} />
+							)}
+						</div>
+						<JwPlayerWrapper
+							getDismissed={getDismissed}
+							config={getArticleVideoConfig(videoDetails, playerWithAdsEnabled)}
+							playerUrl={'https://cdn.jwplayer.com/libraries/ZDCnuHA6.js'}
+							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
+							stopAutoAdvanceOnExitViewport={false}
+						/>
+						{isScrollPlayer && <VideoDetails />}
+						<input type="hidden" value={String(dismissed)} name={inputName} />
+					</div>
+				)}
 				{adComplete && (
 					<div
 						className={
