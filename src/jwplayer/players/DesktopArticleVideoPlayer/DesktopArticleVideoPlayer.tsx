@@ -15,8 +15,11 @@ import { getDismissedFn } from 'jwplayer/utils/utils';
 import styles from './DesktopArticleVideoPlayer.module.css';
 
 export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
+	const searchParams = new URLSearchParams(document.location.search);
+	const playerWithAdsEnabled = searchParams?.get('player_with_ads');
+
 	const placeholderRef = useRef<HTMLDivElement>(null);
-	const adComplete = useAdComplete();
+	const adComplete = playerWithAdsEnabled ? true : useAdComplete();
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
