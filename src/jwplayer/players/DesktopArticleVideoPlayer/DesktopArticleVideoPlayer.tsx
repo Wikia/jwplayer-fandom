@@ -16,7 +16,7 @@ import styles from './DesktopArticleVideoPlayer.module.css';
 
 export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const searchParams = new URLSearchParams(document.location.search);
-	const playerWithAdsEnabled = searchParams?.get('player_with_ads');
+	const playerWithAdsEnabled = !!searchParams?.get('player_with_ads');
 
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const adComplete = playerWithAdsEnabled ? true : useAdComplete();
@@ -60,7 +60,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 						</div>
 						<JwPlayerWrapper
 							getDismissed={getDismissed}
-							config={getArticleVideoConfig(videoDetails)}
+							config={getArticleVideoConfig(videoDetails, playerWithAdsEnabled)}
 							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
 							stopAutoAdvanceOnExitViewport={false}
 						/>

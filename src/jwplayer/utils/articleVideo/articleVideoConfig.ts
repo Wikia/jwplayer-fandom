@@ -47,7 +47,7 @@ const getAdvertisingConfig = (lang: string) => {
 	};
 };
 
-export const getArticleVideoConfig = (videoDetails) => {
+export const getArticleVideoConfig = (videoDetails, playerWithAds = false) => {
 	const lang = videoDetails?.lang || 'en';
 
 	if (window?.videoExperiments?.playlistUrl && !videoDetails?.isDedicatedForArticle) {
@@ -63,6 +63,18 @@ export const getArticleVideoConfig = (videoDetails) => {
 	if (!videoDetails) return {};
 
 	const videoId = videoDetails.playlist[0].mediaid;
+
+	if (playerWithAds) {
+		return {
+			autostart: willAutoplay() && !document.hidden,
+			image: '//content.jwplatform.com/thumbs/' + videoId + '-640.jpg',
+			mute: willMute(),
+			description: videoDetails.description,
+			title: videoDetails.title,
+			playlist: getModifiedPlaylist(videoDetails.playlist, videoDetails.isDedicatedForArticle),
+			lang: videoDetails.lang,
+		};
+	}
 
 	return {
 		autostart: willAutoplay() && !document.hidden,
