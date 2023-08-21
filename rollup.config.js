@@ -17,6 +17,7 @@ import WDSVariables from '@fandom-frontend/design-system/dist/variables.json';
 import { visualizer } from 'rollup-plugin-visualizer';
 
 import analyzer from 'rollup-plugin-analyzer';
+import alias from 'rollup-plugin-alias';
 
 import packageJson from './package.json';
 
@@ -48,10 +49,13 @@ const config = [
 			clearScreen: false,
 		},
 		plugins: [
-			analyzer({
-				hideDeps: true,
-				summaryOnly: true,
-				limit: 0,
+			alias({
+				entries: [
+					{ find: 'react', replacement: 'preact/compat' },
+					{ find: 'react-dom/test-utils', replacement: 'preact/test-utils' },
+					{ find: 'react-dom', replacement: 'preact/compat' },
+					{ find: 'react/jsx-runtime', replacement: 'preact/jsx-runtime' },
+				],
 			}),
 			replace({
 				'process.env.NODE_ENV': isDev ? JSON.stringify('development') : JSON.stringify('production'),
@@ -81,6 +85,11 @@ const config = [
 					cssnext({ warnForDuplicates: false }),
 					cssnano(),
 				],
+			}),
+			analyzer({
+				hideDeps: true,
+				summaryOnly: true,
+				limit: 0,
 			}),
 			visualizer(),
 		],
