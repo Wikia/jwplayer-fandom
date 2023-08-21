@@ -6,13 +6,17 @@
     "lib": ["es5", "es6", "es7", "es2017", "dom"],
     "module": "es2020",
     "target": "es5",
-    "jsx": "react",
+	"jsx": "react-jsx",
+	"jsxImportSource": "preact",
     "allowJs": true,
     "checkJs": false,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
+	"skipLibCheck": true,
     "paths": {
-      "*": ["node_modules", "src/*"]
+      "*": ["node_modules", "src/*"],
+	  "react": ["./node_modules/preact/compat/"],
+	  "react-dom": ["./node_modules/preact/compat/"]
     },
     "baseUrl": "./",
     "typeRoots": ["src/types", "node_modules/@types"],
