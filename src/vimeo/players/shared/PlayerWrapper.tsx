@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { PlayerContext } from 'vimeo/players/shared/PlayerContext';
 import { Player } from 'vimeo/types';
+import { ComponentChildren } from 'preact';
 
-const PlayerWrapper: React.FC<{ playerName: string }> = ({ playerName, children }) => {
+const PlayerWrapper: React.FC<{ playerName: string; children: ComponentChildren }> = ({ playerName, children }) => {
 	const [vimeoPlayer, setVimeoPlayer] = useState<Player>(null);
 
 	const setPlayer = (player: Player) => {

@@ -5,7 +5,7 @@ import IconExternal from '@fandom-frontend/react-common/dist/icons/IconExternal'
 
 import styles from './playerCTAButton.module.scss';
 
-export interface ButtonStyledProps extends React.HTMLProps<HTMLButtonElement> {
+export interface ButtonStyledProps extends React.HTMLAttributes<HTMLButtonElement> {
 	isScrollPlayer: boolean;
 }
 

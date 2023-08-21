@@ -57,8 +57,8 @@ const VolumeSlider: React.FC<VolumeSliderProps> = ({ hover, color }) => {
 						style={{
 							backgroundColor: color,
 							height: mute ? 0 : `${volume}%`,
+							color: `${color}`,
 						}}
-						color={color}
 					/>
 					<div
 						className={styles.sliderKnob}

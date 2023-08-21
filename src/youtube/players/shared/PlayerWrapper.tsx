@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { PlayerContext } from 'youtube/players/shared/PlayerContext';
 import { Player } from 'youtube/types';
+import { ComponentChildren } from 'preact';
 
-const PlayerWrapper: React.FC<{ playerName: string }> = ({ playerName, children }) => {
+const PlayerWrapper: FunctionComponent<{ playerName: string; children: ComponentChildren }> = ({
+	playerName,
+	children,
+}) => {
 	const [youtubePlayer, setYoutubePlayer] = useState<Player>(null);
 
 	const setPlayer = (player: Player) => {
