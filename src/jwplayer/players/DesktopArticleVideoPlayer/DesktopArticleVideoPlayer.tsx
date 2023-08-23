@@ -10,9 +10,10 @@ import CloseButton from 'jwplayer/players/shared/CloseButton/CloseButton';
 import Attribution from 'jwplayer/players/DesktopArticleVideoPlayer/Attribution';
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
+import Spinner from '@fandom-frontend/react-common/dist/components/Spinner';
 import { getDismissedFn } from 'jwplayer/utils/utils';
 
-import styles from './DesktopArticleVideoPlayer.module.css';
+import styles from './DesktopArticleVideoPlayer.module.scss';
 
 export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
@@ -40,31 +41,42 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 		if (pipIcon) pipIcon.style.display = 'none';
 	}
 
+	console.log(videoDetails);
+
 	return (
 		<>
 			<div className={styles.desktopArticleVideoTopPlaceholder} ref={placeholderRef}>
-				{adComplete && (
+				{
 					<div
 						className={
 							isScrollPlayer ? styles.desktopArticleVideoWrapperScrollPlayer : styles.desktopArticleVideoWrapper
 						}
 					>
-						<div className={styles.topBar}>
-							{!isScrollPlayer && <UnmuteButton />}
-							{isScrollPlayer && (
-								<CloseButton dismiss={() => setDismissed(true)} iconColor={'#fff'} className={styles.closeButton} />
-							)}
-						</div>
-						<JwPlayerWrapper
-							getDismissed={getDismissed}
-							config={getArticleVideoConfig(videoDetails)}
-							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
-							stopAutoAdvanceOnExitViewport={false}
-						/>
-						{isScrollPlayer && <VideoDetails />}
-						<input type="hidden" value={String(dismissed)} name={inputName} />
+						{adComplete ? (
+							<div>
+								<div className={styles.topBar}>
+									{!isScrollPlayer && <UnmuteButton />}
+									{isScrollPlayer && (
+										<CloseButton dismiss={() => setDismissed(true)} iconColor={'#fff'} className={styles.closeButton} />
+									)}
+								</div>
+								<JwPlayerWrapper
+									getDismissed={getDismissed}
+									config={getArticleVideoConfig(videoDetails)}
+									onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
+									stopAutoAdvanceOnExitViewport={false}
+								/>
+								{isScrollPlayer && <VideoDetails />}
+								<input type="hidden" value={String(dismissed)} name={inputName} />
+							</div>
+						) : (
+							<div className={styles.thumbnail}>
+								<Spinner className={styles.spinner} />
+								<img src={videoDetails.metadata.thumbnailUrl} alt={'some alt'} />
+							</div>
+						)}
 					</div>
-				)}
+				}
 			</div>
 			<Attribution />
 		</>
