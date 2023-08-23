@@ -1,3 +1,5 @@
+@use '~@fandom-frontend/react-common/dist/components/Spinner.css';
+
 .mobileArticleVideoTopPlaceholder {
 	width: 100%;
 	height: 56.25vw;
@@ -18,4 +20,23 @@
 	-webkit-transition: padding 0.3s;
 	transition: padding 0.3s;
 	padding: 0;
+}
+
+.thumbnail {
+  height: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  img {
+	width: 100%;
+	height: 100%;
+  }
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%);
 }

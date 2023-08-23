@@ -11,7 +11,7 @@ import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimin
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
 import { getDismissedFn } from 'jwplayer/utils/utils';
-
+import Spinner from '@fandom-frontend/react-common/dist/components/Spinner';
 import clsx from 'clsx';
 
 import styles from './mobileArticleVideoPlayer.module.scss';
@@ -100,19 +100,26 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 	return (
 		<>
 			<div ref={ref} className={clsx(styles.mobileArticleVideoTopPlaceholder, isScrollPlayer && `is-on-scroll-active`)}>
-				{adComplete && (
-					<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer} topPosition={getTopPosition()}>
-						<JwPlayerWrapper
-							getDismissed={getDismissed}
-							config={getArticleVideoConfig(videoDetails)}
-							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
-							stopAutoAdvanceOnExitViewport={false}
-						/>
-						<input type="hidden" value={String(dismissed)} name={inputName} />
+				<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer} topPosition={getTopPosition()}>
+					{adComplete ? (
+						<>
+							<JwPlayerWrapper
+								getDismissed={getDismissed}
+								config={getArticleVideoConfig(videoDetails)}
+								onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
+								stopAutoAdvanceOnExitViewport={false}
+							/>
+							<input type="hidden" value={String(dismissed)} name={inputName} />
 
-						<OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />
-					</MobileArticleVideoWrapper>
-				)}
+							<OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />
+						</>
+					) : (
+						<div className={styles.thumbnail}>
+							<Spinner className={styles.spinner} />
+							<img src={videoDetails.metadata.thumbnailUrl} alt={'some alt'} />
+						</div>
+					)}
+				</MobileArticleVideoWrapper>
 			</div>
 			<Attribution />
 		</>
