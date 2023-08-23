@@ -7,7 +7,6 @@ import { eligibleForVimeoTakeover, getVimeoTakeoverDetails } from 'loaders/utils
 import defineExperiment from '@fandom/pathfinder-lite/experiments/defineExperiment';
 import getExperiment from '@fandom/pathfinder-lite/experiments/getExperiment';
 import { Experiment } from '@fandom/pathfinder-lite/types';
-import checkUserGeo from 'utils/experiments/checkUserGeo';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
@@ -73,11 +72,6 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 				setPlayer(<VimeoDesktopArticleVideoPlayer vimeoDetails={vimeoTakeoverDetails} />),
 			);
 			return;
-		} else if (currentExperiment?.name === desktopJwFloatOnScrollExperiment?.name && checkUserGeo(['us'])) {
-			import('experimental/players/DesktopFloatOnScrollArticleVideoPlayer/DesktopFloatOnScrollArticleVideoPlayer').then(
-				({ default: DesktopFloatOnScrollArticleVideoPlayer }) =>
-					setPlayer(<DesktopFloatOnScrollArticleVideoPlayer videoDetails={videoDetails} />),
-			);
 		} else {
 			switch (currentExperiment?.name) {
 				case desktopPauseAfterThreePlaysExperiment.name:
