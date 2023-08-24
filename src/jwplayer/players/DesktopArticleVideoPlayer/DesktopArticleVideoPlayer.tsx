@@ -11,6 +11,7 @@ import Attribution from 'jwplayer/players/DesktopArticleVideoPlayer/Attribution'
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
 import Spinner from '@fandom-frontend/react-common/dist/components/Spinner';
+import IconMovies from '@fandom-frontend/react-common/dist/icons/IconMovies';
 import { getDismissedFn } from 'jwplayer/utils/utils';
 
 import styles from './DesktopArticleVideoPlayer.module.scss';
@@ -70,9 +71,11 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 								<input type="hidden" value={String(dismissed)} name={inputName} />
 							</div>
 						) : (
-							<div className={styles.thumbnail}>
+							<div className={styles.placeholderWrapper}>
 								<Spinner className={styles.spinner} />
-								<img src={videoDetails.metadata.thumbnailUrl} alt={'some alt'} />
+								<div className={styles.placeholder}>
+									<IconMovies />
+								</div>
 							</div>
 						)}
 					</div>
