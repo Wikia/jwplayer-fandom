@@ -47,7 +47,7 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 	videoDetails,
 }) => {
 	const ref = useRef<HTMLDivElement>(null);
-	const adComplete = useAdComplete();
+	const { adComplete } = useAdComplete();
 	const onScreen = useOnScreen(ref, '0px', 1);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);

@@ -3,8 +3,9 @@ import { useState, useEffect } from 'react';
 import { getCommunicationService } from 'jwplayer/utils/communication';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
 
-export default function useAdComplete(): boolean {
+export default function useAdComplete() {
 	const [adComplete, setAdComplete] = useState(false);
+	const [isAdLoading, setIsAdLoading] = useState(true);
 	const communicationService = getCommunicationService();
 
 	useEffect(() => {
@@ -13,6 +14,7 @@ export default function useAdComplete(): boolean {
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_OPT_IN_MESSAGE_RECIEVED);
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_CONFIG_LISTEN_START);
 			waitForAdEngine().then(() => {
+				setIsAdLoading(false);
 				recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_CONFIG_MESSAGE_RECIEVED);
 				recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_SETUP_JW_LISTEN_START);
 				listenSetupJWPlayer(function () {
@@ -40,5 +42,5 @@ export default function useAdComplete(): boolean {
 		});
 	};
 
-	return adComplete;
+	return { adComplete, isAdLoading };
 }

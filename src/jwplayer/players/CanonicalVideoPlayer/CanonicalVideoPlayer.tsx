@@ -25,7 +25,7 @@ const CanonicalVideoWrapper: React.FC<CanonicalVideoWrapperProps> = ({ isScrollP
 const CanonicalVideoPlayer: React.FC<CanonicalVideoPlayerProps> = ({ currentVideo, videoDetails, onComplete }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const communicationService = getCommunicationService();
-	const adComplete = useAdComplete();
+	const { adComplete } = useAdComplete();
 
 	useEffect(() => {
 		const payload = {
