@@ -13,6 +13,7 @@ import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnRea
 import { getDismissedFn } from 'jwplayer/utils/utils';
 import Spinner from '@fandom-frontend/react-common/dist/components/Spinner';
 import clsx from 'clsx';
+import IconMovies from '@fandom-frontend/react-common/dist/icons/IconMovies';
 
 import styles from './mobileArticleVideoPlayer.module.scss';
 
@@ -114,9 +115,11 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 							<OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />
 						</>
 					) : (
-						<div className={styles.thumbnail}>
+						<div className={styles.placeholderWrapper}>
 							<Spinner className={styles.spinner} />
-							<img src={videoDetails.metadata.thumbnailUrl} alt={'some alt'} />
+							<div className={styles.placeholder}>
+								<IconMovies />
+							</div>
 						</div>
 					)}
 				</MobileArticleVideoWrapper>

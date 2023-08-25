@@ -12,20 +12,22 @@
 }
 
 .desktopArticleVideoWrapper {
-	height: max-content;
+	height: 100%;
 	position: absolute;
 	bottom: 0;
 	right: 0;
 	top: 0;
 	left: 0;
+  	background-color: grey;
 }
 
 .desktopArticleVideoWrapperScrollPlayer {
-	height: max-content;
+  	height: 168.75px;
+  	width: 300px;
 	position: fixed;
 	right: 18px;
 	bottom: 45px;
-	width: 300px;
+  	background-color: grey;
 }
 
 .topBar {
@@ -35,31 +37,33 @@
 
 .placeholderWrapper {
 	width: 100%;
-	height: 100%;
+  	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: $wds-color-light-gray;
-	border: solid 1px $wds-color-mid-light-gray;
 	position: relative;
+  	svg {
+	  font-size: 90px;
+	}
 }
 
 .placeholder {
 	height: 100%;
 	width: 100%;
 	position: absolute;
-	z-index: -1;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
-	> svg {
-		filter: grayscale(100%);
+	svg {
 		font-size: 64px;
 		opacity: 0.75;
+	  	fill: red;
 	}
 }
 
+.spinner {
+  z-index: 999;
+}
 
 .closeButton {
 	filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.7));
