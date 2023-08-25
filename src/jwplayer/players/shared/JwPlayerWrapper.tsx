@@ -90,9 +90,11 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 
 			setConfig(config);
 
+			const { image, ...configWithoutImage } = config; // eslint-disable-line
+
 			const playerInstance = window.jwplayer(elementId).setup({
 				...defaultConfig,
-				...config,
+				...configWithoutImage,
 			});
 
 			playerInstance.on(JWEvents.AD_PAUSE, ({ pauseReason, viewable }: JWPauseEvent) => {
