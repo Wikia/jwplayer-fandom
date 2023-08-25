@@ -17,7 +17,7 @@ import styles from './DesktopArticleVideoPlayer.module.scss';
 
 export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
-	const { adComplete, isAdLoading } = useAdComplete();
+	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
