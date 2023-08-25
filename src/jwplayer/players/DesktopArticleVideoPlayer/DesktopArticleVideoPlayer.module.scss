@@ -1,5 +1,3 @@
-@use '~@fandom-frontend/react-common/dist/components/Spinner.css';
-
 .desktopArticleVideoTopPlaceholder {
 	position: absolute;
 	width: 100%;
@@ -33,36 +31,6 @@
 .topBar {
 	width: 100%;
 	position: relative;
-}
-
-.placeholderWrapper {
-	width: 100%;
-  	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: relative;
-  	svg {
-	  font-size: 90px;
-	}
-}
-
-.placeholder {
-	height: 100%;
-	width: 100%;
-	position: absolute;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	svg {
-		font-size: 64px;
-		opacity: 0.75;
-	  	fill: red;
-	}
-}
-
-.spinner {
-  z-index: 999;
 }
 
 .closeButton {
