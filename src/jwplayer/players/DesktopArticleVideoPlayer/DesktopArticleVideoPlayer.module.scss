@@ -1,3 +1,4 @@
+@import '~@fandom-frontend/design-system/dist/scss/wds-variables/_colors.scss';
 @use '~@fandom-frontend/react-common/dist/components/Spinner.css';
 
 .desktopArticleVideoTopPlaceholder {
@@ -42,6 +43,9 @@
 	justify-content: center;
 	align-items: center;
 	position: relative;
+	background-color: $wds-color-light-gray;
+	border: solid 1px $wds-color-mid-light-gray;
+
   	svg {
 	  font-size: 90px;
 	}
@@ -54,6 +58,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
 	svg {
 		font-size: 64px;
 		opacity: 0.75;
