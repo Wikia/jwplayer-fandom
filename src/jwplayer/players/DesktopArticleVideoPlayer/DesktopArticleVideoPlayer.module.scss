@@ -60,9 +60,9 @@
 	align-items: center;
 
 	svg {
+		filter: grayscale(100%);
 		font-size: 64px;
 		opacity: 0.75;
-	  	fill: red;
 	}
 }
 

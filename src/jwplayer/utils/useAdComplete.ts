@@ -19,7 +19,7 @@ export default function useAdComplete() {
 				recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_SETUP_JW_LISTEN_START);
 				listenSetupJWPlayer(function () {
 					recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_SETUP_JW_MESSAGE_RECIEVED);
-					setAdComplete(true);
+					// setAdComplete(true);
 				});
 			});
 		});
