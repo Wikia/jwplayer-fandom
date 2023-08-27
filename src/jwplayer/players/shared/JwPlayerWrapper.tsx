@@ -90,6 +90,9 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 
 			setConfig(config);
 
+			// The following logic prevents JW Player to call for a poster image
+			// This is meant to be an experiment
+			// For the long term this should be probably handled on the backend (Article-video pandora service)
 			const { image, ...configWithoutImage } = config; // eslint-disable-line
 
 			const playerInstance = window.jwplayer(elementId).setup({
