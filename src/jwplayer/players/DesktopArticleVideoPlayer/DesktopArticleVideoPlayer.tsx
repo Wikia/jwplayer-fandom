@@ -41,8 +41,6 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 		if (pipIcon) pipIcon.style.display = 'none';
 	}
 
-	console.log(videoDetails);
-
 	return (
 		<>
 			<div className={styles.desktopArticleVideoTopPlaceholder} ref={placeholderRef}>
