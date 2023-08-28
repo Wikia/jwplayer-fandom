@@ -10,7 +10,7 @@
 }
 
 .desktopArticleVideoWrapper {
-	height: max-content;
+	height: 100%;
 	position: absolute;
 	bottom: 0;
 	right: 0;
@@ -19,11 +19,11 @@
 }
 
 .desktopArticleVideoWrapperScrollPlayer {
-	height: max-content;
+	height: 168px;
+	width: 300px;
 	position: fixed;
 	right: 18px;
 	bottom: 45px;
-	width: 300px;
 }
 
 .topBar {
@@ -32,7 +32,7 @@
 }
 
 .closeButton {
-	filter: drop-shadow(1px 2px 2px rgb(0 0 0 / 0.7));
+	filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.7));
 	position: absolute;
 	right: 0;
 	top: 0;
