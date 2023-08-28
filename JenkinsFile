@@ -30,7 +30,7 @@ pipeline {
   stages {
     stage('Lint, Build, Test, Deploy') {
       agent {
-        docker {
+        dockerfile {
           filename 'Dockerfile'
           dir '.jenkins/pr-check'
           label 'docker-daemon'
