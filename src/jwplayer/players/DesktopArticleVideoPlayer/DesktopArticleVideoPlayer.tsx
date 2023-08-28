@@ -68,7 +68,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 								<input type="hidden" value={String(dismissed)} name={inputName} />
 							</div>
 						) : (
-							<VideoPlaceholder />
+							<VideoPlaceholder isScrollPlayer={isScrollPlayer} />
 						)}
 					</div>
 				}

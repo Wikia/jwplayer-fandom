@@ -114,7 +114,7 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 							<OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />
 						</>
 					) : (
-						<VideoPlaceholder />
+						<VideoPlaceholder isScrollPlayer={isScrollPlayer} />
 					)}
 				</MobileArticleVideoWrapper>
 			</div>
