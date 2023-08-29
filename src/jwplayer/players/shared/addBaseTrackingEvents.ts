@@ -22,6 +22,7 @@ import {
 } from 'jwplayer/utils/videoTracking';
 import { getVideoStartupTime, recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
 import { getAssetId } from 'jwplayer/utils/globalJWInterface';
+import { isInGallery } from 'jwplayer/utils/utils';
 
 function getAdPropsFromAdEvent(event: AdEvents) {
 	if (!event) {
@@ -224,6 +225,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 			jwPlayerAdTracker({
 				player_element_id: playerInstance.id,
 				event_name: 'video_ad_loaded',
+				video_ad_is_in_gallery: isInGallery(),
 				...getAdPropsFromAdEvent(event),
 			});
 		})
@@ -231,6 +233,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 			jwPlayerAdTracker({
 				player_element_id: playerInstance.id,
 				event_name: 'video_ad_started',
+				video_ad_is_in_gallery: isInGallery(),
 				...getAdPropsFromAdEvent(event),
 			});
 			triggerVideoMetric('adstarted');
@@ -239,13 +242,17 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 			jwPlayerAdTracker({
 				player_element_id: playerInstance.id,
 				event_name: 'video_ad_completed',
+				video_ad_is_in_gallery: isInGallery(),
 				...getAdPropsFromAdEvent(event),
 			});
 			triggerVideoMetric('adfinished');
 		})
 		.on(JWEvents.AD_TIME, (event: OnAdTimeEventData) => {
 			const mediaId = getAssetId(playerInstance.id);
-			const additionalAdProps = getAdPropsFromAdEvent(event);
+			const additionalAdProps = {
+				video_ad_is_in_gallery: isInGallery(),
+				...getAdPropsFromAdEvent(event),
+			};
 
 			if (event.position >= event.duration * 0.25 && singleTrack('jw-player-ad-25-' + mediaId)) {
 				jwPlayerAdTracker({
