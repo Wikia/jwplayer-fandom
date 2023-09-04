@@ -1,13 +1,14 @@
 .mobileArticleVideoTopPlaceholder {
+	--z1: token(z1);
 	width: 100%;
 	height: 56.25vw;
 	position: relative;
-	z-index: 100;
+	// z-index must be bigger than infobox button
+	z-index: calc(var(--z1 + 1));
 }
 
 .mobileArticleVideoWrapperIsScrollPlayer {
 	--z2: token(z2);
-	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 	position: fixed;
 	width: 100%;
 	height: 56.25vw;
