@@ -102,7 +102,7 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 		<>
 			<div ref={ref} className={clsx(styles.mobileArticleVideoTopPlaceholder, isScrollPlayer && `is-on-scroll-active`)}>
 				<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer} topPosition={getTopPosition()}>
-					{adComplete ? (
+					{isPlayerReady ? (
 						<>
 							<JwPlayerWrapper
 								getDismissed={getDismissed}
@@ -115,7 +115,7 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 							/>
 							<input type="hidden" value={String(dismissed)} name={inputName} />
 
-							{isPlayerReady && <OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />}
+							<OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />
 						</>
 					) : (
 						<VideoPlaceholder isScrollPlayer={isScrollPlayer} />

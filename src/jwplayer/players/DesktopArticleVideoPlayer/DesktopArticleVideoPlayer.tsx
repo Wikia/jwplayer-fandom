@@ -26,6 +26,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 	const moreVideosIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-related-btn');
 	const pipIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-icon-pip');
 	const inputName = 'isDismissed';
+	const [isPlayerReady, setIsPlayerReady] = useState(false);
 
 	const getDismissed = getDismissedFn(inputName);
 
@@ -50,7 +51,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 							isScrollPlayer ? styles.desktopArticleVideoWrapperScrollPlayer : styles.desktopArticleVideoWrapper
 						}
 					>
-						{adComplete ? (
+						{isPlayerReady ? (
 							<div>
 								<div className={styles.topBar}>
 									{!isScrollPlayer && <UnmuteButton />}
@@ -61,7 +62,10 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 								<JwPlayerWrapper
 									getDismissed={getDismissed}
 									config={getArticleVideoConfig(videoDetails)}
-									onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
+									onReady={(playerInstance) => {
+										articlePlayerOnReady(videoDetails, playerInstance);
+										setIsPlayerReady(true);
+									}}
 									stopAutoAdvanceOnExitViewport={false}
 								/>
 								{isScrollPlayer && <VideoDetails />}
