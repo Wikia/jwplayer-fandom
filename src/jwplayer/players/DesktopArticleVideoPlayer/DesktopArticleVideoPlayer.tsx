@@ -51,7 +51,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 							isScrollPlayer ? styles.desktopArticleVideoWrapperScrollPlayer : styles.desktopArticleVideoWrapper
 						}
 					>
-						{isPlayerReady ? (
+						{adComplete && (
 							<div>
 								<div className={styles.topBar}>
 									{!isScrollPlayer && <UnmuteButton />}
@@ -68,12 +68,11 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 									}}
 									stopAutoAdvanceOnExitViewport={false}
 								/>
-								{isScrollPlayer && <VideoDetails />}
+								{isScrollPlayer && isPlayerReady && <VideoDetails />}
 								<input type="hidden" value={String(dismissed)} name={inputName} />
 							</div>
-						) : (
-							<VideoPlaceholder isScrollPlayer={isScrollPlayer} />
 						)}
+						{!isPlayerReady && <VideoPlaceholder isScrollPlayer={isScrollPlayer} />}
 					</div>
 				}
 			</div>
