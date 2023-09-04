@@ -53,6 +53,7 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 	const isScrollPlayer = !(dismissed || onScreen);
 	const inputName = 'isDismissed';
 	const relatedContainer = document.getElementById('featured-video__player_related') as HTMLDivElement | null;
+	const [isPlayerReady, setIsPlayerReady] = useState(false);
 
 	const getDismissed = getDismissedFn(inputName);
 
@@ -106,12 +107,15 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 							<JwPlayerWrapper
 								getDismissed={getDismissed}
 								config={getArticleVideoConfig(videoDetails)}
-								onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
+								onReady={(playerInstance) => {
+									articlePlayerOnReady(videoDetails, playerInstance);
+									setIsPlayerReady(true);
+								}}
 								stopAutoAdvanceOnExitViewport={false}
 							/>
 							<input type="hidden" value={String(dismissed)} name={inputName} />
 
-							<OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />
+							{isPlayerReady && <OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />}
 						</>
 					) : (
 						<VideoPlaceholder isScrollPlayer={isScrollPlayer} />
