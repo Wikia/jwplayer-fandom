@@ -62,7 +62,7 @@ export interface RedVenturePlayerContext extends JwPlayerContainerId {
 	 * More information on this can be found at - https://docs.jwplayer.com/platform/reference/protect-your-content-with-signed-urls#types-of-signed-urls
 	 * @example - unsigned URL example
 	 * {
-	 *   playerUrl: 'https://cdn.jwplayer.com/libraries/VXc5h4Tf.js'
+	 *   playerUrl: 'https://cdn.jwplayer.com/libraries/UKcdkcuf.js'
 	 * },
 	 * @example - signed URL example
 	 * {
