@@ -6,14 +6,11 @@ import useAdComplete from 'jwplayer/utils/useAdComplete';
 import { communicationService } from 'jwplayer/utils/communication';
 import { isLocalDevelopment, isOnBrowser } from 'jwplayer/utils/envs';
 
-import clsx from 'clsx';
-
 import styles from './canonicalVideoPlayer.module.scss';
 
 const CanonicalVideoPlayer: React.FC<CanonicalVideoPlayerProps> = ({ currentVideo, videoDetails, onComplete }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
-	const isScrollPlayer = false; // we use default JWP "float on scroll" feature
 
 	useEffect(() => {
 		const payload = {
@@ -29,19 +26,7 @@ const CanonicalVideoPlayer: React.FC<CanonicalVideoPlayerProps> = ({ currentVide
 		<PlayerWrapper playerName="canonical-video-player">
 			<div className={styles.canonicalVideoTopPlaceholder} ref={ref}>
 				{adComplete && (
-					<div
-						className={clsx(
-							isScrollPlayer
-								? styles.canonicalVideoWrapperIsScrollPlayer
-								: styles.canonicalVideoWrapperIsNotScrollPlayer,
-						)}
-					>
-						<LoadableVideoPlayerWrapper
-							currentVideo={currentVideo}
-							videoDetails={videoDetails}
-							onComplete={onComplete}
-						/>
-					</div>
+					<LoadableVideoPlayerWrapper currentVideo={currentVideo} videoDetails={videoDetails} onComplete={onComplete} />
 				)}
 			</div>
 		</PlayerWrapper>
