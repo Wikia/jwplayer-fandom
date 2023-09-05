@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
-import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'jwplayer/utils/useAdComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import { DesktopArticleVideoPlayerProps } from 'jwplayer/types';
@@ -14,7 +13,6 @@ import styles from './DesktopArticleVideoPlayer.module.css';
 export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
-	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const controlbar = document.querySelector<HTMLElement>('.jw-controlbar');
 	const shareIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-settings-sharing');
 	const moreVideosIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-related-btn');
@@ -23,17 +21,10 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 
 	const getDismissed = getDismissedFn(inputName);
 
-	if (onScreen) {
-		if (controlbar) controlbar.style.background = 'rgba(0, 0, 0, 0.5)';
-		if (shareIcon) shareIcon.style.display = 'flex';
-		if (moreVideosIcon) moreVideosIcon.style.display = 'flex';
-		if (pipIcon) pipIcon.style.display = 'flex';
-	} else {
-		if (controlbar) controlbar.style.background = 'linear-gradient(0,#000,transparent)';
-		if (shareIcon) shareIcon.style.display = 'none';
-		if (moreVideosIcon) moreVideosIcon.style.display = 'none';
-		if (pipIcon) pipIcon.style.display = 'none';
-	}
+	if (controlbar) controlbar.style.background = 'rgba(0, 0, 0, 0.5)';
+	if (shareIcon) shareIcon.style.display = 'flex';
+	if (moreVideosIcon) moreVideosIcon.style.display = 'flex';
+	if (pipIcon) pipIcon.style.display = 'flex';
 
 	return (
 		<>
