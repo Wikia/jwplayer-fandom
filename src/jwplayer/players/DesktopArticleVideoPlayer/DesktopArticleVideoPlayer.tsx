@@ -1,11 +1,11 @@
 import React, { useRef, useState } from 'react';
 import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButton';
+import CloseButton from 'jwplayer/players/shared/CloseButton/CloseButton';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'jwplayer/utils/useAdComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import { DesktopArticleVideoPlayerProps } from 'jwplayer/types';
-import CloseButton from 'jwplayer/players/shared/CloseButton/CloseButton';
 import Attribution from 'jwplayer/players/DesktopArticleVideoPlayer/Attribution';
 import { VideoPlaceholder } from 'jwplayer/players/shared/VideoPlaceholder/VideoPlaceholder';
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
@@ -45,11 +45,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 		<>
 			<div className={styles.desktopArticleVideoTopPlaceholder} ref={placeholderRef}>
 				{
-					<div
-						className={
-							isScrollPlayer ? styles.desktopArticleVideoWrapperScrollPlayer : styles.desktopArticleVideoWrapper
-						}
-					>
+					<div className={styles.desktopArticleVideoWrapper}>
 						{adComplete && (
 							<div>
 								<div className={styles.topBar}>
