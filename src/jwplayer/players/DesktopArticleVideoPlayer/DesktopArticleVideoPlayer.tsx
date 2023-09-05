@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButton';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import useAdComplete from 'jwplayer/utils/useAdComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
@@ -31,6 +32,9 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 			<div className={styles.desktopArticleVideoTopPlaceholder} ref={placeholderRef}>
 				{adComplete && (
 					<div className={styles.desktopArticleVideoWrapper}>
+						<div className={styles.topBar}>
+							<UnmuteButton />
+						</div>
 						<JwPlayerWrapper
 							getDismissed={getDismissed}
 							config={getArticleVideoConfig(videoDetails)}
