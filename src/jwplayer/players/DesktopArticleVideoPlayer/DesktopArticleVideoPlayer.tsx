@@ -8,6 +8,7 @@ import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import { DesktopArticleVideoPlayerProps } from 'jwplayer/types';
 import CloseButton from 'jwplayer/players/shared/CloseButton/CloseButton';
 import Attribution from 'jwplayer/players/DesktopArticleVideoPlayer/Attribution';
+import { VideoPlaceholder } from 'jwplayer/players/shared/VideoPlaceholder/VideoPlaceholder';
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
 import { getDismissedFn } from 'jwplayer/utils/utils';
@@ -19,6 +20,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
+	const [isPlayerReady, setIsPlayerReady] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
 	const controlbar = document.querySelector<HTMLElement>('.jw-controlbar');
 	const shareIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-settings-sharing');
@@ -43,28 +45,36 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 	return (
 		<>
 			<div className={styles.desktopArticleVideoTopPlaceholder} ref={placeholderRef}>
-				{adComplete && (
+				{
 					<div
 						className={
 							isScrollPlayer ? styles.desktopArticleVideoWrapperScrollPlayer : styles.desktopArticleVideoWrapper
 						}
 					>
-						<div className={styles.topBar}>
-							{!isScrollPlayer && <UnmuteButton />}
-							{isScrollPlayer && (
-								<CloseButton dismiss={() => setDismissed(true)} iconColor={'#fff'} className={styles.closeButton} />
-							)}
-						</div>
-						<JwPlayerWrapper
-							getDismissed={getDismissed}
-							config={getArticleVideoConfig(videoDetails)}
-							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
-							stopAutoAdvanceOnExitViewport={false}
-						/>
-						{isScrollPlayer && <VideoDetails />}
-						<input type="hidden" value={String(dismissed)} name={inputName} />
+						{adComplete && (
+							<div>
+								<div className={styles.topBar}>
+									{!isScrollPlayer && <UnmuteButton />}
+									{isScrollPlayer && (
+										<CloseButton dismiss={() => setDismissed(true)} iconColor={'#fff'} className={styles.closeButton} />
+									)}
+								</div>
+								<JwPlayerWrapper
+									getDismissed={getDismissed}
+									config={getArticleVideoConfig(videoDetails)}
+									onReady={(playerInstance) => {
+										articlePlayerOnReady(videoDetails, playerInstance);
+										setIsPlayerReady(true);
+									}}
+									stopAutoAdvanceOnExitViewport={false}
+								/>
+								{isScrollPlayer && isPlayerReady && <VideoDetails />}
+								<input type="hidden" value={String(dismissed)} name={inputName} />
+							</div>
+						)}
+						{!isPlayerReady && <VideoPlaceholder isScrollPlayer={isScrollPlayer} />}
 					</div>
-				)}
+				}
 			</div>
 			<Attribution />
 		</>
