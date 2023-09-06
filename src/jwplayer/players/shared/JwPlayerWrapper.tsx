@@ -23,7 +23,7 @@ declare let window: WindowJWPlayer;
 const getDefaultPlayerUrl = () => {
 	return navigator.userAgent.match(/android/i)
 		? 'https://cdn.jwplayer.com/libraries/MFqndUHM.js'
-		: 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
+		: 'https://cdn.jwplayer.com/libraries/UKcdkcuf.js';
 };
 
 const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
