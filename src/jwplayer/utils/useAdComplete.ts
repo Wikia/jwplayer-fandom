@@ -4,15 +4,9 @@ import { communicationService, ofType } from 'jwplayer/utils/communication';
 import { race, timer } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
-import getValueFromQuery from 'utils/getValuefromQuery';
 
 export default function useAdComplete(): boolean {
 	const [adComplete, setAdComplete] = useState(false);
-
-	const noAds = getValueFromQuery('noads');
-	if (noAds) {
-		return true;
-	}
 
 	useEffect(() => {
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_OPT_IN_LISTEN_START);
