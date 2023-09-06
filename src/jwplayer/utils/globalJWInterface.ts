@@ -6,7 +6,7 @@
 import { Player } from 'jwplayer/types';
 
 export interface WindowWithJWPlayer {
-	jwplayer: () => Player;
+	jwplayer: (playerId: string | null) => Player;
 	currentPlaylistItemWirewax: boolean | null;
 }
 
@@ -14,89 +14,89 @@ declare let window: WindowWithJWPlayer;
 
 // Ensure all of these operations are safe
 const withTryCatchDefault =
-	<T>(func: () => T, fallback = '') =>
-	() => {
+	<T>(func: (playerId: string) => T, fallback = '') =>
+	(playerId: string) => {
 		// JWPLayer not yet ready
 		if (typeof window === 'undefined' || !window.jwplayer || typeof window.jwplayer !== 'function') {
 			return '';
 		}
 
 		try {
-			return func();
+			return func(playerId);
 		} catch (e) {
 			return fallback;
 		}
 	};
 
-export const getAutoPlayState = withTryCatchDefault<boolean | undefined>(() => {
-	return window.jwplayer().getConfig().autostart;
+export const getAutoPlayState = withTryCatchDefault<boolean | undefined>((playerId: string) => {
+	return window.jwplayer(playerId).getConfig().autostart;
 });
 
 // TODO ENSURE this is the Playlist and not the video id
-export const getPlayListId = withTryCatchDefault<string>(() => {
-	return window.jwplayer().getPlaylistItem().mediaid;
+export const getPlayListId = withTryCatchDefault<string>((playerId: string) => {
+	return window.jwplayer(playerId).getPlaylistItem().mediaid;
 });
 
-export const getVideoVolume = withTryCatchDefault<number>(() => {
-	if (window.jwplayer().getMute()) {
+export const getVideoVolume = withTryCatchDefault<number>((playerId: string) => {
+	if (window.jwplayer(playerId).getMute()) {
 		return 0;
 	}
 
-	return window.jwplayer().getVolume();
+	return window.jwplayer(playerId).getVolume();
 });
 
 // Continue with all functions here to enable everything in PROPERTY_NAMES
 
-export const getPlayHeadPosition = withTryCatchDefault<number>(() => {
-	return window.jwplayer().getPosition();
+export const getPlayHeadPosition = withTryCatchDefault<number>((playerId: string) => {
+	return window.jwplayer(playerId).getPosition();
 });
 
-export const getCurrentQuality = withTryCatchDefault<number>(() => {
-	return window.jwplayer().getCurrentQuality();
+export const getCurrentQuality = withTryCatchDefault<number>((playerId: string) => {
+	return window.jwplayer(playerId).getCurrentQuality();
 });
 
-export const getIsCurrentlyViewable = withTryCatchDefault<number | boolean>(() => {
-	return !!window.jwplayer().getViewable() ?? false;
+export const getIsCurrentlyViewable = withTryCatchDefault<number | boolean>((playerId: string) => {
+	return !!window.jwplayer(playerId).getViewable() ?? false;
 });
 
-export const getPlaylistPosition = withTryCatchDefault<number>(() => {
-	return window.jwplayer().getPlaylistIndex() + 1;
+export const getPlaylistPosition = withTryCatchDefault<number>((playerId: string) => {
+	return window.jwplayer(playerId).getPlaylistIndex() + 1;
 });
 
-export const getDuration = withTryCatchDefault<number>(() => {
-	return window.jwplayer().getDuration();
+export const getDuration = withTryCatchDefault<number>((playerId: string) => {
+	return window.jwplayer(playerId).getDuration();
 });
 
-export const getPlayerId = withTryCatchDefault<string | undefined>(() => {
-	return 'jw-' + window.jwplayer().getConfig().pid;
+export const getPlayerId = withTryCatchDefault<string | undefined>((playerId: string) => {
+	return 'jw-' + window.jwplayer(playerId).getConfig().pid;
 });
 
-export const getAssetTitle = withTryCatchDefault<string>(() => {
-	return window.jwplayer().getPlaylistItem().title;
+export const getAssetTitle = withTryCatchDefault<string>((playerId: string) => {
+	return !playerId ? '' : window.jwplayer(playerId).getPlaylistItem().title;
 });
 
-export const getAssetId = withTryCatchDefault<string | undefined>(() => {
-	return window.jwplayer().getPlaylistItem().mediaid;
+export const getAssetId = withTryCatchDefault<string | undefined>((playerId: string) => {
+	return !playerId ? '' : window.jwplayer(playerId).getPlaylistItem().mediaid;
 });
 
-export const getPublishDate = withTryCatchDefault<number | undefined>(() => {
-	return window.jwplayer().getPlaylistItem().pubdate;
+export const getPublishDate = withTryCatchDefault<number | undefined>((playerId: string) => {
+	return window.jwplayer(playerId).getPlaylistItem().pubdate;
 });
 
 export const getIsInteractable = withTryCatchDefault<boolean | null>(() => {
 	return !!window.currentPlaylistItemWirewax;
 });
 
-export const getJWAdBlockState = withTryCatchDefault<boolean>(() => {
-	return window.jwplayer().getAdBlock();
+export const getJWAdBlockState = withTryCatchDefault<boolean>((playerId: string) => {
+	return window.jwplayer(playerId).getAdBlock();
 });
 
-export const getJWViewState = withTryCatchDefault<string>(() => {
-	if (window.jwplayer().getFloating()) {
+export const getJWViewState = withTryCatchDefault<string>((playerId: string) => {
+	if (window.jwplayer(playerId).getFloating()) {
 		return 'pip';
 	}
 
-	if (window.jwplayer().getFullscreen()) {
+	if (window.jwplayer(playerId).getFullscreen()) {
 		return 'fullscreen';
 	}
 
@@ -112,9 +112,9 @@ export const getIsEmbed = withTryCatchDefault<false>(() => {
 	return false;
 });
 
-export const getJWQualityManifest = withTryCatchDefault<string>(() => {
+export const getJWQualityManifest = withTryCatchDefault<string>((playerId: string) => {
 	return window
-		.jwplayer()
+		.jwplayer(playerId)
 		.getQualityLevels()
 		.map((obj) => obj.label)
 		.join(',');

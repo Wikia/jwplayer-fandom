@@ -53,14 +53,16 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 			if (playReason === 'interaction') {
 				jwPlayerPlaybackTracker({
+					player_element_id: playerInstance.id,
 					event_name: 'video_resume',
 				});
 			}
 
 			// Fire at the start of each video
-			if (singleTrack(initialPlayEvent + getAssetId())) {
+			if (singleTrack(initialPlayEvent + getAssetId(playerInstance.id))) {
 				const timeToFirstFrame = recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_VIDEO);
 				jwPlayerPlaybackTracker({
+					player_element_id: playerInstance.id,
 					event_name: 'video_content_start',
 					video_time_to_first_frame: timeToFirstFrame,
 					video_startup_time: getVideoStartupTime(),
@@ -69,9 +71,10 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 			}
 		})
 		.on(JWEvents.TIME, (event: OnVideoTimeEventData) => {
-			const mediaId = getAssetId();
+			const mediaId = getAssetId(playerInstance.id);
 			if (event.position >= event.duration * 0.25 && singleTrack('jw-player-video-25' + mediaId)) {
 				jwPlayerContentTracker({
+					player_element_id: playerInstance.id,
 					event_name: 'video_content_quartile_25',
 				});
 				triggerVideoMetric('25-percent');
@@ -79,6 +82,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 			if (event.position >= event.duration * 0.5 && singleTrack('jw-player-video-50' + mediaId)) {
 				jwPlayerContentTracker({
+					player_element_id: playerInstance.id,
 					event_name: 'video_content_quartile_50',
 				});
 				triggerVideoMetric('50-percent');
@@ -86,6 +90,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 			if (event.position >= event.duration * 0.75 && singleTrack('jw-player-video-75' + mediaId)) {
 				jwPlayerContentTracker({
+					player_element_id: playerInstance.id,
 					event_name: 'video_content_quartile_75',
 				});
 				triggerVideoMetric('75-percent');
@@ -97,6 +102,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 				if (singleTrack(`jw-player-heartbeat-second-${mediaId}-${tenSecondBucket}`)) {
 					jwPlayerContentTracker({
+						player_element_id: playerInstance.id,
 						event_name: 'video_content_playing',
 						video_content_seconds_viewed: 10,
 					});
@@ -108,6 +114,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 				if (singleTrack(`jw-player-heartbeat-min-${mediaId}-${minuteBucket}`)) {
 					jwPlayerContentTracker({
+						player_element_id: playerInstance.id,
 						event_name: 'video_content_playing',
 						video_content_seconds_viewed: 60,
 					});
@@ -116,6 +123,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 		})
 		.on(JWEvents.COMPLETE, () => {
 			jwPlayerContentTracker({
+				player_element_id: playerInstance.id,
 				event_name: 'video_content_completed',
 			});
 			triggerVideoMetric('100-percent');
@@ -124,6 +132,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 		.on(JWEvents.PAUSE, (event: PausePlayerEventData) => {
 			if (event.pauseReason === 'interaction') {
 				jwPlayerPlaybackTracker({
+					player_element_id: playerInstance.id,
 					event_name: 'video_pause',
 				});
 				triggerVideoMetric('paused');
@@ -137,6 +146,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 			if (event.mute === false) {
 				jwPlayerPlaybackTracker({
+					player_element_id: playerInstance.id,
 					event_name: 'video_volume_change',
 					_label: 'unmute',
 				});
@@ -145,6 +155,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 			if (event.mute === true) {
 				jwPlayerPlaybackTracker({
+					player_element_id: playerInstance.id,
 					event_name: 'video_volume_change',
 					_label: 'mute',
 				});
@@ -152,30 +163,35 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 		})
 		.on(JWEvents.VOLUME, (event: OnVolumeEventData) => {
 			jwPlayerPlaybackTracker({
+				player_element_id: playerInstance.id,
 				event_name: 'video_volume_change',
 				value: event.volume,
 			});
 		})
 		.on(JWEvents.NEXT, () => {
 			jwPlayerPlaybackTracker({
+				player_element_id: playerInstance.id,
 				event_name: 'video_select_next',
 			});
 		})
 
 		.on(JWEvents.FLOAT, () => {
 			jwPlayerPlaybackTracker({
+				player_element_id: playerInstance.id,
 				event_name: 'video_pip',
 			});
 		})
 
 		.on(JWEvents.VIEWABLE, () => {
 			jwPlayerPlaybackTracker({
+				player_element_id: playerInstance.id,
 				event_name: 'video_player_viewability_state',
 			});
 		})
 
 		.on(JWEvents.FULLSCREEN, (event: FullScreenEventData) => {
 			jwPlayerPlaybackTracker({
+				player_element_id: playerInstance.id,
 				event_name: 'video_fullscreen_toggle',
 				_label: `full-screen-${event.fullscreen}`,
 			});
@@ -183,6 +199,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 		.on(JWEvents.SEEK, (seekEventData: SeekEventData) => {
 			jwPlayerPlaybackTracker({
+				player_element_id: playerInstance.id,
 				event_name: 'video_seek',
 				video_seek_start_position: seekEventData.position,
 				video_seek_end_position: seekEventData.offset,
@@ -196,6 +213,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 			triggerVideoMetric('error', event.code.toString());
 
 			jwPlayerPlaybackTracker({
+				player_element_id: playerInstance.id,
 				event_name: 'video_player_error',
 				video_player_error_code: event.code,
 			});
@@ -204,12 +222,14 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 		// Ads
 		.on(JWEvents.AD_LOADED, (event: AdEvents) => {
 			jwPlayerAdTracker({
+				player_element_id: playerInstance.id,
 				event_name: 'video_ad_loaded',
 				...getAdPropsFromAdEvent(event),
 			});
 		})
 		.on(JWEvents.AD_STARTED, (event: AdEvents) => {
 			jwPlayerAdTracker({
+				player_element_id: playerInstance.id,
 				event_name: 'video_ad_started',
 				...getAdPropsFromAdEvent(event),
 			});
@@ -217,17 +237,19 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 		})
 		.on(JWEvents.AD_FINISHED, (event: AdEvents) => {
 			jwPlayerAdTracker({
+				player_element_id: playerInstance.id,
 				event_name: 'video_ad_completed',
 				...getAdPropsFromAdEvent(event),
 			});
 			triggerVideoMetric('adfinished');
 		})
 		.on(JWEvents.AD_TIME, (event: OnAdTimeEventData) => {
-			const mediaId = getAssetId();
+			const mediaId = getAssetId(playerInstance.id);
 			const additionalAdProps = getAdPropsFromAdEvent(event);
 
 			if (event.position >= event.duration * 0.25 && singleTrack('jw-player-ad-25-' + mediaId)) {
 				jwPlayerAdTracker({
+					player_element_id: playerInstance.id,
 					...additionalAdProps,
 					event_name: 'video_ad_quartile_25',
 				});
@@ -235,6 +257,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 			if (event.position >= event.duration * 0.5 && singleTrack('jw-player-ad-50' + mediaId)) {
 				jwPlayerAdTracker({
+					player_element_id: playerInstance.id,
 					...additionalAdProps,
 					event_name: 'video_ad_quartile_50',
 				});
@@ -242,6 +265,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 			if (event.position >= event.duration * 0.75 && singleTrack('jw-player-ad-75' + mediaId)) {
 				jwPlayerAdTracker({
+					player_element_id: playerInstance.id,
 					...additionalAdProps,
 					event_name: 'video_ad_quartile_75',
 				});
@@ -253,6 +277,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 				if (singleTrack(`jw-player-ad-heartbeat-second-${mediaId}-${oneSecondBucket}`)) {
 					jwPlayerContentTracker({
+						player_element_id: playerInstance.id,
 						...additionalAdProps,
 						event_name: 'video_ad_playing',
 						video_ad_seconds_viewed: 1,
@@ -265,6 +290,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 				if (singleTrack(`jw-player-ad-heartbeat-min-${mediaId}-${tenSecondBucket}`)) {
 					jwPlayerContentTracker({
+						player_element_id: playerInstance.id,
 						...additionalAdProps,
 						event_name: 'video_ad_playing',
 						video_ad_seconds_viewed: 10,
@@ -277,6 +303,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 	if (playerInstance.plugins && playerInstance.plugins.sharing && playerInstance.plugins.sharing.on) {
 		playerInstance.plugins.sharing.on('click', (method: ShareEventData) => {
 			jwPlayerPlaybackTracker({
+				player_element_id: playerInstance.id,
 				event_name: 'video_share',
 				video_share_method: method.method.toString(),
 			});
