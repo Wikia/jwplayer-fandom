@@ -4,6 +4,7 @@ import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'jwplayer/utils/useAdComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import OffScreenOverlay from 'jwplayer/players/MobileArticleVideoPlayer/OffScreenOverlay/OffScreenOverlay';
+import { VideoPlaceholder } from 'jwplayer/players/shared/VideoPlaceholder/VideoPlaceholder';
 import { MobileArticleVideoPlayerProps } from 'jwplayer/types';
 import Attribution from 'jwplayer/players/MobileArticleVideoPlayer/Attribution';
 import { singleTrack } from 'jwplayer/utils/videoTracking';
@@ -50,6 +51,7 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(ref, '0px', 1);
 	const [dismissed, setDismissed] = useState(false);
+	const [isPlayerReady, setIsPlayerReady] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
 	const inputName = 'isDismissed';
 	const relatedContainer = document.getElementById('featured-video__player_related') as HTMLDivElement | null;
@@ -100,19 +102,25 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 	return (
 		<>
 			<div ref={ref} className={clsx(styles.mobileArticleVideoTopPlaceholder, isScrollPlayer && `is-on-scroll-active`)}>
-				{adComplete && (
-					<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer} topPosition={getTopPosition()}>
-						<JwPlayerWrapper
-							getDismissed={getDismissed}
-							config={getArticleVideoConfig(videoDetails)}
-							onReady={(playerInstance) => articlePlayerOnReady(videoDetails, playerInstance)}
-							stopAutoAdvanceOnExitViewport={false}
-						/>
-						<input type="hidden" value={String(dismissed)} name={inputName} />
+				<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer} topPosition={getTopPosition()}>
+					{adComplete && (
+						<>
+							<JwPlayerWrapper
+								getDismissed={getDismissed}
+								config={getArticleVideoConfig(videoDetails)}
+								onReady={(playerInstance) => {
+									articlePlayerOnReady(videoDetails, playerInstance);
+									setIsPlayerReady(true);
+								}}
+								stopAutoAdvanceOnExitViewport={false}
+							/>
+							<input type="hidden" value={String(dismissed)} name={inputName} />
 
-						<OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />
-					</MobileArticleVideoWrapper>
-				)}
+							{isPlayerReady && <OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />}
+						</>
+					)}
+					{!isPlayerReady && <VideoPlaceholder isScrollPlayer={isScrollPlayer} />}{' '}
+				</MobileArticleVideoWrapper>
 			</div>
 			<Attribution />
 		</>

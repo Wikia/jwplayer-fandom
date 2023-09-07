@@ -80,23 +80,24 @@ export const PROPERTY_NAMES = {
 
 function addRunTimeParams(trackingParams: TrackData): TrackData {
 	const trackDataObject: TrackData = { ...addGlobalProps(), ...trackingParams };
+	const playerId = trackDataObject.player_element_id as string;
 
-	trackDataObject[PROPERTY_NAMES.VIDEO_AUTO_PLAY_STATE] = getAutoPlayState();
-	trackDataObject[PROPERTY_NAMES.VIDEO_VOLUME_LEVEL] = getVideoVolume();
-	trackDataObject[PROPERTY_NAMES.VIDEO_CURRENT_QUALITY] = getCurrentQuality();
-	trackDataObject[PROPERTY_NAMES.VIDEO_PLAYHEAD_POSITION] = getPlayHeadPosition();
-	trackDataObject[PROPERTY_NAMES.VIDEO_IS_VIEWABLE] = getIsCurrentlyViewable();
-	trackDataObject[PROPERTY_NAMES.VIDEO_JW_AD_BLOCK_STATE] = getJWAdBlockState();
-	trackDataObject[PROPERTY_NAMES.VIDEO_PLAYLIST_POSITION] = getPlaylistPosition();
-	trackDataObject[PROPERTY_NAMES.VIDEO_IS_INTERACTABLE] = getIsInteractable();
-	trackDataObject[PROPERTY_NAMES.VIDEO_ASSET_TITLE] = getAssetTitle();
-	trackDataObject[PROPERTY_NAMES.VIDEO_ASSET_ID] = getAssetId();
-	trackDataObject[PROPERTY_NAMES.VIDEO_PUBLISH_DATE] = getPublishDate();
-	trackDataObject[PROPERTY_NAMES.VIDEO_DURATION] = getDuration();
-	trackDataObject[PROPERTY_NAMES.VIDEO_PLAYER] = getPlayerId();
-	trackDataObject[PROPERTY_NAMES.VIDEO_VIEW_STATE] = getJWViewState();
-	trackDataObject[PROPERTY_NAMES.VIDEO_IS_EMBEDDED] = getIsEmbed();
-	trackDataObject[PROPERTY_NAMES.VIDEO_QUALITY_MANIFEST] = getJWQualityManifest();
+	trackDataObject[PROPERTY_NAMES.VIDEO_AUTO_PLAY_STATE] = getAutoPlayState(playerId);
+	trackDataObject[PROPERTY_NAMES.VIDEO_VOLUME_LEVEL] = getVideoVolume(playerId);
+	trackDataObject[PROPERTY_NAMES.VIDEO_CURRENT_QUALITY] = getCurrentQuality(playerId);
+	trackDataObject[PROPERTY_NAMES.VIDEO_PLAYHEAD_POSITION] = getPlayHeadPosition(playerId);
+	trackDataObject[PROPERTY_NAMES.VIDEO_IS_VIEWABLE] = getIsCurrentlyViewable(playerId);
+	trackDataObject[PROPERTY_NAMES.VIDEO_JW_AD_BLOCK_STATE] = getJWAdBlockState(playerId);
+	trackDataObject[PROPERTY_NAMES.VIDEO_PLAYLIST_POSITION] = getPlaylistPosition(playerId);
+	trackDataObject[PROPERTY_NAMES.VIDEO_IS_INTERACTABLE] = getIsInteractable(playerId);
+	trackDataObject[PROPERTY_NAMES.VIDEO_ASSET_TITLE] = getAssetTitle(playerId);
+	trackDataObject[PROPERTY_NAMES.VIDEO_ASSET_ID] = getAssetId(playerId);
+	trackDataObject[PROPERTY_NAMES.VIDEO_PUBLISH_DATE] = getPublishDate(playerId);
+	trackDataObject[PROPERTY_NAMES.VIDEO_DURATION] = getDuration(playerId);
+	trackDataObject[PROPERTY_NAMES.VIDEO_PLAYER] = getPlayerId(playerId);
+	trackDataObject[PROPERTY_NAMES.VIDEO_VIEW_STATE] = getJWViewState(playerId);
+	trackDataObject[PROPERTY_NAMES.VIDEO_IS_EMBEDDED] = getIsEmbed(playerId);
+	trackDataObject[PROPERTY_NAMES.VIDEO_QUALITY_MANIFEST] = getJWQualityManifest(playerId);
 
 	// TO BE ADDED LATER
 	// trackDataObject[PROPERTY_NAMES.VIDEO_COLLECTION] = getCollection();

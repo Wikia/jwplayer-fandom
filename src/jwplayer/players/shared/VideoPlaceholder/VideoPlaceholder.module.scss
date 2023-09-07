@@ -1,0 +1,44 @@
+@import '~@fandom-frontend/design-system/dist/scss/wds-variables/_colors.scss';
+@use '~@fandom-frontend/react-common/dist/components/Spinner.css';
+
+.placeholderWrapper {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	background-color: $wds-color-light-gray;
+	border: solid 1px $wds-color-mid-light-gray;
+}
+
+.placeholderWrapperScrollPlayer {
+	width: 100%;
+	height: 168px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	background-color: $wds-color-light-gray;
+	border: solid 1px $wds-color-mid-light-gray;
+}
+
+.placeholder {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	svg {
+		filter: grayscale(100%);
+		font-size: 64px;
+		opacity: 0.5;
+		fill: $wds-color-mid-light-gray;
+	}
+}
+
+.spinner {
+	z-index: 999;
+}

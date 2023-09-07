@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { AdTimeData, Player, PlayerConfig, TimeEventData, ProgressUpdateData } from 'jwplayer/types';
 
-const PlayerWrapper: React.FC<{ playerName: string }> = ({ playerName, children }) => {
+const PlayerWrapper: React.FC<{ playerName: string; children: React.ReactNode }> = ({ playerName, children }) => {
 	const [jwPlayer, setJwPlayer] = useState<Player>(null);
 	const [jwPlayerConfig, setJwPlayerConfig] = useState<PlayerConfig>(null);
 	const [jwPlayerAdPlaying, setjwPlayerAdPlaying] = useState(false);
