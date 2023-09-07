@@ -6,21 +6,7 @@ import useAdComplete from 'jwplayer/utils/useAdComplete';
 import { communicationService } from 'jwplayer/utils/communication';
 import { isLocalDevelopment, isOnBrowser } from 'jwplayer/utils/envs';
 
-import clsx from 'clsx';
-
 import styles from './canonicalVideoPlayer.module.scss';
-
-interface CanonicalVideoWrapperProps {
-	isScrollPlayer: boolean;
-}
-
-const CanonicalVideoWrapper: React.FC<CanonicalVideoWrapperProps> = ({ isScrollPlayer }) => (
-	<div
-		className={clsx(
-			isScrollPlayer ? styles.canonicalVideoWrapperIsScrollPlayer : styles.canonicalVideoWrapperIsNotScrollPlayer,
-		)}
-	/>
-);
 
 const CanonicalVideoPlayer: React.FC<CanonicalVideoPlayerProps> = ({ currentVideo, videoDetails, onComplete }) => {
 	const ref = useRef<HTMLDivElement>(null);
@@ -40,13 +26,7 @@ const CanonicalVideoPlayer: React.FC<CanonicalVideoPlayerProps> = ({ currentVide
 		<PlayerWrapper playerName="canonical-video-player">
 			<div className={styles.canonicalVideoTopPlaceholder} ref={ref}>
 				{adComplete && (
-					<CanonicalVideoWrapper isScrollPlayer={false}>
-						<LoadableVideoPlayerWrapper
-							currentVideo={currentVideo}
-							videoDetails={videoDetails}
-							onComplete={onComplete}
-						/>
-					</CanonicalVideoWrapper>
+					<LoadableVideoPlayerWrapper currentVideo={currentVideo} videoDetails={videoDetails} onComplete={onComplete} />
 				)}
 			</div>
 		</PlayerWrapper>

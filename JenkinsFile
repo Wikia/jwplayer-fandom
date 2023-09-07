@@ -30,8 +30,9 @@ pipeline {
   stages {
     stage('Lint, Build, Test, Deploy') {
       agent {
-        docker {
-          image DOCKER_IMAGE
+        dockerfile {
+          filename 'Dockerfile'
+          dir '.jenkins/pr-check'
           label 'docker-daemon'
           reuseNode true
         }
