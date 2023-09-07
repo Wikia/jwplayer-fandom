@@ -4,7 +4,7 @@
 	height: 56.25vw;
 	position: relative;
 	// z-index must be bigger than infobox button
-	z-index: calc(var(--z1 + 1));
+	z-index: calc(var(--z1) + 1);
 }
 
 .mobileArticleVideoWrapperIsScrollPlayer {
