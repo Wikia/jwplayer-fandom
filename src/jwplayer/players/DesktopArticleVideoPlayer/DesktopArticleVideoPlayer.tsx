@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButton';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
-import VideoDetails from 'jwplayer/players/DesktopArticleVideoPlayer/VideoDetails';
 import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'jwplayer/utils/useAdComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
@@ -68,7 +67,6 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 									}}
 									stopAutoAdvanceOnExitViewport={false}
 								/>
-								{isScrollPlayer && isPlayerReady && <VideoDetails />}
 								<input type="hidden" value={String(dismissed)} name={inputName} />
 							</div>
 						)}
