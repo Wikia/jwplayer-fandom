@@ -8,6 +8,7 @@ import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import { DesktopArticleVideoPlayerProps } from 'jwplayer/types';
 import CloseButton from 'jwplayer/players/shared/CloseButton/CloseButton';
 import Attribution from 'jwplayer/players/DesktopArticleVideoPlayer/Attribution';
+import { VideoPlaceholder } from 'jwplayer/players/shared/VideoPlaceholder/VideoPlaceholder';
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
 import { VideoPlaceholder } from 'jwplayer/players/shared/VideoPlaceholder/VideoPlaceholder';
@@ -20,6 +21,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
+	const [isPlayerReady, setIsPlayerReady] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
 	const controlbar = document.querySelector<HTMLElement>('.jw-controlbar');
 	const shareIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-settings-sharing');

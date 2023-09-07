@@ -4,6 +4,7 @@ import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'jwplayer/utils/useAdComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import OffScreenOverlay from 'jwplayer/players/MobileArticleVideoPlayer/OffScreenOverlay/OffScreenOverlay';
+import { VideoPlaceholder } from 'jwplayer/players/shared/VideoPlaceholder/VideoPlaceholder';
 import { MobileArticleVideoPlayerProps } from 'jwplayer/types';
 import Attribution from 'jwplayer/players/MobileArticleVideoPlayer/Attribution';
 import { singleTrack } from 'jwplayer/utils/videoTracking';
@@ -11,7 +12,7 @@ import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimin
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
 import { getDismissedFn } from 'jwplayer/utils/utils';
-import { VideoPlaceholder } from 'jwplayer/players/shared/VideoPlaceholder/VideoPlaceholder';
+
 import clsx from 'clsx';
 
 import styles from './mobileArticleVideoPlayer.module.scss';
@@ -118,7 +119,7 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 							{isPlayerReady && <OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />}
 						</>
 					)}
-					{!isPlayerReady && <VideoPlaceholder isScrollPlayer={isScrollPlayer} />}
+					{!isPlayerReady && <VideoPlaceholder isScrollPlayer={isScrollPlayer} />}{' '}
 				</MobileArticleVideoWrapper>
 			</div>
 			<Attribution />
