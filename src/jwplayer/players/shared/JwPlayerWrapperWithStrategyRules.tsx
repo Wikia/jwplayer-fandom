@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { JWPauseEvent, JWPlayerApi, JWPlayEvent, PlaylistItem } from 'jwplayer/types';
+import { JWPauseEvent, JWPlayerApi, JWPlayEvent } from 'jwplayer/types';
 import FandomWirewaxPlugin from 'jwplayer/plugins/fandom-wirewax.plugin';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { JwPlayerWrapperProps } from 'jwplayer/types';
@@ -7,7 +7,6 @@ import { jwPlayerPlaybackTracker, triggerVideoMetric } from 'jwplayer/utils/vide
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
 import JWEvents from 'jwplayer/players/shared/JWEvents';
 import addBaseTrackingEvents from 'jwplayer/players/shared/addBaseTrackingEvents';
-import slugify from 'jwplayer/utils/slugify';
 import getSponsoredVideos from 'utils/getSponsoredVideos';
 
 interface WindowJWPlayer extends Window {
@@ -17,18 +16,8 @@ interface WindowJWPlayer extends Window {
 
 declare let window: WindowJWPlayer;
 
-/**
- * gets the android player if user is on an android device browser
- */
-const getDefaultPlayerUrl = () => {
-	return navigator.userAgent.match(/android/i)
-		? 'https://cdn.jwplayer.com/libraries/MFqndUHM.js'
-		: 'https://content.jwplatform.com/libraries/VXc5h4Tf.js';
-};
-
-const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
+const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	config,
-	playerUrl,
 	onReady,
 	getDismissed = () => false,
 	onComplete,
@@ -69,10 +58,10 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 			console.debug('Loading of Sponsored Content Video List was disabled.');
 		}
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_INIT_RENDER);
-		initPlayer(jwPlayerContainerEmbedId, playerUrl);
+		initPlayer(jwPlayerContainerEmbedId);
 	}, []);
 
-	const initPlayer = (elementId: string, playerUrl?: string) => {
+	const initPlayer = (elementId: string) => {
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START);
 		jwPlayerPlaybackTracker({ event_name: 'video_player_start_load' });
 
@@ -85,9 +74,6 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 			jwPlayerPlaybackTracker({ event_name: 'video_player_load' });
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY);
 			triggerVideoMetric('loaded');
-
-			const registerPlugin = window.jwplayer().registerPlugin;
-			registerPlugin('wirewax', '8.0', FandomWirewaxPlugin);
 
 			setConfig(config);
 
@@ -144,25 +130,6 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 				if (!stopAutoAdvanceOnExitViewport) {
 					return;
 				}
-
-				// if the video is on its 2nd+ play, pause the video if its not on the viewport
-				/*
-				// Temporarily removed since this was tanking the sponsored content views
-				if (videoIndexRef.current >= 1 && (playerInstance.getViewable() === 0 || document.hasFocus() === false)) {
-					// send tracking event
-					jwPlayerPlaybackTracker({ event_name: 'video_player_pause_not_viewable' });
-
-					// close the related UI to stop auto advancement, and then re-open it for users to click on
-					setTimeout(() => {
-						window.jwplayer(elementId).getPlugin('related').close();
-						window.jwplayer(elementId).getPlugin('related').open();
-					}, 1000);
-				} */
-			});
-
-			playerInstance.setPlaylistItemCallback((item: PlaylistItem) => {
-				item.link = `https://www.fandom.com/newvideopage/${item.mediaid}/${slugify(item.title)}`;
-				return;
 			});
 
 			setPlayer(playerInstance);
@@ -173,7 +140,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 		} else {
 			const script = document.createElement('script');
 			script.async = true;
-			script.src = playerUrl || getDefaultPlayerUrl();
+			script.src = 'https://cdn.jwplayer.com/v2/sites/cGlKNUnj/placements/embed.js';
 			script.onload = onload;
 			document.getElementsByTagName('head')[0].appendChild(script);
 		}
@@ -181,9 +148,17 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 
 	return (
 		<div className={className}>
-			<div id={jwPlayerContainerEmbedId} />
+			<div
+				id={jwPlayerContainerEmbedId}
+				data-jw-placement-id={'21rL5wJF'}
+				data-jw-playlist={'https://cdn.jwplayer.com/v2/playlists/BdkNc4lb'}
+				data-jw-recommendations_playlist_id={'FOhaD53w'}
+				data-jw-preroll_ad_tag={
+					'https://pubads.g.doubleclick.net/gampad/ads?iu=%2F5441%2Fwka1b.VIDEO%2Ffeatured%2Fdesktop%2Fucp_desktop-fandom-fv-article%2F_project43-life&sz=640x480&gdfp_req=1&output=xml_vast4&unviewed_position_start=1&env=vp&cust_params=src%3Dtest%26pos%3Dfeatured%26post_id%3D-1'
+				}
+			/>
 		</div>
 	);
 };
 
-export default React.memo(JwPlayerWrapper);
+export default React.memo(JwPlayerWrapperWithStrategyRules);

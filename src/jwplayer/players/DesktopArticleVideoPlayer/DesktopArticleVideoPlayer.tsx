@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButton';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
+import JwPlayerWrapperWithStrategyRules from 'jwplayer/players/shared/JwPlayerWrapperWithStrategyRules';
 import useOnScreen from 'utils/useOnScreen';
 import useAdComplete from 'jwplayer/utils/useAdComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
@@ -61,20 +62,17 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 										<CloseButton dismiss={() => setDismissed(true)} iconColor={'#fff'} className={styles.closeButton} />
 									)}
 								</div>
-								{playerWithAdsEnabled && (
-									<JwPlayerWrapper
+								{playerWithAdsEnabled ? (
+									<JwPlayerWrapperWithStrategyRules
 										getDismissed={getDismissed}
 										config={getArticleVideoConfig(videoDetails, playerWithAdsEnabled)}
-										playerUrl={'https://cdn.jwplayer.com/v2/sites/cGlKNUnj/placements/embed.js'}
 										onReady={(playerInstance) => {
 											articlePlayerOnReady(videoDetails, playerInstance);
 											setIsPlayerReady(true);
 										}}
 										stopAutoAdvanceOnExitViewport={false}
-										loadStrategyRules={true}
 									/>
-								)}
-								{!playerWithAdsEnabled && (
+								) : (
 									<JwPlayerWrapper
 										getDismissed={getDismissed}
 										config={getArticleVideoConfig(videoDetails, playerWithAdsEnabled)}
