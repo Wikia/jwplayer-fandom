@@ -3,3 +3,4 @@ dist
 standalone-dist
 test-jw
 src/main.ts
+scripts
