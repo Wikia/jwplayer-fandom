@@ -140,5 +140,8 @@
 		"clsx": "1.2.1",
 		"js-cookie": "3.0.1",
 		"rxjs": "7.5.4"
+	},
+	"resolutions": {
+		"**/@types/react": "17.0.39"
 	}
 }
