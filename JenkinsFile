@@ -55,6 +55,14 @@ pipeline {
           }
         }
 
+        stage('typescript') {
+          steps {
+            sh("yarn tsc --noEmit")
+            script {
+              FAILED_STAGE = 'lint'
+            }
+          }
+        }
         stage('lint') {
           steps {
             sh("yarn lint")
