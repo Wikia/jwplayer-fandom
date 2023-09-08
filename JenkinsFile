@@ -59,7 +59,7 @@ pipeline {
           steps {
             sh("yarn tsc --noEmit")
             script {
-              FAILED_STAGE = 'lint'
+              FAILED_STAGE = 'typescript'
             }
           }
         }
