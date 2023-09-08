@@ -65,12 +65,13 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 									<JwPlayerWrapper
 										getDismissed={getDismissed}
 										config={getArticleVideoConfig(videoDetails, playerWithAdsEnabled)}
-										playerUrl={'https://cdn.jwplayer.com/libraries/ZDCnuHA6.js'}
+										playerUrl={'https://cdn.jwplayer.com/v2/sites/cGlKNUnj/placements/embed.js'}
 										onReady={(playerInstance) => {
 											articlePlayerOnReady(videoDetails, playerInstance);
 											setIsPlayerReady(true);
 										}}
 										stopAutoAdvanceOnExitViewport={false}
+										loadStrategyRules={true}
 									/>
 								)}
 								{!playerWithAdsEnabled && (
