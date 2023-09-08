@@ -61,15 +61,29 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 										<CloseButton dismiss={() => setDismissed(true)} iconColor={'#fff'} className={styles.closeButton} />
 									)}
 								</div>
-								<JwPlayerWrapper
-									getDismissed={getDismissed}
-									config={getArticleVideoConfig(videoDetails, playerWithAdsEnabled)}
-									onReady={(playerInstance) => {
-										articlePlayerOnReady(videoDetails, playerInstance);
-										setIsPlayerReady(true);
-									}}
-									stopAutoAdvanceOnExitViewport={false}
-								/>
+								{playerWithAdsEnabled && (
+									<JwPlayerWrapper
+										getDismissed={getDismissed}
+										config={getArticleVideoConfig(videoDetails, playerWithAdsEnabled)}
+										playerUrl={'https://cdn.jwplayer.com/libraries/ZDCnuHA6.js'}
+										onReady={(playerInstance) => {
+											articlePlayerOnReady(videoDetails, playerInstance);
+											setIsPlayerReady(true);
+										}}
+										stopAutoAdvanceOnExitViewport={false}
+									/>
+								)}
+								{!playerWithAdsEnabled && (
+									<JwPlayerWrapper
+										getDismissed={getDismissed}
+										config={getArticleVideoConfig(videoDetails, playerWithAdsEnabled)}
+										onReady={(playerInstance) => {
+											articlePlayerOnReady(videoDetails, playerInstance);
+											setIsPlayerReady(true);
+										}}
+										stopAutoAdvanceOnExitViewport={false}
+									/>
+								)}
 								<input type="hidden" value={String(dismissed)} name={inputName} />
 							</div>
 						)}
