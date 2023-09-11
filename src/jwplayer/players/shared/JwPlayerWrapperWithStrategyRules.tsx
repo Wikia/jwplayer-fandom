@@ -1,6 +1,5 @@
 import React, { useEffect, useContext } from 'react';
 import { JWPauseEvent, JWPlayerApi, JWPlayEvent } from 'jwplayer/types';
-import FandomWirewaxPlugin from 'jwplayer/plugins/fandom-wirewax.plugin';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { JwPlayerWrapperProps } from 'jwplayer/types';
 import { jwPlayerPlaybackTracker, triggerVideoMetric } from 'jwplayer/utils/videoTracking';
@@ -28,9 +27,6 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 }) => {
 	const { setPlayer, setConfig } = useContext(PlayerContext);
 	const videoIndexRef = React.useRef(0);
-	const defaultConfig = {
-		plugins: { fandomWirewax: {} },
-	};
 	console.debug('jwPlayerContainerEmbedId: ', jwPlayerContainerEmbedId);
 
 	useEffect(() => {
@@ -58,81 +54,86 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 			console.debug('Loading of Sponsored Content Video List was disabled.');
 		}
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_INIT_RENDER);
-		initPlayer(jwPlayerContainerEmbedId);
+		initPlayer();
 	}, []);
 
-	const initPlayer = (elementId: string) => {
+	const registerEventHandlers = (playerInstance) => {
+		playerInstance.on(JWEvents.AD_PAUSE, ({ pauseReason, viewable }: JWPauseEvent) => {
+			// Keep playing the ad when the user closed the mini player
+			if (viewable === 0 && pauseReason === 'external') {
+				playerInstance.play();
+			}
+		});
+
+		playerInstance.on(JWEvents.PLAY, ({ playReason, viewable }: JWPlayEvent) => {
+			const dismissed = getDismissed();
+			// Pause the content play when the user closed the mini player playing the ad
+			if (dismissed && viewable === 0 && playReason === 'autostart') {
+				playerInstance.pause();
+			}
+		});
+
+		playerInstance.on(JWEvents.READY, () => {
+			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_READY);
+			triggerVideoMetric('ready');
+			// only add the events after the player is ready
+			jwPlayerPlaybackTracker({ event_name: 'video_player_ready' });
+			addBaseTrackingEvents(playerInstance);
+
+			if (onReady) {
+				console.debug('Player ready...');
+				onReady(playerInstance);
+			}
+		});
+
+		playerInstance.on(JWEvents.COMPLETE, () => {
+			if (typeof onComplete === 'function') {
+				onComplete();
+			}
+
+			// Incrementing videos watched count
+			videoIndexRef.current += 1;
+
+			// if stopAutoAdvanceOnExitViewport is false then we don't want to stop the auto advance, keep normal behavior
+			if (!stopAutoAdvanceOnExitViewport) {
+				return;
+			}
+		});
+	};
+
+	const initPlayer = () => {
+		console.debug('initPlayer...');
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START);
 		jwPlayerPlaybackTracker({ event_name: 'video_player_start_load' });
 
 		const onload = () => {
-			// Set the max_resolution param for related videos
-			if (typeof window?.jwplayer?.defaults?.related?.file === 'string') {
-				window.jwplayer.defaults.related.file = window.jwplayer.defaults.related.file + '&max_resolution=1280';
-			}
+			console.debug('Strategy rules embed loaded. Waiting for player...');
+			const timeout = setTimeout(() => {
+				if (typeof window?.jwplayer === 'function') {
+					console.debug('Timout! Player loaded!', jwPlayerContainerEmbedId);
 
-			jwPlayerPlaybackTracker({ event_name: 'video_player_load' });
-			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY);
-			triggerVideoMetric('loaded');
+					// Set the max_resolution param for related videos
+					if (typeof window?.jwplayer?.defaults?.related?.file === 'string') {
+						window.jwplayer.defaults.related.file = window.jwplayer.defaults.related.file + '&max_resolution=1280';
+					}
 
-			setConfig(config);
+					jwPlayerPlaybackTracker({ event_name: 'video_player_load' });
+					recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY);
+					triggerVideoMetric('loaded');
 
-			// The following logic prevents JW Player to call for a poster image
-			// This is meant to be an experiment
-			// For the long term this should be probably handled on the backend (Article-video pandora service)
-			const { image, ...configWithoutImage } = config; // eslint-disable-line
+					setConfig(config);
 
-			const playerInstance = window.jwplayer(elementId).setup({
-				...defaultConfig,
-				...configWithoutImage,
-			});
-
-			playerInstance.on(JWEvents.AD_PAUSE, ({ pauseReason, viewable }: JWPauseEvent) => {
-				// Keep playing the ad when the user closed the mini player
-				if (viewable === 0 && pauseReason === 'external') {
-					playerInstance.play();
-				}
-			});
-
-			playerInstance.on(JWEvents.PLAY, ({ playReason, viewable }: JWPlayEvent) => {
-				const dismissed = getDismissed();
-				// Pause the content play when the user closed the mini player playing the ad
-				if (dismissed && viewable === 0 && playReason === 'autostart') {
-					playerInstance.pause();
-				}
-			});
-
-			playerInstance.on(JWEvents.READY, (event) => {
-				recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_READY);
-				triggerVideoMetric('ready');
-				// only add the events after the player is ready
-				jwPlayerPlaybackTracker({ event_name: 'video_player_ready' });
-				addBaseTrackingEvents(playerInstance);
-				new FandomWirewaxPlugin(elementId, {
-					player: window.jwplayer(elementId),
-					ready: event,
-				});
-
-				if (onReady) {
-					onReady(playerInstance);
-				}
-			});
-
-			playerInstance.on(JWEvents.COMPLETE, () => {
-				if (typeof onComplete === 'function') {
-					onComplete();
+					// TODO: refactor this so we get here the container within jwPlayerContainerEmbedId
+					const playerInstance = window.jwplayer();
+					console.debug('playerInstance: ', playerInstance);
+					registerEventHandlers(playerInstance);
+					setPlayer(playerInstance);
+				} else {
+					console.debug('Timout! No player...', window.jwplayer);
 				}
 
-				// Incrementing videos watched count
-				videoIndexRef.current += 1;
-
-				// if stopAutoAdvanceOnExitViewport is false then we don't want to stop the auto advance, keep normal behavior
-				if (!stopAutoAdvanceOnExitViewport) {
-					return;
-				}
-			});
-
-			setPlayer(playerInstance);
+				clearTimeout(timeout);
+			}, 250);
 		};
 
 		if (typeof window.jwplayer === 'function') {
