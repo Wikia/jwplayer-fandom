@@ -56,9 +56,7 @@ async function fetchTestPackages() {
 	const response = await fetch(`${BASE_ARTIFATORY_URL}${BASE_READ_PATH}`);
 	const json = await response.json();
 
-	const packages = json.children.map((child) => child.uri).filter(isTestVersion);
-
-	return packages;
+	return json.children.map((child) => child.uri).filter(isTestVersion);
 }
 
 async function deletePackage(packageName) {
@@ -80,7 +78,11 @@ async function deleteTestPackagesWithVersionLowerThan(version) {
 
 	for (const packageName of packagesToDelete) {
 		console.log(`Deleting ${packageName}...`);
-		await deletePackage(packageName);
+		try {
+			await deletePackage(packageName);
+		} catch (e) {
+			console.error(`Error deleting package: ${packageName}`, e);
+		}
 	}
 }
 
