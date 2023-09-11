@@ -164,6 +164,11 @@ Instead of using `/test-jw/src` app for testing the standalone player you can wo
 - Bump version and publish with `yarn pub:[patch|minor|major]` (e.g. `yarn pub:minor`).
 - If you don't have your artifactory credentials on `~/.npmrc` get them [here](https://fandom.atlassian.net/wiki/spaces/GEN/pages/110592255/Artifactory+-+Internal+package+repositories).
 
+## Removing unused test version
+
+- run `node scripts/artifactory-cleanup.js`
+- see a comment in the script file for more details
+
 ## JenkinsJob
 
 See at: http://prod.jenkins.service.sjc.consul:8080/job/JWPlayer/
