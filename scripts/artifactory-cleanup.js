@@ -1,3 +1,21 @@
+/*
+ * Script removes unused, test packages from artifactory (jfrog registry)
+ * It removes any test package (which version does not match semver `X.Y.Z`
+ * (e.g. version `2.4.6-COTECH-123` or `2.4.6anything` are treated as test versions,
+ * `2.4.6` is not a test version) which version number is lower than the current version
+ * minus one minor version (e.g. if the current version in 2.6.4 we will remove all test packages
+ * that are marked as 2.4.X and lower (we'll keep 2.6.X and 2.5.X).
+ *
+ * USAGE:
+ *
+ * node scripts/artifactory-cleanup.js
+ *
+ *
+ * The script uses your artifactory identity token
+ * which you should have saved in `.npmrc` (or `.yarnrc) file in your user home dir.
+ * The script reads the token using `yarn config get "//artifactory.wikia-inc.com/artifactory/api/npm/wikia-npm/:_authToken"` command
+ */
+
 const exec = require('child_process').exec;
 const semver = require('semver');
 const packageJson = require('../package.json');
@@ -62,7 +80,7 @@ async function deleteTestPackagesWithVersionLowerThan(version) {
 
 	for (const packageName of packagesToDelete) {
 		console.log(`Deleting ${packageName}...`);
-		// await deletePackage(packageName);
+		await deletePackage(packageName);
 	}
 }
 
