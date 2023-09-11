@@ -16,7 +16,8 @@
  * The script reads the token using `yarn config get "//artifactory.wikia-inc.com/artifactory/api/npm/wikia-npm/:_authToken"` command
  */
 
-const exec = require('child_process').exec;
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
 const semver = require('semver');
 const packageJson = require('../package.json');
 
@@ -30,18 +31,15 @@ const previousMinorVersion = semver.minor(packageJson.version) - 1;
 const versionThreshold = `${currentMajorVersion}.${previousMinorVersion}.0`;
 
 async function getArtifactoryTokenFromYarnConfig() {
-	return new Promise((resolve, reject) => {
-		exec(
-			'yarn config get "//artifactory.wikia-inc.com/artifactory/api/npm/wikia-npm/:_authToken"',
-			(err, stdout, stderr) => {
-				if (stderr) {
-					reject(stderr);
-				} else {
-					resolve(stdout.trim());
-				}
-			},
-		);
-	});
+	const { stdout, stderr } = await exec(
+		'yarn config get "//artifactory.wikia-inc.com/artifactory/api/npm/wikia-npm/:_authToken"',
+	);
+
+	if (stderr) {
+		throw new Error(stderr);
+	}
+
+	return stdout.trim();
 }
 
 function extractVersionFromPackageName(packageName) {
