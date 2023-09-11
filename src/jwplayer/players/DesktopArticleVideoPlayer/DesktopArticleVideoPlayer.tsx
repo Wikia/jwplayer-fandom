@@ -17,10 +17,10 @@ import styles from './DesktopArticleVideoPlayer.module.scss';
 
 export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const searchParams = new URLSearchParams(document.location.search);
-	const playerWithAdsEnabled = !!searchParams?.get('player_with_ads');
+	const strategyRulesEnabled = !!searchParams?.get('icbm__icEnableJWPStrategyRules');
 
 	const placeholderRef = useRef<HTMLDivElement>(null);
-	const adComplete = playerWithAdsEnabled ? true : useAdComplete();
+	const adComplete = strategyRulesEnabled ? true : useAdComplete();
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
 	const [isPlayerReady, setIsPlayerReady] = useState(false);
@@ -62,10 +62,10 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 										<CloseButton dismiss={() => setDismissed(true)} iconColor={'#fff'} className={styles.closeButton} />
 									)}
 								</div>
-								{playerWithAdsEnabled ? (
+								{strategyRulesEnabled ? (
 									<JwPlayerWrapperWithStrategyRules
 										getDismissed={getDismissed}
-										config={getArticleVideoConfig(videoDetails, playerWithAdsEnabled)}
+										config={getArticleVideoConfig(videoDetails, strategyRulesEnabled)}
 										onReady={(playerInstance) => {
 											articlePlayerOnReady(videoDetails, playerInstance);
 											setIsPlayerReady(true);
@@ -75,7 +75,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 								) : (
 									<JwPlayerWrapper
 										getDismissed={getDismissed}
-										config={getArticleVideoConfig(videoDetails, playerWithAdsEnabled)}
+										config={getArticleVideoConfig(videoDetails, strategyRulesEnabled)}
 										onReady={(playerInstance) => {
 											articlePlayerOnReady(videoDetails, playerInstance);
 											setIsPlayerReady(true);

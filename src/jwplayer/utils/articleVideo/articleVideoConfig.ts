@@ -47,7 +47,7 @@ const getAdvertisingConfig = (lang: string) => {
 	};
 };
 
-export const getArticleVideoConfig = (videoDetails, playerWithAds = false) => {
+export const getArticleVideoConfig = (videoDetails, removeAdsFromConfig = false) => {
 	const lang = videoDetails?.lang || 'en';
 
 	if (window?.videoExperiments?.playlistUrl && !videoDetails?.isDedicatedForArticle) {
@@ -64,7 +64,7 @@ export const getArticleVideoConfig = (videoDetails, playerWithAds = false) => {
 
 	const videoId = videoDetails.playlist[0].mediaid;
 
-	if (playerWithAds) {
+	if (removeAdsFromConfig) {
 		return {
 			autostart: willAutoplay() && !document.hidden,
 			image: '//content.jwplatform.com/thumbs/' + videoId + '-640.jpg',
