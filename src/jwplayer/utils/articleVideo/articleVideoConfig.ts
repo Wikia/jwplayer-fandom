@@ -63,6 +63,9 @@ export const getArticleVideoConfig = (videoDetails, removeAdsFromConfig = false)
 	if (!videoDetails) return {};
 
 	const videoId = videoDetails.playlist[0].mediaid;
+	const playlistUrl = videoDetails.isDedicatedForArticle
+		? `https://cdn.jwplayer.com/v2/media/${videoId}`
+		: `https://cdn.jwplayer.com/v2/playlists/${videoId}`;
 
 	if (removeAdsFromConfig) {
 		return {
@@ -73,6 +76,7 @@ export const getArticleVideoConfig = (videoDetails, removeAdsFromConfig = false)
 			title: videoDetails.title,
 			playlist: getModifiedPlaylist(videoDetails.playlist, videoDetails.isDedicatedForArticle),
 			lang: videoDetails.lang,
+			playlistUrl,
 		};
 	}
 
@@ -85,5 +89,6 @@ export const getArticleVideoConfig = (videoDetails, removeAdsFromConfig = false)
 		playlist: getModifiedPlaylist(videoDetails.playlist, videoDetails.isDedicatedForArticle),
 		lang: videoDetails.lang,
 		advertising: getAdvertisingConfig(lang),
+		playlistUrl,
 	};
 };

@@ -14,6 +14,7 @@ export interface JWPlayerApi {
 
 export type PlayerConfig = {
 	playlist?: Playlist;
+	playlistUrl?: string;
 	plugins?: Record<string, unknown>;
 	playlistItem?: { mediaid: string; videoId: string };
 	mediaElement?: HTMLVideoElement;
