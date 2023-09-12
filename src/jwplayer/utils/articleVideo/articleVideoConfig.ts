@@ -47,7 +47,7 @@ const getAdvertisingConfig = (lang: string) => {
 	};
 };
 
-export const getArticleVideoConfig = (videoDetails, removeAdsFromConfig = false) => {
+export const getArticleVideoConfig = (videoDetails) => {
 	const lang = videoDetails?.lang || 'en';
 
 	if (window?.videoExperiments?.playlistUrl && !videoDetails?.isDedicatedForArticle) {
@@ -66,19 +66,6 @@ export const getArticleVideoConfig = (videoDetails, removeAdsFromConfig = false)
 	const playlistUrl = videoDetails.isDedicatedForArticle
 		? `https://cdn.jwplayer.com/v2/media/${videoId}`
 		: `https://cdn.jwplayer.com/v2/playlists/${videoId}`;
-
-	if (removeAdsFromConfig) {
-		return {
-			autostart: willAutoplay() && !document.hidden,
-			image: '//content.jwplatform.com/thumbs/' + videoId + '-640.jpg',
-			mute: willMute(),
-			description: videoDetails.description,
-			title: videoDetails.title,
-			playlist: getModifiedPlaylist(videoDetails.playlist, videoDetails.isDedicatedForArticle),
-			lang: videoDetails.lang,
-			playlistUrl,
-		};
-	}
 
 	return {
 		autostart: willAutoplay() && !document.hidden,

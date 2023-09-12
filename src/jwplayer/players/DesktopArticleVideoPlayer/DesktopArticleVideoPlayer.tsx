@@ -65,7 +65,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 								{strategyRulesEnabled ? (
 									<JwPlayerWrapperWithStrategyRules
 										getDismissed={getDismissed}
-										config={getArticleVideoConfig(videoDetails, strategyRulesEnabled)}
+										config={getArticleVideoConfig(videoDetails)}
 										onReady={(playerInstance) => {
 											articlePlayerOnReady(videoDetails, playerInstance);
 											setIsPlayerReady(true);
@@ -75,7 +75,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 								) : (
 									<JwPlayerWrapper
 										getDismissed={getDismissed}
-										config={getArticleVideoConfig(videoDetails, strategyRulesEnabled)}
+										config={getArticleVideoConfig(videoDetails)}
 										onReady={(playerInstance) => {
 											articlePlayerOnReady(videoDetails, playerInstance);
 											setIsPlayerReady(true);
