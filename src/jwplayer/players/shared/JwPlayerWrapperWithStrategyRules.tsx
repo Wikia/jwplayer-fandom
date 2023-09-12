@@ -103,7 +103,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	};
 
 	const isJWPlayerReady = () => {
-		return typeof window?.jwplayer === 'function';
+		return typeof window.jwplayer === 'function';
 	};
 
 	const jwPlayerLoaded = () => {
@@ -141,7 +141,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 			});
 		};
 
-		if (typeof window.jwplayer === 'function') {
+		if (isJWPlayerReady()) {
 			onload();
 		} else {
 			const script = document.createElement('script');
