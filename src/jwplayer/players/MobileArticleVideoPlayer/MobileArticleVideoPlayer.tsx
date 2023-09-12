@@ -12,6 +12,7 @@ import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimin
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
 import { getDismissedFn } from 'jwplayer/utils/utils';
+import { useMobileArticleVideoContext } from 'contexts/MobileArticleVideoContext';
 
 import clsx from 'clsx';
 
@@ -19,34 +20,29 @@ import styles from './mobileArticleVideoPlayer.module.scss';
 
 interface MobileArticleVideoWrapperProps {
 	isScrollPlayer: boolean;
-	topPosition: string;
 }
 
-const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({
-	isScrollPlayer,
-	topPosition,
-	children,
-}) => (
-	<div
-		className={clsx(
-			`mobile-article-video-wrapper`,
-			isScrollPlayer
-				? styles.mobileArticleVideoWrapperIsScrollPlayer
-				: styles.mobileArticleVideoWrapperIsNotScrollPlayer,
-		)}
-		style={{
-			...(isScrollPlayer && { top: topPosition }),
-		}}
-	>
-		{children}
-	</div>
-);
+const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({ isScrollPlayer, children }) => {
+	const { scrollTopPosition } = useMobileArticleVideoContext();
 
-export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerProps> = ({
-	hasPartnerSlot,
-	isFullScreen,
-	videoDetails,
-}) => {
+	return (
+		<div
+			className={clsx(
+				`mobile-article-video-wrapper`,
+				isScrollPlayer
+					? styles.mobileArticleVideoWrapperIsScrollPlayer
+					: styles.mobileArticleVideoWrapperIsNotScrollPlayer,
+			)}
+			style={{
+				...(isScrollPlayer && { top: scrollTopPosition }),
+			}}
+		>
+			{children}
+		</div>
+	);
+};
+
+export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(ref, '0px', 1);
@@ -57,22 +53,6 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 	const [isPlayerReady, setIsPlayerReady] = useState(false);
 
 	const getDismissed = getDismissedFn(inputName);
-
-	const getTopPosition = () => {
-		if (isFullScreen) {
-			return '0px';
-		}
-
-		if (hasPartnerSlot) {
-			return '75px';
-		}
-
-		return '55px';
-	};
-
-	useEffect(() => {
-		// mobileArticleVideoPlayerTracker.loaded();
-	}, []);
 
 	useEffect(() => {
 		if (!onScreen) {
@@ -87,13 +67,11 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 		}
 
 		if (!adComplete && singleTrack('ad-mobile-video-player-impression')) {
-			// mobileArticleVideoPlayerTracker.impression({ label: 'ad' }); // todo figure out label
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_AD);
 			return;
 		}
 
 		if (singleTrack('mobile-video-player-impression')) {
-			// mobileArticleVideoPlayerTracker.impression({ label: 'post-ad' }); // todo figure out label
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_VIDEO);
 			return;
 		}
@@ -102,7 +80,7 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 	return (
 		<>
 			<div ref={ref} className={clsx(styles.mobileArticleVideoTopPlaceholder, isScrollPlayer && `is-on-scroll-active`)}>
-				<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer} topPosition={getTopPosition()}>
+				<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer}>
 					{adComplete && (
 						<>
 							<JwPlayerWrapper
@@ -127,17 +105,9 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 	);
 };
 
-export const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
-	hasPartnerSlot,
-	isFullScreen,
-	videoDetails,
-}) => (
+export const MobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({ videoDetails }) => (
 	<PlayerWrapper playerName="jw-mobile-article-video">
-		<MobileArticleVideoPlayerContent
-			hasPartnerSlot={hasPartnerSlot}
-			isFullScreen={isFullScreen}
-			videoDetails={videoDetails}
-		/>
+		<MobileArticleVideoPlayerContent videoDetails={videoDetails} />
 	</PlayerWrapper>
 );
 

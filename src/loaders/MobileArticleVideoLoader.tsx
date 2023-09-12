@@ -2,13 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { MobileArticleVideoLoaderProps } from 'loaders/types';
 import { setVersionWindowVar } from 'loaders/utils/GetVersion';
 import { shouldLoadUcpPlayer } from 'loaders/utils/shouldLoadPlayer';
+import { MobileArticleVideoContext } from 'contexts/MobileArticleVideoContext';
 
 import { eligibleForYoutubeTakeover, getYoutubeTakeoverDetails } from './utils/GetYoutubeTakeoverDetails';
 import { eligibleForVimeoTakeover, getVimeoTakeoverDetails } from './utils/GetVimeoTakeoverDetails';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
-export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> = ({ videoDetails }) => {
+export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> = ({
+	videoDetails,
+	scrollTopPosition = '55px',
+}) => {
 	const [player, setPlayer] = useState(undefined);
 
 	useEffect(() => {
@@ -44,7 +48,9 @@ export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> =
 		}
 	};
 
-	return player;
+	return (
+		<MobileArticleVideoContext.Provider value={{ scrollTopPosition }}>{player}</MobileArticleVideoContext.Provider>
+	);
 };
 
 export default MobileArticleVideoLoader;
