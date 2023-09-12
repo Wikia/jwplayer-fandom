@@ -7,6 +7,7 @@ import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimin
 import JWEvents from 'jwplayer/players/shared/JWEvents';
 import addBaseTrackingEvents from 'jwplayer/players/shared/addBaseTrackingEvents';
 import getSponsoredVideos from 'utils/getSponsoredVideos';
+import waitFor from 'utils/waitFor';
 
 interface WindowJWPlayer extends Window {
 	jwplayer?: JWPlayerApi;
@@ -101,6 +102,31 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 		});
 	};
 
+	const isJWPlayerReady = () => {
+		return typeof window?.jwplayer === 'function';
+	};
+
+	const jwPlayerLoaded = () => {
+		console.debug('Player loaded!', jwPlayerContainerEmbedId);
+
+		// Set the max_resolution param for related videos
+		if (typeof window?.jwplayer?.defaults?.related?.file === 'string') {
+			window.jwplayer.defaults.related.file = window.jwplayer.defaults.related.file + '&max_resolution=1280';
+		}
+
+		jwPlayerPlaybackTracker({ event_name: 'video_player_load' });
+		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY);
+		triggerVideoMetric('loaded');
+
+		setConfig(config);
+
+		// TODO: refactor this so we get here the container within jwPlayerContainerEmbedId
+		const playerInstance = window.jwplayer();
+		console.debug('playerInstance: ', playerInstance);
+		registerEventHandlers(playerInstance);
+		setPlayer(playerInstance);
+	};
+
 	const initPlayer = () => {
 		console.debug('initPlayer...');
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START);
@@ -108,32 +134,11 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 
 		const onload = () => {
 			console.debug('Strategy rules embed loaded. Waiting for player...');
-			const timeout = setTimeout(() => {
-				if (typeof window?.jwplayer === 'function') {
-					console.debug('Timout! Player loaded!', jwPlayerContainerEmbedId);
 
-					// Set the max_resolution param for related videos
-					if (typeof window?.jwplayer?.defaults?.related?.file === 'string') {
-						window.jwplayer.defaults.related.file = window.jwplayer.defaults.related.file + '&max_resolution=1280';
-					}
-
-					jwPlayerPlaybackTracker({ event_name: 'video_player_load' });
-					recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY);
-					triggerVideoMetric('loaded');
-
-					setConfig(config);
-
-					// TODO: refactor this so we get here the container within jwPlayerContainerEmbedId
-					const playerInstance = window.jwplayer();
-					console.debug('playerInstance: ', playerInstance);
-					registerEventHandlers(playerInstance);
-					setPlayer(playerInstance);
-				} else {
-					console.debug('Timout! No player...', window.jwplayer);
-				}
-
-				clearTimeout(timeout);
-			}, 250);
+			const waitForJWPlayer = waitFor({ eventCheck: isJWPlayerReady });
+			waitForJWPlayer().then(jwPlayerLoaded, () => {
+				console.error('JWPlayer not ready', window?.jwplayer);
+			});
 		};
 
 		if (typeof window.jwplayer === 'function') {
