@@ -104,6 +104,9 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 				// Keep playing the ad when the user closed the mini player
 				if (viewable === 0 && pauseReason === 'external') {
 					playerInstance.play();
+				} else if (document.visibilityState === 'hidden' && pauseReason === undefined) {
+					// Keep the ad playing even when the user switches tabs
+					playerInstance.play();
 				}
 			});
 
