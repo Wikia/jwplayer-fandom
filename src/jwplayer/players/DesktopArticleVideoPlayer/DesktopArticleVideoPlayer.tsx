@@ -19,13 +19,13 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 	const adComplete = useAdComplete();
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
-	const [isPlayerReady, setIsPlayerReady] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
 	const controlbar = document.querySelector<HTMLElement>('.jw-controlbar');
 	const shareIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-settings-sharing');
 	const moreVideosIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-related-btn');
 	const pipIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-icon-pip');
 	const inputName = 'isDismissed';
+	const [isPlayerReady, setIsPlayerReady] = useState(false);
 
 	const getDismissed = getDismissedFn(inputName);
 

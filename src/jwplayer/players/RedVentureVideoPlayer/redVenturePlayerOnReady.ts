@@ -1,9 +1,10 @@
-import { communicationService } from 'jwplayer/utils/communication';
+import { getCommunicationService } from 'jwplayer/utils/communication';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
 import { RedVentureVideoDetails } from 'jwplayer/types';
 
 export default function useOnRedVenturePlayerReady(videoDetails: RedVentureVideoDetails, playerInstance): void {
 	const playerKey = playerInstance.id;
+	const communicationService = getCommunicationService();
 
 	window.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', { detail: playerInstance }));
 	window[playerKey] = playerInstance;

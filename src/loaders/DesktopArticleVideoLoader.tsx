@@ -79,53 +79,11 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 					setPlayer(<DesktopFloatOnScrollArticleVideoPlayer videoDetails={videoDetails} />),
 			);
 		} else {
-			switch (currentExperiment?.name) {
-				case desktopPauseAfterThreePlaysExperiment.name:
-					currentExperiment.log.info('Loading pause after three plays Desktop Article Video Player');
-					import('experimental/players/DesktopPauseAfterPlayPlayer/DesktopPauseAfterPlayPlayer').then(
-						({ default: DesktopPauseAfterPlayPlayer }) =>
-							setPlayer(
-								<DesktopPauseAfterPlayPlayer
-									videoDetails={videoDetails}
-									playerName="jw-desktop-article-video-pause-after-three-plays"
-									playsBeforePause={3}
-								/>,
-							),
-					);
-					break;
-				case desktopPauseAfterFivePlaysExperiment.name:
-					currentExperiment.log.info('Loading pause after five plays Desktop Article Video Player');
-					import('experimental/players/DesktopPauseAfterPlayPlayer/DesktopPauseAfterPlayPlayer').then(
-						({ default: DesktopPauseAfterPlayPlayer }) =>
-							setPlayer(
-								<DesktopPauseAfterPlayPlayer
-									videoDetails={videoDetails}
-									playerName="jw-desktop-article-video-pause-after-five-plays"
-									playsBeforePause={5}
-								/>,
-							),
-					);
-					break;
-				case desktopPauseAfterTenPlaysExperiment.name:
-					currentExperiment.log.info('Loading pause after ten plays Desktop Article Video Player');
-					import('experimental/players/DesktopPauseAfterPlayPlayer/DesktopPauseAfterPlayPlayer').then(
-						({ default: DesktopPauseAfterPlayPlayer }) =>
-							setPlayer(
-								<DesktopPauseAfterPlayPlayer
-									videoDetails={videoDetails}
-									playerName="jw-desktop-article-video-pause-after-ten-plays"
-									playsBeforePause={10}
-								/>,
-							),
-					);
-					break;
-				default:
-					console.debug('Loading default Desktop Article Video Player');
-					import('jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer').then(
-						({ default: JWDesktopArticleVideoPlayer }) =>
-							setPlayer(<JWDesktopArticleVideoPlayer videoDetails={videoDetails} />),
-					);
-			}
+			console.debug('Loading default Desktop Article Video Player');
+			import('jwplayer/players/DesktopArticleVideoPlayer/DesktopArticleVideoPlayer').then(
+				({ default: JWDesktopArticleVideoPlayer }) =>
+					setPlayer(<JWDesktopArticleVideoPlayer videoDetails={videoDetails} />),
+			);
 		}
 	};
 

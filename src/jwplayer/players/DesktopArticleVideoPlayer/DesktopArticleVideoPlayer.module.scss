@@ -19,11 +19,12 @@
 }
 
 .desktopArticleVideoWrapperScrollPlayer {
-	height: 168px;
+	height: max-content;
 	width: 300px;
 	position: fixed;
 	right: 18px;
 	bottom: 45px;
+	width: 300px;
 }
 
 .topBar {
