@@ -4,6 +4,7 @@ import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import JwPlayerWrapperWithStrategyRules from 'jwplayer/players/shared/JwPlayerWrapperWithStrategyRules';
 import useOnScreen from 'utils/useOnScreen';
 import useAdEngineComplete from 'jwplayer/utils/useAdEngineComplete';
+import useJwpAdsSetupComplete from 'jwplayer/utils/useJwpAdsSetupComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import { DesktopArticleVideoPlayerProps } from 'jwplayer/types';
 import CloseButton from 'jwplayer/players/shared/CloseButton/CloseButton';
@@ -17,10 +18,12 @@ import styles from './DesktopArticleVideoPlayer.module.scss';
 
 export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const searchParams = new URLSearchParams(document.location.search);
+	// TODO: get the value for strategyRulesEnabled in useJwpAdsSetupComplete from the AdEngine action
 	const strategyRulesEnabled = !!searchParams?.get('icbm__icEnableJWPStrategyRules');
 
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const adEngineComplete = strategyRulesEnabled ? true : useAdEngineComplete();
+	const jwpAdsSetupComplete = useJwpAdsSetupComplete();
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
 	const [isPlayerReady, setIsPlayerReady] = useState(false);
@@ -54,7 +57,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 							isScrollPlayer ? styles.desktopArticleVideoWrapperScrollPlayer : styles.desktopArticleVideoWrapper
 						}
 					>
-						{adEngineComplete && (
+						{adEngineComplete && jwpAdsSetupComplete && (
 							<div>
 								<div className={styles.topBar}>
 									{!isScrollPlayer && <UnmuteButton />}
