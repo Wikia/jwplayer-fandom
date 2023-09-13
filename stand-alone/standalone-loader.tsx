@@ -15,6 +15,13 @@ import { RedVentureVideoDetails, RedVentureVideoPlayerProps } from "./types";
 console.debug('Standalone RedVenture Video Player ...');
 
 interface WindowWithRedVentureJWPlayer extends Window {
+	fandomContext: {
+		video?: {
+			playerLoaded: boolean;
+			playerName: string;
+		};
+		[key: string]: unknown;
+	},
 	loadPlayer: (props: RedVenturePlayerContextProps) => void;
 }
 
@@ -41,6 +48,13 @@ const getJwPlayerContainerEmbedId = (context: RedVenturePlayerContextProps): str
 	return undefined;
 };
 
+const updateFandomContext = (): void => {
+	(window.fandomContext = window.fandomContext || {}).video = {
+		playerLoaded: true,
+		playerName: 'jwplayer',
+	};
+};
+
 window.loadPlayer = async (context: RedVenturePlayerContextProps) => {
 	const canProceed = canPlayerRender(context);
 
@@ -56,6 +70,8 @@ window.loadPlayer = async (context: RedVenturePlayerContextProps) => {
 	const reactRoot = document.createElement('div');
 	const videoWrapperElement = getVideoWrapperElement(context);
 	videoWrapperElement.innerHTML = '';
+
+	updateFandomContext();
 
 	ReactDOM.render(
 		React.createElement(RedVentureVideoPlayer, {
