@@ -112,8 +112,11 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 
 			playerInstance.on(JWEvents.PLAY, ({ playReason, viewable }: JWPlayEvent) => {
 				const dismissed = getDismissed();
-				// Pause the content play when the user closed the mini player playing the ad
 				if (dismissed && viewable === 0 && playReason === 'autostart') {
+					// Pause the content play when the user closed the mini player playing the ad
+					playerInstance.pause();
+					// Pause the content when the user switches tabs
+				} else if (playReason === 'autostart' && document.visibilityState === 'hidden') {
 					playerInstance.pause();
 				}
 			});
