@@ -3,7 +3,7 @@ import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButto
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import JwPlayerWrapperWithStrategyRules from 'jwplayer/players/shared/JwPlayerWrapperWithStrategyRules';
 import useOnScreen from 'utils/useOnScreen';
-import useAdComplete from 'jwplayer/utils/useAdComplete';
+import useAdEngineComplete from 'jwplayer/utils/useAdEngineComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import { DesktopArticleVideoPlayerProps } from 'jwplayer/types';
 import CloseButton from 'jwplayer/players/shared/CloseButton/CloseButton';
@@ -20,7 +20,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 	const strategyRulesEnabled = !!searchParams?.get('icbm__icEnableJWPStrategyRules');
 
 	const placeholderRef = useRef<HTMLDivElement>(null);
-	const adComplete = strategyRulesEnabled ? true : useAdComplete();
+	const adEngineComplete = strategyRulesEnabled ? true : useAdEngineComplete();
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
 	const [isPlayerReady, setIsPlayerReady] = useState(false);
@@ -54,7 +54,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 							isScrollPlayer ? styles.desktopArticleVideoWrapperScrollPlayer : styles.desktopArticleVideoWrapper
 						}
 					>
-						{adComplete && (
+						{adEngineComplete && (
 							<div>
 								<div className={styles.topBar}>
 									{!isScrollPlayer && <UnmuteButton />}

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
-import useAdComplete from 'jwplayer/utils/useAdComplete';
+import useAdEngineComplete from 'jwplayer/utils/useAdEngineComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import OffScreenOverlay from 'jwplayer/players/MobileArticleVideoPlayer/OffScreenOverlay/OffScreenOverlay';
 import { VideoPlaceholder } from 'jwplayer/players/shared/VideoPlaceholder/VideoPlaceholder';
@@ -48,7 +48,7 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 	videoDetails,
 }) => {
 	const ref = useRef<HTMLDivElement>(null);
-	const adComplete = useAdComplete();
+	const adComplete = useAdEngineComplete();
 	const onScreen = useOnScreen(ref, '0px', 1);
 	const [dismissed, setDismissed] = useState(false);
 	const [isPlayerReady, setIsPlayerReady] = useState(false);

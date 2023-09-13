@@ -7,7 +7,7 @@ import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnRea
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import MobileReskinnedArticleVideoPlayerOverlay from 'experimental/players/MobileReskinnedArticleVideoPlayer/MobileReskinnedArticleVideoPlayerOverlay';
 import CloseButton from 'jwplayer/players/shared/CloseButton/CloseButton';
-import useAdComplete from 'jwplayer/utils/useAdComplete';
+import useAdEngineComplete from 'jwplayer/utils/useAdEngineComplete';
 
 import clsx from 'clsx';
 
@@ -15,7 +15,7 @@ import styles from './MobileReskinnedArticleVideoPlayer.module.css';
 
 const MobileReskinnedArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
-	const adComplete = useAdComplete();
+	const adComplete = useAdEngineComplete();
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
