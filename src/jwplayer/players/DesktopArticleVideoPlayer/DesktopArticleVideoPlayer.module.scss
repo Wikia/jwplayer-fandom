@@ -1,6 +1,7 @@
 .desktopArticleVideoTopPlaceholder {
 	position: absolute;
 	width: 100%;
+	height: max-content;
 	padding-top: 56.25%;
 	top: 0;
 	left: 0;
@@ -10,7 +11,7 @@
 }
 
 .desktopArticleVideoWrapper {
-	height: 100%;
+	height: max-content;
 	position: absolute;
 	bottom: 0;
 	right: 0;
