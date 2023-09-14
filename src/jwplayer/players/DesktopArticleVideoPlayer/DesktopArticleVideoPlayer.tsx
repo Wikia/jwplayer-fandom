@@ -17,12 +17,8 @@ import { getDismissedFn } from 'jwplayer/utils/utils';
 import styles from './DesktopArticleVideoPlayer.module.scss';
 
 export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
-	const searchParams = new URLSearchParams(document.location.search);
-	// TODO: get the value for strategyRulesEnabled in useJwpAdsSetupComplete from the AdEngine action
-	const strategyRulesEnabled = !!searchParams?.get('icbm__icEnableJWPStrategyRules');
-
 	const placeholderRef = useRef<HTMLDivElement>(null);
-	const adEngineComplete = strategyRulesEnabled ? true : useAdEngineComplete();
+	const adEngineComplete = useAdEngineComplete();
 	const jwpAdsSetupComplete = useJwpAdsSetupComplete();
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
@@ -57,7 +53,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 							isScrollPlayer ? styles.desktopArticleVideoWrapperScrollPlayer : styles.desktopArticleVideoWrapper
 						}
 					>
-						{adEngineComplete && jwpAdsSetupComplete && (
+						{adEngineComplete && jwpAdsSetupComplete.complete && (
 							<div>
 								<div className={styles.topBar}>
 									{!isScrollPlayer && <UnmuteButton />}
@@ -65,7 +61,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 										<CloseButton dismiss={() => setDismissed(true)} iconColor={'#fff'} className={styles.closeButton} />
 									)}
 								</div>
-								{strategyRulesEnabled ? (
+								{jwpAdsSetupComplete.strategyRulesEnabled ? (
 									<JwPlayerWrapperWithStrategyRules
 										getDismissed={getDismissed}
 										config={getArticleVideoConfig(videoDetails)}
@@ -73,6 +69,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 											articlePlayerOnReady(videoDetails, playerInstance);
 											setIsPlayerReady(true);
 										}}
+										vastUrl={jwpAdsSetupComplete.vastUrl}
 										stopAutoAdvanceOnExitViewport={false}
 									/>
 								) : (

@@ -3,15 +3,28 @@ import { communicationService, ofType } from 'jwplayer/utils/communication';
 import { first } from 'rxjs/operators';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
 
-export default function useJwpAdsSetupComplete(): boolean {
-	const [jwpAdsSetupComplete, setJwpAdsSetupComplete] = useState(false);
+interface AdEngineSetupData {
+	autoplayDisabled: boolean;
+	showAds: boolean;
+	strategyRulesEnabled?: boolean;
+	vastUrl?: string;
+}
+
+export default function useJwpAdsSetupComplete(): Record<string, boolean | string> {
+	const [jwpAdsSetupComplete, setJwpAdsSetupComplete] = useState(null);
+	const [vastUrl, setVastUrl] = useState(null);
+	const [strategyRulesEnabled, setStrategyRulesEnabled] = useState(false);
 
 	useEffect(() => {
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_CONFIG_MESSAGE_RECIEVED);
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_SETUP_JW_LISTEN_START);
-		listenSetupJWPlayer(function () {
+		listenSetupJWPlayer(function (adEngineData: AdEngineSetupData) {
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_SETUP_JW_MESSAGE_RECIEVED);
 			setJwpAdsSetupComplete(true);
+			setVastUrl(adEngineData.vastUrl);
+			setStrategyRulesEnabled(adEngineData.strategyRulesEnabled);
+
+			console.debug('useJwpAdsSetupComplete: ', strategyRulesEnabled, vastUrl);
 		});
 	}, []);
 
@@ -19,5 +32,9 @@ export default function useJwpAdsSetupComplete(): boolean {
 		communicationService.action$.pipe(ofType('[Ad Engine] Setup JWPlayer'), first()).subscribe(callback);
 	};
 
-	return jwpAdsSetupComplete;
+	return {
+		complete: jwpAdsSetupComplete,
+		strategyRulesEnabled,
+		vastUrl,
+	};
 }
