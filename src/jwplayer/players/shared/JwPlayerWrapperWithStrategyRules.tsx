@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { JWPauseEvent, JWPlayerApi, JWPlayEvent } from 'jwplayer/types';
+import { JWPauseEvent, JWPlacementApi, JWPlayerApi, JWPlayEvent, JWPPlacementReadyResponse } from 'jwplayer/types';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { JwPlayerWrapperProps } from 'jwplayer/types';
 import { jwPlayerPlaybackTracker, triggerVideoMetric } from 'jwplayer/utils/videoTracking';
@@ -7,10 +7,10 @@ import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimin
 import JWEvents from 'jwplayer/players/shared/JWEvents';
 import addBaseTrackingEvents from 'jwplayer/players/shared/addBaseTrackingEvents';
 import getSponsoredVideos from 'utils/getSponsoredVideos';
-import waitFor from 'utils/waitFor';
 
 interface WindowJWPlayer extends Window {
 	jwplayer?: JWPlayerApi;
+	jwplacements?: JWPlacementApi;
 	sponsoredVideos?: string[];
 }
 
@@ -28,6 +28,8 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 }) => {
 	const { setPlayer, setConfig } = useContext(PlayerContext);
 	const videoIndexRef = React.useRef(0);
+	const strategyRulesPlacementId = '21rL5wJF';
+	const recommendationPlaylistId = 'FOhaD53w';
 
 	useEffect(() => {
 		if (shouldLoadSponsoredContentList) {
@@ -105,8 +107,8 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 		return typeof window.jwplayer === 'function';
 	};
 
-	const jwPlayerLoaded = () => {
-		console.debug('Player loaded!', jwPlayerContainerEmbedId);
+	const jwPlayerLoaded = (payload: JWPPlacementReadyResponse) => {
+		console.debug('Placement Embed Complete: ', payload.placementId, payload.playerDivId, payload.player);
 
 		// Set the max_resolution param for related videos
 		if (typeof window?.jwplayer?.defaults?.related?.file === 'string') {
@@ -119,9 +121,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 
 		setConfig(config);
 
-		// TODO: refactor this so we get here the container within jwPlayerContainerEmbedId
-		const playerInstance = window.jwplayer();
-		console.debug('playerInstance: ', playerInstance);
+		const playerInstance = payload.player;
 		registerEventHandlers(playerInstance);
 		setPlayer(playerInstance);
 	};
@@ -134,10 +134,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 		const onload = () => {
 			console.debug('Strategy rules embed loaded. Waiting for player...');
 
-			const waitForJWPlayer = waitFor({ eventCheck: isJWPlayerReady });
-			waitForJWPlayer().then(jwPlayerLoaded, () => {
-				console.error('JWPlayer not ready', window?.jwplayer);
-			});
+			window.jwplacements._getPlacementReadyPromise(strategyRulesPlacementId).then(jwPlayerLoaded);
 		};
 
 		if (isJWPlayerReady()) {
@@ -155,9 +152,9 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 		<div className={className}>
 			<div
 				id={jwPlayerContainerEmbedId}
-				data-jw-placement-id={'21rL5wJF'}
+				data-jw-placement-id={strategyRulesPlacementId}
 				data-jw-playlist={config.playlistUrl}
-				data-jw-recommendations_playlist_id={'FOhaD53w'}
+				data-jw-recommendations_playlist_id={recommendationPlaylistId}
 				data-jw-preroll_ad_tag={
 					'https://pubads.g.doubleclick.net/gampad/ads?iu=%2F5441%2Fwka1b.VIDEO%2Ffeatured%2Fdesktop%2Fucp_desktop-fandom-fv-article%2F_project43-life&sz=640x480&gdfp_req=1&output=xml_vast4&unviewed_position_start=1&env=vp&cust_params=src%3Dtest%26pos%3Dfeatured%26post_id%3D-1'
 				}

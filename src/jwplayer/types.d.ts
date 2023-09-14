@@ -12,6 +12,16 @@ export interface JWPlayerApi {
 	defaults: PlayerDefaults;
 }
 
+export interface JWPPlacementReadyResponse {
+	placementId: string;
+	playerDivId: string;
+	player: JWPlayerApi;
+}
+
+export interface JWPlacementApi {
+	_getPlacementReadyPromise(placementId: string): Promise<JWPPlacementReadyResponse>;
+}
+
 export type PlayerConfig = {
 	playlist?: Playlist;
 	playlistUrl?: string;
