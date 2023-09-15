@@ -20,11 +20,11 @@ export default function useJwpAdsSetupComplete(): Record<string, boolean | strin
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_SETUP_JW_LISTEN_START);
 		listenSetupJWPlayer(function (adEngineData: AdEngineSetupData) {
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_SETUP_JW_MESSAGE_RECIEVED);
-			setJwpAdsSetupComplete(true);
-			setVastUrl(adEngineData.vastUrl);
-			setStrategyRulesEnabled(adEngineData.strategyRulesEnabled);
+			const { vastUrl, strategyRulesEnabled } = adEngineData;
 
-			console.debug('useJwpAdsSetupComplete: ', strategyRulesEnabled, vastUrl);
+			setJwpAdsSetupComplete(true);
+			setVastUrl(vastUrl);
+			setStrategyRulesEnabled(strategyRulesEnabled);
 		});
 	}, []);
 
