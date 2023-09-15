@@ -22,7 +22,6 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	getDismissed = () => false,
 	onComplete,
 	className,
-	stopAutoAdvanceOnExitViewport,
 	shouldLoadSponsoredContentList = true,
 	jwPlayerContainerEmbedId = 'featured-video__player',
 	vastUrl,
@@ -96,11 +95,6 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 
 			// Incrementing videos watched count
 			videoIndexRef.current += 1;
-
-			// if stopAutoAdvanceOnExitViewport is false then we don't want to stop the auto advance, keep normal behavior
-			if (!stopAutoAdvanceOnExitViewport) {
-				return;
-			}
 		});
 	};
 

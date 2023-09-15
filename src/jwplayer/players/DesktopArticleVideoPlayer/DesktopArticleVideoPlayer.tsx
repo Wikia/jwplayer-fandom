@@ -72,7 +72,6 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 										config={getArticleVideoConfig(videoDetails)}
 										onReady={onPlayerInstanceReady}
 										vastUrl={jwpAdsSetupComplete.vastUrl}
-										stopAutoAdvanceOnExitViewport={false}
 									/>
 								) : (
 									<JwPlayerWrapper
