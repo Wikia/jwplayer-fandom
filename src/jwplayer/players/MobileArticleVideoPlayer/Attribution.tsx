@@ -14,7 +14,7 @@ const Attribution: React.FC = () => {
 			<a className={styles.usernameLink} href={playlistListItem.userUrl}>
 				{playlistListItem.username}
 			</a>
-			<a aria-label={'Attribution Link'} className={styles.iconLink} href={playlistListItem.userUrl}>
+			<a aria-label={playlistListItem.username} className={styles.iconLink} href={playlistListItem.userUrl}>
 				<IconExternalTiny />
 			</a>
 		</div>
