@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { communicationService, ofType } from 'jwplayer/utils/communication';
-import { first } from 'rxjs/operators';
+import { getCommunicationService } from 'jwplayer/utils/communication';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
 
 interface AdEngineSetupData {
@@ -11,6 +10,8 @@ interface AdEngineSetupData {
 }
 
 export default function useJwpAdsSetupComplete(): Record<string, boolean | string> {
+	const communicationService = getCommunicationService();
+
 	const [jwpAdsSetupComplete, setJwpAdsSetupComplete] = useState(null);
 	const [vastUrl, setVastUrl] = useState(null);
 	const [strategyRulesEnabled, setStrategyRulesEnabled] = useState(false);
@@ -29,7 +30,9 @@ export default function useJwpAdsSetupComplete(): Record<string, boolean | strin
 	}, []);
 
 	const listenSetupJWPlayer = (callback) => {
-		communicationService.action$.pipe(ofType('[Ad Engine] Setup JWPlayer'), first()).subscribe(callback);
+		communicationService.on('[Ad Engine] Setup JWPlayer', () => {
+			callback();
+		});
 	};
 
 	return {

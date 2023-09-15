@@ -1,10 +1,11 @@
-import { communicationService } from 'jwplayer/utils/communication';
+import { getCommunicationService } from 'jwplayer/utils/communication';
 import { setVideoSeenInSession } from 'jwplayer/utils/articleVideo/articleVideoSession';
 import { willAutoplay, willMute } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
 
 export default function useOnArticlePlayerReady(videoDetails, playerInstance): void {
 	const playerKey = 'aeJWPlayerKey';
+	const communicationService = getCommunicationService();
 
 	if (!videoDetails.isDedicatedForArticle) {
 		setVideoSeenInSession();
