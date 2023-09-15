@@ -32,6 +32,11 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 
 	const getDismissed = getDismissedFn(inputName);
 
+	const onPlayerInstanceReady = (playerInstance) => {
+		articlePlayerOnReady(videoDetails, playerInstance);
+		setIsPlayerReady(true);
+	};
+
 	if (onScreen) {
 		if (controlbar) controlbar.style.background = 'rgba(0, 0, 0, 0.5)';
 		if (shareIcon) shareIcon.style.display = 'flex';
@@ -65,10 +70,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 									<JwPlayerWrapperWithStrategyRules
 										getDismissed={getDismissed}
 										config={getArticleVideoConfig(videoDetails)}
-										onReady={(playerInstance) => {
-											articlePlayerOnReady(videoDetails, playerInstance);
-											setIsPlayerReady(true);
-										}}
+										onReady={onPlayerInstanceReady}
 										vastUrl={jwpAdsSetupComplete.vastUrl}
 										stopAutoAdvanceOnExitViewport={false}
 									/>
@@ -76,10 +78,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 									<JwPlayerWrapper
 										getDismissed={getDismissed}
 										config={getArticleVideoConfig(videoDetails)}
-										onReady={(playerInstance) => {
-											articlePlayerOnReady(videoDetails, playerInstance);
-											setIsPlayerReady(true);
-										}}
+										onReady={onPlayerInstanceReady}
 										stopAutoAdvanceOnExitViewport={false}
 									/>
 								)}
