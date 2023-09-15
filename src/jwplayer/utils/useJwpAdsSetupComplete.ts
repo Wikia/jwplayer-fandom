@@ -30,9 +30,7 @@ export default function useJwpAdsSetupComplete(): Record<string, boolean | strin
 	}, []);
 
 	const listenSetupJWPlayer = (callback) => {
-		communicationService.on('[Ad Engine] Setup JWPlayer', () => {
-			callback();
-		});
+		communicationService.on('[Ad Engine] Setup JWPlayer', callback);
 	};
 
 	return {
