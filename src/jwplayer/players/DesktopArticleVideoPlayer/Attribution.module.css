@@ -8,12 +8,10 @@
 
 .usernameLink {
 	color: rgba(var(--theme-page-text-color--rgb), 0.75);
-	cursor: pointer;
 }
 
 .iconLink {
 	color: rgba(var(--theme-page-text-color--rgb), 0.75);
-	cursor: pointer;
 	line-height: 0;
 	margin-left: 6px;
 }
