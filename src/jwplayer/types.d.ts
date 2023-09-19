@@ -474,7 +474,5 @@ export interface RedVentureVideoPlayerProps extends JwPlayerContainerId {
 }
 
 export interface MobileArticleVideoPlayerProps {
-	hasPartnerSlot?: boolean;
-	isFullScreen?: boolean;
 	videoDetails: ArticleVideoDetails;
 }

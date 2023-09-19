@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import YoutubePlayerWrapper from 'youtube/players/shared/YoutubePlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
 import PlayerWrapper from 'youtube/players/shared/PlayerWrapper';
+import { useMobileArticleVideoContext } from 'contexts/MobileArticleVideoContext';
 
 import clsx from 'clsx';
 
@@ -13,13 +14,10 @@ import MobileYoutubeOffScreenOverlay from './overlays/MobileYoutubeOffScreenOver
 
 interface MobileArticleVideoWrapperProps {
 	youtubeTakeoverDetails: YoutubeTakeOverDetails;
-	topPosition: string;
 }
 
-const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({
-	youtubeTakeoverDetails,
-	topPosition,
-}) => {
+const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({ youtubeTakeoverDetails }) => {
+	const { scrollTopPosition } = useMobileArticleVideoContext();
 	const ref = useRef<HTMLDivElement>(null);
 	const onScreen = useOnScreen(ref, '0px', 1);
 	const [dismissed, setDismissed] = useState(false);
@@ -34,7 +32,7 @@ const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({
 						: styles.mobileArticleVideoWrapperIsNotScrollPlayer,
 				)}
 				style={{
-					...(isScrollPlayer && { top: topPosition }),
+					...(isScrollPlayer && { top: scrollTopPosition }),
 				}}
 			>
 				<MobileYoutubeOffScreenOverlay dismiss={() => setDismissed(true)} isScrollPlayer={isScrollPlayer} />
@@ -44,31 +42,10 @@ const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({
 	);
 };
 
-interface MobileArticleVideoPlayerProps extends YoutubeArticleVideoPlayerProps {
-	hasPartnerSlot?: boolean;
-	isFullScreen?: boolean;
-}
-
-const YoutubeMobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
-	hasPartnerSlot,
-	isFullScreen,
-	youtubeTakeoverDetails,
-}) => {
-	const getTopPosition = () => {
-		if (isFullScreen) {
-			return '0px';
-		}
-
-		if (hasPartnerSlot) {
-			return '75px';
-		}
-
-		return '55px';
-	};
-
+const YoutubeMobileArticleVideoPlayer: React.FC<YoutubeArticleVideoPlayerProps> = ({ youtubeTakeoverDetails }) => {
 	return (
 		<PlayerWrapper playerName="youtube-mobile-article-video">
-			<MobileArticleVideoWrapper youtubeTakeoverDetails={youtubeTakeoverDetails} topPosition={getTopPosition()} />
+			<MobileArticleVideoWrapper youtubeTakeoverDetails={youtubeTakeoverDetails} />
 		</PlayerWrapper>
 	);
 };
