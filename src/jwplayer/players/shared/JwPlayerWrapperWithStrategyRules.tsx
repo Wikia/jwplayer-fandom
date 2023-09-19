@@ -71,7 +71,6 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 
 	const { setPlayer, setConfig } = useContext(PlayerContext);
 	const jwpWrapperInitialized = useJwpWrapperInit(initPlayer, shouldLoadSponsoredContentList);
-	const videoIndexRef = React.useRef(0);
 	const strategyRulesPlacementId = '21rL5wJF';
 	const recommendationPlaylistId = 'FOhaD53w';
 
@@ -108,9 +107,6 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 			if (typeof onComplete === 'function') {
 				onComplete();
 			}
-
-			// Incrementing videos watched count
-			videoIndexRef.current += 1;
 		});
 	};
 
