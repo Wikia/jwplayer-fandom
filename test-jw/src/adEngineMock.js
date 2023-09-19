@@ -1,4 +1,4 @@
-import { communicationService } from "./communication/communicationService";
+import { communicationService } from './communication/communicationService';
 
 function sendMockedDataPrivacyAction() {
 	communicationService.dispatch({
