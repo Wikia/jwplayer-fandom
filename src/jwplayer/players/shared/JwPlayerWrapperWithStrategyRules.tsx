@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { JWPauseEvent, JWPlacementApi, JWPlayerApi, JWPlayEvent, JWPPlacementReadyResponse } from 'jwplayer/types';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { JwPlayerWrapperProps } from 'jwplayer/types';
@@ -11,6 +11,7 @@ import useJwpWrapperInit from 'jwplayer/utils/useJwpWrapperInit';
 interface WindowJWPlayer extends Window {
 	jwplayer?: JWPlayerApi;
 	jwplacements?: JWPlacementApi;
+	jwDataStore?: Record<string, unknown>;
 	sponsoredVideos?: string[];
 }
 
@@ -25,10 +26,10 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	shouldLoadSponsoredContentList = true,
 	jwPlayerContainerEmbedId = 'featured-video__player',
 	vastUrl,
+	parentClassName,
 }) => {
-	const isJWPlacementsReady = () => {
-		return typeof window.jwplacements === 'function';
-	};
+	const strategyRulesPlacementId = '21rL5wJF';
+	const recommendationPlaylistId = 'FOhaD53w';
 
 	const jwPlayerLoaded = (payload: JWPPlacementReadyResponse) => {
 		console.debug('Placement Embed Complete: ', payload.placementId, payload.playerDivId, payload.player);
@@ -50,29 +51,11 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	};
 
 	const initPlayer = () => {
-		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START);
-		jwPlayerPlaybackTracker({ event_name: 'video_player_start_load' });
-
-		const onload = () => {
-			console.debug('Strategy rules embed loaded. Waiting for player...');
-			window.jwplacements._getPlacementReadyPromise(strategyRulesPlacementId).then(jwPlayerLoaded);
-		};
-
-		if (isJWPlacementsReady()) {
-			onload();
-		} else {
-			const script = document.createElement('script');
-			script.async = true;
-			script.src = 'https://cdn.jwplayer.com/v2/sites/cGlKNUnj/placements/embed.js';
-			script.onload = onload;
-			document.getElementsByTagName('head')[0].appendChild(script);
-		}
+		console.debug('Strategy rules enabled: the embed will be loaded inline', vastUrl);
 	};
 
 	const { setPlayer, setConfig } = useContext(PlayerContext);
 	const jwpWrapperInitialized = useJwpWrapperInit(initPlayer, shouldLoadSponsoredContentList);
-	const strategyRulesPlacementId = '21rL5wJF';
-	const recommendationPlaylistId = 'FOhaD53w';
 
 	const registerEventHandlers = (playerInstance) => {
 		playerInstance.on(JWEvents.AD_PAUSE, ({ pauseReason, viewable }: JWPauseEvent) => {
@@ -110,19 +93,29 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 		});
 	};
 
-	return (
-		<div className={className}>
-			{jwpWrapperInitialized && (
-				<div
-					id={jwPlayerContainerEmbedId}
-					data-jw-placement-id={strategyRulesPlacementId}
-					data-jw-playlist={config.playlistUrl}
-					data-jw-recommendations_playlist_id={recommendationPlaylistId}
-					data-jw-preroll_ad_tag={vastUrl}
-				/>
-			)}
-		</div>
-	);
+	useEffect(() => {
+		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START);
+		jwPlayerPlaybackTracker({ event_name: 'video_player_start_load' });
+
+		const onload = () => {
+			console.debug('Strategy rules embed loaded. Waiting for player...');
+			window.jwplacements._getPlacementReadyPromise(strategyRulesPlacementId).then(jwPlayerLoaded);
+		};
+
+		const selector = `.${parentClassName} .strategyRulesScriptPlaceholder`;
+		const script = document.createElement('script');
+		const prerollAdTag = vastUrl ? encodeURIComponent(vastUrl) : '';
+		script.async = true;
+		script.src = `https://cdn.jwplayer.com/v2/sites/cGlKNUnj/placements/${strategyRulesPlacementId}/embed.js?custom.${strategyRulesPlacementId}.playlist=https://cdn.jwplayer.com/v2/playlists/BdkNc4lb&custom.${strategyRulesPlacementId}.recommendations_playlist_id=${recommendationPlaylistId}&custom.${strategyRulesPlacementId}.preroll_ad_tag=${prerollAdTag}`;
+		script.onload = onload;
+		document.querySelector(selector).appendChild(script);
+
+		return () => {
+			document.querySelector(selector).removeChild(script);
+		};
+	}, []);
+
+	return <div className={className}>{jwpWrapperInitialized && <div id={jwPlayerContainerEmbedId} />}</div>;
 };
 
 export default React.memo(JwPlayerWrapperWithStrategyRules);

@@ -58,7 +58,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 							isScrollPlayer ? styles.desktopArticleVideoWrapperScrollPlayer : styles.desktopArticleVideoWrapper
 						}
 					>
-						{adEngineComplete && jwpAdsSetupComplete.complete && (
+						{adEngineComplete && (
 							<div>
 								<div className={styles.topBar}>
 									{!isScrollPlayer && <UnmuteButton />}
@@ -66,12 +66,14 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 										<CloseButton dismiss={() => setDismissed(true)} iconColor={'#fff'} className={styles.closeButton} />
 									)}
 								</div>
-								{jwpAdsSetupComplete.strategyRulesEnabled ? (
+								<div className="strategyRulesScriptPlaceholder" />
+								{jwpAdsSetupComplete.complete && jwpAdsSetupComplete.strategyRulesEnabled ? (
 									<JwPlayerWrapperWithStrategyRules
 										getDismissed={getDismissed}
 										config={getArticleVideoConfig(videoDetails)}
 										onReady={onPlayerInstanceReady}
 										vastUrl={jwpAdsSetupComplete.vastUrl}
+										parentClassName={styles.desktopArticleVideoTopPlaceholder}
 									/>
 								) : (
 									<JwPlayerWrapper

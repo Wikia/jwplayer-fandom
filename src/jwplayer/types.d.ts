@@ -451,6 +451,7 @@ export interface JwPlayerWrapperProps extends JwPlayerContainerId {
 	stopAutoAdvanceOnExitViewport?: boolean;
 	shouldLoadSponsoredContentList?: boolean;
 	vastUrl?: boolean | string;
+	parentClassName?: string;
 }
 
 export interface JwPlayerContainerId {
