@@ -66,7 +66,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 										<CloseButton dismiss={() => setDismissed(true)} iconColor={'#fff'} className={styles.closeButton} />
 									)}
 								</div>
-								<div className="strategyRulesScriptPlaceholder" />
+								{jwpAdsSetupComplete.strategyRulesEnabled && <div className="strategyRulesWrapper" />}
 								{jwpAdsSetupComplete.complete && jwpAdsSetupComplete.strategyRulesEnabled ? (
 									<JwPlayerWrapperWithStrategyRules
 										getDismissed={getDismissed}

@@ -5,7 +5,7 @@ import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { JwPlayerWrapperProps } from 'jwplayer/types';
 import { jwPlayerPlaybackTracker, triggerVideoMetric } from 'jwplayer/utils/videoTracking';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
-import useJwpWrapperInit from 'jwplayer/utils/useJwpWrapperInit';
+import useBeforeJwpWrapperRendered from 'jwplayer/utils/useBeforeJwpWrapperRendered';
 import JWEvents from 'jwplayer/players/shared/JWEvents';
 import addBaseTrackingEvents from 'jwplayer/players/shared/addBaseTrackingEvents';
 import slugify from 'jwplayer/utils/slugify';
@@ -38,7 +38,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	jwPlayerContainerEmbedId = 'featured-video__player',
 }) => {
 	const { setPlayer, setConfig } = useContext(PlayerContext);
-	const jwpWrapperInitialized = useJwpWrapperInit(() => {
+	const jwpWrapperInitialized = useBeforeJwpWrapperRendered(() => {
 		initPlayer(jwPlayerContainerEmbedId, playerUrl);
 	}, shouldLoadSponsoredContentList);
 	const videoIndexRef = React.useRef(0);

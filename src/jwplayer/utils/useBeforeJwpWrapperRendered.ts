@@ -8,8 +8,8 @@ interface WindowWithSponsoredVideos extends Window {
 
 declare let window: WindowWithSponsoredVideos;
 
-export default function useJwpWrapperInit(loadEmbed: () => void, shouldLoadSponsoredContentList: boolean) {
-	const [loadEmbedExecuted, setLoadEmbedExecuted] = useState(false);
+export default function useBeforeJwpWrapperRendered(initJwp: () => void, shouldLoadSponsoredContentList: boolean) {
+	const [jwpInitialized, setJwpInitialized] = useState(false);
 
 	useEffect(() => {
 		if (shouldLoadSponsoredContentList) {
@@ -36,9 +36,9 @@ export default function useJwpWrapperInit(loadEmbed: () => void, shouldLoadSpons
 			console.debug('Loading of Sponsored Content Video List was disabled.');
 		}
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_INIT_RENDER);
-		loadEmbed();
-		setLoadEmbedExecuted(true);
+		initJwp();
+		setJwpInitialized(true);
 	}, []);
 
-	return loadEmbedExecuted;
+	return jwpInitialized;
 }
