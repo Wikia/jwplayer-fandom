@@ -112,7 +112,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 		id: jwPlayerContainerEmbedId,
 	});
 
-	return '';
+	return <></>;
 };
 
 export default React.memo(JwPlayerWrapperWithStrategyRules);
