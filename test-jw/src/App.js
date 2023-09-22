@@ -17,17 +17,17 @@ function App() {
 	};
 
 	return (
-		<div className="App">
-			{/*<CanonicalVideoLoader currentVideo={CANONICAL_VIDEO} />*/}
-			<DesktopArticleVideoLoader videoDetails={ARTICLE_VIDEO_DETAILS} />
-			{/*<MobileArticleVideoLoader videoDetails={ARTICLE_VIDEO_DETAILS} />*/}
-				<button style={{ position: 'absolute', bottom: 0 }} onClick={triggerAd}>
-					TEST
-				</button>
-				<button style={{ position: 'absolute', bottom: 0, left: 64 }} onClick={triggerStrategyRulesAd}>
-					TEST WITH STRATEGY RULES
-				</button>
-		</div>
+		<>
+			<div>
+				<button onClick={triggerAd}>TEST</button>
+				<button onClick={triggerStrategyRulesAd}>TEST WITH STRATEGY RULES</button>
+			</div>
+			<div className="App">
+				{/*<CanonicalVideoLoader currentVideo={CANONICAL_VIDEO} />*/}
+				<DesktopArticleVideoLoader videoDetails={ARTICLE_VIDEO_DETAILS} />
+				{/*<MobileArticleVideoLoader videoDetails={ARTICLE_VIDEO_DETAILS} />*/}
+			</div>
+		</>
 	);
 }
 
