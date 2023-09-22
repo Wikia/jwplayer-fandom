@@ -9,7 +9,13 @@ interface AdEngineSetupData {
 	vastUrl?: string;
 }
 
-export default function useJwpAdsSetupComplete(): Record<string, boolean | string> {
+interface JwpAdsSetupCompleteResult {
+	complete: boolean;
+	strategyRulesEnabled: boolean;
+	vastUrl: string;
+}
+
+export default function useJwpAdsSetupComplete(): JwpAdsSetupCompleteResult {
 	const communicationService = getCommunicationService();
 
 	const [jwpAdsSetupComplete, setJwpAdsSetupComplete] = useState(null);
