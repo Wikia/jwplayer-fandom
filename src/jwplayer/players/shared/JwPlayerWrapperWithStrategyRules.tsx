@@ -61,11 +61,9 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 			}
 		});
 
-		playerInstance.on(JWEvents.COMPLETE, () => {
-			if (typeof onComplete === 'function') {
-				onComplete();
-			}
-		});
+		if (typeof onComplete === 'function') {
+			playerInstance.on(JWEvents.COMPLETE, () => onComplete());
+		}
 	};
 
 	const jwPlayerLoaded = (payload: JWPPlacementReadyResponse) => {
