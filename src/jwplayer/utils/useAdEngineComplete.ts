@@ -13,7 +13,7 @@ export default function useAdEngineComplete(): boolean {
 		communicationService.on('[AdEngine OptIn] set opt in', () => {
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_OPT_IN_MESSAGE_RECIEVED);
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_CONFIG_LISTEN_START);
-			// TODO: we probably can remove this after we finish testing strategy rules
+			// TODO: we probably can remove waiting for the AdEngine after we finish testing strategy rules
 			waitForAdEngine().then(() => {
 				recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_CONFIG_MESSAGE_RECIEVED);
 				recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_SETUP_JW_LISTEN_START);
