@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButton';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
-import JwPlayerWrapperWithStrategyRules from 'jwplayer/players/shared/JwPlayerWrapperWithStrategyRules';
+import { StrategyRulesWrapper } from 'jwplayer/players/shared/StrategyRulesWrapper';
 import useOnScreen from 'utils/useOnScreen';
 import useAdEngineComplete from 'jwplayer/utils/useAdEngineComplete';
 import useJwpAdsSetupComplete from 'jwplayer/utils/useJwpAdsSetupComplete';
@@ -66,14 +66,11 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 										<CloseButton dismiss={() => setDismissed(true)} iconColor={'#fff'} className={styles.closeButton} />
 									)}
 								</div>
-								{jwpAdsSetupComplete.strategyRulesEnabled && <div className="strategyRulesWrapper" />}
-								{jwpAdsSetupComplete.complete && jwpAdsSetupComplete.strategyRulesEnabled ? (
-									<JwPlayerWrapperWithStrategyRules
+								{jwpAdsSetupComplete.strategyRulesEnabled ? (
+									<StrategyRulesWrapper
 										getDismissed={getDismissed}
 										config={getArticleVideoConfig(videoDetails)}
 										onReady={onPlayerInstanceReady}
-										vastUrl={jwpAdsSetupComplete.vastUrl}
-										parentClassName={styles.desktopArticleVideoTopPlaceholder}
 									/>
 								) : (
 									<JwPlayerWrapper

@@ -1,3 +1,5 @@
+import { MutableRefObject } from 'react';
+
 import FandomWirewaxPlugin from './plugins/fandom-wirewax.plugin';
 
 // export type FeaturedVideoApi = (targetContainer: string, playerURL: string) => void;
@@ -451,7 +453,7 @@ export interface JwPlayerWrapperProps extends JwPlayerContainerId {
 	stopAutoAdvanceOnExitViewport?: boolean;
 	shouldLoadSponsoredContentList?: boolean;
 	vastUrl?: string;
-	parentClassName?: string;
+	parentRef?: MutableRefObject<HTMLElement>;
 }
 
 export interface JwPlayerContainerId {

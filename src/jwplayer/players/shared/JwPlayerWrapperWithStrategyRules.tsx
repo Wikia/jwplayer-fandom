@@ -27,7 +27,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	shouldLoadSponsoredContentList = true,
 	jwPlayerContainerEmbedId = 'featured-video__player',
 	vastUrl,
-	parentClassName,
+	parentRef,
 }) => {
 	const strategyRulesPlacementId = '21rL5wJF';
 	const recommendationPlaylistId = 'FOhaD53w';
@@ -92,7 +92,6 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	const { setPlayer, setConfig } = useContext(PlayerContext);
 	useBeforeJwpWrapperRendered(initPlayer, shouldLoadSponsoredContentList);
 
-	const selector = `.${parentClassName} .strategyRulesWrapper`;
 	const prerollAdTag = vastUrl ? encodeURIComponent(vastUrl) : '';
 	const strategyRulesUrl = `https://cdn.jwplayer.com/v2/sites/cGlKNUnj/placements/${strategyRulesPlacementId}/embed.js?custom.${strategyRulesPlacementId}.playlist=https://cdn.jwplayer.com/v2/playlists/BdkNc4lb&custom.${strategyRulesPlacementId}.recommendations_playlist_id=${recommendationPlaylistId}&custom.${strategyRulesPlacementId}.preroll_ad_tag=${prerollAdTag}`;
 	const onBeforeLoad = () => {
@@ -104,7 +103,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 		window.jwplacements._getPlacementReadyPromise(strategyRulesPlacementId).then(jwPlayerLoaded);
 	};
 
-	useScript(strategyRulesUrl, selector, onBeforeLoad, {
+	useScript(strategyRulesUrl, parentRef.current, onBeforeLoad, {
 		onLoad,
 		className,
 		id: jwPlayerContainerEmbedId,

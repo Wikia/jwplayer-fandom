@@ -9,7 +9,7 @@ interface ScriptOptions {
 
 export default function useScript(
 	url: string,
-	parentSelector = 'head',
+	parentNode: HTMLElement,
 	beforeLoad: () => void,
 	scriptOptions: ScriptOptions,
 ) {
@@ -26,9 +26,9 @@ export default function useScript(
 		scriptOptions.className ? (script.className = scriptOptions.className) : null;
 		scriptOptions.onLoad ? (script.onload = scriptOptions.onLoad) : null;
 
-		document.querySelector(parentSelector).appendChild(script);
+		parentNode.appendChild(script);
 		setScriptInjected(true);
-	}, [url, parentSelector]);
+	}, [url, parentNode]);
 
 	return scriptInjected;
 }

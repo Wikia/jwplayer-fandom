@@ -9,7 +9,7 @@ interface AdEngineSetupData {
 	vastUrl?: string;
 }
 
-interface JwpAdsSetupCompleteResult {
+export interface JwpAdsSetupCompleteResult {
 	complete: boolean;
 	strategyRulesEnabled: boolean;
 	vastUrl: string;
