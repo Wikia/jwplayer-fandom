@@ -38,14 +38,15 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	jwPlayerContainerEmbedId = 'featured-video__player',
 }) => {
 	const { setPlayer, setConfig } = useContext(PlayerContext);
-	const jwpWrapperInitialized = useBeforeJwpWrapperRendered(() => {
-		initPlayer(jwPlayerContainerEmbedId, playerUrl);
-	}, shouldLoadSponsoredContentList);
 	const videoIndexRef = React.useRef(0);
 	const defaultConfig = {
 		plugins: { fandomWirewax: {} },
 	};
 	console.debug('jwPlayerContainerEmbedId: ', jwPlayerContainerEmbedId);
+
+	useBeforeJwpWrapperRendered(() => {
+		initPlayer(jwPlayerContainerEmbedId, playerUrl);
+	}, shouldLoadSponsoredContentList);
 
 	const initPlayer = (elementId: string, playerUrl?: string) => {
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START);
@@ -154,7 +155,11 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 		}
 	};
 
-	return <div className={className}>{jwpWrapperInitialized && <div id={jwPlayerContainerEmbedId} />}</div>;
+	return (
+		<div className={className}>
+			<div id={jwPlayerContainerEmbedId} />
+		</div>
+	);
 };
 
 export default React.memo(JwPlayerWrapper);
