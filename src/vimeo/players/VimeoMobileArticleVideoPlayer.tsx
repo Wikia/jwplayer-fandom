@@ -3,6 +3,7 @@ import VimeoPlayerWrapper from 'vimeo/players/shared/VimeoPlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
 import PlayerWrapper from 'vimeo/players/shared/PlayerWrapper';
 import { VimeoArticleVideoPlayerProps, VimeoTakeOverDetails } from 'vimeo/types';
+import { useMobileArticleVideoContext } from 'contexts/MobileArticleVideoContext';
 
 import clsx from 'clsx';
 
@@ -10,20 +11,11 @@ import styles from './VimeoMobileArticleVideoPlayer.module.css';
 import MobileVimeoOffScreenOverlay from './overlays/MobileVimeoOffScreenOverlay';
 
 interface MobileArticleVideoWrapperProps {
-	topPosition: string;
 	vimeoDetails: VimeoTakeOverDetails;
 }
 
-interface MobileArticleVideoPlayerProps extends VimeoArticleVideoPlayerProps {
-	hasPartnerSlot?: boolean;
-	isFullScreen?: boolean;
-}
-
-const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({
-	vimeoDetails,
-	topPosition,
-	children,
-}) => {
+const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({ vimeoDetails, children }) => {
+	const { scrollTopPosition } = useMobileArticleVideoContext();
 	const ref = useRef<HTMLDivElement>(null);
 	const onScreen = useOnScreen(ref, '0px', 1);
 	const [dismissed, setDismissed] = useState(false);
@@ -39,7 +31,7 @@ const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({
 						: styles.mobileArticleVideoWrapperIsNotScrollPlayer,
 				)}
 				style={{
-					...(isScrollPlayer && { top: topPosition }),
+					...(isScrollPlayer && { top: scrollTopPosition }),
 				}}
 			>
 				<MobileVimeoOffScreenOverlay dismiss={() => setDismissed(true)} isScrollPlayer={isScrollPlayer} />
@@ -50,26 +42,10 @@ const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({
 	);
 };
 
-const VimeoMobileArticleVideoPlayer: React.FC<MobileArticleVideoPlayerProps> = ({
-	hasPartnerSlot,
-	isFullScreen,
-	vimeoDetails,
-}) => {
-	const getTopPosition = () => {
-		if (isFullScreen) {
-			return '0px';
-		}
-
-		if (hasPartnerSlot) {
-			return '75px';
-		}
-
-		return '55px';
-	};
-
+const VimeoMobileArticleVideoPlayer: React.FC<VimeoArticleVideoPlayerProps> = ({ vimeoDetails }) => {
 	return (
 		<PlayerWrapper playerName="youtube-mobile-article-video">
-			<MobileArticleVideoWrapper vimeoDetails={vimeoDetails} topPosition={getTopPosition()} />
+			<MobileArticleVideoWrapper vimeoDetails={vimeoDetails} />
 		</PlayerWrapper>
 	);
 };
