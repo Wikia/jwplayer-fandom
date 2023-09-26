@@ -58,7 +58,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 							isScrollPlayer ? styles.desktopArticleVideoWrapperScrollPlayer : styles.desktopArticleVideoWrapper
 						}
 					>
-						{adEngineComplete && (
+						{jwpAdsSetupComplete.strategyRulesEnabled ? (
 							<div>
 								<div className={styles.topBar}>
 									{!isScrollPlayer && <UnmuteButton />}
@@ -66,22 +66,35 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 										<CloseButton dismiss={() => setDismissed(true)} iconColor={'#fff'} className={styles.closeButton} />
 									)}
 								</div>
-								{jwpAdsSetupComplete.strategyRulesEnabled ? (
-									<StrategyRulesWrapper
-										getDismissed={getDismissed}
-										config={getArticleVideoConfig(videoDetails)}
-										onReady={onPlayerInstanceReady}
-									/>
-								) : (
+								<StrategyRulesWrapper
+									getDismissed={getDismissed}
+									config={getArticleVideoConfig(videoDetails)}
+									onReady={onPlayerInstanceReady}
+								/>
+								<input type="hidden" value={String(dismissed)} name={inputName} />
+							</div>
+						) : (
+							adEngineComplete && (
+								<div>
+									<div className={styles.topBar}>
+										{!isScrollPlayer && <UnmuteButton />}
+										{isScrollPlayer && (
+											<CloseButton
+												dismiss={() => setDismissed(true)}
+												iconColor={'#fff'}
+												className={styles.closeButton}
+											/>
+										)}
+									</div>
 									<JwPlayerWrapper
 										getDismissed={getDismissed}
 										config={getArticleVideoConfig(videoDetails)}
 										onReady={onPlayerInstanceReady}
 										stopAutoAdvanceOnExitViewport={false}
 									/>
-								)}
-								<input type="hidden" value={String(dismissed)} name={inputName} />
-							</div>
+									<input type="hidden" value={String(dismissed)} name={inputName} />
+								</div>
+							)
 						)}
 						{!isPlayerReady && <VideoPlaceholder isScrollPlayer={isScrollPlayer} />}
 					</div>
