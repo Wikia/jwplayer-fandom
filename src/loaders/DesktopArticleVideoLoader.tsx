@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { DesktopArticleVideoLoaderProps } from 'loaders/types';
 import { setVersionWindowVar } from 'loaders/utils/GetVersion';
 import { shouldLoadUcpPlayer } from 'loaders/utils/shouldLoadPlayer';
-import { eligibleForYoutubeTakeover, getYoutubeTakeoverDetails } from 'loaders/utils/GetYoutubeTakeoverDetails';
-import { eligibleForVimeoTakeover, getVimeoTakeoverDetails } from 'loaders/utils/GetVimeoTakeoverDetails';
 import defineExperiment from '@fandom/pathfinder-lite/experiments/defineExperiment';
 import getExperiment from '@fandom/pathfinder-lite/experiments/getExperiment';
 import { Experiment } from '@fandom/pathfinder-lite/types';
 import checkUserGeo from 'utils/experiments/checkUserGeo';
+import {
+	getTakeoverDetails,
+	eligibleForYoutubeTakeover,
+	eligibleForVimeoTakeover,
+} from 'loaders/utils/GetTakeoverDetails';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
@@ -58,19 +61,18 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 			desktopJwFloatOnScrollExperiment,
 		]);
 
-		const youtubeTakeoverDetails = await getYoutubeTakeoverDetails({ deviceType: 'desktop' });
-		const vimeoTakeoverDetails = await getVimeoTakeoverDetails();
+		const takeoverDetails = await getTakeoverDetails({ deviceType: 'desktop' });
 
-		if (eligibleForYoutubeTakeover(youtubeTakeoverDetails)) {
+		if (eligibleForYoutubeTakeover(takeoverDetails)) {
 			console.debug('Youtube takeover - loading Desktop youtube embed.');
 			import('youtube/players/YoutubeDesktopArticleVideoPlayer').then(({ default: YoutubeDesktopArticleVideoPlayer }) =>
-				setPlayer(<YoutubeDesktopArticleVideoPlayer youtubeTakeoverDetails={youtubeTakeoverDetails} />),
+				setPlayer(<YoutubeDesktopArticleVideoPlayer youtubeTakeoverDetails={takeoverDetails} />),
 			);
 			return;
-		} else if (eligibleForVimeoTakeover(vimeoTakeoverDetails)) {
+		} else if (eligibleForVimeoTakeover(takeoverDetails)) {
 			console.debug('Vimeo takeover - loading Desktop vimeo embed.');
 			import('vimeo/players/VimeoDesktopArticleVideoPlayer').then(({ default: VimeoDesktopArticleVideoPlayer }) =>
-				setPlayer(<VimeoDesktopArticleVideoPlayer vimeoDetails={vimeoTakeoverDetails} />),
+				setPlayer(<VimeoDesktopArticleVideoPlayer vimeoDetails={takeoverDetails} />),
 			);
 			return;
 		} else if (currentExperiment?.name === desktopJwFloatOnScrollExperiment?.name && checkUserGeo(['us'])) {
