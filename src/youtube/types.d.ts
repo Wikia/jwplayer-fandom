@@ -24,7 +24,7 @@ interface WindowWithMW extends Window {
 export interface YoutubeTakeoverResponse {
 	product: string;
 	id: string;
-	impression_per_session: number;
+	impressions_per_session: number;
 	youtube_take_over: boolean;
 	takeover_video_id: string;
 }

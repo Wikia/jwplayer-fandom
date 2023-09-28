@@ -21,7 +21,7 @@ export type Player = (playerDivId: string, height: number, width: number, parent
 export interface VimeoTakeoverResponse {
 	product: string;
 	id: string;
-	impression_per_session: number;
+	impressions_per_session: number;
 	vimeo_take_over: boolean;
 	takeover_video_id: string;
 }
