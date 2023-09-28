@@ -29,6 +29,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	vastUrl,
 	parentRef,
 }) => {
+	const playlistUrl = config.playlistUrl;
 	const strategyRulesPlacementId = '21rL5wJF';
 	const recommendationPlaylistId = 'FOhaD53w';
 
@@ -93,7 +94,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	useBeforeJwpWrapperRendered(initPlayer, shouldLoadSponsoredContentList);
 
 	const prerollAdTag = vastUrl ? encodeURIComponent(vastUrl) : '';
-	const strategyRulesUrl = `https://cdn.jwplayer.com/v2/sites/cGlKNUnj/placements/${strategyRulesPlacementId}/embed.js?custom.${strategyRulesPlacementId}.playlist=https://cdn.jwplayer.com/v2/playlists/BdkNc4lb&custom.${strategyRulesPlacementId}.recommendations_playlist_id=${recommendationPlaylistId}&custom.${strategyRulesPlacementId}.preroll_ad_tag=${prerollAdTag}`;
+	const strategyRulesUrl = `https://cdn.jwplayer.com/v2/sites/cGlKNUnj/placements/${strategyRulesPlacementId}/embed.js?custom.${strategyRulesPlacementId}.playlist=${playlistUrl}&custom.${strategyRulesPlacementId}.recommendations_playlist_id=${recommendationPlaylistId}&custom.${strategyRulesPlacementId}.preroll_ad_tag=${prerollAdTag}`;
 	const onBeforeLoad = () => {
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START);
 		jwPlayerPlaybackTracker({ event_name: 'video_player_start_load' });
