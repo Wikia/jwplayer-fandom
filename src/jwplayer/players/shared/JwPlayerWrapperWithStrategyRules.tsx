@@ -29,7 +29,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	vastUrl,
 	parentRef,
 }) => {
-	const playlistUrl = config.playlistUrl;
+	const { playlistUrl } = config;
 	const strategyRulesPlacementId = '21rL5wJF';
 	const recommendationPlaylistId = 'FOhaD53w';
 
@@ -68,7 +68,8 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	};
 
 	const jwPlayerLoaded = (payload: JWPPlacementReadyResponse) => {
-		console.debug('Placement Embed Complete: ', payload.placementId, payload.playerDivId, payload.player);
+		console.debug('Placement Embed Complete: ', payload.placementId, payload.player);
+		console.debug('jwPlayerContainerEmbedId: ', payload.playerDivId);
 
 		// Set the max_resolution param for related videos
 		if (typeof window?.jwplayer?.defaults?.related?.file === 'string') {
@@ -87,7 +88,12 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	};
 
 	const initPlayer = () => {
-		console.debug('Strategy rules enabled: the embed will be loaded inline', vastUrl);
+		console.debug(
+			'Strategy rules enabled: the embed will be loaded inline',
+			playlistUrl,
+			recommendationPlaylistId,
+			vastUrl,
+		);
 	};
 
 	const { setPlayer, setConfig } = useContext(PlayerContext);
