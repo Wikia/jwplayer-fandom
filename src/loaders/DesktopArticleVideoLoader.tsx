@@ -11,6 +11,8 @@ import {
 	eligibleForYoutubeTakeover,
 	eligibleForVimeoTakeover,
 } from 'loaders/utils/GetTakeoverDetails';
+import { YoutubeTakeOverDetails } from 'youtube/types';
+import { VimeoTakeOverDetails } from 'vimeo/types';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
@@ -63,16 +65,18 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 
 		const takeoverDetails = await getTakeoverDetails({ deviceType: 'desktop' });
 
-		if (eligibleForYoutubeTakeover(takeoverDetails)) {
+		if (eligibleForYoutubeTakeover(takeoverDetails as YoutubeTakeOverDetails)) {
 			console.debug('Youtube takeover - loading Desktop youtube embed.');
 			import('youtube/players/YoutubeDesktopArticleVideoPlayer').then(({ default: YoutubeDesktopArticleVideoPlayer }) =>
-				setPlayer(<YoutubeDesktopArticleVideoPlayer youtubeTakeoverDetails={takeoverDetails} />),
+				setPlayer(
+					<YoutubeDesktopArticleVideoPlayer youtubeTakeoverDetails={takeoverDetails as YoutubeTakeOverDetails} />,
+				),
 			);
 			return;
-		} else if (eligibleForVimeoTakeover(takeoverDetails)) {
+		} else if (eligibleForVimeoTakeover(takeoverDetails as VimeoTakeOverDetails)) {
 			console.debug('Vimeo takeover - loading Desktop vimeo embed.');
 			import('vimeo/players/VimeoDesktopArticleVideoPlayer').then(({ default: VimeoDesktopArticleVideoPlayer }) =>
-				setPlayer(<VimeoDesktopArticleVideoPlayer vimeoDetails={takeoverDetails} />),
+				setPlayer(<VimeoDesktopArticleVideoPlayer vimeoDetails={takeoverDetails as VimeoTakeOverDetails} />),
 			);
 			return;
 		} else if (currentExperiment?.name === desktopJwFloatOnScrollExperiment?.name && checkUserGeo(['us'])) {
