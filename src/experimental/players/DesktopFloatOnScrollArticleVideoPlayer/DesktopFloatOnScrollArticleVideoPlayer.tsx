@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButton';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
-import useAdComplete from 'jwplayer/utils/useAdComplete';
+import useAdEngineComplete from 'jwplayer/utils/useAdEngineComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import { DesktopArticleVideoPlayerProps } from 'jwplayer/types';
 import Attribution from 'jwplayer/players/DesktopArticleVideoPlayer/Attribution';
@@ -13,7 +13,7 @@ import styles from './DesktopFloatOnScrollArticleVideoPlayer.module.css';
 
 const DesktopFloatOnScrollArticleVideoPlayer: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
-	const adComplete = useAdComplete();
+	const adComplete = useAdEngineComplete();
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const controlbar = document.querySelector<HTMLElement>('.jw-controlbar');
 	const shareIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-settings-sharing');

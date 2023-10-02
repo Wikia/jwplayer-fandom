@@ -1,8 +1,10 @@
 import React, { useRef, useState } from 'react';
 import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButton';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
+import { StrategyRulesWrapper } from 'jwplayer/players/shared/StrategyRulesWrapper';
 import useOnScreen from 'utils/useOnScreen';
-import useAdComplete from 'jwplayer/utils/useAdComplete';
+import useAdEngineComplete from 'jwplayer/utils/useAdEngineComplete';
+import useJwpAdsSetupComplete from 'jwplayer/utils/useJwpAdsSetupComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import { DesktopArticleVideoPlayerProps } from 'jwplayer/types';
 import CloseButton from 'jwplayer/players/shared/CloseButton/CloseButton';
@@ -16,7 +18,8 @@ import styles from './DesktopArticleVideoPlayer.module.scss';
 
 export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
-	const adComplete = useAdComplete();
+	const adEngineComplete = useAdEngineComplete();
+	const jwpAdsSetupComplete = useJwpAdsSetupComplete();
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
@@ -28,6 +31,11 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 	const [isPlayerReady, setIsPlayerReady] = useState(false);
 
 	const getDismissed = getDismissedFn(inputName);
+
+	const onPlayerInstanceReady = (playerInstance) => {
+		articlePlayerOnReady(videoDetails, playerInstance);
+		setIsPlayerReady(true);
+	};
 
 	if (onScreen) {
 		if (controlbar) controlbar.style.background = 'rgba(0, 0, 0, 0.5)';
@@ -50,7 +58,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 							isScrollPlayer ? styles.desktopArticleVideoWrapperScrollPlayer : styles.desktopArticleVideoWrapper
 						}
 					>
-						{adComplete && (
+						{jwpAdsSetupComplete.strategyRulesEnabled ? (
 							<div>
 								<div className={styles.topBar}>
 									{!isScrollPlayer && <UnmuteButton />}
@@ -58,17 +66,35 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 										<CloseButton dismiss={() => setDismissed(true)} iconColor={'#fff'} className={styles.closeButton} />
 									)}
 								</div>
-								<JwPlayerWrapper
+								<StrategyRulesWrapper
 									getDismissed={getDismissed}
 									config={getArticleVideoConfig(videoDetails)}
-									onReady={(playerInstance) => {
-										articlePlayerOnReady(videoDetails, playerInstance);
-										setIsPlayerReady(true);
-									}}
-									stopAutoAdvanceOnExitViewport={false}
+									onReady={onPlayerInstanceReady}
 								/>
 								<input type="hidden" value={String(dismissed)} name={inputName} />
 							</div>
+						) : (
+							adEngineComplete && (
+								<div>
+									<div className={styles.topBar}>
+										{!isScrollPlayer && <UnmuteButton />}
+										{isScrollPlayer && (
+											<CloseButton
+												dismiss={() => setDismissed(true)}
+												iconColor={'#fff'}
+												className={styles.closeButton}
+											/>
+										)}
+									</div>
+									<JwPlayerWrapper
+										getDismissed={getDismissed}
+										config={getArticleVideoConfig(videoDetails)}
+										onReady={onPlayerInstanceReady}
+										stopAutoAdvanceOnExitViewport={false}
+									/>
+									<input type="hidden" value={String(dismissed)} name={inputName} />
+								</div>
+							)
 						)}
 						{!isPlayerReady && <VideoPlaceholder isScrollPlayer={isScrollPlayer} />}
 					</div>

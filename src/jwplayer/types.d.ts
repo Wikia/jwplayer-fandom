@@ -1,3 +1,5 @@
+import { MutableRefObject } from 'react';
+
 import FandomWirewaxPlugin from './plugins/fandom-wirewax.plugin';
 
 // export type FeaturedVideoApi = (targetContainer: string, playerURL: string) => void;
@@ -12,8 +14,19 @@ export interface JWPlayerApi {
 	defaults: PlayerDefaults;
 }
 
+export interface JWPPlacementReadyResponse {
+	placementId: string;
+	playerDivId: string;
+	player: JWPlayerApi;
+}
+
+export interface JWPlacementApi {
+	_getPlacementReadyPromise(placementId: string): Promise<JWPPlacementReadyResponse>;
+}
+
 export type PlayerConfig = {
 	playlist?: Playlist;
+	playlistUrl?: string;
 	plugins?: Record<string, unknown>;
 	playlistItem?: { mediaid: string; videoId: string };
 	mediaElement?: HTMLVideoElement;
@@ -439,6 +452,8 @@ export interface JwPlayerWrapperProps extends JwPlayerContainerId {
 	className?: string;
 	stopAutoAdvanceOnExitViewport?: boolean;
 	shouldLoadSponsoredContentList?: boolean;
+	vastUrl?: string;
+	parentRef?: MutableRefObject<HTMLElement>;
 }
 
 export interface JwPlayerContainerId {

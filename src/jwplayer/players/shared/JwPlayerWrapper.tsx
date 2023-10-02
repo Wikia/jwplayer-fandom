@@ -1,14 +1,14 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { JWPauseEvent, JWPlayerApi, JWPlayEvent, PlaylistItem } from 'jwplayer/types';
 import FandomWirewaxPlugin from 'jwplayer/plugins/fandom-wirewax.plugin';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { JwPlayerWrapperProps } from 'jwplayer/types';
 import { jwPlayerPlaybackTracker, triggerVideoMetric } from 'jwplayer/utils/videoTracking';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
+import useBeforeJwpWrapperRendered from 'jwplayer/utils/useBeforeJwpWrapperRendered';
 import JWEvents from 'jwplayer/players/shared/JWEvents';
 import addBaseTrackingEvents from 'jwplayer/players/shared/addBaseTrackingEvents';
 import slugify from 'jwplayer/utils/slugify';
-import getSponsoredVideos from 'utils/getSponsoredVideos';
 
 interface WindowJWPlayer extends Window {
 	jwplayer?: JWPlayerApi;
@@ -38,41 +38,20 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	jwPlayerContainerEmbedId = 'featured-video__player',
 }) => {
 	const { setPlayer, setConfig } = useContext(PlayerContext);
+	const { playlistUrl } = config;
 	const videoIndexRef = React.useRef(0);
 	const defaultConfig = {
 		plugins: { fandomWirewax: {} },
 	};
 	console.debug('jwPlayerContainerEmbedId: ', jwPlayerContainerEmbedId);
 
-	useEffect(() => {
-		if (shouldLoadSponsoredContentList) {
-			const retrieveSponsoredVideo = async () => {
-				if (window?.sponsoredVideos?.length > 0) {
-					console.debug('sponsoredVideos already retrieved');
-					return;
-				}
-
-				const sponsoredVideoResponse = await getSponsoredVideos();
-				if (sponsoredVideoResponse && typeof window !== undefined) {
-					window.sponsoredVideos = sponsoredVideoResponse;
-					console.debug('Retrieved sponsoredVideos list');
-				} else {
-					console.debug(
-						'Could not set sponsored videos. Either window the fetched sponsoredVideo list were undefined.',
-					);
-				}
-			};
-			retrieveSponsoredVideo().catch((e) => {
-				console.error('There was an issue with retrieving Sponsored Videos. ', e);
-			});
-		} else {
-			console.debug('Loading of Sponsored Content Video List was disabled.');
-		}
-		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_INIT_RENDER);
+	useBeforeJwpWrapperRendered(() => {
 		initPlayer(jwPlayerContainerEmbedId, playerUrl);
-	}, []);
+	}, shouldLoadSponsoredContentList);
 
 	const initPlayer = (elementId: string, playerUrl?: string) => {
+		console.debug('Legacy wrapper enabled: the embed will be loaded in head', playlistUrl);
+
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START);
 		jwPlayerPlaybackTracker({ event_name: 'video_player_start_load' });
 
@@ -85,6 +64,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 			jwPlayerPlaybackTracker({ event_name: 'video_player_load' });
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY);
 			triggerVideoMetric('loaded');
+
 			const registerPlugin = window.jwplayer().registerPlugin;
 			registerPlugin('wirewax', '8.0', FandomWirewaxPlugin);
 
