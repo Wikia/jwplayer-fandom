@@ -18,6 +18,8 @@ import clsx from 'clsx';
 
 import { StrategyRulesWrapper } from 'jwplayer/players/shared/StrategyRulesWrapper';
 
+import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
+
 import styles from './mobileArticleVideoPlayer.module.scss';
 
 interface MobileArticleVideoWrapperProps {
@@ -89,7 +91,7 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 		<>
 			<div ref={ref} className={clsx(styles.mobileArticleVideoTopPlaceholder, isScrollPlayer && `is-on-scroll-active`)}>
 				<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer}>
-					{jwpAdsSetupComplete.strategyRulesEnabled && (
+					{jwpAdsSetupComplete.strategyRulesEnabled ? (
 						<>
 							<StrategyRulesWrapper
 								getDismissed={getDismissed}
@@ -101,6 +103,22 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 
 							{isPlayerReady && <OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />}
 						</>
+					) : (
+						adEngineComplete && (
+							<>
+								<JwPlayerWrapper
+									getDismissed={getDismissed}
+									config={getArticleVideoConfig(videoDetails)}
+									onReady={onPlayerInstanceReady}
+									stopAutoAdvanceOnExitViewport={false}
+								/>
+								<input type="hidden" value={String(dismissed)} name={inputName} />
+
+								{isPlayerReady && (
+									<OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />
+								)}
+							</>
+						)
 					)}
 					{!isPlayerReady && <VideoPlaceholder isScrollPlayer={isScrollPlayer} />}{' '}
 				</MobileArticleVideoWrapper>
