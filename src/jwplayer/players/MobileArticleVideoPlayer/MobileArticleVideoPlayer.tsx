@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
 import useAdEngineComplete from 'jwplayer/utils/useAdEngineComplete';
+import useJwpAdsSetupComplete from 'jwplayer/utils/useJwpAdsSetupComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import OffScreenOverlay from 'jwplayer/players/MobileArticleVideoPlayer/OffScreenOverlay/OffScreenOverlay';
 import { VideoPlaceholder } from 'jwplayer/players/shared/VideoPlaceholder/VideoPlaceholder';
@@ -15,6 +15,10 @@ import { getDismissedFn } from 'jwplayer/utils/utils';
 import { useMobileArticleVideoContext } from 'contexts/MobileArticleVideoContext';
 
 import clsx from 'clsx';
+
+import { StrategyRulesWrapper } from 'jwplayer/players/shared/StrategyRulesWrapper';
+
+import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 
 import styles from './mobileArticleVideoPlayer.module.scss';
 
@@ -44,7 +48,8 @@ const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({ i
 
 export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const ref = useRef<HTMLDivElement>(null);
-	const adComplete = useAdEngineComplete();
+	const adEngineComplete = useAdEngineComplete();
+	const jwpAdsSetupComplete = useJwpAdsSetupComplete();
 	const onScreen = useOnScreen(ref, '0px', 1);
 	const [dismissed, setDismissed] = useState(false);
 	const isScrollPlayer = !(dismissed || onScreen);
@@ -53,6 +58,11 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 	const [isPlayerReady, setIsPlayerReady] = useState(false);
 
 	const getDismissed = getDismissedFn(inputName);
+
+	const onPlayerInstanceReady = (playerInstance) => {
+		articlePlayerOnReady(videoDetails, playerInstance);
+		setIsPlayerReady(true);
+	};
 
 	useEffect(() => {
 		if (!onScreen) {
@@ -66,7 +76,7 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 			relatedContainer.style.display = '';
 		}
 
-		if (!adComplete && singleTrack('ad-mobile-video-player-impression')) {
+		if (!adEngineComplete && singleTrack('ad-mobile-video-player-impression')) {
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_AD);
 			return;
 		}
@@ -75,27 +85,40 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_VIDEO);
 			return;
 		}
-	}, [onScreen, adComplete]);
+	}, [onScreen, adEngineComplete]);
 
 	return (
 		<>
 			<div ref={ref} className={clsx(styles.mobileArticleVideoTopPlaceholder, isScrollPlayer && `is-on-scroll-active`)}>
 				<MobileArticleVideoWrapper isScrollPlayer={isScrollPlayer}>
-					{adComplete && (
+					{jwpAdsSetupComplete.strategyRulesEnabled ? (
 						<>
-							<JwPlayerWrapper
+							<StrategyRulesWrapper
 								getDismissed={getDismissed}
 								config={getArticleVideoConfig(videoDetails)}
-								onReady={(playerInstance) => {
-									articlePlayerOnReady(videoDetails, playerInstance);
-									setIsPlayerReady(true);
-								}}
+								onReady={onPlayerInstanceReady}
 								stopAutoAdvanceOnExitViewport={false}
 							/>
 							<input type="hidden" value={String(dismissed)} name={inputName} />
 
 							{isPlayerReady && <OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />}
 						</>
+					) : (
+						adEngineComplete && (
+							<>
+								<JwPlayerWrapper
+									getDismissed={getDismissed}
+									config={getArticleVideoConfig(videoDetails)}
+									onReady={onPlayerInstanceReady}
+									stopAutoAdvanceOnExitViewport={false}
+								/>
+								<input type="hidden" value={String(dismissed)} name={inputName} />
+
+								{isPlayerReady && (
+									<OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />
+								)}
+							</>
+						)
 					)}
 					{!isPlayerReady && <VideoPlaceholder isScrollPlayer={isScrollPlayer} />}{' '}
 				</MobileArticleVideoWrapper>
