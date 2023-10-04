@@ -24,7 +24,7 @@ export const getOptimizelyVariationId = (optimizelyExperimentId: string) => {
 
 	const experimentStates = optimizelyState.getVariationMap()[optimizelyExperimentId];
 
-	return experimentStates[optimizelyExperimentId]?.id as string | undefined;
+	return experimentStates?.id as string | undefined;
 };
 
 export const isOptimizelyExperimentActive = (optimizelyExperimentId: string) => {
