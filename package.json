@@ -12,6 +12,7 @@
 	"types": "main.d.ts",
 	"install-peers": "install-peers",
 	"scripts": {
+		"start": "npm-run-all --parallel watch app",
 		"build": "yarn build-fandom-player && yarn build-stand-alone",
 		"build-fandom-player": "yarn run create-dist && rollup -c && cp package.json dist/ && cd dist && npm set-script prepare ''",
 		"build-stand-alone": "cd stand-alone && yarn && yarn run create-standalone-dist && rollup -c rollup-stand-alone.config.js && cp package.json standalone-dist && npm set-script prepare ''",
