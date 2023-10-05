@@ -1,1 +1,0 @@
-This directory is a placeholderfor for experimental players.
