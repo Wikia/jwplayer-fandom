@@ -1221,10 +1221,10 @@
   dependencies:
     "@fandom/context" "^0.6.2"
 
-"@fandom/tracking-metrics@0.0.28":
-  version "0.0.28"
-  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/tracking-metrics/-/@fandom/tracking-metrics-0.0.28.tgz#d35ca0ea3401bfd091e8f70102250e1c9da3441b"
-  integrity sha512-80cujNiaQGYcD37KrklLxPmO4WMafBi94mSPBAxowY1XqTRbUDizDCVxfQT8KR3zsejyXYdj5pf8+dp2Zn/HSg==
+"@fandom/tracking-metrics@0.2.1":
+  version "0.2.1"
+  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/tracking-metrics/-/@fandom/tracking-metrics-0.2.1.tgz#a8855835c7febf377775e29eb92ef10d6170da6b"
+  integrity sha512-lX5EX5gBkoYjbsu+uKsoApktBL80SoKUwYOpoH3iyRdX63aNfUh9P6A4U5+6uKog4rXq48lEpWLASd/WpC1Y/w==
 
 "@floating-ui/core@^1.4.1":
   version "1.4.1"
