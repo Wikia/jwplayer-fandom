@@ -23,7 +23,7 @@ import {
 	ON_SCROLL_LARGER_CUSTOM_UX_WITHOUT_TITLE_BAR_VARIANT_ID,
 	PLAYER_WITH_ON_SCROLL_ENABLED_URL,
 } from 'utils/experiments/onScrollExperiment';
-import { isOptimizelyExperimentActive, isOptimizelyVariationActive } from 'utils/optimizely';
+import { useOptimizelyVariation } from 'optimizely/useOptimizelyVatiation';
 
 import styles from './DesktopArticleVideoPlayer.module.scss';
 
@@ -31,25 +31,24 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const adEngineComplete = useAdEngineComplete();
 	const jwpAdsSetupComplete = useJwpAdsSetupComplete();
+	const onScrollVariation = useOptimizelyVariation(ON_SCROLL_EXPERIMENT_ID);
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
 	const [isPlayerReady, setIsPlayerReady] = useState(false);
-
-	const shouldUsePlayerWithOnScroll = isOptimizelyVariationActive(ON_SCROLL_EXPERIMENT_ID, ON_SCROLL_JWPLAYER_UX); // 400x225 player
+	const shouldUsePlayerWithOnScroll = onScrollVariation === ON_SCROLL_JWPLAYER_UX;
 	const isScrollPlayer = !(dismissed || onScreen) && isPlayerReady && !shouldUsePlayerWithOnScroll;
 	const shouldRenderVideoDetails =
 		isScrollPlayer &&
-		(!isOptimizelyExperimentActive(ON_SCROLL_EXPERIMENT_ID) ||
-			isOptimizelyVariationActive(ON_SCROLL_EXPERIMENT_ID, [
-				ON_SCROLL_CUSTOM_UX_WITH_TITLE_BAR_VARIANT_ID,
-				ON_SCROLL_LARGER_CUSTOM_UX_WITH_TITLE_BAR_VARIANT_ID,
-			]));
+		(!onScrollVariation ||
+			[ON_SCROLL_CUSTOM_UX_WITH_TITLE_BAR_VARIANT_ID, ON_SCROLL_LARGER_CUSTOM_UX_WITH_TITLE_BAR_VARIANT_ID].includes(
+				onScrollVariation,
+			));
 	const shouldRenderWideOnScrollPlayer =
 		isScrollPlayer &&
-		isOptimizelyVariationActive(ON_SCROLL_EXPERIMENT_ID, [
+		[
 			ON_SCROLL_LARGER_CUSTOM_UX_WITH_TITLE_BAR_VARIANT_ID,
 			ON_SCROLL_LARGER_CUSTOM_UX_WITHOUT_TITLE_BAR_VARIANT_ID,
-		]);
+		].includes(onScrollVariation);
 
 	const controlbar = document.querySelector<HTMLElement>('.jw-controlbar');
 	const shareIcon = document.querySelector<HTMLElement>('.jw-controlbar .jw-button-container .jw-settings-sharing');
