@@ -6,13 +6,7 @@ import defineExperiment from '@fandom/pathfinder-lite/experiments/defineExperime
 import getExperiment from '@fandom/pathfinder-lite/experiments/getExperiment';
 import { Experiment } from '@fandom/pathfinder-lite/types';
 import checkUserGeo from 'utils/experiments/checkUserGeo';
-import {
-	getTakeoverDetails,
-	eligibleForYoutubeTakeover,
-	eligibleForVimeoTakeover,
-} from 'loaders/utils/GetTakeoverDetails';
-import { YoutubeTakeOverDetails } from 'youtube/types';
-import { VimeoTakeOverDetails } from 'vimeo/types';
+import { getTakeoverDetails } from 'loaders/utils/GetTakeoverDetails';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
@@ -65,18 +59,16 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 
 		const takeoverDetails = await getTakeoverDetails({ deviceType: 'desktop' });
 
-		if (eligibleForYoutubeTakeover(takeoverDetails as YoutubeTakeOverDetails)) {
+		if (takeoverDetails?.type === 'youtube') {
 			console.debug('Youtube takeover - loading Desktop youtube embed.');
 			import('youtube/players/YoutubeDesktopArticleVideoPlayer').then(({ default: YoutubeDesktopArticleVideoPlayer }) =>
-				setPlayer(
-					<YoutubeDesktopArticleVideoPlayer youtubeTakeoverDetails={takeoverDetails as YoutubeTakeOverDetails} />,
-				),
+				setPlayer(<YoutubeDesktopArticleVideoPlayer youtubeTakeoverDetails={takeoverDetails} />),
 			);
 			return;
-		} else if (eligibleForVimeoTakeover(takeoverDetails as VimeoTakeOverDetails)) {
+		} else if (takeoverDetails?.type === 'vimeo') {
 			console.debug('Vimeo takeover - loading Desktop vimeo embed.');
 			import('vimeo/players/VimeoDesktopArticleVideoPlayer').then(({ default: VimeoDesktopArticleVideoPlayer }) =>
-				setPlayer(<VimeoDesktopArticleVideoPlayer vimeoDetails={takeoverDetails as VimeoTakeOverDetails} />),
+				setPlayer(<VimeoDesktopArticleVideoPlayer vimeoDetails={takeoverDetails} />),
 			);
 			return;
 		} else if (currentExperiment?.name === desktopJwFloatOnScrollExperiment?.name && checkUserGeo(['us'])) {
