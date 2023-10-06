@@ -3,9 +3,13 @@ import { MobileArticleVideoLoaderProps } from 'loaders/types';
 import { setVersionWindowVar } from 'loaders/utils/GetVersion';
 import { shouldLoadUcpPlayer } from 'loaders/utils/shouldLoadPlayer';
 import { MobileArticleVideoContext } from 'contexts/MobileArticleVideoContext';
-
-import { eligibleForYoutubeTakeover, getYoutubeTakeoverDetails } from './utils/GetYoutubeTakeoverDetails';
-import { eligibleForVimeoTakeover, getVimeoTakeoverDetails } from './utils/GetVimeoTakeoverDetails';
+import {
+	eligibleForYoutubeTakeover,
+	eligibleForVimeoTakeover,
+	getTakeoverDetails,
+} from 'loaders/utils/GetTakeoverDetails';
+import { YoutubeTakeOverDetails } from 'youtube/types';
+import { VimeoTakeOverDetails } from 'vimeo/types';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
@@ -24,19 +28,20 @@ export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> =
 	}, []);
 
 	const getPlayer = async () => {
-		const youtubeTakeoverDetails = await getYoutubeTakeoverDetails({ deviceType: 'mobile' });
-		const vimeoTakeoverDetails = await getVimeoTakeoverDetails();
+		const takeoverDetails = await getTakeoverDetails({ deviceType: 'mobile' });
 
-		if (eligibleForYoutubeTakeover(youtubeTakeoverDetails)) {
+		if (eligibleForYoutubeTakeover(takeoverDetails as YoutubeTakeOverDetails)) {
 			console.debug('Youtube takeover - loading Mobile youtube embed.');
 			import('youtube/players/YoutubeMobileArticleVideoPlayer').then(({ default: YoutubeMobileArticleVideoPlayer }) =>
-				setPlayer(<YoutubeMobileArticleVideoPlayer youtubeTakeoverDetails={youtubeTakeoverDetails} />),
+				setPlayer(
+					<YoutubeMobileArticleVideoPlayer youtubeTakeoverDetails={takeoverDetails as YoutubeTakeOverDetails} />,
+				),
 			);
 			return;
-		} else if (eligibleForVimeoTakeover(vimeoTakeoverDetails)) {
+		} else if (eligibleForVimeoTakeover(takeoverDetails as VimeoTakeOverDetails)) {
 			console.debug('Vimeo takeover - loading mobile vimeo embed.');
 			import('vimeo/players/VimeoMobileArticleVideoPlayer').then(({ default: VimeoMobileArticleVideoPlayer }) =>
-				setPlayer(<VimeoMobileArticleVideoPlayer vimeoDetails={vimeoTakeoverDetails} />),
+				setPlayer(<VimeoMobileArticleVideoPlayer vimeoDetails={takeoverDetails as VimeoTakeOverDetails} />),
 			);
 			return;
 		} else {
