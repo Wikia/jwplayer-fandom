@@ -3,13 +3,7 @@ import { MobileArticleVideoLoaderProps } from 'loaders/types';
 import { setVersionWindowVar } from 'loaders/utils/GetVersion';
 import { shouldLoadUcpPlayer } from 'loaders/utils/shouldLoadPlayer';
 import { MobileArticleVideoContext } from 'contexts/MobileArticleVideoContext';
-import {
-	eligibleForYoutubeTakeover,
-	eligibleForVimeoTakeover,
-	getTakeoverDetails,
-} from 'loaders/utils/GetTakeoverDetails';
-import { YoutubeTakeOverDetails } from 'youtube/types';
-import { VimeoTakeOverDetails } from 'vimeo/types';
+import { getTakeoverDetails } from 'loaders/utils/GetTakeoverDetails';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
@@ -30,18 +24,16 @@ export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> =
 	const getPlayer = async () => {
 		const takeoverDetails = await getTakeoverDetails({ deviceType: 'mobile' });
 
-		if (eligibleForYoutubeTakeover(takeoverDetails as YoutubeTakeOverDetails)) {
+		if (takeoverDetails?.type === 'youtube') {
 			console.debug('Youtube takeover - loading Mobile youtube embed.');
 			import('youtube/players/YoutubeMobileArticleVideoPlayer').then(({ default: YoutubeMobileArticleVideoPlayer }) =>
-				setPlayer(
-					<YoutubeMobileArticleVideoPlayer youtubeTakeoverDetails={takeoverDetails as YoutubeTakeOverDetails} />,
-				),
+				setPlayer(<YoutubeMobileArticleVideoPlayer youtubeTakeoverDetails={takeoverDetails} />),
 			);
 			return;
-		} else if (eligibleForVimeoTakeover(takeoverDetails as VimeoTakeOverDetails)) {
+		} else if (takeoverDetails?.type === 'vimeo') {
 			console.debug('Vimeo takeover - loading mobile vimeo embed.');
 			import('vimeo/players/VimeoMobileArticleVideoPlayer').then(({ default: VimeoMobileArticleVideoPlayer }) =>
-				setPlayer(<VimeoMobileArticleVideoPlayer vimeoDetails={takeoverDetails as VimeoTakeOverDetails} />),
+				setPlayer(<VimeoMobileArticleVideoPlayer vimeoDetails={takeoverDetails} />),
 			);
 			return;
 		} else {
