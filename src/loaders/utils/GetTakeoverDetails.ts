@@ -41,7 +41,7 @@ export async function getTakeoverDetails({ deviceType }: YoutubePlayerTrackingPr
 	switch (takeoverDetails.type) {
 		case 'youtube': {
 			console.debug('Youtube Takeover: Eligible for youtube takeover based on the targeting params.', takeoverDetails);
-			trackYoutubeTakeoverDetails({ deviceType, youtubeVideoId: takeoverDetails.videoId });
+			trackYoutubeTakeoverDetails({ deviceType, videoId: takeoverDetails.videoId });
 			break;
 		}
 		case 'vimeo': {

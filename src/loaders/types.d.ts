@@ -35,6 +35,6 @@ interface TakeoverResponse {
 }
 
 interface TakeoverDetails {
-	videoId: string;
-	type: 'youtube' | 'vimeo';
+	videoId?: string;
+	type?: 'youtube' | 'vimeo';
 }
