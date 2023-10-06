@@ -23,7 +23,7 @@ export async function getTakeoverDetails({ deviceType }: YoutubePlayerTrackingPr
 		return null;
 	}
 
-	const response = await fetch(getTakeoverUrl(wikiId));
+	const response: Response = await fetch(getTakeoverUrl(wikiId));
 	const dataArray: TakeoverResponse[] = await response.json();
 	if (dataArray.length === 0) {
 		return null;
