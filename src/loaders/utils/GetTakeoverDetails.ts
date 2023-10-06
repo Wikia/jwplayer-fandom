@@ -4,6 +4,7 @@ import { trackYoutubeTakeoverDetails, YoutubePlayerTrackingProps } from 'youtube
 import { YoutubeTakeOverDetails } from 'youtube/types';
 import { getMediaWikiConfigDetails } from 'loaders/utils/GetMediaWikiConfigDetails';
 import { VimeoTakeOverDetails } from 'vimeo/types';
+import { TakeoverResponse } from 'loaders/types';
 
 function getTakeoverUrl(wikiId: string): string {
 	const articleVideoBaseUrl = getArticleVideoServiceBaseUrl();
@@ -23,7 +24,7 @@ export async function getTakeoverDetails({ deviceType }: YoutubePlayerTrackingPr
 	}
 
 	const response = await fetch(getTakeoverUrl(wikiId));
-	const dataArray = await response.json();
+	const dataArray: TakeoverResponse[] = await response.json();
 	if (dataArray.length === 0) {
 		return null;
 	}

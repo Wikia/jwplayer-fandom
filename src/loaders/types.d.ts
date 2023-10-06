@@ -24,3 +24,12 @@ interface MW {
 interface WindowWithMW extends Window {
 	mw: MW;
 }
+
+interface TakeoverResponse {
+	product: string;
+	id: string;
+	impressions_per_session: number;
+	youtube_take_over: boolean;
+	vimeo_take_over: boolean;
+	takeover_video_id: string;
+}
