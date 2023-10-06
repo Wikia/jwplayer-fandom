@@ -1,12 +1,11 @@
 import { isServerSide } from 'utils/getEnv';
-import getValueFromQuery from 'utils/getValuefromQuery';
 import { getArticleVideoServiceBaseUrl } from 'utils/getPandoraDetails';
 import { trackYoutubeTakeoverDetails, YoutubePlayerTrackingProps } from 'youtube/players/shared/youtubeTrackingEvents';
 import { YoutubeTakeOverDetails } from 'youtube/types';
 import { getMediaWikiConfigDetails } from 'loaders/utils/GetMediaWikiConfigDetails';
 import { VimeoTakeOverDetails } from 'vimeo/types';
 
-function getTakeoverUrl(wikiId?: string): string {
+function getTakeoverUrl(wikiId: string): string {
 	const articleVideoBaseUrl = getArticleVideoServiceBaseUrl();
 	if (articleVideoBaseUrl.length === 0) {
 		return articleVideoBaseUrl;
@@ -19,24 +18,19 @@ function getTakeoverUrl(wikiId?: string): string {
 
 export async function getTakeoverDetails({ deviceType }: YoutubePlayerTrackingProps) {
 	const { wikiId, isTier3Wiki } = getMediaWikiConfigDetails();
+	if (!wikiId || isTier3Wiki) {
+		return null;
+	}
+
 	const response = await fetch(getTakeoverUrl(wikiId));
 	const dataArray = await response.json();
+	if (dataArray.length === 0) {
+		return null;
+	}
 
 	if (dataArray[0].youtube_take_over) {
 		const youtubeDetails: YoutubeTakeOverDetails = { isYoutubeTakeover: false };
 		if (isServerSide()) {
-			return youtubeDetails;
-		}
-
-		const forcedYoutubeEmbedVideoId = getValueFromQuery('youtube_embed_video_id');
-		if (forcedYoutubeEmbedVideoId) {
-			youtubeDetails.isYoutubeTakeover = true;
-			youtubeDetails.youtubeVideoId = forcedYoutubeEmbedVideoId;
-			console.debug('Youtube Takeover: Found the youtube_embed_video_id query param', youtubeDetails);
-			return youtubeDetails;
-		}
-
-		if (!wikiId || isTier3Wiki) {
 			return youtubeDetails;
 		}
 
@@ -63,18 +57,6 @@ export async function getTakeoverDetails({ deviceType }: YoutubePlayerTrackingPr
 			return vimeoDetails;
 		}
 
-		const forcedVimeoEmbedVideoId = getValueFromQuery('vimeo_embed_video_id');
-		if (forcedVimeoEmbedVideoId) {
-			vimeoDetails.isVimeoTakeover = true;
-			vimeoDetails.videoId = forcedVimeoEmbedVideoId;
-			console.debug('Vimeo Takeover: Found the vimeo_embed_video_id query param', vimeoDetails);
-			return vimeoDetails;
-		}
-
-		if (!wikiId || isTier3Wiki) {
-			return vimeoDetails;
-		}
-
 		const wikiVimeoTakeoverDetails = dataArray?.length === 1 ? dataArray[0] : null;
 
 		if (wikiVimeoTakeoverDetails?.vimeo_take_over && wikiVimeoTakeoverDetails?.takeover_video_id?.trim().length !== 0) {
@@ -92,7 +74,7 @@ export async function getTakeoverDetails({ deviceType }: YoutubePlayerTrackingPr
 }
 
 export const eligibleForYoutubeTakeover = (youtubeTakeoverDetails: YoutubeTakeOverDetails) => {
-	if (youtubeTakeoverDetails.isYoutubeTakeover !== undefined) {
+	if (youtubeTakeoverDetails?.isYoutubeTakeover) {
 		const youtubeTakeoverFlag = youtubeTakeoverDetails.isYoutubeTakeover;
 		const isVideoIdValidLength =
 			youtubeTakeoverDetails?.youtubeVideoId && youtubeTakeoverDetails?.youtubeVideoId?.length !== 0;
@@ -103,10 +85,12 @@ export const eligibleForYoutubeTakeover = (youtubeTakeoverDetails: YoutubeTakeOv
 };
 
 export const eligibleForVimeoTakeover = (vimeoDetails: VimeoTakeOverDetails) => {
-	if (vimeoDetails.isVimeoTakeover !== undefined) {
+	if (vimeoDetails?.isVimeoTakeover) {
 		const vimeoTakeoverFlag = vimeoDetails.isVimeoTakeover;
 		const isVideoIdValidLength = vimeoDetails?.videoId && vimeoDetails?.videoId?.length !== 0;
 
 		return vimeoTakeoverFlag && isVideoIdValidLength;
 	}
+
+	return false;
 };
