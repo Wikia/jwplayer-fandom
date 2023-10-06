@@ -138,7 +138,7 @@
 		"@fandom-frontend/design-system": "15.18.1",
 		"@fandom-frontend/react-common": "13.23.1",
 		"@fandom/context": "^0.6.1",
-		"@fandom/tracking-metrics": "0.2.1",
+		"@fandom/tracking-metrics": "0.2.1-COTECH-781",
 		"@wikia/post-quecast": "2.0.1",
 		"clsx": "1.2.1",
 		"js-cookie": "3.0.1"
