@@ -1,6 +1,6 @@
 import { getArticleVideoServiceBaseUrl } from 'utils/getPandoraDetails';
 import { getMediaWikiConfigDetails } from 'loaders/utils/GetMediaWikiConfigDetails';
-import { TakeoverResponse } from 'loaders/types';
+import { TakeoverDetails, TakeoverResponse } from 'loaders/types';
 
 function getTakeoverUrl(wikiId: string): string {
 	const articleVideoBaseUrl = getArticleVideoServiceBaseUrl();
@@ -13,7 +13,7 @@ function getTakeoverUrl(wikiId: string): string {
 	return `${articleVideoBaseUrl}takeover/v1/takeover-mappings/${wikiId}`;
 }
 
-export async function getTakeoverDetails() {
+export async function getTakeoverDetails(): Promise<TakeoverDetails> {
 	const { wikiId, isTier3Wiki } = getMediaWikiConfigDetails();
 	if (!wikiId || isTier3Wiki) {
 		return null;

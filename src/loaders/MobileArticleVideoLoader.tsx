@@ -22,7 +22,7 @@ export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> =
 	}, []);
 
 	const getPlayer = async () => {
-		const takeoverDetails = await getTakeoverDetails({ deviceType: 'mobile' });
+		const takeoverDetails = await getTakeoverDetails();
 
 		if (takeoverDetails?.type === 'youtube') {
 			console.debug('Youtube takeover - loading Mobile youtube embed.');

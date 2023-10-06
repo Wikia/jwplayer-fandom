@@ -57,7 +57,7 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 			desktopJwFloatOnScrollExperiment,
 		]);
 
-		const takeoverDetails = await getTakeoverDetails({ deviceType: 'desktop' });
+		const takeoverDetails = await getTakeoverDetails();
 
 		if (takeoverDetails?.type === 'youtube') {
 			console.debug('Youtube takeover - loading Desktop youtube embed.');
