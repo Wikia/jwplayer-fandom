@@ -3,11 +3,7 @@ import JwPlayerWrapperWithStrategyRules from 'jwplayer/players/shared/JwPlayerWr
 import { JwPlayerWrapperProps } from 'jwplayer/types';
 import useJwpAdsSetupComplete from 'jwplayer/utils/useJwpAdsSetupComplete';
 
-interface StrategyRulesProps extends JwPlayerWrapperProps {
-	onReady: (args: any) => void;
-}
-
-export const StrategyRulesWrapper: React.FC<StrategyRulesProps> = ({ getDismissed, config, onReady }) => {
+export const StrategyRulesWrapper: React.FC<JwPlayerWrapperProps> = ({ getDismissed, config, onReady }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 
 	const jwpAdsSetupComplete = useJwpAdsSetupComplete();
