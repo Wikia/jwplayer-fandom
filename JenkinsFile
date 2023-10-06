@@ -1,6 +1,6 @@
 def FAILED_STAGE
 
-DOCKER_IMAGE = 'node:17-slim'
+DOCKER_IMAGE = 'node:18-slim'
 
 pipeline {
   agent { label 'docker-daemon' }

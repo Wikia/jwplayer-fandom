@@ -5,9 +5,8 @@
 	"types": "types.d.ts",
 	"install-peers": "install-peers",
 	"scripts": {
-		"build-stand-alone": "yarn && yarn run create-standalone-dist && rollup -c rollup-stand-alone.config.js && cp package.json standalone-dist && npm set-script prepare ''",
+		"build-stand-alone": "yarn && yarn run create-standalone-dist && rollup -c rollup-stand-alone.config.js",
 		"create-standalone-dist": "rm -rf standalone-dist && mkdir -p standalone-dist",
-		"cp:loop": " while true; do cp dist/bundle.esm.js test-jw/src; sleep 10; done",
 		"test": "echo 'No Tests yet'",
 		"purgeSingleFile": "ts-node --project tsconfig-stand-alone.json src/deploy/purge/purgeSingleFile.ts",
 		"prepare": ""
