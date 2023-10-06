@@ -12,21 +12,7 @@ interface WindowWithMW {
 	mw: MW;
 }
 
-interface FandomContextTracking {
-	pvUID: string;
-	beaconId: string;
-	sessionId: string;
-	pvNumber: number;
-	pvNumberGlobal: number;
-}
-
-interface WindowWithMWAndFandomContext extends WindowWithMW {
-	fandomContext: {
-		tracking: FandomContextTracking;
-	};
-}
-
-declare let window: WindowWithMWAndFandomContext;
+declare let window: WindowWithMW;
 
 export const GLOBAL_PROPS = {
 	// Confirmed
@@ -64,20 +50,6 @@ function getDefaultsFromMWConfig(): TrackData {
 	return defaultTrackData;
 }
 
-function getDefaultsFromFandomContext(): TrackData {
-	const fandomTrackingContext = window?.fandomContext?.tracking;
-	const defaultTrackData: TrackData = {};
-
-	// Add base tracking from fandomContext
-	defaultTrackData[GLOBAL_PROPS.BEACON_ID] = fandomTrackingContext?.beaconId;
-	defaultTrackData[GLOBAL_PROPS.SESSION_ID] = fandomTrackingContext?.sessionId;
-	defaultTrackData[GLOBAL_PROPS.PAGE_VIEW_ID] = fandomTrackingContext?.pvUID;
-	defaultTrackData[GLOBAL_PROPS.PAGE_VIEW_NUMBER] = fandomTrackingContext?.pvNumber;
-	defaultTrackData[GLOBAL_PROPS.PAGE_VIEW_NUMBER_GLOBAL] = fandomTrackingContext?.pvNumberGlobal;
-
-	return defaultTrackData;
-}
-
 export default function addGlobalProps(): TrackData {
 	try {
 		let defaultProps: TrackData = {};
@@ -87,10 +59,6 @@ export default function addGlobalProps(): TrackData {
 		// If we are on MW lets add them this way
 		if (window && window.mw && window.mw.config) {
 			defaultProps = { ...defaultProps, ...getDefaultsFromMWConfig() };
-		}
-
-		if (window?.fandomContext?.tracking) {
-			defaultProps = { ...defaultProps, ...getDefaultsFromFandomContext() };
 		}
 
 		return defaultProps;
