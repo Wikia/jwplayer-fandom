@@ -18,6 +18,7 @@
 		"deploy-stand-alone": "ts-node --project stand-alone/tsconfig-stand-alone.json stand-alone/deploy/deploy.ts",
 		"watch": "yarn run create-dist && NODE_ENV=development rollup -c --watch",
 		"app": "cd test-jw && yarn && yarn start",
+		"dev": "yarn build && yarn app",
 		"create-dist": "rm -rf dist && mkdir -p dist",
 		"create-standalone-dist": "rm -rf standalone-dist && mkdir -p standalone-dist",
 		"cp:loop": " while true; do cp dist/bundle.esm.js test-jw/src; sleep 10; done",
