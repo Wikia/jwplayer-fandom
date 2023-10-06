@@ -33,3 +33,8 @@ interface TakeoverResponse {
 	vimeo_take_over: boolean;
 	takeover_video_id: string;
 }
+
+interface TakeoverDetails {
+	videoId: string;
+	type: 'youtube' | 'vimeo';
+}
