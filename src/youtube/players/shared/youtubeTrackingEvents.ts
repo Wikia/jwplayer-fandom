@@ -1,5 +1,5 @@
 import { track } from '@fandom/tracking-metrics/tracking/dataLayer';
-import { YoutubeTakeOverDetails } from 'youtube/types';
+import { TakeoverDetails } from 'loaders/types';
 
 export interface YoutubePlayerTrackingProps {
 	deviceType: 'desktop' | 'mobile';
@@ -9,15 +9,12 @@ interface YoutubePlayerTrackingWithPlayerStateProps extends YoutubePlayerTrackin
 	playerStateName: string;
 }
 
-export const trackYoutubeTakeoverDetails = ({
-	deviceType,
-	youtubeVideoId,
-}: YoutubePlayerTrackingProps & YoutubeTakeOverDetails) => {
-	console.debug(`Youtube takeover details sourced. The following youtube video id will play: ${youtubeVideoId}`);
+export const trackYoutubeTakeoverDetails = ({ deviceType, videoId }: YoutubePlayerTrackingProps & TakeoverDetails) => {
+	console.debug(`Youtube takeover details sourced. The following youtube video id will play: ${videoId}`);
 	track({
 		event: `basic-mw-event-youtube-takeover-details-${deviceType}`,
 		action: 'youtube',
-		category: `youtube-video-takeover-${youtubeVideoId}`,
+		category: `youtube-video-takeover-${videoId}`,
 	});
 };
 
