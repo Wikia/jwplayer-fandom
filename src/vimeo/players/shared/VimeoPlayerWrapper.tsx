@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 
-import { VimeoArticleVideoPlayerTrackingProps, VimeoTakeOverDetails } from 'vimeo/types';
+import { VimeoArticleVideoPlayerTrackingProps } from 'vimeo/types';
+
+import { TakeoverDetails } from 'loaders/types';
 
 import styles from './VimeoPlayerWrapper.module.css';
 
 export interface VimeoVideoDetails extends VimeoArticleVideoPlayerTrackingProps {
-	vimeoDetails?: VimeoTakeOverDetails;
+	vimeoDetails?: TakeoverDetails;
 }
 
 interface WindowWithVimeo extends Window {
