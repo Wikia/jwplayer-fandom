@@ -1,4 +1,5 @@
 import { MutableRefObject } from 'react';
+import { wikiaJWPlayeri18n } from 'jwplayer/i18n';
 
 import FandomWirewaxPlugin from './plugins/fandom-wirewax.plugin';
 
@@ -290,7 +291,7 @@ export type Player = {
 	getPlugin: (name: string) => BasePluginInterface;
 	getQualityLevels: () => QualityObject[];
 	load: (playlist: string | Playlist) => null;
-	setPlaylistItemCallback: (PlaylistItemCallbackData) => void;
+	setPlaylistItemCallback: (playlistItemCallbackData: (playlistItem: PlaylistItem) => void) => void;
 	pauseAd: (state: boolean) => null;
 	getCaptionsList: () => CaptionsList;
 	setCurrentCaptions: (index: number) => null;
@@ -357,7 +358,7 @@ export type Embedder = {
 		},
 	) => null;
 	dispose: () => null;
-	setCurrentTime: (number) => void;
+	setCurrentTime: (currentTime: number) => void;
 	ready: () => void;
 	play: () => void;
 	on: (name: string, handler: EmbedderEventHandler) => null;
@@ -383,13 +384,14 @@ export interface ArticleVideoDetails {
 	impressionsPerSession: number;
 	isDedicatedForArticle: boolean;
 	kind: string;
-	lang: string;
+	lang: keyof typeof wikiaJWPlayeri18n;
 	mediaId: string;
 	metadata: ArticleVideoMetadata;
-	playlist: Playlist;
+	playlist: PlaylistItem[];
 	title: string;
 	videoTags: string;
 	tier3Mapping: boolean;
+	feedid: string;
 }
 
 export interface RedVentureVideoDetails {
@@ -399,7 +401,7 @@ export interface RedVentureVideoDetails {
 	feed_instance_id: string;
 	kind: string;
 	mediaId: string;
-	playlist: Playlist;
+	playlist: PlaylistItem[];
 	videoTags: string;
 }
 
@@ -416,6 +418,7 @@ export interface CanonicalVideoDetails {
 	tracks?: Array<Track>;
 	pubdate: number;
 	tags?: Array<string>;
+	lang: keyof typeof wikiaJWPlayeri18n;
 }
 
 /** JWPlayer's video source definition  */

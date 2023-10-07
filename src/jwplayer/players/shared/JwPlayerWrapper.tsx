@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { JWPauseEvent, JWPlayerApi, JWPlayEvent, PlaylistItem } from 'jwplayer/types';
+import { JWPauseEvent, JWPlayerApi, JWPlayEvent } from 'jwplayer/types';
 import FandomWirewaxPlugin from 'jwplayer/plugins/fandom-wirewax.plugin';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { JwPlayerWrapperProps } from 'jwplayer/types';
@@ -139,7 +139,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 				} */
 			});
 
-			playerInstance.setPlaylistItemCallback((item: PlaylistItem) => {
+			playerInstance.setPlaylistItemCallback((item) => {
 				item.link = `https://www.fandom.com/newvideopage/${item.mediaid}/${slugify(item.title)}`;
 				return;
 			});

@@ -11,8 +11,8 @@ interface WindowWgCookieDomain extends Window {
 
 declare let window: WindowWgCookieDomain;
 
-function setCookie(cookieName, domain, path) {
-	return (cookieValue) => {
+function setCookie(cookieName: string, domain: string, path: string) {
+	return (cookieValue: string) => {
 		Cookies.set(cookieName, cookieValue, {
 			path: path,
 			domain: domain,
@@ -23,7 +23,7 @@ function setCookie(cookieName, domain, path) {
 	};
 }
 
-function getCookie(cookieName) {
+function getCookie(cookieName: string) {
 	return () => Cookies.get(cookieName);
 }
 

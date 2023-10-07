@@ -1,5 +1,6 @@
 import * as articleVideoCookieService from 'jwplayer/utils/articleVideo/articleVideoCookies';
 import { wikiaJWPlayeri18n } from 'jwplayer/i18n';
+import { ArticleVideoDetails, PlaylistItem } from 'jwplayer/types';
 
 const isFromRecirculation = () => {
 	return window.location.search.indexOf('wikia-footer-wiki-rec') > -1;
@@ -13,22 +14,22 @@ export const willMute = () => {
 	return isFromRecirculation() ? false : willAutoplay();
 };
 
-const getModifiedPlaylist = (playlist, isDedicatedForArticle) => {
+const getModifiedPlaylist = (playlist: PlaylistItem[], isDedicatedForArticle: boolean) => {
 	const normalizedPlaylistIndex = getNormalizedPlaylistIndex(playlist);
 	const newPlaylist = playlist.slice(normalizedPlaylistIndex);
 
 	return !isDedicatedForArticle && newPlaylist.length ? newPlaylist : playlist;
 };
 
-const getNormalizedPlaylistIndex = (playlist) => {
+const getNormalizedPlaylistIndex = (playlist: PlaylistItem[]) => {
 	const playerImpressions = articleVideoCookieService.getPlayerImpressionsInWiki() || 0;
 
 	return playerImpressions > playlist.length ? playerImpressions % playlist.length : playerImpressions;
 };
 
-const getAdvertisingConfig = (lang: string) => {
+const getAdvertisingConfig = (lang: keyof typeof wikiaJWPlayeri18n) => {
 	const i18n = wikiaJWPlayeri18n[lang];
-	const langForAds = lang.substr(0, 2);
+	const langForAds = lang.substring(0, 2);
 
 	return {
 		admessage: i18n.admessage,
@@ -47,7 +48,7 @@ const getAdvertisingConfig = (lang: string) => {
 	};
 };
 
-export const getArticleVideoConfig = (videoDetails) => {
+export const getArticleVideoConfig = (videoDetails: ArticleVideoDetails) => {
 	const lang = videoDetails?.lang || 'en';
 
 	if (window?.videoExperiments?.playlistUrl && !videoDetails?.isDedicatedForArticle) {

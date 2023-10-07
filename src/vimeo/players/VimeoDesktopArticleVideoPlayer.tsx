@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { VimeoArticleVideoPlayerProps, VimeoTakeOverDetails } from 'vimeo/types';
 import useOnScreen from 'utils/useOnScreen';
-import PlayerWrapper from 'vimeo/players/shared/PlayerWrapper';
 import CloseButton from 'vimeo/players/shared/CloseButton';
 import VimeoPlayerWrapper from 'vimeo/players/shared/VimeoPlayerWrapper';
 
@@ -58,11 +57,7 @@ const DesktopArticleVideoWrapper: React.FC<VimeoDesktopArticleVideoWrapperProps>
 };
 
 export const VimeoDesktopArticleVideoPlayer: React.FC<VimeoArticleVideoPlayerProps> = ({ vimeoDetails }) => {
-	return (
-		<PlayerWrapper playerName="vimeo-desktop-article-video">
-			<DesktopArticleVideoWrapper vimeoDetails={vimeoDetails} />
-		</PlayerWrapper>
-	);
+	return <DesktopArticleVideoWrapper vimeoDetails={vimeoDetails} />;
 };
 
 export default VimeoDesktopArticleVideoPlayer;

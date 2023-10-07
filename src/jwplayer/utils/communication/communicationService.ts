@@ -11,7 +11,7 @@ class CommunicationService {
 		this.communicator = new Communicator();
 	}
 
-	dispatch(action) {
+	dispatch<T>(action: Action<T>) {
 		this.communicator.dispatch({ ...action, __global: true });
 	}
 

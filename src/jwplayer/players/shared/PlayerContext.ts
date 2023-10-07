@@ -3,20 +3,20 @@ import { Player, PlayerConfig, TimeEventData, AdTimeData, ProgressUpdateData } f
 
 interface PlayerContextInterface {
 	player: Player;
-	setPlayer: (playerInstance) => void;
+	setPlayer: (playerInstance: Player) => void;
 	playerName: string;
 	config: PlayerConfig;
-	setConfig: (playerConfig) => void;
+	setConfig: (playerConfig: PlayerConfig) => void;
 	adPlaying: boolean;
-	setAdPlaying: (newAdPlayState) => void;
+	setAdPlaying: (newAdPlayState: boolean) => void;
 	relatedOpen: boolean;
-	setRelatedOpen: (newRelatedOpenState) => void;
+	setRelatedOpen: (newRelatedOpenState: boolean) => void;
 	adTime: AdTimeData;
-	setAdTime: (adTime) => void;
+	setAdTime: (adTime: AdTimeData) => void;
 	time: TimeEventData;
-	setTime: (time) => void;
+	setTime: (time: TimeEventData) => void;
 	progressData: ProgressUpdateData;
-	setProgressData: (progressUpdateData) => void;
+	setProgressData: (progressUpdateData: ProgressUpdateData) => void;
 }
 
 export const PlayerContext = React.createContext<PlayerContextInterface | null>(null);

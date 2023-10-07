@@ -9,7 +9,7 @@ export const getRedVentureVideoConfig = (videoDetails: RedVentureVideoDetails, a
 	const lang = 'en';
 	const autoStart = autoPlay ?? (willAutoplay() && !document.hidden);
 	const i18n = wikiaJWPlayeri18n[lang] || wikiaJWPlayeri18n['en'];
-	const langForAds = lang.substr(0, 2);
+	const langForAds = lang.substring(0, 2);
 
 	return {
 		autostart: autoStart,

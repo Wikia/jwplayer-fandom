@@ -7,7 +7,7 @@ import useOnScreen from 'utils/useOnScreen';
 import useAdEngineComplete from 'jwplayer/utils/useAdEngineComplete';
 import useJwpAdsSetupComplete from 'jwplayer/utils/useJwpAdsSetupComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
-import { DesktopArticleVideoPlayerProps } from 'jwplayer/types';
+import { DesktopArticleVideoPlayerProps, Player } from 'jwplayer/types';
 import CloseButton from 'jwplayer/players/shared/CloseButton/CloseButton';
 import Attribution from 'jwplayer/players/DesktopArticleVideoPlayer/Attribution';
 import { VideoPlaceholder } from 'jwplayer/players/shared/VideoPlaceholder/VideoPlaceholder';
@@ -58,7 +58,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 	const inputName = 'isDismissed';
 	const getDismissed = getDismissedFn(inputName);
 
-	const onPlayerInstanceReady = (playerInstance) => {
+	const onPlayerInstanceReady = (playerInstance: Player) => {
 		articlePlayerOnReady(videoDetails, playerInstance);
 		setIsPlayerReady(true);
 	};

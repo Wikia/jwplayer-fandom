@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import VimeoPlayerWrapper from 'vimeo/players/shared/VimeoPlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
-import PlayerWrapper from 'vimeo/players/shared/PlayerWrapper';
 import { VimeoArticleVideoPlayerProps, VimeoTakeOverDetails } from 'vimeo/types';
 import { useMobileArticleVideoContext } from 'contexts/MobileArticleVideoContext';
 
@@ -43,11 +42,7 @@ const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({ v
 };
 
 const VimeoMobileArticleVideoPlayer: React.FC<VimeoArticleVideoPlayerProps> = ({ vimeoDetails }) => {
-	return (
-		<PlayerWrapper playerName="youtube-mobile-article-video">
-			<MobileArticleVideoWrapper vimeoDetails={vimeoDetails} />
-		</PlayerWrapper>
-	);
+	return <MobileArticleVideoWrapper vimeoDetails={vimeoDetails} />;
 };
 
 export default VimeoMobileArticleVideoPlayer;

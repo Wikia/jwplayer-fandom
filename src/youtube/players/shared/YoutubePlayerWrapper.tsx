@@ -11,6 +11,7 @@ import { YoutubeTakeOverDetails } from 'youtube/types';
 import styles from './YoutubePlayerWrapper.module.css';
 
 import OnStateChangeEvent = YT.OnStateChangeEvent;
+import PlayerEventHandler = YT.PlayerEventHandler;
 
 export interface YoutubeVideoDetails extends YoutubePlayerTrackingProps {
 	youtubeTakeoverDetails?: YoutubeTakeOverDetails;
@@ -34,7 +35,9 @@ const YoutubePlayerWrapper: React.FC<YoutubeVideoDetails> = ({ deviceType, youtu
 				onReady: onYoutubeReady,
 				onStateChange: (event: OnStateChangeEvent) => {
 					const playerStateEnum = YT.PlayerState;
-					const stateValueAsString = Object.keys(playerStateEnum).find((key) => playerStateEnum?.[key] === event.data);
+					const stateValueAsString = Object.keys(playerStateEnum).find(
+						(key: keyof typeof YT.PlayerState) => playerStateEnum[key] === event.data,
+					);
 					trackYoutubePlayerStateChange({ deviceType, playerStateName: stateValueAsString });
 				},
 			},
@@ -55,7 +58,7 @@ const YoutubePlayerWrapper: React.FC<YoutubeVideoDetails> = ({ deviceType, youtu
 		trackYoutubePlayerInit({ deviceType });
 	}, []);
 
-	const onYoutubeReady = (event) => {
+	const onYoutubeReady: PlayerEventHandler<YT.PlayerEvent> = (event) => {
 		console.debug('Youtube Player Embed Ready.');
 		if (typeof event?.target?.playVideo === 'function') {
 			console.debug('Youtube Player Embed Ready - YoutubePlayer was set.');

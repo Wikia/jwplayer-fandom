@@ -16,6 +16,8 @@
     },
     "baseUrl": "./",
     "typeRoots": ["src/types", "node_modules/@types"],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "strictBindCallApply": true,
+    "noImplicitAny": true,
   }
 }

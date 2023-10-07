@@ -36,7 +36,7 @@ export default function useAdEngineComplete(): boolean {
 		return Promise.race([adEngineConfigured$, adEngineTimeout$]);
 	};
 
-	const listenSetupJWPlayer = (callback) => {
+	const listenSetupJWPlayer = (callback: () => void) => {
 		communicationService.on('[Ad Engine] Setup JWPlayer', () => {
 			callback();
 		});

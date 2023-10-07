@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import YoutubePlayerWrapper from 'youtube/players/shared/YoutubePlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
-import PlayerWrapper from 'youtube/players/shared/PlayerWrapper';
 import { useMobileArticleVideoContext } from 'contexts/MobileArticleVideoContext';
 
 import clsx from 'clsx';
@@ -43,11 +42,7 @@ const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({ y
 };
 
 const YoutubeMobileArticleVideoPlayer: React.FC<YoutubeArticleVideoPlayerProps> = ({ youtubeTakeoverDetails }) => {
-	return (
-		<PlayerWrapper playerName="youtube-mobile-article-video">
-			<MobileArticleVideoWrapper youtubeTakeoverDetails={youtubeTakeoverDetails} />
-		</PlayerWrapper>
-	);
+	return <MobileArticleVideoWrapper youtubeTakeoverDetails={youtubeTakeoverDetails} />;
 };
 
 export default YoutubeMobileArticleVideoPlayer;

@@ -2,8 +2,9 @@ import { getCommunicationService } from 'jwplayer/utils/communication';
 import { setVideoSeenInSession } from 'jwplayer/utils/articleVideo/articleVideoSession';
 import { willAutoplay, willMute } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
+import { ArticleVideoDetails, Player } from 'jwplayer/types';
 
-export default function useOnArticlePlayerReady(videoDetails, playerInstance): void {
+export default function useOnArticlePlayerReady(videoDetails: ArticleVideoDetails, playerInstance: Player): void {
 	const playerKey = 'aeJWPlayerKey';
 	const communicationService = getCommunicationService();
 
@@ -12,6 +13,8 @@ export default function useOnArticlePlayerReady(videoDetails, playerInstance): v
 	}
 
 	window.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', { detail: playerInstance }));
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
 	window[playerKey] = playerInstance;
 
 	recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_PLAYER_READY_DISPATCH);

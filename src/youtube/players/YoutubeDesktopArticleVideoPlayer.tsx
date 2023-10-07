@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import YoutubePlayerWrapper from 'youtube/players/shared/YoutubePlayerWrapper';
-import PlayerWrapper from 'youtube/players/shared/PlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
 import CloseButton from 'youtube/players/shared/CloseButton';
 import { YoutubeArticleVideoPlayerProps, YoutubeTakeOverDetails } from 'youtube/types';
@@ -58,11 +57,7 @@ const DesktopArticleVideoWrapper: React.FC<YoutubeDesktopArticleVideoWrapperProp
 };
 
 const YoutubeDesktopArticleVideoPlayer: React.FC<YoutubeArticleVideoPlayerProps> = ({ youtubeTakeoverDetails }) => {
-	return (
-		<PlayerWrapper playerName="youtube-desktop-article-video">
-			<DesktopArticleVideoWrapper youtubeTakeoverDetails={youtubeTakeoverDetails} />
-		</PlayerWrapper>
-	);
+	return <DesktopArticleVideoWrapper youtubeTakeoverDetails={youtubeTakeoverDetails} />;
 };
 
 export default YoutubeDesktopArticleVideoPlayer;

@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-
 import { VimeoArticleVideoPlayerTrackingProps, VimeoTakeOverDetails } from 'vimeo/types';
 
 import styles from './VimeoPlayerWrapper.module.css';
@@ -10,7 +9,7 @@ export interface VimeoVideoDetails extends VimeoArticleVideoPlayerTrackingProps 
 
 interface WindowWithVimeo extends Window {
 	Vimeo: {
-		Player: (htmlElementId: string) => void;
+		Player: new (targetId: string) => Vimeo;
 	};
 }
 
@@ -30,7 +29,7 @@ const VimeoPlayerWrapper: React.FC<VimeoVideoDetails> = ({ deviceType, vimeoDeta
 		player.on('loaded', ({ id }: VimeoLoadedData) => {
 			console.debug(`Vimeo video ID: ${id} loaded`);
 			player.setVolume(0).then(() => {
-				player.play();
+				void player.play();
 			});
 		});
 	};

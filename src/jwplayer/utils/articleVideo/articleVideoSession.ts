@@ -13,8 +13,8 @@ export function hasSeenTheVideoInCurrentSession() {
 export function setVideoSeenInSession() {
 	if (!hasSeenTheVideoInCurrentSession()) {
 		Cookies.set(videoSeenInSessionCookieName, currentSession);
-		setPlayerImpressionsInWiki(1);
+		setPlayerImpressionsInWiki('1');
 	} else {
-		setPlayerImpressionsInWiki(playerImpressionsInWiki + 1);
+		setPlayerImpressionsInWiki((playerImpressionsInWiki + 1).toString());
 	}
 }

@@ -273,4 +273,4 @@ export const wikiaJWPlayeri18n = {
 		volume: '音量',
 		watch: '觀看',
 	},
-};
+} as const;

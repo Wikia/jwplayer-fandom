@@ -5,7 +5,7 @@ import useJwpAdsSetupComplete from 'jwplayer/utils/useJwpAdsSetupComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
 import OffScreenOverlay from 'jwplayer/players/MobileArticleVideoPlayer/OffScreenOverlay/OffScreenOverlay';
 import { VideoPlaceholder } from 'jwplayer/players/shared/VideoPlaceholder/VideoPlaceholder';
-import { MobileArticleVideoPlayerProps } from 'jwplayer/types';
+import { MobileArticleVideoPlayerProps, Player } from 'jwplayer/types';
 import Attribution from 'jwplayer/players/MobileArticleVideoPlayer/Attribution';
 import { singleTrack } from 'jwplayer/utils/videoTracking';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
@@ -59,7 +59,7 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 
 	const getDismissed = getDismissedFn(inputName);
 
-	const onPlayerInstanceReady = (playerInstance) => {
+	const onPlayerInstanceReady = (playerInstance: Player) => {
 		articlePlayerOnReady(videoDetails, playerInstance);
 		setIsPlayerReady(true);
 	};

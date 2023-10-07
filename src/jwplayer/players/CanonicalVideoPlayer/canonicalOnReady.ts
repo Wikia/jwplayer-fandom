@@ -1,8 +1,15 @@
 import { getCommunicationService } from 'jwplayer/utils/communication';
 import { willAutoplay, willMute } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
+import { CanonicalVideoDetails, Player } from 'jwplayer/types';
 
-export default function canonicalOnReady(videoDetails, playerInstance): void {
+interface WindowWithAEJWPlayerKey extends Window {
+	aeJWPlayerKey: Player;
+}
+
+declare let window: WindowWithAEJWPlayerKey;
+
+export default function canonicalOnReady(videoDetails: CanonicalVideoDetails, playerInstance: Player): void {
 	const playerKey = 'aeJWPlayerKey';
 	const communicationService = getCommunicationService();
 

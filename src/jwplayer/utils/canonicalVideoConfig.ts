@@ -1,14 +1,15 @@
 import { wikiaJWPlayeri18n } from 'jwplayer/i18n';
+import { CanonicalVideoDetails } from 'jwplayer/types';
 
 import { willAutoplay, willMute } from './articleVideo/articleVideoConfig';
 
-const getCanonicalVideoConfig = (videoDetails) => {
+const getCanonicalVideoConfig = (videoDetails: CanonicalVideoDetails) => {
 	if (!videoDetails) return {};
 
 	const videoId = videoDetails.mediaid;
 	const lang = videoDetails.lang || 'en';
 	const i18n = wikiaJWPlayeri18n[lang] || wikiaJWPlayeri18n['en'];
-	const langForAds = lang.substr(0, 2);
+	const langForAds = lang.substring(0, 2);
 
 	const config = {
 		autostart: willAutoplay() && !document.hidden,

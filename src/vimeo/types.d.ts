@@ -14,6 +14,7 @@ export interface VimeoArticleVideoPlayerProps {
 export interface PlayerInstance {
 	// To fill with needed player methods...
 	getMuted: () => boolean;
+	on: (event: string, callback: () => void) => void;
 }
 
 export type Player = (playerDivId: string, height: number, width: number, parent?: string[]) => PlayerInstance;
