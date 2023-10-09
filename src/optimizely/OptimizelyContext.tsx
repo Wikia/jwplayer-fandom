@@ -14,7 +14,7 @@ type OptimizelyContextType = {
 	variationMap?: VariationMap;
 };
 
-interface WindowWithOptimizely extends Window {
+export interface WindowWithOptimizely extends Window {
 	optimizely?: {
 		get: (type: string) => {
 			getVariationMap: () => VariationMap;

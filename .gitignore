@@ -10,3 +10,4 @@ dist
 standalone-dist
 /vault-gcs.json
 stats.html
+coverage

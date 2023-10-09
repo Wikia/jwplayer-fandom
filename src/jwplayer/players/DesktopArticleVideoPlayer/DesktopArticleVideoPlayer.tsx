@@ -23,7 +23,7 @@ import {
 	ON_SCROLL_LARGER_CUSTOM_UX_WITHOUT_TITLE_BAR_VARIANT_ID,
 	PLAYER_WITH_ON_SCROLL_ENABLED_URL,
 } from 'utils/experiments/onScrollExperiment';
-import { useOptimizelyVariation } from 'optimizely/useOptimizelyVatiation';
+import { useOptimizelyVariation } from 'optimizely/useOptimizelyVariation';
 
 import styles from './DesktopArticleVideoPlayer.module.scss';
 
