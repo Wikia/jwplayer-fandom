@@ -24,6 +24,7 @@ import {
 	PLAYER_WITH_ON_SCROLL_ENABLED_URL,
 } from 'utils/experiments/onScrollExperiment';
 import { useOptimizelyVariation } from 'optimizely/useOptimizelyVariation';
+import { useOptimizelyTrack } from 'optimizely/useOptimizelyTrack';
 
 import styles from './DesktopArticleVideoPlayer.module.scss';
 
@@ -32,6 +33,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 	const adEngineComplete = useAdEngineComplete();
 	const jwpAdsSetupComplete = useJwpAdsSetupComplete();
 	const onScrollVariation = useOptimizelyVariation(ON_SCROLL_EXPERIMENT_ID);
+	useOptimizelyTrack(ON_SCROLL_EXPERIMENT_ID);
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
 	const [isPlayerReady, setIsPlayerReady] = useState(false);
