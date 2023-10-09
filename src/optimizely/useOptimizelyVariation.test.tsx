@@ -3,6 +3,8 @@ import { renderHook, act } from '@testing-library/react';
 
 import { getCommunicationService } from 'jwplayer/utils/communication/communicationService';
 
+import { mockOptimizely } from 'utils/tests/optimizely';
+
 import { OptimizelyContextProvider, WindowWithOptimizely } from './OptimizelyContext';
 import { useOptimizelyVariation } from './useOptimizelyVariation';
 
@@ -53,18 +55,8 @@ describe('useOptimizelyVariation', () => {
 	it('should return the variation if the experiment is available', async () => {
 		const experimentId = '1234';
 		const variationId = '5678';
-		const variationName = 'test';
 
-		window.optimizely = {
-			get: () => ({
-				getVariationMap: () => ({
-					[experimentId]: {
-						id: variationId,
-						name: variationName,
-					},
-				}),
-			}),
-		};
+		mockOptimizely();
 
 		const { result } = setup(experimentId);
 
