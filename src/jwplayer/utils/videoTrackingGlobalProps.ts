@@ -19,8 +19,11 @@ export const GLOBAL_PROPS = {
 	BEACON_ID: 'beacon',
 	BEACON_ID2: 'b2',
 	PAGE_VIEW_ID: 'pv_unique_id',
+	PAGE_VIEW_NUMBER: 'pv_number',
+	PAGE_VIEW_NUMBER_GLOBAL: 'pv_number_global',
 	TIMESTAMP: 'timestamp', // acts as cache buster too
 	USER_ID: 'user_id',
+	SESSION_ID: 'session_id',
 
 	// MW Specific
 	COMMUNITY_ID: 'c',
@@ -37,7 +40,6 @@ function getDefaultsFromMWConfig(): TrackData {
 	const defaultTrackData: TrackData = {};
 
 	// Add base tracking from mw
-	defaultTrackData[GLOBAL_PROPS.PAGE_VIEW_ID] = config.get('pvUID');
 	defaultTrackData[GLOBAL_PROPS.USER_ID] = config.get('wgUserId');
 	defaultTrackData[GLOBAL_PROPS.COMMUNITY_ID] = config.get('wgCityId');
 	defaultTrackData[GLOBAL_PROPS.COMMUNITY_NAME] = config.get('wgDBname');
