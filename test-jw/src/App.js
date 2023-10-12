@@ -7,6 +7,18 @@ import { WIREWAX_VIDEO, CANONICAL_VIDEO, ARTICLE_VIDEO_DETAILS } from './videoCo
 
 import './app.css';
 
+const fandomContextTrackingMock = {
+	pvUID: 'test-pv-unique-id',
+	beaconId: 'test-beacon-id',
+	sessionId: 'test-session-id',
+	pvNumber: 666,
+	pvNumberGlobal: 777,
+};
+
+window.fandomContext = {
+	tracking: fandomContextTrackingMock,
+};
+
 function App() {
 	const triggerAd = () => {
 		unblockPlayer();
