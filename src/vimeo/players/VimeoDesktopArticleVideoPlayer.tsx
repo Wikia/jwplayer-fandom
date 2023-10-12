@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { VimeoArticleVideoPlayerProps, VimeoTakeOverDetails } from 'vimeo/types';
+import { VimeoArticleVideoPlayerProps } from 'vimeo/types';
 import useOnScreen from 'utils/useOnScreen';
 import PlayerWrapper from 'vimeo/players/shared/PlayerWrapper';
 import CloseButton from 'vimeo/players/shared/CloseButton';
@@ -7,10 +7,12 @@ import VimeoPlayerWrapper from 'vimeo/players/shared/VimeoPlayerWrapper';
 
 import clsx from 'clsx';
 
+import { TakeoverDetails } from 'loaders/types';
+
 import styles from './VimeoDesktopArticleVideoPlayer.module.css';
 
 interface VimeoDesktopArticleVideoWrapperProps {
-	vimeoDetails: VimeoTakeOverDetails;
+	vimeoDetails: TakeoverDetails;
 }
 
 const DesktopArticleVideoWrapper: React.FC<VimeoDesktopArticleVideoWrapperProps> = ({ vimeoDetails }) => {

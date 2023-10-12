@@ -1,14 +1,11 @@
-export interface VimeoTakeOverDetails {
-	isVimeoTakeover?: boolean;
-	videoId?: string;
-}
+import { TakeoverDetails } from 'loaders/types';
 
 export interface VimeoArticleVideoPlayerTrackingProps {
 	deviceType: 'desktop' | 'mobile';
 }
 
 export interface VimeoArticleVideoPlayerProps {
-	vimeoDetails: VimeoTakeOverDetails;
+	vimeoDetails: TakeoverDetails;
 }
 
 export interface PlayerInstance {
@@ -17,11 +14,3 @@ export interface PlayerInstance {
 }
 
 export type Player = (playerDivId: string, height: number, width: number, parent?: string[]) => PlayerInstance;
-
-export interface VimeoTakeoverResponse {
-	product: string;
-	id: string;
-	impression_per_session: number;
-	vimeo_take_over: boolean;
-	takeover_video_id: string;
-}

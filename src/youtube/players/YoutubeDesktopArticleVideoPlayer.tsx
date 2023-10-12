@@ -3,14 +3,16 @@ import YoutubePlayerWrapper from 'youtube/players/shared/YoutubePlayerWrapper';
 import PlayerWrapper from 'youtube/players/shared/PlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
 import CloseButton from 'youtube/players/shared/CloseButton';
-import { YoutubeArticleVideoPlayerProps, YoutubeTakeOverDetails } from 'youtube/types';
+import { YoutubeArticleVideoPlayerProps } from 'youtube/types';
 
 import clsx from 'clsx';
+
+import { TakeoverDetails } from 'loaders/types';
 
 import styles from './youtubeDesktopArticleVideoPlayer.module.scss';
 
 interface YoutubeDesktopArticleVideoWrapperProps {
-	youtubeTakeoverDetails: YoutubeTakeOverDetails;
+	youtubeTakeoverDetails: TakeoverDetails;
 }
 
 const DesktopArticleVideoWrapper: React.FC<YoutubeDesktopArticleVideoWrapperProps> = ({ youtubeTakeoverDetails }) => {

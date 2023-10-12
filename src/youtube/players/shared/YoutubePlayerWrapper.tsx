@@ -6,14 +6,14 @@ import {
 	trackYoutubePlayerStateChange,
 	YoutubePlayerTrackingProps,
 } from 'youtube/players/shared/youtubeTrackingEvents';
-import { YoutubeTakeOverDetails } from 'youtube/types';
+import { TakeoverDetails } from 'loaders/types';
 
 import styles from './YoutubePlayerWrapper.module.css';
 
 import OnStateChangeEvent = YT.OnStateChangeEvent;
 
 export interface YoutubeVideoDetails extends YoutubePlayerTrackingProps {
-	youtubeTakeoverDetails?: YoutubeTakeOverDetails;
+	youtubeTakeoverDetails?: TakeoverDetails;
 }
 
 interface WindowWithYouTube extends Window {
@@ -38,7 +38,7 @@ const YoutubePlayerWrapper: React.FC<YoutubeVideoDetails> = ({ deviceType, youtu
 					trackYoutubePlayerStateChange({ deviceType, playerStateName: stateValueAsString });
 				},
 			},
-			videoId: youtubeTakeoverDetails.youtubeVideoId,
+			videoId: youtubeTakeoverDetails.videoId,
 			playerVars: {
 				autoplay: 1,
 				mute: 1,
