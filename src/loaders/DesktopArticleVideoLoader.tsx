@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { DesktopArticleVideoLoaderProps } from 'loaders/types';
 import { setVersionWindowVar } from 'loaders/utils/GetVersion';
-import { shouldLoadUcpPlayer } from 'loaders/utils/shouldLoadPlayer';
 import { getTakeoverDetails } from 'loaders/utils/GetTakeoverDetails';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
@@ -10,7 +9,7 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 	const [player, setPlayer] = useState(undefined);
 
 	useEffect(() => {
-		if (!player && shouldLoadUcpPlayer()) {
+		if (!player) {
 			getPlayer();
 		}
 

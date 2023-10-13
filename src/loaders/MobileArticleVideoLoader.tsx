@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MobileArticleVideoLoaderProps } from 'loaders/types';
 import { setVersionWindowVar } from 'loaders/utils/GetVersion';
-import { shouldLoadUcpPlayer } from 'loaders/utils/shouldLoadPlayer';
 import { MobileArticleVideoContext } from 'contexts/MobileArticleVideoContext';
 import { getTakeoverDetails } from 'loaders/utils/GetTakeoverDetails';
 
@@ -14,7 +13,7 @@ export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> =
 	const [player, setPlayer] = useState(undefined);
 
 	useEffect(() => {
-		if (!player && shouldLoadUcpPlayer()) {
+		if (!player) {
 			getPlayer();
 		}
 
