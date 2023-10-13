@@ -6,7 +6,8 @@ const isFromRecirculation = () => {
 };
 
 export const willAutoplay = () => {
-	return articleVideoCookieService.getAutoplay() !== '0';
+	// as the function is used in many I've just left return true for now as we might want to use it in the future
+	return true;
 };
 
 export const willMute = () => {
