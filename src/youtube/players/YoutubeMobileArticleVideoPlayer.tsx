@@ -3,17 +3,17 @@ import YoutubePlayerWrapper from 'youtube/players/shared/YoutubePlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
 import PlayerWrapper from 'youtube/players/shared/PlayerWrapper';
 import { useMobileArticleVideoContext } from 'contexts/MobileArticleVideoContext';
-
 import clsx from 'clsx';
 
-import { YoutubeArticleVideoPlayerProps, YoutubeTakeOverDetails } from '../types';
+import { TakeoverDetails } from 'loaders/types';
+
+import { YoutubeArticleVideoPlayerProps } from '../types';
 
 import styles from './youtubeMobileArticleVideoPlayer.module.scss';
-
 import MobileYoutubeOffScreenOverlay from './overlays/MobileYoutubeOffScreenOverlay';
 
 interface MobileArticleVideoWrapperProps {
-	youtubeTakeoverDetails: YoutubeTakeOverDetails;
+	youtubeTakeoverDetails: TakeoverDetails;
 }
 
 const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({ youtubeTakeoverDetails }) => {

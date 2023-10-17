@@ -1,4 +1,5 @@
 import 'react';
+import { TakeoverDetails } from 'loaders/types';
 
 // eslint-disable-line @typescript-eslint/no-unused-vars
 declare module 'react' {
@@ -21,26 +22,13 @@ interface WindowWithMW extends Window {
 	mw: MW;
 }
 
-export interface YoutubeTakeoverResponse {
-	product: string;
-	id: string;
-	impression_per_session: number;
-	youtube_take_over: boolean;
-	takeover_video_id: string;
-}
-
-export interface YoutubeTakeOverDetails {
-	isYoutubeTakeover?: boolean;
-	youtubeVideoId?: string;
-}
-
 export interface PlayerInstance {
 	// To fill with needed player methods...
 	getMuted: () => boolean;
 }
 
 export interface YoutubeArticleVideoPlayerProps {
-	youtubeTakeoverDetails: YoutubeTakeOverDetails;
+	youtubeTakeoverDetails: TakeoverDetails;
 }
 
 export type Player = (playerDivId: string, height: number, width: number, parent?: string[]) => PlayerInstance;

@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.8.1",
+	"version": "2.9.0",
 	"description": "JWPlayer for Fandom",
 	"engines": {
 		"node": ">=18.0.0"
@@ -25,6 +25,7 @@
 		"deploy-stand-alone": "ts-node --project stand-alone/tsconfig-stand-alone.json stand-alone/deploy/deploy.ts",
 		"watch": "NODE_ENV=development rollup -c --watch",
 		"app": "cd test-jw && yarn && yarn start",
+		"dev": "yarn build && yarn app",
 		"create-dist": "rm -rf dist && mkdir -p dist",
 		"create-standalone-dist": "rm -rf standalone-dist && mkdir -p standalone-dist",
 		"lint": "yarn eslint src && yarn prettier --check src",
@@ -150,7 +151,7 @@
 		"@fandom-frontend/design-system": "15.18.1",
 		"@fandom-frontend/react-common": "13.23.1",
 		"@fandom/context": "^0.6.1",
-		"@fandom/tracking-metrics": "0.0.28",
+		"@fandom/tracking-metrics": "0.3.0",
 		"@wikia/post-quecast": "2.0.1",
 		"clsx": "1.2.1",
 		"js-cookie": "3.0.1"

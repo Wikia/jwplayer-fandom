@@ -2,16 +2,17 @@ import React, { useRef, useState } from 'react';
 import VimeoPlayerWrapper from 'vimeo/players/shared/VimeoPlayerWrapper';
 import useOnScreen from 'utils/useOnScreen';
 import PlayerWrapper from 'vimeo/players/shared/PlayerWrapper';
-import { VimeoArticleVideoPlayerProps, VimeoTakeOverDetails } from 'vimeo/types';
+import { VimeoArticleVideoPlayerProps } from 'vimeo/types';
 import { useMobileArticleVideoContext } from 'contexts/MobileArticleVideoContext';
-
 import clsx from 'clsx';
+
+import { TakeoverDetails } from 'loaders/types';
 
 import styles from './VimeoMobileArticleVideoPlayer.module.css';
 import MobileVimeoOffScreenOverlay from './overlays/MobileVimeoOffScreenOverlay';
 
 interface MobileArticleVideoWrapperProps {
-	vimeoDetails: VimeoTakeOverDetails;
+	vimeoDetails: TakeoverDetails;
 }
 
 const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({ vimeoDetails, children }) => {
