@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { AdTimeData, Player, PlayerConfig, TimeEventData, ProgressUpdateData } from 'jwplayer/types';
+import { OptimizelyContextProvider } from 'optimizely/OptimizelyContext';
 
 const PlayerWrapper: React.FC<{ playerName: string; children: React.ReactNode }> = ({ playerName, children }) => {
 	const [jwPlayer, setJwPlayer] = useState<Player>(null);
@@ -64,7 +65,7 @@ const PlayerWrapper: React.FC<{ playerName: string; children: React.ReactNode }>
 				progressData: jwProgressData,
 			}}
 		>
-			{children}
+			<OptimizelyContextProvider>{children}</OptimizelyContextProvider>
 		</PlayerContext.Provider>
 	);
 };

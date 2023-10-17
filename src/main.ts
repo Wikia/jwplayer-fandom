@@ -6,10 +6,6 @@ export { default as JWMobileArticleVideoPlayer } from 'jwplayer/players/MobileAr
 
 export { default as JWCanonicalVideoPlayer } from 'jwplayer/players/CanonicalVideoPlayer/CanonicalVideoPlayer';
 
-export { default as JWDesktopReskinnedArticleVideoPlayer } from 'experimental/players/DesktopReskinnedArticleVideoPlayer/DesktopReskinnedArticleVideoPlayer';
-
-export { default as DesktopFloatOnScrollArticleVideoPlayer } from 'experimental/players/DesktopFloatOnScrollArticleVideoPlayer/DesktopFloatOnScrollArticleVideoPlayer';
-
 export { default as RedVentureVideoPlayer } from 'jwplayer/players/RedVentureVideoPlayer/RedVentureVideoPlayer';
 
 export { default as YoutubeDesktopArticleVideoPlayer } from 'youtube/players/YoutubeDesktopArticleVideoPlayer';

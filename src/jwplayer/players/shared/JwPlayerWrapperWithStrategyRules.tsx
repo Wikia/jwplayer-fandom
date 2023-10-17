@@ -1,5 +1,12 @@
 import React, { useContext } from 'react';
-import { JWPauseEvent, JWPlacementApi, JWPlayerApi, JWPlayEvent, JWPPlacementReadyResponse } from 'jwplayer/types';
+import {
+	JWPauseEvent,
+	JWPlacementApi,
+	JWPlayerApi,
+	JWPlayEvent,
+	JWPPlacementReadyResponse,
+	Player,
+} from 'jwplayer/types';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { JwPlayerWrapperProps } from 'jwplayer/types';
 import { jwPlayerPlaybackTracker, triggerVideoMetric } from 'jwplayer/utils/videoTracking';
@@ -33,7 +40,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	const strategyRulesPlacementId = '21rL5wJF';
 	const recommendationPlaylistId = 'FOhaD53w';
 
-	const registerEventHandlers = (playerInstance) => {
+	const registerEventHandlers = (playerInstance: Player) => {
 		playerInstance.on(JWEvents.AD_PAUSE, ({ pauseReason, viewable }: JWPauseEvent) => {
 			// Keep playing the ad when the user closed the mini player
 			if (viewable === 0 && pauseReason === 'external') {

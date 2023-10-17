@@ -60,51 +60,15 @@ Read more about how to implement and use them [here](https://github.com/Wikia/br
 
 ## Running Experiments
 
-Experimenting is supported directly within the JW Player repository. The JWPlayer repository uses the
-[pathfinder-lite](https://github.com/Wikia/pathfinder-lite) library to expose tools for experimenting in Fandom.
-Looks through the documentation in that repository to get started with experimenting. Below is a small snippet of code
-on how experimentation can be setup in a Loader.
+We use Optimizely for AB testing. There is OptimizelyContext that provides data about active experiments to all the components.
+To check if the variant is active for a given experiment, use `useOptimizelyVariation` hook:
 
-```javascript
-import defineExperiment from '@fandom/pathfinder-lite/experiments/defineExperiment';
-import getExperiment from '@fandom/pathfinder-lite/experiments/getExperiment';
-import { Experiment } from '@fandom/pathfinder-lite/types';
-
-...
-
-const mobileReskinnedExperiment = defineExperiment({
-	name: 'mobile-reskinned-player',
-	buckets: ['p'],
-	startDate: Date.parse('2023-02-09T08:00:00'),
-	endDate: Date.parse('2023-02-20T11:59:00'),
-});
-
-...
-
-const getPlayer = async () => {
-  const currentExperiment: Experiment = getExperiment([mobileReskinnedExperiment]);
-
-  if (currentExperiment?.name === mobileReskinnedExperiment?.name) {
-    currentExperiment.log.info('Loading re-skinned Mobile Article Video Player');
-    import('experimental/players/MobileReskinnedArticleVideoPlayer/MobileReskinnedArticleVideoPlayer').then(
-        ({ default: JWMobileReskinnedArticleVideoPlayer }) =>
-            setPlayer(<JWMobileReskinnedArticleVideoPlayer videoDetails={videoDetails} />),
-    );
-    return;
-  }
-
-  // By default if there is no experiment just set the base player
-  if (!currentExperiment) {
-    import('jwplayer/players/MobileArticleVideoPlayer/MobileArticleVideoPlayer').then(
-        ({ default: JWMobileArticleVideoPlayer }) =>
-            setPlayer(<JWMobileArticleVideoPlayer videoDetails={videoDetails} />),
-    );
-
-    return;
-  }
-}
-
-```
+    ```js
+    const MY_OPTIMIZELY_EXPERIMENT_ID = '1234567890';
+    const MY_OPTIMIZELY_EXPERIMENT_VARIATION_1 = 'my-variation-name';
+    const myExperimentVariation = useOptimizelyVariation(MY_OPTIMIZELY_EXPERIMENT_ID);
+    const isMyVariationActive = myExperimentVariation === MY_OPTIMIZELY_EXPERIMENT_VARIATION_1;
+    ```
 
 ## Special Non-JW Player Takeovers
 
@@ -124,24 +88,13 @@ The first thing you need to do is to clone repo, install dependencies and run `y
 
 - Clone repo
 - Run `yarn install`
-- Run `yarn build` to build the player inside the `/dist` directory
+- Run `yarn start` to build the player inside the `/dist` directory and watch for changes and start test app (which lives in `test-jw` directory)
 - Open up the `App.js` file in `/test-jw/src/` and check that the right player is loading in the app.
   The default one that should be loaded is the `DesktopArticleVideoLoader`.
   This will load the Desktop version of the JWPlayer that's loaded on all of our wiki pages.
-- To start `App.js`, run the `yarn app` command from the root of the project.
-  This command is located inside the root `package.json` file. This application works by doing a `yarn link`
-  of the root `/dist` directory. Make sure that the `/dist` contains files that are built through the `yarn build`
-  command that should've been ran in the previous steps
-- In case you don't see anything popping up on, then the most likely culprit is the `adComplete()` hook in the
-  DesktopArticleVideoPlayer (or other Players that are loaded through the Loader in `App.js`). The easiest thing to do
-  is comment out the `adComplete()` call, and statically set it to `true`.
-- The `adComplete()` function communicates with AdEngine, however on localhost AdEng is not loaded by default. As a result,
-  the player never loads. Another option is to add in a query param in the `adComplete()` function to bypass the AdEng communication, and return true.
 - By now, the Video Player should've loaded for you. Make sure that in this case, the `DesktopArticleVideoLoader` component has the `videoDetails` prop
   passed to it. There is a sample of the `videoDetails` prop imported in the `App.js` file by default. All the samples are set in the
   `/test-jw/src/videoConfigs.js` file.
-- Whenever you're making changes to the Video Player component you're doing development on, make sure to re-run `yarn build` each time you make the change.
-  This process can be improved by using the `yarn watch run`, but it may not work a 100% in all cases. Some tweaking may be needed there.
 - When the JWPlayer changes are ready to be tested on other apps, such as [unified-platform](https://github.com/Wikia/unified-platform), then you can change
   the `version` variable in the `package.json`, and add in `test-1` or something along those lines. There's no easy way to test the jwplayer package
   without deploying it to artifactory. Deployment steps are covered below. For testing packages on other apps, a plain `yarn pub` works. No need to add params to it.

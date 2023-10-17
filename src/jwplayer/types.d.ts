@@ -17,7 +17,7 @@ export interface JWPlayerApi {
 export interface JWPPlacementReadyResponse {
 	placementId: string;
 	playerDivId: string;
-	player: JWPlayerApi;
+	player: Player;
 }
 
 export interface JWPlacementApi {
@@ -272,7 +272,7 @@ export type Player = {
 	getState: () => string;
 	getMute: () => boolean;
 	setup(options: PlayerConfig): Player;
-	registerPlugin(name: string, version: string, plugin: Record<string, unknown> | typeof FandomWirewaxPlugin);
+	registerPlugin(name: string, version: string, plugin: Record<string, unknown> | typeof FandomWirewaxPlugin): void;
 	getConfig: () => PlayerConfig;
 	getContainer: () => HTMLElement;
 	seek: (seekTo: number) => void;

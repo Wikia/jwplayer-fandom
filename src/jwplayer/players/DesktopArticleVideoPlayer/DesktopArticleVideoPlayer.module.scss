@@ -26,6 +26,10 @@
 	bottom: 45px;
 }
 
+.isWideVariant {
+	width: 400px;
+}
+
 .topBar {
 	width: 100%;
 	position: relative;
@@ -36,4 +40,12 @@
 	position: absolute;
 	right: 0;
 	top: 0;
+}
+
+// styles for on scroll experiement (25676340498), JWPlayer variant (25668500411)
+// they've been added to move the player higher so the "wikiabar" is not covering the close (X) button
+:global {
+	.jw-flag-floating.jw-floating-dismissible .jw-wrapper {
+		bottom: 77px !important;
+	}
 }
