@@ -1,15 +1,10 @@
 import { getCommunicationService } from 'jwplayer/utils/communication';
-import { setVideoSeenInSession } from 'jwplayer/utils/articleVideo/articleVideoSession';
 import { willAutoplay, willMute } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
 
 export default function useOnArticlePlayerReady(videoDetails, playerInstance): void {
 	const playerKey = 'aeJWPlayerKey';
 	const communicationService = getCommunicationService();
-
-	if (!videoDetails.isDedicatedForArticle) {
-		setVideoSeenInSession();
-	}
 
 	window.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', { detail: playerInstance }));
 	window[playerKey] = playerInstance;
