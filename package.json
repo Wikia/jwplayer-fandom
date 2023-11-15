@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.10.2",
+	"version": "2.10.3",
 	"description": "JWPlayer for Fandom",
 	"engines": {
 		"node": ">=18.0.0"
