@@ -36,6 +36,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	stopAutoAdvanceOnExitViewport,
 	shouldLoadSponsoredContentList = true,
 	jwPlayerContainerEmbedId = 'featured-video__player',
+	vastXml = '',
 }) => {
 	const { setPlayer, setConfig } = useContext(PlayerContext);
 	const { playlistUrl } = config;
@@ -74,6 +75,10 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 			// This is meant to be an experiment
 			// For the long term this should be probably handled on the backend (Article-video pandora service)
 			const { image, ...configWithoutImage } = config; // eslint-disable-line
+
+			if (vastXml !== '') {
+				configWithoutImage['advertising']['vastxml'] = vastXml;
+			}
 
 			const playerInstance = window.jwplayer(elementId).setup({
 				...defaultConfig,

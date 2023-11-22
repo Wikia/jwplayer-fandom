@@ -7,12 +7,14 @@ interface AdEngineSetupData {
 	showAds: boolean;
 	strategyRulesEnabled?: boolean;
 	vastUrl?: string;
+	vastXml?: string;
 }
 
 export interface JwpAdsSetupCompleteResult {
 	complete: boolean;
 	strategyRulesEnabled: boolean;
 	vastUrl: string;
+	vastXml?: string;
 }
 
 export default function useJwpAdsSetupComplete(): JwpAdsSetupCompleteResult {
@@ -21,17 +23,19 @@ export default function useJwpAdsSetupComplete(): JwpAdsSetupCompleteResult {
 	const [jwpAdsSetupComplete, setJwpAdsSetupComplete] = useState(null);
 	const [vastUrl, setVastUrl] = useState(null);
 	const [strategyRulesEnabled, setStrategyRulesEnabled] = useState(false);
+	const [vastXml, setVastXml] = useState('');
 
 	useEffect(() => {
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_CONFIG_MESSAGE_RECIEVED);
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_SETUP_JW_LISTEN_START);
 		listenSetupJWPlayer(function (adEngineData: AdEngineSetupData) {
 			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_SETUP_JW_MESSAGE_RECIEVED);
-			const { vastUrl, strategyRulesEnabled } = adEngineData;
+			const { vastUrl, vastXml, strategyRulesEnabled } = adEngineData;
 
 			setJwpAdsSetupComplete(true);
 			setVastUrl(vastUrl);
 			setStrategyRulesEnabled(strategyRulesEnabled);
+			setVastXml(vastXml);
 		});
 	}, []);
 
@@ -43,5 +47,6 @@ export default function useJwpAdsSetupComplete(): JwpAdsSetupCompleteResult {
 		complete: jwpAdsSetupComplete,
 		strategyRulesEnabled,
 		vastUrl,
+		vastXml,
 	};
 }

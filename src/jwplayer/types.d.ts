@@ -453,6 +453,7 @@ export interface JwPlayerWrapperProps extends JwPlayerContainerId {
 	stopAutoAdvanceOnExitViewport?: boolean;
 	shouldLoadSponsoredContentList?: boolean;
 	vastUrl?: string;
+	vastXml?: string;
 	parentRef?: MutableRefObject<HTMLElement>;
 }
 

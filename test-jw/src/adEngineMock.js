@@ -28,7 +28,7 @@ export function unblockPlayer() {
 }
 
 export function unblockPlayerForStrategyRules() {
-	communicationService.dispatch( {
+	communicationService.dispatch({
 		...adEngineSetupJWPlayerActionPayload,
 		strategyRulesEnabled: true,
 		vastUrl: VAST_URL,
@@ -38,7 +38,7 @@ export function unblockPlayerForStrategyRules() {
 export function unblockPlayerForVastXml() {
 	sendMockedDataPrivacyAction();
 	sendMockedAdEngineConfiguredAction();
-	communicationService.dispatch( {
+	communicationService.dispatch({
 		...adEngineSetupJWPlayerActionPayload,
 		vastXml: VAST_XML,
 	});
