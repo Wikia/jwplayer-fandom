@@ -2,7 +2,7 @@ import CanonicalVideoLoader from '@fandom/jwplayer-fandom/CanonicalVideoLoader'
 import { DesktopArticleVideoLoader } from '@fandom/jwplayer-fandom/DesktopArticleVideoLoader';
 import { MobileArticleVideoLoader } from '@fandom/jwplayer-fandom/MobileArticleVideoLoader';
 
-import { unblockPlayer, unblockPlayerForStrategyRules } from './adEngineMock';
+import { unblockPlayer, unblockPlayerForStrategyRules, unblockPlayerForVastXml } from './adEngineMock';
 import { WIREWAX_VIDEO, CANONICAL_VIDEO, ARTICLE_VIDEO_DETAILS } from './videoConfigs';
 
 import './app.css';
@@ -28,11 +28,16 @@ function App() {
 		unblockPlayerForStrategyRules();
 	};
 
+	const triggerVastXml = () => {
+		unblockPlayerForVastXml();
+	};
+
 	return (
 		<>
 			<div>
 				<button onClick={triggerAd}>TEST</button>
 				<button onClick={triggerStrategyRulesAd}>TEST WITH STRATEGY RULES</button>
+				<button onClick={triggerVastXml}>TEST WITH VAST XML</button>
 			</div>
 			<div className="App">
 				{/*<CanonicalVideoLoader currentVideo={CANONICAL_VIDEO} />*/}
