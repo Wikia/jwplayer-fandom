@@ -111,6 +111,7 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 									config={getArticleVideoConfig(videoDetails)}
 									onReady={onPlayerInstanceReady}
 									stopAutoAdvanceOnExitViewport={false}
+									vastXml={jwpAdsSetupComplete.vastXml}
 								/>
 								<input type="hidden" value={String(dismissed)} name={inputName} />
 
