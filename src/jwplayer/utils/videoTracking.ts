@@ -18,7 +18,6 @@ import {
 	getIsEmbed,
 	getJWQualityManifest,
 } from 'jwplayer/utils/globalJWInterface';
-import addGlobalProps from 'jwplayer/utils/videoTrackingGlobalProps';
 import getVideoPlayerVersion from 'jwplayer/utils/getVideoPlayerVersion';
 import triggerMetric from '@fandom/tracking-metrics/metrics/metric';
 
@@ -79,7 +78,7 @@ export const PROPERTY_NAMES = {
 };
 
 function addRunTimeParams(trackingParams: TrackData): TrackData {
-	const trackDataObject: TrackData = { ...addGlobalProps(), ...trackingParams };
+	const trackDataObject: TrackData = { ...trackingParams };
 	const playerId = trackDataObject.player_element_id as string;
 
 	trackDataObject[PROPERTY_NAMES.VIDEO_AUTO_PLAY_STATE] = getAutoPlayState(playerId);
