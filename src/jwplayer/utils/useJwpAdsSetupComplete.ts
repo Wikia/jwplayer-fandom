@@ -20,10 +20,10 @@ export interface JwpAdsSetupCompleteResult {
 export default function useJwpAdsSetupComplete(): JwpAdsSetupCompleteResult {
 	const communicationService = getCommunicationService();
 
-	const [jwpAdsSetupComplete, setJwpAdsSetupComplete] = useState(null);
-	const [vastUrl, setVastUrl] = useState(null);
-	const [strategyRulesEnabled, setStrategyRulesEnabled] = useState(false);
-	const [vastXml, setVastXml] = useState('');
+	const [jwpAdsSetupComplete, setJwpAdsSetupComplete] = useState<boolean>(null);
+	const [vastUrl, setVastUrl] = useState<string>(undefined);
+	const [strategyRulesEnabled, setStrategyRulesEnabled] = useState<boolean>(false);
+	const [vastXml, setVastXml] = useState<string>(undefined);
 
 	useEffect(() => {
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_CONFIG_MESSAGE_RECIEVED);
