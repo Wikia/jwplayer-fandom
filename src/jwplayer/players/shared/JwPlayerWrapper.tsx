@@ -50,6 +50,12 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 		initPlayer(jwPlayerContainerEmbedId, playerUrl);
 	}, shouldLoadSponsoredContentList);
 
+	const isSponsoredVideo = () => {
+		const isSponsored = config.playlist && config.playlist[0] && config.playlist[0].isSponsored === 'Yes';
+		console.debug('isSponsored: ', isSponsored);
+		return isSponsored;
+	};
+
 	const initPlayer = (elementId: string, playerUrl?: string) => {
 		console.debug('Legacy wrapper enabled: the embed will be loaded in head', playlistUrl);
 
@@ -76,7 +82,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 			// For the long term this should be probably handled on the backend (Article-video pandora service)
 			const { image, ...configWithoutImage } = config; // eslint-disable-line
 
-			if (vastXml) {
+			if (vastXml && !isSponsoredVideo()) {
 				configWithoutImage['advertising']['vastxml'] = vastXml;
 			}
 

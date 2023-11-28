@@ -52,6 +52,7 @@ export type PlaylistItem = {
 	userUrl?: string;
 	pubdate?: number;
 	link?: string;
+	isSponsored?: '' | 'Yes';
 };
 
 interface PlaylistItemPlayerEventData {
