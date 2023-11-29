@@ -3,6 +3,7 @@ import { MobileArticleVideoLoaderProps } from 'loaders/types';
 import { setVersionWindowVar } from 'loaders/utils/GetVersion';
 import { MobileArticleVideoContext } from 'contexts/MobileArticleVideoContext';
 import { getTakeoverDetails } from 'loaders/utils/GetTakeoverDetails';
+import { eligibleTracker } from 'loaders/utils/tracking';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
@@ -18,6 +19,7 @@ export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> =
 		}
 
 		setVersionWindowVar();
+		eligibleTracker.impression();
 	}, []);
 
 	const getPlayer = async () => {
