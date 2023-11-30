@@ -504,15 +504,15 @@
   version "0.0.0"
   uid ""
 
-"@fandom/tracking-metrics@0.3.0-COTECH-863":
-  version "0.3.0-COTECH-863"
-  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/tracking-metrics/-/@fandom/tracking-metrics-0.3.0-COTECH-863.tgz#a4a9ec5973c879dc22a22d90f4bc26d8502c2e03"
-  integrity sha512-7QMXs2VDT98Krnd1PaXDsqFysxuQd6gOJ4w5v7RbcSH8BXQ0+KQbCtwyIJI0+QDzo+R6WYtsV20h6tdWe1+ZKw==
-
 "@fandom/tracking-metrics@0.4.0":
   version "0.4.0"
   resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/tracking-metrics/-/@fandom/tracking-metrics-0.4.0.tgz#105c6a51f5a6a3f951a615d87abb17f3c0f3427f"
   integrity sha512-QQPg7GA6NeNI7jAI7Qsy6XkE9kzRMeFbNQeTzm5RUp8NfSpPgKrVOdpZAHe1L8SkpmISsNf9vWDm6ISY2AyGJw==
+
+"@fandom/tracking-metrics@0.4.1":
+  version "0.4.1"
+  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/tracking-metrics/-/@fandom/tracking-metrics-0.4.1.tgz#16e19ebab4c3e8ce01d1b907a5e94c59a643f842"
+  integrity sha512-5rBvgGdPwHJq1u9MWjeRIkMraSjHgxDrmpnsf+K9YeK2jKTuFwt96wkNxGjVAjm2yA6fEYwu/ZFjOGx/YEzFhQ==
 
 "@floating-ui/core@^1.4.2":
   version "1.5.0"

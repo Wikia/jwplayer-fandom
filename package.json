@@ -146,13 +146,13 @@
 		"react": "^16.14.0 || ^17.0.2 || ^18.0.0",
 		"react-dom": "^16.14.0 || ^17.0.2 || ^18.0.0",
 		"react-i18next": "^11.7.1",
-		"@fandom/tracking-metrics": "^0.3.0"
+		"@fandom/tracking-metrics": "^0.4.1"
 	},
 	"dependencies": {
 		"@fandom-frontend/design-system": "15.18.1",
 		"@fandom-frontend/react-common": "13.23.1",
 		"@fandom/context": "^0.6.1",
-		"@fandom/tracking-metrics": "0.3.0-COTECH-863",
+		"@fandom/tracking-metrics": "0.4.1",
 		"@wikia/post-quecast": "2.0.1",
 		"clsx": "1.2.1",
 		"js-cookie": "3.0.1"
