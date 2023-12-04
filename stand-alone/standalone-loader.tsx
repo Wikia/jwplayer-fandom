@@ -8,9 +8,9 @@ import {
 	canPlayerRender,
 	getVideoDetails,
 	getVideoWrapperElement,
-	RedVenturePlayerContextProps
+	RedVenturePlayerContextProps,
 } from './loaderHelper';
-import { RedVentureVideoDetails, RedVentureVideoPlayerProps } from "./types";
+import { RedVentureVideoDetails, RedVentureVideoPlayerProps } from './types';
 
 console.debug('Standalone RedVenture Video Player ...');
 
@@ -21,7 +21,7 @@ interface WindowWithRedVentureJWPlayer extends Window {
 			playerName: string;
 		};
 		[key: string]: unknown;
-	},
+	};
 	loadPlayer: (props: RedVenturePlayerContextProps) => void;
 }
 
@@ -80,6 +80,7 @@ window.loadPlayer = async (context: RedVenturePlayerContextProps) => {
 			jwPlayerContainerEmbedId: getJwPlayerContainerEmbedId(context),
 			playerUrl: context?.playerUrl,
 			autoPlay: context?.autoPlay,
+			hasAds: context.hasAds,
 		} as RedVentureVideoPlayerProps),
 		reactRoot,
 	);

@@ -1,8 +1,4 @@
-import {
-	JwPlayerContainerId,
-	RedVentureVideoDetails,
-	RequireOnlyOne
-} from './types';
+import { JwPlayerContainerId, RedVentureVideoDetails, RequireOnlyOne } from './types';
 
 export interface RedVenturePlayerContext extends JwPlayerContainerId {
 	/**
@@ -89,6 +85,10 @@ export interface RedVenturePlayerContext extends JwPlayerContainerId {
 	 * }
 	 * */
 	autoPlay?: boolean;
+	/**
+	 * @description An optional parameter that determines whether the video should have ads.
+	 */
+	hasAds?: boolean;
 }
 
 export type RedVenturePlayerContextProps = RequireOnlyOne<
@@ -185,7 +185,7 @@ export const canPlayerRender = (context: RedVenturePlayerContextProps): boolean 
 	return true;
 };
 
-const newsAndRatingsNamesWithDefaultPlayer = [ 'gamespot', 'gamefaqs', 'comicvine', 'tvguide', 'metacritic' ];
+const newsAndRatingsNamesWithDefaultPlayer = ['gamespot', 'gamefaqs', 'comicvine', 'tvguide', 'metacritic'];
 export const assurePlayerUrl = (context: RedVenturePlayerContextProps): RedVenturePlayerContextProps => {
 	const newContext = { ...context };
 
@@ -193,5 +193,5 @@ export const assurePlayerUrl = (context: RedVenturePlayerContextProps): RedVentu
 		newContext.playerUrl = 'https://cdn.jwplayer.com/libraries/0YAHnB5r.js';
 	}
 
-	return newContext
+	return newContext;
 };

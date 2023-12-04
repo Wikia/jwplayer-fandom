@@ -15,20 +15,6 @@ import clsx from 'clsx';
 
 import styles from './redVentureVideoPlayer.module.scss';
 
-interface PhoenixUser {
-	isPremium?: () => boolean;
-}
-
-interface Phoenix {
-	User?: PhoenixUser;
-}
-
-interface WindowWithPhoenix extends Window {
-	Phoenix?: Phoenix;
-}
-
-declare let window: WindowWithPhoenix;
-
 interface RedVentureVideoWrapperProps extends RedVentureVideoPlayerProps {
 	right?: number;
 	width?: number;
@@ -40,15 +26,10 @@ const RedVentureVideoWrapper: React.FC<RedVentureVideoWrapperProps> = ({
 	jwPlayerContainerEmbedId,
 	autoPlay,
 	playerUrl,
+	hasAds = true,
 }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
-	// Check if Ads are disabled on any of the N&R Games sites. If the resolving function is not present, then always resolve to connecting with AdEng.
-	// This check should only apply to the GiantBomb N&R site. Safeguards are added in for other sites, where this function may not be defined.
-	// If the user is a GiantBomb premium user, then let's flag the video player as not having ads. Premium users should not see video ads.
-	const hasAds =
-		window?.Phoenix?.User?.isPremium && typeof window?.Phoenix?.User?.isPremium === 'function'
-			? !window.Phoenix.User.isPremium()
-			: true;
+
 	const adComplete = useRvAdComplete(hasAds);
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
@@ -111,6 +92,7 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 	jwPlayerContainerEmbedId,
 	playerUrl,
 	autoPlay,
+	hasAds,
 }) => {
 	return (
 		<PlayerWrapper playerName="jw-red-venture-video">
@@ -120,6 +102,7 @@ const RedVentureVideoPlayer: React.FC<RedVentureVideoPlayerProps> = ({
 				jwPlayerContainerEmbedId={jwPlayerContainerEmbedId}
 				playerUrl={playerUrl}
 				autoPlay={autoPlay}
+				hasAds={hasAds}
 			/>
 		</PlayerWrapper>
 	);
