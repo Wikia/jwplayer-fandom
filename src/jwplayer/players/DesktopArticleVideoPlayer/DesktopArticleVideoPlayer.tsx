@@ -122,6 +122,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 										onReady={onPlayerInstanceReady}
 										stopAutoAdvanceOnExitViewport={false}
 										playerUrl={shouldUsePlayerWithOnScroll ? PLAYER_WITH_ON_SCROLL_ENABLED_URL : undefined}
+										vastXml={jwpAdsSetupComplete.vastXml}
 									/>
 									{shouldRenderVideoDetails && <VideoDetails />}
 									<input type="hidden" value={String(dismissed)} name={inputName} />

@@ -52,6 +52,7 @@ export type PlaylistItem = {
 	userUrl?: string;
 	pubdate?: number;
 	link?: string;
+	isSponsored?: '' | 'Yes';
 };
 
 interface PlaylistItemPlayerEventData {
@@ -453,6 +454,7 @@ export interface JwPlayerWrapperProps extends JwPlayerContainerId {
 	stopAutoAdvanceOnExitViewport?: boolean;
 	shouldLoadSponsoredContentList?: boolean;
 	vastUrl?: string;
+	vastXml?: string;
 	parentRef?: MutableRefObject<HTMLElement>;
 }
 
