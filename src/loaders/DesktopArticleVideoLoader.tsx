@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { DesktopArticleVideoLoaderProps } from 'loaders/types';
 import { setVersionWindowVar } from 'loaders/utils/GetVersion';
 import { getTakeoverDetails } from 'loaders/utils/GetTakeoverDetails';
+import { eligibleTracker } from 'loaders/utils/tracking';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
@@ -14,6 +15,7 @@ export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps>
 		}
 
 		setVersionWindowVar();
+		eligibleTracker.impression();
 	}, []);
 
 	const getPlayer = async () => {

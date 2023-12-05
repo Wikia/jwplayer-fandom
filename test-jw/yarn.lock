@@ -504,10 +504,10 @@
   version "0.0.0"
   uid ""
 
-"@fandom/tracking-metrics@0.3.0":
-  version "0.3.0"
-  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/tracking-metrics/-/@fandom/tracking-metrics-0.3.0.tgz#9bcd7296893ec848c49e520ea560cf1472109fe2"
-  integrity sha512-Ur2js+2JbCCO/MCiGG660vNVUjI1UlshcTa6lNJ9ppsuz8KHQ3hHQfx/rvZBbneLQtMAZSAXEC/LdNT3kLjLpg==
+"@fandom/tracking-metrics@0.4.1":
+  version "0.4.1"
+  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/tracking-metrics/-/@fandom/tracking-metrics-0.4.1.tgz#16e19ebab4c3e8ce01d1b907a5e94c59a643f842"
+  integrity sha512-5rBvgGdPwHJq1u9MWjeRIkMraSjHgxDrmpnsf+K9YeK2jKTuFwt96wkNxGjVAjm2yA6fEYwu/ZFjOGx/YEzFhQ==
 
 "@floating-ui/core@^1.4.2":
   version "1.5.0"

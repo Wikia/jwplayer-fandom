@@ -84,7 +84,7 @@ const config = [
 			}),
 			visualizer(),
 		],
-		external: ['react', 'react-dom', 'react-i18next', 'react-i18next'],
+		external: ['react', 'react-dom', 'react-i18next', 'react-i18next', /^@fandom\/tracking-metrics/],
 	},
 	{
 		input: './src/types.d.ts',
