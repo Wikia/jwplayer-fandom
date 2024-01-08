@@ -488,6 +488,7 @@ export interface RedVentureVideoPlayerProps extends JwPlayerContainerId {
 	showScrollPlayer: boolean;
 	playerUrl?: string;
 	autoPlay?: boolean;
+	hasAds?: boolean;
 }
 
 export interface MobileArticleVideoPlayerProps {
