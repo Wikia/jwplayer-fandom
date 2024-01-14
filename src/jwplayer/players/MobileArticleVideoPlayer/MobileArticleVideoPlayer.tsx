@@ -20,6 +20,9 @@ import { StrategyRulesWrapper } from 'jwplayer/players/shared/StrategyRulesWrapp
 
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 
+import { getCommunicationService } from 'jwplayer/utils/communication/communicationService';
+import { iasTracker } from 'jwplayer/utils/iasTracker';
+
 import styles from './mobileArticleVideoPlayer.module.scss';
 
 interface MobileArticleVideoWrapperProps {
@@ -49,6 +52,7 @@ const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({ i
 export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const adEngineComplete = useAdEngineComplete();
+	const communicationService = getCommunicationService();
 	const jwpAdsSetupComplete = useJwpAdsSetupComplete();
 	const onScreen = useOnScreen(ref, '0px', 1);
 	const [dismissed, setDismissed] = useState(false);
@@ -61,6 +65,9 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 
 	const onPlayerInstanceReady = (playerInstance) => {
 		articlePlayerOnReady(videoDetails, playerInstance);
+		communicationService.on('[JWPlayer] Player Ready', async () => {
+			await iasTracker.loadIasTrackerIfEnabled();
+		});
 		setIsPlayerReady(true);
 	};
 
