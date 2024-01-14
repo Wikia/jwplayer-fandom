@@ -26,11 +26,15 @@ import {
 import { useOptimizelyVariation } from 'optimizely/useOptimizelyVariation';
 import { useOptimizelyTrack } from 'optimizely/useOptimizelyTrack';
 
+import { getCommunicationService } from 'jwplayer/utils/communication/communicationService';
+import { iasTracker } from 'jwplayer/utils/iasTracker';
+
 import styles from './DesktopArticleVideoPlayer.module.scss';
 
 export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const adEngineComplete = useAdEngineComplete();
+	const communicationService = getCommunicationService();
 	const jwpAdsSetupComplete = useJwpAdsSetupComplete();
 	const onScrollVariation = useOptimizelyVariation(ON_SCROLL_EXPERIMENT_ID);
 	useOptimizelyTrack(ON_SCROLL_EXPERIMENT_ID);
@@ -62,6 +66,9 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 
 	const onPlayerInstanceReady = (playerInstance) => {
 		articlePlayerOnReady(videoDetails, playerInstance);
+		communicationService.on('[JWPlayer] Player Ready', async () => {
+			await iasTracker.loadIasTrackerIfEnabled();
+		});
 		setIsPlayerReady(true);
 	};
 
