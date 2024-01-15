@@ -66,7 +66,7 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 	const onPlayerInstanceReady = (playerInstance) => {
 		articlePlayerOnReady(videoDetails, playerInstance);
 		communicationService.on('[JWPlayer] Player Ready', async () => {
-			await iasTracker.loadIasTrackerIfEnabled();
+			await iasTracker.loadIasTrackerIfEnabled('fandommobile');
 		});
 		setIsPlayerReady(true);
 	};

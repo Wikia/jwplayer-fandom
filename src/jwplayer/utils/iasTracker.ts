@@ -4,8 +4,11 @@ const scriptUrl = '//static.adsafeprotected.com/vans-adapter-google-ima.js';
 class IasTracker {
 	private scriptPromise: Promise<Event>;
 
-	public async loadIasTrackerIfEnabled(): Promise<void> {
-		if (localStorage.getItem('instant-config-fandomdesktop') != null) {
+	public async loadIasTrackerIfEnabled(skin: 'fandomdesktop' | 'fandommobile'): Promise<void> {
+		const deserializedConfigData = JSON.parse(localStorage.getItem(`instant-config-${skin}`)).data;
+		const { icIASVideoTracking } = JSON.parse(deserializedConfigData);
+
+		if (icIASVideoTracking[0].value === true) {
 			await this.load();
 		}
 	}

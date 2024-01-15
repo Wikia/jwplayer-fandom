@@ -67,7 +67,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 	const onPlayerInstanceReady = (playerInstance) => {
 		articlePlayerOnReady(videoDetails, playerInstance);
 		communicationService.on('[JWPlayer] Player Ready', async () => {
-			await iasTracker.loadIasTrackerIfEnabled();
+			await iasTracker.loadIasTrackerIfEnabled('fandomdesktop');
 		});
 		setIsPlayerReady(true);
 	};
