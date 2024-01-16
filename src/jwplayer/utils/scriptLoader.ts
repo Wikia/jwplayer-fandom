@@ -3,7 +3,7 @@ class ScriptLoader {
 		src: string,
 		type = 'text/javascript',
 		isAsync = true,
-		node: HTMLElement | string = null,
+		node: HTMLElement | string,
 		parameters: Record<string, string> = {},
 		datasets: Partial<DOMStringMap> = {},
 	): HTMLScriptElement {
