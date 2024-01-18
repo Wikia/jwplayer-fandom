@@ -24,12 +24,6 @@ interface WindowJWPlayer extends Window {
 	sponsoredVideos?: string[];
 }
 
-export interface VideoAdsOptions {
-	showAds: boolean;
-	targetingParams?: string;
-	videoAdUnitPath?: string;
-}
-
 declare let window: WindowJWPlayer;
 
 const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
