@@ -37,7 +37,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	parentRef,
 }) => {
 	const { playlistUrl } = config;
-	const strategyRulesPlacementId = '21rL5wJF';
+	const strategyRulesPlacementId = 'yXlW7CsI';
 	const recommendationPlaylistId = 'FOhaD53w';
 
 	const registerEventHandlers = (playerInstance: Player) => {
