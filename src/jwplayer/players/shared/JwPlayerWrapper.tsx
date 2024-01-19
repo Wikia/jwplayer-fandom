@@ -9,6 +9,9 @@ import useBeforeJwpWrapperRendered from 'jwplayer/utils/useBeforeJwpWrapperRende
 import JWEvents from 'jwplayer/players/shared/JWEvents';
 import addBaseTrackingEvents from 'jwplayer/players/shared/addBaseTrackingEvents';
 import slugify from 'jwplayer/utils/slugify';
+import checkUserGeo from 'utils/experiments/checkUserGeo';
+
+const ROW_COUNTRIES_BLACKLIST = ['CA', 'UK', 'PH', 'TH', 'ID', 'SG', 'TW', 'MX', 'AR', 'BR', 'DE', 'FR', 'AUS', 'NZ'];
 
 interface WindowJWPlayer extends Window {
 	jwplayer?: JWPlayerApi;
@@ -33,7 +36,6 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	getDismissed = () => false,
 	onComplete,
 	className,
-	stopAutoAdvanceOnExitViewport,
 	shouldLoadSponsoredContentList = true,
 	jwPlayerContainerEmbedId = 'featured-video__player',
 	vastXml,
@@ -130,24 +132,16 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 				// Incrementing videos watched count
 				videoIndexRef.current += 1;
 
-				// if stopAutoAdvanceOnExitViewport is false then we don't want to stop the auto advance, keep normal behavior
-				if (!stopAutoAdvanceOnExitViewport) {
+				if (checkUserGeo(['US'])) {
 					return;
 				}
 
-				// if the video is on its 2nd+ play, pause the video if its not on the viewport
-				/*
-				// Temporarily removed since this was tanking the sponsored content views
-				if (videoIndexRef.current >= 1 && (playerInstance.getViewable() === 0 || document.hasFocus() === false)) {
-					// send tracking event
-					jwPlayerPlaybackTracker({ event_name: 'video_player_pause_not_viewable' });
+				const limit = checkUserGeo(ROW_COUNTRIES_BLACKLIST) ? 2 : 1;
 
-					// close the related UI to stop auto advancement, and then re-open it for users to click on
-					setTimeout(() => {
-						window.jwplayer(elementId).getPlugin('related').close();
-						window.jwplayer(elementId).getPlugin('related').open();
-					}, 1000);
-				} */
+				if (videoIndexRef.current >= limit) {
+					jwPlayerPlaybackTracker({ event_name: 'auto_advance_disabled' });
+					window.jwplayer(elementId).getPlugin('related').close();
+				}
 			});
 
 			playerInstance.setPlaylistItemCallback((item: PlaylistItem) => {

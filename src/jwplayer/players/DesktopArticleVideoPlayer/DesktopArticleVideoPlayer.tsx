@@ -120,7 +120,6 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 										getDismissed={getDismissed}
 										config={getArticleVideoConfig(videoDetails)}
 										onReady={onPlayerInstanceReady}
-										stopAutoAdvanceOnExitViewport={false}
 										playerUrl={shouldUsePlayerWithOnScroll ? PLAYER_WITH_ON_SCROLL_ENABLED_URL : undefined}
 										vastXml={jwpAdsSetupComplete.vastXml}
 									/>

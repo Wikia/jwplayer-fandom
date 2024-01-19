@@ -73,7 +73,6 @@ const RedVentureVideoWrapper: React.FC<RedVentureVideoWrapperProps> = ({
 						<JwPlayerWrapper
 							config={getRedVentureVideoConfig(videoDetails, autoPlay)}
 							onReady={(playerInstance) => redVenturePlayerOnReady(videoDetails, playerInstance)}
-							stopAutoAdvanceOnExitViewport={false}
 							shouldLoadSponsoredContentList={true}
 							jwPlayerContainerEmbedId={jwPlayerContainerEmbedId}
 							playerUrl={playerUrl}
