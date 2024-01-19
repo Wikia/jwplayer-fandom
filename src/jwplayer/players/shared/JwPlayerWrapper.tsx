@@ -11,7 +11,22 @@ import addBaseTrackingEvents from 'jwplayer/players/shared/addBaseTrackingEvents
 import slugify from 'jwplayer/utils/slugify';
 import checkUserGeo from 'utils/experiments/checkUserGeo';
 
-const ROW_COUNTRIES_BLACKLIST = ['CA', 'UK', 'PH', 'TH', 'ID', 'SG', 'TW', 'MX', 'AR', 'BR', 'DE', 'FR', 'AUS', 'NZ'];
+const SPONSORED_CONTENT_COUNTRIES = [
+	'CA',
+	'UK',
+	'PH',
+	'TH',
+	'ID',
+	'SG',
+	'TW',
+	'MX',
+	'AR',
+	'BR',
+	'DE',
+	'FR',
+	'AUS',
+	'NZ',
+];
 
 interface WindowJWPlayer extends Window {
 	jwplayer?: JWPlayerApi;
@@ -136,7 +151,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 					return;
 				}
 
-				const limit = checkUserGeo(ROW_COUNTRIES_BLACKLIST) ? 2 : 1;
+				const limit = checkUserGeo(SPONSORED_CONTENT_COUNTRIES) ? 2 : 1;
 
 				if (videoIndexRef.current >= limit) {
 					jwPlayerPlaybackTracker({ event_name: 'auto_advance_disabled' });
