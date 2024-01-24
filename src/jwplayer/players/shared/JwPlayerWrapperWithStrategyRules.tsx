@@ -15,6 +15,7 @@ import JWEvents from 'jwplayer/players/shared/JWEvents';
 import addBaseTrackingEvents from 'jwplayer/players/shared/addBaseTrackingEvents';
 import useBeforeJwpWrapperRendered from 'jwplayer/utils/useBeforeJwpWrapperRendered';
 import useScript from 'jwplayer/utils/useScript';
+import { getCommunicationService } from 'jwplayer/utils/communication/communicationService';
 
 interface WindowJWPlayer extends Window {
 	jwplayer?: JWPlayerApi;
@@ -39,6 +40,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	const { playlistUrl } = config;
 	const strategyRulesPlacementId = '21rL5wJF';
 	const recommendationPlaylistId = 'FOhaD53w';
+	const communicationService = getCommunicationService();
 
 	const registerEventHandlers = (playerInstance: Player) => {
 		playerInstance.on(JWEvents.AD_PAUSE, ({ pauseReason, viewable }: JWPauseEvent) => {
@@ -92,6 +94,16 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 		const playerInstance = payload.player;
 		registerEventHandlers(playerInstance);
 		setPlayer(playerInstance);
+
+		communicationService.dispatch({
+			type: '[Video] Player rendered',
+			payload: {
+				renderedId: 'JW player',
+				videoAdsOptions: {
+					showAds: true,
+				},
+			},
+		});
 	};
 
 	const initPlayer = () => {
