@@ -97,7 +97,6 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 								getDismissed={getDismissed}
 								config={getArticleVideoConfig(videoDetails)}
 								onReady={onPlayerInstanceReady}
-								stopAutoAdvanceOnExitViewport={false}
 							/>
 							<input type="hidden" value={String(dismissed)} name={inputName} />
 
@@ -110,7 +109,6 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 									getDismissed={getDismissed}
 									config={getArticleVideoConfig(videoDetails)}
 									onReady={onPlayerInstanceReady}
-									stopAutoAdvanceOnExitViewport={false}
 									vastXml={jwpAdsSetupComplete.vastXml}
 								/>
 								<input type="hidden" value={String(dismissed)} name={inputName} />

@@ -451,7 +451,6 @@ export interface JwPlayerWrapperProps extends JwPlayerContainerId {
 	onReady?: (playerInstance: Player) => void;
 	onComplete?: () => void;
 	className?: string;
-	stopAutoAdvanceOnExitViewport?: boolean;
 	shouldLoadSponsoredContentList?: boolean;
 	vastUrl?: string;
 	vastXml?: string;
