@@ -64,11 +64,6 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 			// only add the events after the player is ready
 			jwPlayerPlaybackTracker({ event_name: 'video_player_ready' });
 			addBaseTrackingEvents(playerInstance);
-
-			if (onReady) {
-				console.debug('Player ready...');
-				onReady(playerInstance);
-			}
 		});
 
 		if (typeof onComplete === 'function') {
@@ -79,6 +74,10 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	const jwPlayerLoaded = (payload: JWPPlacementReadyResponse) => {
 		console.debug('Placement Embed Complete: ', payload.placementId, payload.player);
 		console.debug('jwPlayerContainerEmbedId: ', payload.playerDivId);
+
+		if (onReady) {
+			onReady(payload.player);
+		}
 
 		// Set the max_resolution param for related videos
 		if (typeof window?.jwplayer?.defaults?.related?.file === 'string') {
