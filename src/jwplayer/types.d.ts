@@ -448,7 +448,7 @@ export interface JwPlayerWrapperProps extends JwPlayerContainerId {
 	getDismissed?: () => boolean;
 	config?: PlayerConfig;
 	playerUrl?: string;
-	onReady?: (playerInstance: Player) => void;
+	onReady?: (playerInstance?: Player) => void; // playerInstance for onReady is not needed in the SR scenario it is needed when AdEngine controls the ads
 	onComplete?: () => void;
 	className?: string;
 	shouldLoadSponsoredContentList?: boolean;

@@ -76,7 +76,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 		console.debug('jwPlayerContainerEmbedId: ', payload.playerDivId);
 
 		if (onReady) {
-			onReady(payload.player);
+			onReady();
 		}
 
 		// Set the max_resolution param for related videos
