@@ -23,7 +23,7 @@ export default function useOnArticlePlayerReady(videoDetails, playerInstance): v
 			audio: !willMute(),
 			ctp: !willAutoplay(),
 			slotName: 'featured',
-			videoId: videoDetails.playlist[0].mediaid,
+			videoId: videoDetails && videoDetails?.playlist?.length > 0 ? videoDetails.playlist[0].mediaid : '',
 		},
 	});
 }

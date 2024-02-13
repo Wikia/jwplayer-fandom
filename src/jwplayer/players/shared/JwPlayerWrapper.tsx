@@ -108,6 +108,10 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 				...configWithoutImage,
 			});
 
+			if (!config.playlist && onReady) {
+				onReady(playerInstance);
+			}
+
 			playerInstance.on(JWEvents.AD_PAUSE, ({ pauseReason, viewable }: JWPauseEvent) => {
 				// Keep playing the ad when the user closed the mini player
 				if (viewable === 0 && pauseReason === 'external') {
