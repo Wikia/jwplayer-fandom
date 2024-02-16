@@ -48,20 +48,17 @@ const getAdvertisingConfig = (lang: string) => {
 	};
 };
 
+function isPlaylistEmpty(playlist) {
+	return typeof playlist === 'object' && playlist?.length > 0;
+}
+
 export const getArticleVideoConfig = (videoDetails) => {
 	const lang = videoDetails?.lang || 'en';
 
-	if (window?.videoExperiments?.playlistUrl && !videoDetails?.isDedicatedForArticle) {
-		// This way we can provide an alternative playlist e.g. by using Optimizely
-		return {
-			autostart: willAutoplay() && !document.hidden,
-			mute: willMute(),
-			advertising: getAdvertisingConfig(lang),
-			playlist: window.videoExperiments.playlistUrl,
-		};
+	if (!videoDetails || !isPlaylistEmpty(videoDetails.playlist)) {
+		console.warn('No video details!');
+		return {};
 	}
-
-	if (!videoDetails) return {};
 
 	const videoId = videoDetails.playlist[0].mediaid;
 	const mappedVideoOrPlaylistId = videoDetails.mediaId;

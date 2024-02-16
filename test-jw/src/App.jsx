@@ -32,16 +32,27 @@ function App() {
 		unblockPlayerForVastXml();
 	};
 
+	const refreshWithBrokenMetadata = () => {
+		document.location.replace('/?brokenmetadata=1');
+	};
+
+	const searchParams = new URLSearchParams(document.location.search);
+	let videoDetails = {};
+	if (!searchParams.has('brokenmetadata')) {
+		videoDetails = ARTICLE_VIDEO_DETAILS;
+	}
+
 	return (
 		<>
 			<div>
 				<button onClick={triggerAd}>TEST</button>
 				<button onClick={triggerStrategyRulesAd}>TEST WITH STRATEGY RULES</button>
 				<button onClick={triggerVastXml}>TEST WITH VAST XML</button>
+				<button onClick={refreshWithBrokenMetadata}>TEST BROKEN METADATA</button>
 			</div>
 			<div className="App">
 				{/*<CanonicalVideoLoader currentVideo={CANONICAL_VIDEO} />*/}
-				<DesktopArticleVideoLoader videoDetails={ARTICLE_VIDEO_DETAILS} />
+				<DesktopArticleVideoLoader videoDetails={videoDetails} />
 				{/*<MobileArticleVideoLoader videoDetails={ARTICLE_VIDEO_DETAILS} />*/}
 			</div>
 		</>
