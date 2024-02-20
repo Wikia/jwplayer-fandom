@@ -48,10 +48,17 @@ const getAdvertisingConfig = (lang: string) => {
 	};
 };
 
+function isPlaylistEmpty(playlist) {
+	return typeof playlist === 'object' && playlist?.length > 0;
+}
+
 export const getArticleVideoConfig = (videoDetails) => {
 	const lang = videoDetails?.lang || 'en';
 
-	if (!videoDetails) return {};
+	if (!videoDetails || !isPlaylistEmpty(videoDetails.playlist)) {
+		console.warn('No video details!');
+		return {};
+	}
 
 	const videoId = videoDetails.playlist[0].mediaid;
 	const mappedVideoOrPlaylistId = videoDetails.mediaId;
