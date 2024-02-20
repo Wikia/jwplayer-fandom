@@ -65,9 +65,6 @@ export const getArticleVideoConfig = (videoDetails) => {
 
 	const videoId = videoDetails.playlist[0].mediaid;
 	const mappedVideoOrPlaylistId = videoDetails.mediaId;
-	const playlistUrl = videoDetails.isDedicatedForArticle
-		? `https://cdn.jwplayer.com/v2/media/${videoId}`
-		: `https://cdn.jwplayer.com/v2/playlists/${mappedVideoOrPlaylistId}`;
 
 	return {
 		autostart: willAutoplay() && !document.hidden,
@@ -80,6 +77,5 @@ export const getArticleVideoConfig = (videoDetails) => {
 		mediaId: videoId,
 		lang: videoDetails.lang,
 		advertising: getAdvertisingConfig(lang),
-		playlistUrl,
 	};
 };
