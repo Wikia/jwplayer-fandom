@@ -76,6 +76,8 @@ export const getArticleVideoConfig = (videoDetails) => {
 		description: videoDetails.description,
 		title: videoDetails.title,
 		playlist: getModifiedPlaylist(videoDetails.playlist, videoDetails.isDedicatedForArticle),
+		playlistId: !videoDetails.isDedicatedForArticle ? mappedVideoOrPlaylistId : null,
+		mediaId: videoId,
 		lang: videoDetails.lang,
 		advertising: getAdvertisingConfig(lang),
 		playlistUrl,
