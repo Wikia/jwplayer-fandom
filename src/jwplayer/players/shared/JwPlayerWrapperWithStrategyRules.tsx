@@ -43,6 +43,11 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	const communicationService = getCommunicationService();
 
 	const registerEventHandlers = (playerInstance: Player) => {
+		if (!playerInstance) {
+			// when JWP loads other player than JWP for example ExCo
+			return;
+		}
+
 		playerInstance.on(JWEvents.AD_PAUSE, ({ pauseReason, viewable }: JWPauseEvent) => {
 			// Keep playing the ad when the user closed the mini player
 			if (viewable === 0 && pauseReason === 'external') {
