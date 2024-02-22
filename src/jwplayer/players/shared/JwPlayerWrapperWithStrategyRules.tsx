@@ -37,12 +37,17 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	vastUrl,
 	parentRef,
 }) => {
-	const { playlistUrl } = config;
-	const strategyRulesPlacementId = 'yXlW7CsI';
+	const { mediaId, playlistId } = config;
+	const strategyRulesPlacementId = 'KmMLkvao';
 	const recommendationPlaylistId = 'FOhaD53w';
 	const communicationService = getCommunicationService();
 
 	const registerEventHandlers = (playerInstance: Player) => {
+		if (!playerInstance) {
+			// when JWP loads other player than JWP for example ExCo
+			return;
+		}
+
 		playerInstance.on(JWEvents.AD_PAUSE, ({ pauseReason, viewable }: JWPauseEvent) => {
 			// Keep playing the ad when the user closed the mini player
 			if (viewable === 0 && pauseReason === 'external') {
@@ -108,7 +113,8 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	const initPlayer = () => {
 		console.debug(
 			'Strategy rules enabled: the embed will be loaded inline',
-			playlistUrl,
+			mediaId,
+			playlistId,
 			recommendationPlaylistId,
 			vastUrl,
 		);
@@ -118,7 +124,8 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	useBeforeJwpWrapperRendered(initPlayer, shouldLoadSponsoredContentList);
 
 	const prerollAdTag = vastUrl ? encodeURIComponent(vastUrl) : '';
-	const strategyRulesUrl = `https://cdn.jwplayer.com/v2/sites/cGlKNUnj/placements/${strategyRulesPlacementId}/embed.js?custom.${strategyRulesPlacementId}.playlist=${playlistUrl}&custom.${strategyRulesPlacementId}.recommendations_playlist_id=${recommendationPlaylistId}&custom.${strategyRulesPlacementId}.preroll_ad_tag=${prerollAdTag}`;
+	const playlistOrMediaKeyVal = playlistId ? `playlist_id=${playlistId}` : `media_id=${mediaId}`;
+	const strategyRulesUrl = `https://cdn.jwplayer.com/v2/sites/cGlKNUnj/placements/${strategyRulesPlacementId}/embed.js?custom.${strategyRulesPlacementId}.${playlistOrMediaKeyVal}&custom.${strategyRulesPlacementId}.recommendations_playlist_id=${recommendationPlaylistId}&custom.${strategyRulesPlacementId}.preroll_ad_tag=${prerollAdTag}`;
 	const onBeforeLoad = () => {
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START);
 		jwPlayerPlaybackTracker({ event_name: 'video_player_start_load' });

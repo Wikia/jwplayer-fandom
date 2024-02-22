@@ -62,9 +62,6 @@ export const getArticleVideoConfig = (videoDetails) => {
 
 	const videoId = videoDetails.playlist[0].mediaid;
 	const mappedVideoOrPlaylistId = videoDetails.mediaId;
-	const playlistUrl = videoDetails.isDedicatedForArticle
-		? `https://cdn.jwplayer.com/v2/media/${videoId}`
-		: `https://cdn.jwplayer.com/v2/playlists/${mappedVideoOrPlaylistId}`;
 
 	return {
 		autostart: willAutoplay() && !document.hidden,
@@ -73,8 +70,9 @@ export const getArticleVideoConfig = (videoDetails) => {
 		description: videoDetails.description,
 		title: videoDetails.title,
 		playlist: getModifiedPlaylist(videoDetails.playlist, videoDetails.isDedicatedForArticle),
+		playlistId: !videoDetails.isDedicatedForArticle ? mappedVideoOrPlaylistId : null,
+		mediaId: videoId,
 		lang: videoDetails.lang,
 		advertising: getAdvertisingConfig(lang),
-		playlistUrl,
 	};
 };

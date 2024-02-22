@@ -56,7 +56,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	vastXml,
 }) => {
 	const { setPlayer, setConfig } = useContext(PlayerContext);
-	const { playlistUrl } = config;
+	const { playlistId } = config;
 	const videoIndexRef = React.useRef(0);
 	const defaultConfig = {
 		plugins: { fandomWirewax: {} },
@@ -74,7 +74,7 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 	};
 
 	const initPlayer = (elementId: string, playerUrl?: string) => {
-		console.debug('Legacy wrapper enabled: the embed will be loaded in head', playlistUrl);
+		console.debug('Legacy wrapper enabled: the embed will be loaded in head', playlistId);
 
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START);
 		jwPlayerPlaybackTracker({ event_name: 'video_player_start_load' });

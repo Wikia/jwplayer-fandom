@@ -26,9 +26,10 @@ export interface JWPlacementApi {
 
 export type PlayerConfig = {
 	playlist?: Playlist;
-	playlistUrl?: string;
+	playlistId?: string | null;
 	plugins?: Record<string, unknown>;
 	playlistItem?: { mediaid: string; videoId: string };
+	mediaId?: string;
 	mediaElement?: HTMLVideoElement;
 	autostart?: boolean;
 	pid?: string;
