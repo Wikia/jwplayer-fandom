@@ -84,6 +84,18 @@ export interface JWPauseEvent extends JWEvent {
 	pauseReason: string;
 }
 
+export interface JWAdImpressionEvent extends JWEvent {
+	adposition: string;
+	ima: {
+		ad: {
+			data: {
+				adId: string;
+				creativeId: string;
+			};
+		};
+	};
+}
+
 export interface PausePlayerEventData {
 	oldState?: string;
 	viewable?: number;

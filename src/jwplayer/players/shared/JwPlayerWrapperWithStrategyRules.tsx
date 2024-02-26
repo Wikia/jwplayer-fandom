@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import {
+	JWAdImpressionEvent,
 	JWPauseEvent,
 	JWPlacementApi,
 	JWPlayerApi,
@@ -22,6 +23,12 @@ interface WindowJWPlayer extends Window {
 	jwplacements?: JWPlacementApi;
 	jwDataStore?: Record<string, unknown>;
 	sponsoredVideos?: string[];
+}
+
+enum JWPlayerAdPosition {
+	'pre' = 'preroll',
+	'mid' = 'midroll',
+	'post' = 'postroll',
 }
 
 declare let window: WindowJWPlayer;
@@ -47,6 +54,16 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 			// when JWP loads other player than JWP for example ExCo
 			return;
 		}
+
+		playerInstance.on(JWEvents.AD_IMPRESSION, ({ adposition, ima }: JWAdImpressionEvent) => {
+			const playerContainer = playerInstance.getContainer();
+			const { adId, creativeId } = ima?.ad?.data;
+			const adPosition = adposition ?? 'pre';
+
+			playerContainer.dataset.vastPosition = JWPlayerAdPosition[adPosition];
+			playerContainer.dataset.vastLineItemId = adId;
+			playerContainer.dataset.vastCreativeId = creativeId;
+		});
 
 		playerInstance.on(JWEvents.AD_PAUSE, ({ pauseReason, viewable }: JWPauseEvent) => {
 			// Keep playing the ad when the user closed the mini player
