@@ -63,6 +63,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 			playerContainer.dataset.vastPosition = JWPlayerAdPosition[adPosition];
 			playerContainer.dataset.vastLineItemId = adId;
 			playerContainer.dataset.vastCreativeId = creativeId;
+			playerContainer.dataset.vastParams = new URLSearchParams(vastUrl).get('cust_params');
 		});
 
 		playerInstance.on(JWEvents.AD_PAUSE, ({ pauseReason, viewable }: JWPauseEvent) => {
