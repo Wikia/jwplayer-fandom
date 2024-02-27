@@ -26,9 +26,9 @@ interface WindowJWPlayer extends Window {
 }
 
 enum JWPlayerAdPosition {
-	'pre' = 'preroll',
-	'mid' = 'midroll',
-	'post' = 'postroll',
+	pre = 'preroll',
+	mid = 'midroll',
+	post = 'postroll',
 }
 
 declare let window: WindowJWPlayer;
@@ -48,6 +48,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	const strategyRulesPlacementId = 'KmMLkvao';
 	const recommendationPlaylistId = 'FOhaD53w';
 	const communicationService = getCommunicationService();
+	const defaultAdPosition = JWPlayerAdPosition.pre;
 
 	const registerEventHandlers = (playerInstance: Player) => {
 		if (!playerInstance) {
@@ -58,7 +59,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 		playerInstance.on(JWEvents.AD_IMPRESSION, ({ adposition, ima }: JWAdImpressionEvent) => {
 			const playerContainer = playerInstance.getContainer();
 			const { adId, creativeId } = ima?.ad?.data;
-			const adPosition = adposition ?? 'pre';
+			const adPosition = adposition ?? defaultAdPosition;
 
 			playerContainer.dataset.vastPosition = JWPlayerAdPosition[adPosition];
 			playerContainer.dataset.vastLineItemId = adId;
