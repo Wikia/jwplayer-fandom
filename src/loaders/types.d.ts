@@ -23,6 +23,7 @@ interface MW {
 
 interface WindowWithMW extends Window {
 	mw: MW;
+	canPlayVideo?: () => boolean;
 }
 
 interface TakeoverResponse {

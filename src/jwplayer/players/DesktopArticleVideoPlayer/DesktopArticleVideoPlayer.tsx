@@ -25,12 +25,16 @@ import {
 } from 'utils/experiments/onScrollExperiment';
 import { useOptimizelyVariation } from 'optimizely/useOptimizelyVariation';
 import { useOptimizelyTrack } from 'optimizely/useOptimizelyTrack';
+import { WindowWithMW } from 'loaders/types';
 
 import styles from './DesktopArticleVideoPlayer.module.scss';
+
+declare let window: WindowWithMW;
 
 export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const adEngineComplete = useAdEngineComplete();
+	const preventRendering = adEngineComplete && !window.canPlayVideo?.();
 	const jwpAdsSetupComplete = useJwpAdsSetupComplete();
 	const onScrollVariation = useOptimizelyVariation(ON_SCROLL_EXPERIMENT_ID);
 	useOptimizelyTrack(ON_SCROLL_EXPERIMENT_ID);
@@ -75,6 +79,10 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 		if (shareIcon) shareIcon.style.display = 'none';
 		if (moreVideosIcon) moreVideosIcon.style.display = 'none';
 		if (pipIcon) pipIcon.style.display = 'none';
+	}
+
+	if (preventRendering) {
+		return null;
 	}
 
 	return (
