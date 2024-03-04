@@ -16,6 +16,7 @@ import addBaseTrackingEvents from 'jwplayer/players/shared/addBaseTrackingEvents
 import useBeforeJwpWrapperRendered from 'jwplayer/utils/useBeforeJwpWrapperRendered';
 import useScript from 'jwplayer/utils/useScript';
 import { getCommunicationService } from 'jwplayer/utils/communication/communicationService';
+import { updateRVParam } from 'jwplayer/utils/updateRVParam';
 
 interface WindowJWPlayer extends Window {
 	jwplayer?: JWPlayerApi;
@@ -41,6 +42,8 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	const strategyRulesPlacementId = 'KmMLkvao';
 	const recommendationPlaylistId = 'FOhaD53w';
 	const communicationService = getCommunicationService();
+	const prerollAdTag = vastUrl ?? '';
+	const [adIndex, setAdIndex] = React.useState(1);
 
 	const registerEventHandlers = (playerInstance: Player) => {
 		if (!playerInstance) {
@@ -69,6 +72,16 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 			// only add the events after the player is ready
 			jwPlayerPlaybackTracker({ event_name: 'video_player_ready' });
 			addBaseTrackingEvents(playerInstance);
+		});
+
+		playerInstance.on(JWEvents.AD_IMPRESSION, () => {
+			const newAdIndex = adIndex + 1;
+			const newPrerollAdTag = updateRVParam(prerollAdTag, newAdIndex);
+			setAdIndex(newAdIndex);
+			const jwDataStore = window.jwDataStore || { custom: {} };
+			jwDataStore.custom[strategyRulesPlacementId] = jwDataStore.custom[strategyRulesPlacementId] || {};
+			jwDataStore.custom[strategyRulesPlacementId].preroll_ad_tag = newPrerollAdTag;
+			window.jwDataStore = jwDataStore;
 		});
 
 		if (typeof onComplete === 'function') {
@@ -123,9 +136,10 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	const { setPlayer, setConfig } = useContext(PlayerContext);
 	useBeforeJwpWrapperRendered(initPlayer, shouldLoadSponsoredContentList);
 
-	const prerollAdTag = vastUrl ? encodeURIComponent(vastUrl) : '';
 	const playlistOrMediaKeyVal = playlistId ? `playlist_id=${playlistId}` : `media_id=${mediaId}`;
-	const strategyRulesUrl = `https://cdn.jwplayer.com/v2/sites/cGlKNUnj/placements/${strategyRulesPlacementId}/embed.js?custom.${strategyRulesPlacementId}.${playlistOrMediaKeyVal}&custom.${strategyRulesPlacementId}.recommendations_playlist_id=${recommendationPlaylistId}&custom.${strategyRulesPlacementId}.preroll_ad_tag=${prerollAdTag}`;
+	const strategyRulesUrl = `https://cdn.jwplayer.com/v2/sites/cGlKNUnj/placements/${strategyRulesPlacementId}/embed.js?custom.${strategyRulesPlacementId}.${playlistOrMediaKeyVal}&custom.${strategyRulesPlacementId}.recommendations_playlist_id=${recommendationPlaylistId}&custom.${strategyRulesPlacementId}.preroll_ad_tag=${encodeURIComponent(
+		prerollAdTag,
+	)}`;
 	const onBeforeLoad = () => {
 		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START);
 		jwPlayerPlaybackTracker({ event_name: 'video_player_start_load' });
