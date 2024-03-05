@@ -43,7 +43,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	const recommendationPlaylistId = 'FOhaD53w';
 	const communicationService = getCommunicationService();
 	const prerollAdTag = vastUrl ?? '';
-	const [adIndex, setAdIndex] = React.useState(1);
+	const adIndexRef = React.useRef(1);
 
 	const registerEventHandlers = (playerInstance: Player) => {
 		if (!playerInstance) {
@@ -75,9 +75,9 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 		});
 
 		playerInstance.on(JWEvents.AD_IMPRESSION, () => {
-			const newAdIndex = adIndex + 1;
+			const newAdIndex = adIndexRef.current + 1;
 			const newPrerollAdTag = updateRVParam(prerollAdTag, newAdIndex);
-			setAdIndex(newAdIndex);
+			adIndexRef.current = newAdIndex;
 			const jwDataStore = window.jwDataStore || { custom: {} };
 			jwDataStore.custom[strategyRulesPlacementId] = jwDataStore.custom[strategyRulesPlacementId] || {};
 			jwDataStore.custom[strategyRulesPlacementId].preroll_ad_tag = newPrerollAdTag;
