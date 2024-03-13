@@ -10,7 +10,7 @@ import {
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { JwPlayerWrapperProps } from 'jwplayer/types';
 import { jwPlayerPlaybackTracker, triggerVideoMetric } from 'jwplayer/utils/videoTracking';
-import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
+import { recordAndTrackDifference, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
 import JWEvents from 'jwplayer/players/shared/JWEvents';
 import addBaseTrackingEvents from 'jwplayer/players/shared/addBaseTrackingEvents';
 import useBeforeJwpWrapperRendered from 'jwplayer/utils/useBeforeJwpWrapperRendered';
@@ -59,6 +59,11 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 		});
 
 		playerInstance.on(JWEvents.PLAY, ({ playReason, viewable }: JWPlayEvent) => {
+			recordAndTrackDifference(
+				VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_CONTENT_OR_AD,
+				VIDEO_RECORD_EVENTS.JW_PLAYER_READY,
+			);
+
 			const dismissed = getDismissed();
 			// Pause the content play when the user closed the mini player playing the ad
 			if (dismissed && viewable === 0 && playReason === 'autostart') {
@@ -67,7 +72,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 		});
 
 		playerInstance.on(JWEvents.READY, () => {
-			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_READY);
+			recordAndTrackDifference(VIDEO_RECORD_EVENTS.JW_PLAYER_READY, VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY);
 			triggerVideoMetric('ready');
 			// only add the events after the player is ready
 			jwPlayerPlaybackTracker({ event_name: 'video_player_ready' });
@@ -75,6 +80,11 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 		});
 
 		playerInstance.on(JWEvents.AD_IMPRESSION, () => {
+			recordAndTrackDifference(
+				VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_CONTENT_OR_AD,
+				VIDEO_RECORD_EVENTS.JW_PLAYER_READY,
+			);
+
 			const newAdIndex = adIndexRef.current + 1;
 			const newPrerollAdTag = updateRVParam(prerollAdTag, newAdIndex);
 			adIndexRef.current = newAdIndex;
@@ -103,7 +113,10 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 		}
 
 		jwPlayerPlaybackTracker({ event_name: 'video_player_load' });
-		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY);
+		recordAndTrackDifference(
+			VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY,
+			VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START,
+		);
 		triggerVideoMetric('loaded');
 
 		setConfig(config);
@@ -141,7 +154,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 		prerollAdTag,
 	)}`;
 	const onBeforeLoad = () => {
-		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START);
+		recordAndTrackDifference(VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START, VIDEO_RECORD_EVENTS.FEATURED_VIDEO_INIT);
 		jwPlayerPlaybackTracker({ event_name: 'video_player_start_load' });
 	};
 	const onLoad = () => {

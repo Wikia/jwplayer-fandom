@@ -61,7 +61,7 @@ export default function addBaseTrackingEvents(playerInstance: Player) {
 
 			// Fire at the start of each video
 			if (singleTrack(initialPlayEvent + getAssetId(playerInstance.id))) {
-				const timeToFirstFrame = recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_VIDEO);
+				const timeToFirstFrame = recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_VIDEO_CONTENT);
 				jwPlayerPlaybackTracker({
 					player_element_id: playerInstance.id,
 					event_name: 'video_content_start',

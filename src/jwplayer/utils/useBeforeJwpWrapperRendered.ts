@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import getSponsoredVideos from 'utils/getSponsoredVideos';
-import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
 
 interface WindowWithSponsoredVideos extends Window {
 	sponsoredVideos?: string[];
@@ -35,7 +34,6 @@ export default function useBeforeJwpWrapperRendered(initJwp: () => void, shouldL
 		} else {
 			console.debug('Loading of Sponsored Content Video List was disabled.');
 		}
-		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_INIT_RENDER);
 		initJwp();
 		setJwpInitialized(true);
 	}, []);

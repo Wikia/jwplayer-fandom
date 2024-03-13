@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { getCommunicationService } from 'jwplayer/utils/communication';
-import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
 
 interface AdEngineSetupData {
 	autoplayDisabled: boolean;
@@ -26,10 +25,7 @@ export default function useJwpAdsSetupComplete(): JwpAdsSetupCompleteResult {
 	const [vastXml, setVastXml] = useState<string>(undefined);
 
 	useEffect(() => {
-		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_CONFIG_MESSAGE_RECIEVED);
-		recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_SETUP_JW_LISTEN_START);
 		listenSetupJWPlayer(function (adEngineData: AdEngineSetupData) {
-			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_AD_ENG_SETUP_JW_MESSAGE_RECIEVED);
 			const { vastUrl, vastXml, strategyRulesEnabled } = adEngineData;
 
 			setJwpAdsSetupComplete(true);

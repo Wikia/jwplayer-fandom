@@ -7,8 +7,6 @@ import OffScreenOverlay from 'jwplayer/players/MobileArticleVideoPlayer/OffScree
 import { VideoPlaceholder } from 'jwplayer/players/shared/VideoPlaceholder/VideoPlaceholder';
 import { MobileArticleVideoPlayerProps } from 'jwplayer/types';
 import Attribution from 'jwplayer/players/MobileArticleVideoPlayer/Attribution';
-import { singleTrack } from 'jwplayer/utils/videoTracking';
-import { recordVideoEvent, VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
 import { getDismissedFn } from 'jwplayer/utils/utils';
@@ -74,16 +72,6 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 
 		if (relatedContainer) {
 			relatedContainer.style.display = '';
-		}
-
-		if (!adEngineComplete && singleTrack('ad-mobile-video-player-impression')) {
-			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_AD);
-			return;
-		}
-
-		if (singleTrack('mobile-video-player-impression')) {
-			recordVideoEvent(VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_VIDEO);
-			return;
 		}
 	}, [onScreen, adEngineComplete]);
 
