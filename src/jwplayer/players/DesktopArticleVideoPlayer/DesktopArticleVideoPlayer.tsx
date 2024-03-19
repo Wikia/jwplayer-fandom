@@ -1,14 +1,13 @@
 import React, { useRef, useState } from 'react';
 import clsx from 'clsx';
-import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButton';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 import { StrategyRulesWrapper } from 'jwplayer/players/shared/StrategyRulesWrapper';
 import useOnScreen from 'utils/useOnScreen';
 import useAdEngineComplete from 'jwplayer/utils/useAdEngineComplete';
 import useJwpAdsSetupComplete from 'jwplayer/utils/useJwpAdsSetupComplete';
 import PlayerWrapper from 'jwplayer/players/shared/PlayerWrapper';
+import TopBar from 'jwplayer/players/shared/TopBar';
 import { DesktopArticleVideoPlayerProps } from 'jwplayer/types';
-import CloseButton from 'jwplayer/players/shared/CloseButton/CloseButton';
 import Attribution from 'jwplayer/players/DesktopArticleVideoPlayer/Attribution';
 import { VideoPlaceholder } from 'jwplayer/players/shared/VideoPlaceholder/VideoPlaceholder';
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
@@ -33,6 +32,7 @@ declare let window: WindowWithMW;
 
 export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
+	const topBarRef = useRef<HTMLDivElement>(null);
 	const adEngineComplete = useAdEngineComplete();
 	const preventRendering = adEngineComplete && !window.canPlayVideo?.();
 	const jwpAdsSetupComplete = useJwpAdsSetupComplete();
@@ -98,32 +98,19 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 					>
 						{jwpAdsSetupComplete.strategyRulesEnabled ? (
 							<div>
-								<div className={styles.topBar}>
-									{!isScrollPlayer && <UnmuteButton />}
-									{isScrollPlayer && (
-										<CloseButton dismiss={() => setDismissed(true)} iconColor={'#fff'} className={styles.closeButton} />
-									)}
-								</div>
+								<TopBar isScrollPlayer={isScrollPlayer} onClickClose={() => setDismissed(true)} ref={topBarRef} />
 								<StrategyRulesWrapper
 									getDismissed={getDismissed}
 									config={getArticleVideoConfig(videoDetails)}
 									onReady={onPlayerInstanceReady}
+									topBarRef={topBarRef}
 								/>
 								<input type="hidden" value={String(dismissed)} name={inputName} />
 							</div>
 						) : (
 							adEngineComplete && (
 								<div>
-									<div className={styles.topBar}>
-										{!isScrollPlayer && <UnmuteButton />}
-										{isScrollPlayer && (
-											<CloseButton
-												dismiss={() => setDismissed(true)}
-												iconColor={'#fff'}
-												className={styles.closeButton}
-											/>
-										)}
-									</div>
+									<TopBar isScrollPlayer={isScrollPlayer} onClickClose={() => setDismissed(true)} />
 									<JwPlayerWrapper
 										getDismissed={getDismissed}
 										config={getArticleVideoConfig(videoDetails)}
