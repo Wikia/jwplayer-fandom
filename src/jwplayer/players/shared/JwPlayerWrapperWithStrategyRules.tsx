@@ -37,7 +37,6 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	jwPlayerContainerEmbedId = 'featured-video__player',
 	vastUrl,
 	parentRef,
-	topBarRef,
 }) => {
 	const { mediaId, playlistId } = config;
 	const strategyRulesPlacementId = 'KmMLkvao';
@@ -126,11 +125,6 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 		const playerInstance = payload.player;
 		registerEventHandlers(playerInstance);
 		setPlayer(playerInstance);
-
-		// Hide Top Bar for non-JWP players
-		if (!playerInstance) {
-			topBarRef.current.classList.add('displayNone');
-		}
 
 		communicationService.dispatch({
 			type: '[Video] Player rendered',

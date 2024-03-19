@@ -456,7 +456,6 @@ export interface JwPlayerWrapperProps extends JwPlayerContainerId {
 	vastUrl?: string;
 	vastXml?: string;
 	parentRef?: MutableRefObject<HTMLElement>;
-	topBarRef?: MutableRefObject<HTMLElement>;
 }
 
 export interface JwPlayerContainerId {

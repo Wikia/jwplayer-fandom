@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import CloseButton from 'jwplayer/players/shared/CloseButton/CloseButton';
 import UnmuteButton from 'jwplayer/players/DesktopArticleVideoPlayer/UnmuteButton';
 
@@ -9,13 +9,13 @@ interface TopBarProps {
 	isScrollPlayer: boolean;
 }
 
-const TopBar = forwardRef<HTMLDivElement, TopBarProps>(({ onClickClose, isScrollPlayer }, ref) => {
+const TopBar: React.FC<TopBarProps> = ({ onClickClose, isScrollPlayer }) => {
 	return (
-		<div ref={ref} className={styles.topBar}>
+		<div className={styles.topBar}>
 			{!isScrollPlayer && <UnmuteButton />}
 			{isScrollPlayer && <CloseButton dismiss={onClickClose} iconColor={'#fff'} className={styles.closeButton} />}
 		</div>
 	);
-});
+};
 
 export default TopBar;

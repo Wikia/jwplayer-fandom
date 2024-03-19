@@ -1,6 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import clsx from 'clsx';
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
+import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { StrategyRulesWrapper } from 'jwplayer/players/shared/StrategyRulesWrapper';
 import useOnScreen from 'utils/useOnScreen';
 import useAdEngineComplete from 'jwplayer/utils/useAdEngineComplete';
@@ -32,7 +33,6 @@ declare let window: WindowWithMW;
 
 export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
-	const topBarRef = useRef<HTMLDivElement>(null);
 	const adEngineComplete = useAdEngineComplete();
 	const preventRendering = adEngineComplete && !window.canPlayVideo?.();
 	const jwpAdsSetupComplete = useJwpAdsSetupComplete();
@@ -41,6 +41,8 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 	const onScreen = useOnScreen(placeholderRef, '0px', 0.5);
 	const [dismissed, setDismissed] = useState(false);
 	const [isPlayerReady, setIsPlayerReady] = useState(false);
+	const { player } = useContext(PlayerContext);
+	const shouldRenderTopBar = isPlayerReady && !!player;
 	const shouldUsePlayerWithOnScroll = onScrollVariation === ON_SCROLL_JWPLAYER_UX;
 	const isScrollPlayer = !(dismissed || onScreen) && isPlayerReady && !shouldUsePlayerWithOnScroll;
 	const shouldRenderVideoDetails =
@@ -98,12 +100,13 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 					>
 						{jwpAdsSetupComplete.strategyRulesEnabled ? (
 							<div>
-								<TopBar isScrollPlayer={isScrollPlayer} onClickClose={() => setDismissed(true)} ref={topBarRef} />
+								{shouldRenderTopBar && (
+									<TopBar isScrollPlayer={isScrollPlayer} onClickClose={() => setDismissed(true)} />
+								)}
 								<StrategyRulesWrapper
 									getDismissed={getDismissed}
 									config={getArticleVideoConfig(videoDetails)}
 									onReady={onPlayerInstanceReady}
-									topBarRef={topBarRef}
 								/>
 								<input type="hidden" value={String(dismissed)} name={inputName} />
 							</div>
