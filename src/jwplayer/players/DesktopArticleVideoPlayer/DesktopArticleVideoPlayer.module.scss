@@ -20,10 +20,12 @@
 
 .desktopArticleVideoWrapperScrollPlayer {
 	height: max-content;
-	width: 300px;
 	position: fixed;
 	right: 18px;
 	bottom: 45px;
+	&--customized {
+		width: 300px;
+	}
 }
 
 .isWideVariant {

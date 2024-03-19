@@ -42,7 +42,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 	const [dismissed, setDismissed] = useState(false);
 	const [isPlayerReady, setIsPlayerReady] = useState(false);
 	const { player } = useContext(PlayerContext);
-	const shouldRenderTopBar = isPlayerReady && !!player;
+	const shouldCustomizeBehavior = isPlayerReady && !!player;
 	const shouldUsePlayerWithOnScroll = onScrollVariation === ON_SCROLL_JWPLAYER_UX;
 	const isScrollPlayer = !(dismissed || onScreen) && isPlayerReady && !shouldUsePlayerWithOnScroll;
 	const shouldRenderVideoDetails =
@@ -95,12 +95,13 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 						className={clsx({
 							[styles.desktopArticleVideoWrapper]: !isScrollPlayer,
 							[styles.desktopArticleVideoWrapperScrollPlayer]: isScrollPlayer,
+							[styles['desktopArticleVideoWrapperScrollPlayer--customized']]: isScrollPlayer && shouldCustomizeBehavior,
 							[styles.isWideVariant]: shouldRenderWideOnScrollPlayer,
 						})}
 					>
 						{jwpAdsSetupComplete.strategyRulesEnabled ? (
 							<div>
-								{shouldRenderTopBar && (
+								{shouldCustomizeBehavior && (
 									<TopBar isScrollPlayer={isScrollPlayer} onClickClose={() => setDismissed(true)} />
 								)}
 								<StrategyRulesWrapper
