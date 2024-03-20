@@ -1,17 +1,13 @@
 import * as articleVideoCookieService from 'jwplayer/utils/articleVideo/articleVideoCookies';
 import { wikiaJWPlayeri18n } from 'jwplayer/i18n';
 
-const isFromRecirculation = () => {
-	return window.location.search.indexOf('wikia-footer-wiki-rec') > -1;
-};
-
 export const willAutoplay = () => {
 	// as the function is used in many I've just left return true for now as we might want to use it in the future
 	return true;
 };
 
 export const willMute = () => {
-	return isFromRecirculation() ? false : willAutoplay();
+	return willAutoplay();
 };
 
 const getModifiedPlaylist = (playlist, isDedicatedForArticle) => {
