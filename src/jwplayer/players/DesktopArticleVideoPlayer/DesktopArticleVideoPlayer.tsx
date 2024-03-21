@@ -44,7 +44,8 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 	const { player } = useContext(PlayerContext);
 	const shouldCustomizeBehavior = isPlayerReady && !!player;
 	const shouldUsePlayerWithOnScroll = onScrollVariation === ON_SCROLL_JWPLAYER_UX;
-	const isScrollPlayer = !(dismissed || onScreen) && isPlayerReady && !shouldUsePlayerWithOnScroll;
+	const isScrollPlayer =
+		!(dismissed || onScreen) && isPlayerReady && !shouldUsePlayerWithOnScroll && shouldCustomizeBehavior;
 	const shouldRenderVideoDetails =
 		isScrollPlayer &&
 		(!onScrollVariation ||
@@ -95,7 +96,6 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 						className={clsx({
 							[styles.desktopArticleVideoWrapper]: !isScrollPlayer,
 							[styles.desktopArticleVideoWrapperScrollPlayer]: isScrollPlayer,
-							[styles.desktopArticleVideoWrapperScrollPlayerCustomized]: isScrollPlayer && shouldCustomizeBehavior,
 							[styles.isWideVariant]: shouldRenderWideOnScrollPlayer,
 						})}
 					>

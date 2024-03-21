@@ -53,12 +53,12 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 	const jwpAdsSetupComplete = useJwpAdsSetupComplete();
 	const onScreen = useOnScreen(ref, '0px', 1);
 	const [dismissed, setDismissed] = useState(false);
-	const isScrollPlayer = !(dismissed || onScreen);
 	const inputName = 'isDismissed';
 	const relatedContainer = document.getElementById('featured-video__player_related') as HTMLDivElement | null;
 	const [isPlayerReady, setIsPlayerReady] = useState(false);
 	const { player } = useContext(PlayerContext);
 	const shouldCustomizeBehavior = isPlayerReady && !!player;
+	const isScrollPlayer = !(dismissed || onScreen) && shouldCustomizeBehavior;
 
 	const getDismissed = getDismissedFn(inputName);
 
