@@ -13,6 +13,7 @@ import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoC
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
 import { getDismissedFn } from 'jwplayer/utils/utils';
 import { useMobileArticleVideoContext } from 'contexts/MobileArticleVideoContext';
+import { WindowWithMW } from 'loaders/types';
 
 import clsx from 'clsx';
 
@@ -25,6 +26,8 @@ import styles from './mobileArticleVideoPlayer.module.scss';
 interface MobileArticleVideoWrapperProps {
 	isScrollPlayer: boolean;
 }
+
+declare let window: WindowWithMW;
 
 const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({ isScrollPlayer, children }) => {
 	const { scrollTopPosition } = useMobileArticleVideoContext();
@@ -49,6 +52,7 @@ const MobileArticleVideoWrapper: React.FC<MobileArticleVideoWrapperProps> = ({ i
 export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerProps> = ({ videoDetails }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const adEngineComplete = useAdEngineComplete();
+	const preventRendering = adEngineComplete && !window.canPlayVideo?.();
 	const jwpAdsSetupComplete = useJwpAdsSetupComplete();
 	const onScreen = useOnScreen(ref, '0px', 1);
 	const [dismissed, setDismissed] = useState(false);
@@ -86,6 +90,10 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 			return;
 		}
 	}, [onScreen, adEngineComplete]);
+
+	if (preventRendering) {
+		return null;
+	}
 
 	return (
 		<>
