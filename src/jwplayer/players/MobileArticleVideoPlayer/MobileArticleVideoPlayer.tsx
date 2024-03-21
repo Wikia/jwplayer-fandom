@@ -7,6 +7,9 @@ import OffScreenOverlay from 'jwplayer/players/MobileArticleVideoPlayer/OffScree
 import { VideoPlaceholder } from 'jwplayer/players/shared/VideoPlaceholder/VideoPlaceholder';
 import { MobileArticleVideoPlayerProps } from 'jwplayer/types';
 import Attribution from 'jwplayer/players/MobileArticleVideoPlayer/Attribution';
+import { StrategyRulesWrapper } from 'jwplayer/players/shared/StrategyRulesWrapper';
+import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
+import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
 import { getDismissedFn } from 'jwplayer/utils/utils';
@@ -14,12 +17,6 @@ import { useMobileArticleVideoContext } from 'contexts/MobileArticleVideoContext
 import { WindowWithMW } from 'loaders/types';
 
 import clsx from 'clsx';
-
-import { StrategyRulesWrapper } from 'jwplayer/players/shared/StrategyRulesWrapper';
-
-import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
-
-import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 
 import styles from './mobileArticleVideoPlayer.module.scss';
 
