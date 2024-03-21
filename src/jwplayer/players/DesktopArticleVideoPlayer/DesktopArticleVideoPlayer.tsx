@@ -95,7 +95,7 @@ export const DesktopArticleVideoPlayerContent: React.FC<DesktopArticleVideoPlaye
 						className={clsx({
 							[styles.desktopArticleVideoWrapper]: !isScrollPlayer,
 							[styles.desktopArticleVideoWrapperScrollPlayer]: isScrollPlayer,
-							[styles['desktopArticleVideoWrapperScrollPlayer--customized']]: isScrollPlayer && shouldCustomizeBehavior,
+							[styles.desktopArticleVideoWrapperScrollPlayerCustomized]: isScrollPlayer && shouldCustomizeBehavior,
 							[styles.isWideVariant]: shouldRenderWideOnScrollPlayer,
 						})}
 					>
