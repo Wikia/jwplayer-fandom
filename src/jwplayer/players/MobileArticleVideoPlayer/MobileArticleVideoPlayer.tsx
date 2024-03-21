@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import useOnScreen from 'utils/useOnScreen';
 import useAdEngineComplete from 'jwplayer/utils/useAdEngineComplete';
 import useJwpAdsSetupComplete from 'jwplayer/utils/useJwpAdsSetupComplete';
@@ -18,6 +18,8 @@ import clsx from 'clsx';
 import { StrategyRulesWrapper } from 'jwplayer/players/shared/StrategyRulesWrapper';
 
 import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
+
+import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 
 import styles from './mobileArticleVideoPlayer.module.scss';
 
@@ -58,6 +60,8 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 	const inputName = 'isDismissed';
 	const relatedContainer = document.getElementById('featured-video__player_related') as HTMLDivElement | null;
 	const [isPlayerReady, setIsPlayerReady] = useState(false);
+	const { player } = useContext(PlayerContext);
+	const shouldCustomizeBehavior = isPlayerReady && !!player;
 
 	const getDismissed = getDismissedFn(inputName);
 
@@ -96,7 +100,9 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 							/>
 							<input type="hidden" value={String(dismissed)} name={inputName} />
 
-							{isPlayerReady && <OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />}
+							{shouldCustomizeBehavior && (
+								<OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />
+							)}
 						</>
 					) : (
 						adEngineComplete && (
