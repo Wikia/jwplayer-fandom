@@ -9,7 +9,7 @@ import {
 } from 'jwplayer/types';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { JwPlayerWrapperProps } from 'jwplayer/types';
-import { jwPlayerPlaybackTracker, triggerVideoMetric } from 'jwplayer/utils/videoTracking';
+import { jwPlayerPlaybackTracker } from 'jwplayer/utils/videoTracking';
 import { recordAndTrackDifference, STRATEGY_RULES_VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
 import JWEvents from 'jwplayer/players/shared/JWEvents';
 import addBaseTrackingEvents from 'jwplayer/players/shared/addBaseTrackingEvents';
@@ -76,7 +76,6 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 				STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_READY,
 				STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY,
 			);
-			triggerVideoMetric('ready');
 			// only add the events after the player is ready
 			jwPlayerPlaybackTracker({ event_name: 'video_player_ready' });
 			addBaseTrackingEvents(playerInstance);
@@ -120,7 +119,6 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 			STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY,
 			STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START,
 		);
-		triggerVideoMetric('loaded');
 
 		setConfig(config);
 
