@@ -1,14 +1,21 @@
 import { recordOnce, recordMultiple, difference } from '@fandom/tracking-metrics/timing/timings';
 
-const PREFIX = 'jw-player-';
-
 export const VIDEO_RECORD_EVENTS = {
 	FEATURED_VIDEO_INIT: 'featured-video-init',
-	JW_PLAYER_SCRIPTS_LOAD_START: PREFIX + 'scripts-load-start',
-	JW_PLAYER_SCRIPTS_LOAD_READY: PREFIX + 'scripts-load-ready',
-	JW_PLAYER_READY: PREFIX + 'ready',
-	JW_PLAYER_PLAYING_VIDEO_CONTENT: PREFIX + 'playing-initial-video',
-	JW_PLAYER_PLAYING_CONTENT_OR_AD: PREFIX + 'playing-content-or-ad',
+	JW_PLAYER_SCRIPTS_LOAD_START: 'jw-player-scripts-load-start',
+	JW_PLAYER_SCRIPTS_LOAD_READY: 'jw-player-scripts-load-ready',
+	JW_PLAYER_READY: 'jw-player-ready',
+	JW_PLAYER_PLAYING_VIDEO_CONTENT: 'jw-player-playing-initial-video',
+	JW_PLAYER_PLAYING_CONTENT_OR_AD: 'jw-player-playing-content-or-ad',
+};
+
+export const STRATEGY_RULES_VIDEO_RECORD_EVENTS = {
+	FEATURED_VIDEO_INIT: 'featured-video-init',
+	JW_PLAYER_SCRIPTS_LOAD_START: 'jw-sr-player-scripts-load-start',
+	JW_PLAYER_SCRIPTS_LOAD_READY: 'jw-sr-player-scripts-load-ready',
+	JW_PLAYER_READY: 'jw-sr-player-ready',
+	JW_PLAYER_PLAYING_VIDEO_CONTENT: 'jw-sr-player-playing-initial-video',
+	JW_PLAYER_PLAYING_CONTENT_OR_AD: 'jw-sr-player-playing-content-or-ad',
 };
 
 const recordOptions = { sampleRate: 1 };

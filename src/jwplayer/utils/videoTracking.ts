@@ -19,7 +19,6 @@ import {
 	getJWQualityManifest,
 } from 'jwplayer/utils/globalJWInterface';
 import getVideoPlayerVersion from 'jwplayer/utils/getVideoPlayerVersion';
-import triggerMetric from '@fandom/tracking-metrics/metrics/metric';
 
 // https://docs.google.com/spreadsheets/d/1jEn61uIP8dYE8KQP3nrMG3nePFArgxrs3Q4lxTcArZQ/edit#gid=1564524057
 export const PROPERTY_NAMES = {
@@ -141,16 +140,4 @@ export function singleTrack(eventName: string) {
 
 	mappings.add(eventName);
 	return true;
-}
-
-/**
- * Additional DW event recording with sampling for engineering usage. This will allow us to make charts and graphs
- * to monitor releases via the realtime and historical tables
- */
-export function triggerVideoMetric(metric: string, label?: string, value = 1, sample = 0.2) {
-	try {
-		triggerMetric(`video-player:${metric}`, value, sample, label ?? metric);
-	} catch (e) {
-		console.warn('VideoMetric Warning for ' + metric);
-	}
 }
