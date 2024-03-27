@@ -11,11 +11,11 @@ export const MobileArticleVideoLoader: React.FC<MobileArticleVideoLoaderProps> =
 	videoDetails,
 	scrollTopPosition = '55px',
 }) => {
-	const [player, setPlayer] = useState(undefined);
+	const [player, setPlayer] = useState<React.ReactElement | null>(null);
 
 	useEffect(() => {
 		if (!player) {
-			getPlayer();
+			void getPlayer();
 		}
 
 		setVersionWindowVar();
