@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import useOnScreen from 'utils/useOnScreen';
 import useAdEngineComplete from 'jwplayer/utils/useAdEngineComplete';
 import useJwpAdsSetupComplete from 'jwplayer/utils/useJwpAdsSetupComplete';
@@ -7,6 +7,9 @@ import OffScreenOverlay from 'jwplayer/players/MobileArticleVideoPlayer/OffScree
 import { VideoPlaceholder } from 'jwplayer/players/shared/VideoPlaceholder/VideoPlaceholder';
 import { MobileArticleVideoPlayerProps } from 'jwplayer/types';
 import Attribution from 'jwplayer/players/MobileArticleVideoPlayer/Attribution';
+import { StrategyRulesWrapper } from 'jwplayer/players/shared/StrategyRulesWrapper';
+import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
+import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { getArticleVideoConfig } from 'jwplayer/utils/articleVideo/articleVideoConfig';
 import articlePlayerOnReady from 'jwplayer/utils/articleVideo/articlePlayerOnReady';
 import { getDismissedFn } from 'jwplayer/utils/utils';
@@ -14,10 +17,6 @@ import { useMobileArticleVideoContext } from 'contexts/MobileArticleVideoContext
 import { WindowWithMW } from 'loaders/types';
 
 import clsx from 'clsx';
-
-import { StrategyRulesWrapper } from 'jwplayer/players/shared/StrategyRulesWrapper';
-
-import JwPlayerWrapper from 'jwplayer/players/shared/JwPlayerWrapper';
 
 import styles from './mobileArticleVideoPlayer.module.scss';
 
@@ -54,10 +53,12 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 	const jwpAdsSetupComplete = useJwpAdsSetupComplete();
 	const onScreen = useOnScreen(ref, '0px', 1);
 	const [dismissed, setDismissed] = useState(false);
-	const isScrollPlayer = !(dismissed || onScreen);
 	const inputName = 'isDismissed';
 	const relatedContainer = document.getElementById('featured-video__player_related') as HTMLDivElement | null;
 	const [isPlayerReady, setIsPlayerReady] = useState(false);
+	const { player } = useContext(PlayerContext);
+	const shouldCustomizeBehavior = isPlayerReady && !!player;
+	const isScrollPlayer = !(dismissed || onScreen) && shouldCustomizeBehavior;
 
 	const getDismissed = getDismissedFn(inputName);
 
@@ -96,7 +97,9 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 							/>
 							<input type="hidden" value={String(dismissed)} name={inputName} />
 
-							{isPlayerReady && <OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />}
+							{shouldCustomizeBehavior && (
+								<OffScreenOverlay isScrollPlayer={isScrollPlayer} dismiss={() => setDismissed(true)} />
+							)}
 						</>
 					) : (
 						adEngineComplete && (
