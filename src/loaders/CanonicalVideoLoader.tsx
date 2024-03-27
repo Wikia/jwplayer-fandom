@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CanonicalVideoLoaderProps } from 'loaders/types';
 import { setVersionWindowVar } from 'loaders/utils/GetVersion';
+import { eligibleTracker } from 'loaders/utils/tracking';
 
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
@@ -9,19 +10,20 @@ export const CanonicalVideoLoader: React.FC<CanonicalVideoLoaderProps> = ({
 	videoDetails,
 	onComplete,
 }) => {
-	const [player, setPlayer] = useState(undefined);
+	const [player, setPlayer] = useState<React.ReactElement | null>(null);
 
 	useEffect(() => {
 		if (!player) {
-			getPlayer();
+			void getPlayer();
 		}
 
 		setVersionWindowVar();
+		eligibleTracker.impression();
 	}, []);
 
 	// Since the player is lazy loaded, change the player again when there is a new video prop
 	useEffect(() => {
-		getPlayer();
+		void getPlayer();
 	}, [currentVideo]);
 
 	const getPlayer = async () => {
