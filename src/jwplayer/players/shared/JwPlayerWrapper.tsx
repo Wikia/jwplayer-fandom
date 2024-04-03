@@ -13,7 +13,7 @@ import checkUserGeo from 'utils/experiments/checkUserGeo';
 
 const SPONSORED_CONTENT_COUNTRIES = [
 	'CA',
-	'UK',
+	'GB',
 	'PH',
 	'TH',
 	'ID',
@@ -24,7 +24,7 @@ const SPONSORED_CONTENT_COUNTRIES = [
 	'BR',
 	'DE',
 	'FR',
-	'AUS',
+	'AU',
 	'NZ',
 ];
 
