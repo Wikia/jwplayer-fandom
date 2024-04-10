@@ -7,11 +7,11 @@ import { eligibleTracker } from 'loaders/utils/tracking';
 export { getVideoPlayerVersion } from 'loaders/utils/GetVersion';
 
 export const DesktopArticleVideoLoader: React.FC<DesktopArticleVideoLoaderProps> = ({ videoDetails }) => {
-	const [player, setPlayer] = useState(undefined);
+	const [player, setPlayer] = useState<React.ReactElement | null>(null);
 
 	useEffect(() => {
 		if (!player) {
-			getPlayer();
+			void getPlayer();
 		}
 
 		setVersionWindowVar();
