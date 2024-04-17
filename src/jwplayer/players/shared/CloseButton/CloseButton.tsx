@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import IconCrossTiny from '@fandom-frontend/react-common/dist/icons/IconCrossTiny';
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { jwPlayerPlaybackTracker } from 'jwplayer/utils/videoTracking';
+import { getCommunicationService } from 'jwplayer/utils/communication/communicationService';
 
 import styles from './closeButton.module.scss';
 
@@ -16,9 +17,17 @@ interface CloseButtonProps {
 
 const CloseButton: React.FC<CloseButtonProps> = ({ className, dismiss, style, iconColor, iconSize }) => {
 	const { player } = useContext(PlayerContext);
+	const communicationService = getCommunicationService();
+
 	const onClickClose = (event) => {
 		event.stopPropagation();
 		jwPlayerPlaybackTracker({ event_name: 'video_player_close' });
+		communicationService.dispatch({
+			type: '[Video] Close button clicked',
+			payload: {
+				player: 'JW player',
+			},
+		});
 		player.pause();
 		dismiss();
 	};
