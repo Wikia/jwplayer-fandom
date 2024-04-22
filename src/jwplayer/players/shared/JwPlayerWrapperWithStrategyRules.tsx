@@ -39,17 +39,23 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	parentRef,
 }) => {
 	const { mediaId, playlistId } = config;
-	const strategyRulesPlacementId = 'KmMLkvao';
+	const searchParams = new URLSearchParams(window.location.search);
+	const strategyRulesPlacementId = searchParams.get('jwp_placement_id') ?? 'KmMLkvao';
 	const recommendationPlaylistId = 'FOhaD53w';
 	const communicationService = getCommunicationService();
 	const prerollAdTag = vastUrl ?? '';
 	const adIndexRef = React.useRef(1);
+	const { setPlayer, setConfig } = useContext(PlayerContext);
 
 	const registerEventHandlers = (playerInstance: Player) => {
 		if (!playerInstance) {
 			// when JWP loads other player than JWP for example ExCo
 			return;
 		}
+
+		playerInstance.on(JWEvents.REMOVE, () => {
+			setPlayer(undefined);
+		});
 
 		playerInstance.on(JWEvents.AD_PAUSE, ({ pauseReason, viewable }: JWPauseEvent) => {
 			// Keep playing the ad when the user closed the mini player
@@ -147,7 +153,6 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 		);
 	};
 
-	const { setPlayer, setConfig } = useContext(PlayerContext);
 	useBeforeJwpWrapperRendered(initPlayer, shouldLoadSponsoredContentList);
 
 	const playlistOrMediaKeyVal = playlistId ? `playlist_id=${playlistId}` : `media_id=${mediaId}`;
