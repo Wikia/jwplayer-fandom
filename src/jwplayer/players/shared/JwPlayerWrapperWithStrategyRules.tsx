@@ -93,6 +93,11 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 				STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_READY,
 			);
 
+			recordAndTrackDifference(
+				STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_AD,
+				STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_READY,
+			);
+
 			const newAdIndex = adIndexRef.current + 1;
 			const newPrerollAdTag = updateRVParam(prerollAdTag, newAdIndex);
 			adIndexRef.current = newAdIndex;
