@@ -119,13 +119,13 @@ pipeline {
         stage('Track change completion in Jira') {
           steps {
             script {
-        releaseTracking.changeComplete(
-          [
-            environment : "Development",
-            issueKey    : issueKey,
-            success     : true
-          ]
-        )
+				releaseTracking.changeComplete(
+				  [
+					environment : "Development",
+					issueKey    : issueKey,
+					success     : true
+				  ]
+				)
             }
           }
         }
