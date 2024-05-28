@@ -1,0 +1,18 @@
+name: jwplayer
+id: 'ari:cloud:compass:7440e9e8-427f-4f8b-a5be-4fe1b6af19da:component/0ddba87b-bb0b-45ce-8b4e-f9dd88e0c264/bd0ed0bf-f606-44b1-ab7e-0d2e2abfe89d'
+description: null
+configVersion: 1
+typeId: LIBRARY
+ownerId: null
+fields:
+  tier: 4
+links:
+  - name: null
+    type: REPOSITORY
+    url: 'https://github.com/Wikia/jwplayer-fandom'
+relationships: {}
+labels: null
+customFields: null
+
+# Learn more about formatting compass.yml:
+# https://go.atlassian.com/compass-yml-format
