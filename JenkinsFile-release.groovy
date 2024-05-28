@@ -106,11 +106,7 @@ pipeline {
         stage('publish') {
           steps {
             script {
-        if (params.dry_run) {
-          print("yarn pub")
-        } else {
-          sh("yarn pub")
-        }
+              sh("yarn pub")
         FAILED_STAGE = 'publish'
             }
           }
