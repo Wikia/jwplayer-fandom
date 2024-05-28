@@ -107,7 +107,7 @@ pipeline {
           steps {
             script {
               sh("yarn pub")
-        FAILED_STAGE = 'publish'
+              FAILED_STAGE = 'publish'
             }
           }
         }
