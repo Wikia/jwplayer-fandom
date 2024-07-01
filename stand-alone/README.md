@@ -1,4 +1,4 @@
-#How the stand-alone app is structured
+# How the stand-alone app is structured
 
 1. Currently the `/src` folder at the root of the project and the `/stand-alone` folder at the root of the project
    are separate apps. The main JWPlayer code is all located in the `/src` folder.
@@ -16,7 +16,7 @@ import RedVentureVideoPlayer from '@fandom/jwplayer-fandom/RedVentureVideoPlayer
 5. This issue may need to be fixed in the future, specifically when trying to automate deployments through tools
    such as Jenkins.
 
-#Notes on semi-automated deploying with a script
+# Notes on semi-automated deploying with a script
 
 1. The semi-automated deploying script is called `deploy-stand-alone` and can be found in the main `package.json` file.
 2. Run `yarn deploy-stand-alone --env [env]`
@@ -29,7 +29,7 @@ import RedVentureVideoPlayer from '@fandom/jwplayer-fandom/RedVentureVideoPlayer
    - The general deployment URL pattern is `https://static.wikia.nocookie.net/silversurfer/video/[env]/standalone-dist/standAlone_RV_VideoPlayer.js`
    - The deployment envs can be expanded by adding additional environment to the `envs.ts` file
 
-#Notes on how to do manual deployments:
+# Notes on how to do manual deployments:
 
 1. Go to the root of the project.
 2. Run `yarn build-stand-alone` on the command prompt
@@ -50,7 +50,7 @@ import RedVentureVideoPlayer from '@fandom/jwplayer-fandom/RedVentureVideoPlayer
    The `standAlone_RV_VideoPlayer` can be renamed to `standAlone_RV_VideoPlayer1` for example.
 8. Repeat steps 2-7 to redeploy new builds
 
-#Purging a file deployed to GCS
+# Purging a file deployed to GCS
 In some instances, we may want to instantly purge a file that's hosted on GCS, and cached through Fandom's CDNs.
 This is not a simple thing to do, as it requires purging multiple CDN nodes at once.
 Fortunately, there is a script provided that can purge all the caches on which the stand-alone video player is cached on.
@@ -164,7 +164,7 @@ On above websites recommended Python version is 3.7 and you may facing issues in
 8. Now you can test if you're properly authenticated against Google Cloud Services. Run the following command: **_gsutil ls gs://silversurfer_**
    1. You should see a response. If you see a 400 error, or some other error code then that means you might've missed a step somewhere above.
 
-#How to embed this player on any page
+# How to embed this player on any page
 
 1. Open the chrome dev console
 2. Paste the following 4 lines into the console:
