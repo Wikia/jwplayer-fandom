@@ -1,4 +1,4 @@
-import CanonicalVideoLoader from '@fandom/jwplayer-fandom/CanonicalVideoLoader'
+import CanonicalVideoLoader from '@fandom/jwplayer-fandom/CanonicalVideoLoader';
 import { DesktopArticleVideoLoader } from '@fandom/jwplayer-fandom/DesktopArticleVideoLoader';
 import { MobileArticleVideoLoader } from '@fandom/jwplayer-fandom/MobileArticleVideoLoader';
 

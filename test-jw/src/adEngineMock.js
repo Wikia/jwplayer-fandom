@@ -31,7 +31,7 @@ export function unblockPlayerForStrategyRules() {
 	communicationService.dispatch({
 		...adEngineSetupJWPlayerActionPayload,
 		strategyRulesEnabled: true,
-		vastUrl: VAST_URL,
+		vastXml: VAST_XML,
 	});
 }
 

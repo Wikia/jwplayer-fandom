@@ -36,6 +36,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	shouldLoadSponsoredContentList = true,
 	jwPlayerContainerEmbedId = 'featured-video__player',
 	vastUrl,
+	vastXml,
 	parentRef,
 }) => {
 	const { mediaId, playlistId } = config;
@@ -155,23 +156,34 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 
 	useBeforeJwpWrapperRendered(initPlayer, shouldLoadSponsoredContentList);
 
-	const playlistOrMediaKeyVal = playlistId ? `playlist_id=${playlistId}` : `media_id=${mediaId}`;
-	const strategyRulesUrl = `https://cdn.jwplayer.com/v2/sites/cGlKNUnj/placements/${strategyRulesPlacementId}/embed.js?custom.${strategyRulesPlacementId}.${playlistOrMediaKeyVal}&custom.${strategyRulesPlacementId}.recommendations_playlist_id=${recommendationPlaylistId}&custom.${strategyRulesPlacementId}.preroll_ad_tag=${encodeURIComponent(
-		prerollAdTag,
-	)}`;
+	const strategyRulesURL = `https://cdn.jwplayer.com/v2/sites/cGlKNUnj/placements/${strategyRulesPlacementId}/embed.js`;
 	const onBeforeLoad = () => {
 		recordAndTrackDifference(
 			STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START,
 			STRATEGY_RULES_VIDEO_RECORD_EVENTS.FEATURED_VIDEO_INIT,
 		);
 		jwPlayerPlaybackTracker({ event_name: 'video_player_start_load' });
+		window.jwDataStore = window.jwDataStore || { custom: {} };
+		window.jwDataStore.custom[strategyRulesPlacementId] = window.jwDataStore.custom[strategyRulesPlacementId] || {};
+		const customParams = window.jwDataStore.custom[strategyRulesPlacementId];
+		if (playlistId) {
+			customParams.playlist_id = playlistId;
+		} else {
+			customParams.media_id = mediaId;
+		}
+		customParams.recommendations_playlist_id = recommendationPlaylistId;
+		if (vastXml) {
+			customParams.vastxml = vastXml;
+		} else {
+			customParams.preroll_ad_tag = prerollAdTag;
+		}
 	};
 	const onLoad = () => {
 		console.debug('Strategy rules embed loaded. Waiting for player...');
 		window.jwplacements._getPlacementReadyPromise(strategyRulesPlacementId).then(jwPlayerLoaded);
 	};
 
-	useScript(strategyRulesUrl, parentRef.current, onBeforeLoad, {
+	useScript(strategyRulesURL, parentRef.current, onBeforeLoad, {
 		onLoad,
 		className,
 		id: jwPlayerContainerEmbedId,
