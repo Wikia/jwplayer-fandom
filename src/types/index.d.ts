@@ -5,5 +5,12 @@ declare global {
 		videoExperiments?: {
 			playlistUrl?: string;
 		};
+		newrelic?: unknown;
+		nrvideo?: {
+			Core: {
+				addTracker: (tracker: unknown) => void;
+			};
+			JwplayerTracker: (jwplayer: unknown) => void;
+		};
 	}
 }

@@ -115,6 +115,10 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 			onReady();
 		}
 
+		if (payload.player && window.nrvideo && window.newrelic) {
+			window.nrvideo.Core.addTracker(new window.nrvideo.JwplayerTracker(payload.player));
+		}
+
 		// Set the max_resolution param for related videos
 		if (typeof window?.jwplayer?.defaults?.related?.file === 'string') {
 			window.jwplayer.defaults.related.file = window.jwplayer.defaults.related.file + '&max_resolution=1280';
@@ -159,6 +163,8 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	const strategyRulesUrl = `https://cdn.jwplayer.com/v2/sites/cGlKNUnj/placements/${strategyRulesPlacementId}/embed.js?custom.${strategyRulesPlacementId}.${playlistOrMediaKeyVal}&custom.${strategyRulesPlacementId}.recommendations_playlist_id=${recommendationPlaylistId}&custom.${strategyRulesPlacementId}.preroll_ad_tag=${encodeURIComponent(
 		prerollAdTag,
 	)}`;
+	const newRelicVideoUrl =
+		'https://script.wikia.nocookie.net/fandom-ae-assets/temp/nandy/newrelic-video-jwplayer.min.js';
 	const onBeforeLoad = () => {
 		recordAndTrackDifference(
 			STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START,
@@ -171,6 +177,9 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 		window.jwplacements._getPlacementReadyPromise(strategyRulesPlacementId).then(jwPlayerLoaded);
 	};
 
+	useScript(newRelicVideoUrl, parentRef.current, null, {
+		id: 'nr-video',
+	});
 	useScript(strategyRulesUrl, parentRef.current, onBeforeLoad, {
 		onLoad,
 		className,
