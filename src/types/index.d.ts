@@ -5,7 +5,9 @@ declare global {
 		videoExperiments?: {
 			playlistUrl?: string;
 		};
-		newrelic?: unknown;
+		newrelic?: {
+			setCustomAttribute: (name: string, value: string | number | boolean | null, persist?: boolean) => void;
+		};
 		nrvideo?: {
 			Core: {
 				addTracker: (tracker: unknown) => void;

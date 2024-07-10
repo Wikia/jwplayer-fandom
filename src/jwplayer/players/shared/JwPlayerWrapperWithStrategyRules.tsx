@@ -17,6 +17,7 @@ import useBeforeJwpWrapperRendered from 'jwplayer/utils/useBeforeJwpWrapperRende
 import useScript from 'jwplayer/utils/useScript';
 import { getCommunicationService } from 'jwplayer/utils/communication/communicationService';
 import { updateRVParam } from 'jwplayer/utils/updateRVParam';
+import { difference } from '@fandom/tracking-metrics/timing/timings';
 
 interface WindowJWPlayer extends Window {
 	jwplayer?: JWPlayerApi;
@@ -70,6 +71,14 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 				STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_READY,
 			);
 
+			if (window.newrelic) {
+				const contentOrAdTime = +difference(
+					STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_READY,
+					STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_CONTENT_OR_AD,
+				);
+				window.newrelic.setCustomAttribute('video_player_play', contentOrAdTime);
+			}
+
 			const dismissed = getDismissed();
 			// Pause the content play when the user closed the mini player playing the ad
 			if (dismissed && viewable === 0 && playReason === 'autostart') {
@@ -85,6 +94,13 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 			// only add the events after the player is ready
 			jwPlayerPlaybackTracker({ event_name: 'video_player_ready' });
 			addBaseTrackingEvents(playerInstance);
+			if (window.newrelic) {
+				const playerReadyTime = +difference(
+					STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY,
+					STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_READY,
+				);
+				window.newrelic.setCustomAttribute('video_player_ready', playerReadyTime);
+			}
 		});
 
 		playerInstance.on(JWEvents.AD_IMPRESSION, () => {
@@ -92,6 +108,14 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 				STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_CONTENT_OR_AD,
 				STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_READY,
 			);
+
+			if (window.newrelic) {
+				const contentOrAdTime = +difference(
+					STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_READY,
+					STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_CONTENT_OR_AD,
+				);
+				window.newrelic.setCustomAttribute('video_player_play', contentOrAdTime);
+			}
 
 			const newAdIndex = adIndexRef.current + 1;
 			const newPrerollAdTag = updateRVParam(prerollAdTag, newAdIndex);
@@ -129,6 +153,14 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 			STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY,
 			STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START,
 		);
+
+		if (window.newrelic) {
+			const playerLoadTime = +difference(
+				STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START,
+				STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY,
+			);
+			window.newrelic.setCustomAttribute('video_player_load', playerLoadTime);
+		}
 
 		setConfig(config);
 
@@ -171,6 +203,13 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 			STRATEGY_RULES_VIDEO_RECORD_EVENTS.FEATURED_VIDEO_INIT,
 		);
 		jwPlayerPlaybackTracker({ event_name: 'video_player_start_load' });
+		if (window.newrelic) {
+			const playerStartLoadTime = +difference(
+				STRATEGY_RULES_VIDEO_RECORD_EVENTS.FEATURED_VIDEO_INIT,
+				STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START,
+			);
+			window.newrelic.setCustomAttribute('video_player_start_load', playerStartLoadTime);
+		}
 	};
 	const onLoad = () => {
 		console.debug('Strategy rules embed loaded. Waiting for player...');
