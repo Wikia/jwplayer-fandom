@@ -28,6 +28,12 @@ interface WindowJWPlayer extends Window {
 
 declare let window: WindowJWPlayer;
 
+function recordNewRelicTimeAction(actionName: string, time: number) {
+	window.newrelic.addPageAction(actionName, {
+		time,
+	});
+}
+
 const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	config,
 	onReady,
@@ -76,7 +82,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 					STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_READY,
 					STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_CONTENT_OR_AD,
 				);
-				window.newrelic.setCustomAttribute('video_player_play', contentOrAdTime);
+				recordNewRelicTimeAction('video_player_play', contentOrAdTime);
 			}
 
 			const dismissed = getDismissed();
@@ -99,7 +105,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 					STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY,
 					STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_READY,
 				);
-				window.newrelic.setCustomAttribute('video_player_ready', playerReadyTime);
+				recordNewRelicTimeAction('video_player_ready', playerReadyTime);
 			}
 		});
 
@@ -114,7 +120,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 					STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_READY,
 					STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_CONTENT_OR_AD,
 				);
-				window.newrelic.setCustomAttribute('video_player_play', contentOrAdTime);
+				recordNewRelicTimeAction('video_player_play', contentOrAdTime);
 			}
 
 			const newAdIndex = adIndexRef.current + 1;
@@ -159,7 +165,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 				STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START,
 				STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_READY,
 			);
-			window.newrelic.setCustomAttribute('video_player_load', playerLoadTime);
+			recordNewRelicTimeAction('video_player_load', playerLoadTime);
 		}
 
 		setConfig(config);
@@ -208,7 +214,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 				STRATEGY_RULES_VIDEO_RECORD_EVENTS.FEATURED_VIDEO_INIT,
 				STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START,
 			);
-			window.newrelic.setCustomAttribute('video_player_start_load', playerStartLoadTime);
+			recordNewRelicTimeAction('video_player_start_load', playerStartLoadTime);
 		}
 	};
 	const onLoad = () => {
