@@ -7,7 +7,7 @@ export const StrategyRulesWrapper: React.FC<JwPlayerWrapperProps> = ({ getDismis
 	const placeholderRef = useRef<HTMLDivElement>(null);
 
 	const jwpAdsSetupComplete = useJwpAdsSetupComplete();
-	const vastUrl = jwpAdsSetupComplete.vastUrl;
+	const { vastUrl, vastXml } = jwpAdsSetupComplete;
 	const setupComplete = jwpAdsSetupComplete.complete;
 
 	return (
@@ -19,6 +19,7 @@ export const StrategyRulesWrapper: React.FC<JwPlayerWrapperProps> = ({ getDismis
 					config={config}
 					onReady={onReady}
 					vastUrl={vastUrl}
+					vastXml={vastXml}
 					parentRef={placeholderRef}
 				/>
 			)}
