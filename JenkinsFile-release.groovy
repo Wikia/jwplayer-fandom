@@ -1,6 +1,7 @@
 @Library('GlobalSharedLibrary') _
 def FAILED_STAGE
-def issueKey
+def trackingKey
+def GIT_COMMIT_HASH
 def imageTag = "testImageTag"
 
 DOCKER_IMAGE = 'node:18-slim'
@@ -80,25 +81,18 @@ pipeline {
         stage('Track change start in Jira') {
           steps {
             script {
-            commitMsg = releaseTracking.getGitCommitMessage()
-            issueKey = releaseTracking.changeStart(
-              [
-              affectedApp        : "Fandom Community Platform",
-              affectedService    : "jwplayer",
-              environment        : "Development" ,
-              version            : "jwplayer-" + imageTag,
-              extraDescription   : """
-                 Deployment information:
-                 - *Branch:* [https://github.com/Wikia/jwplayer-fandom/tree/${params.branch}]
-                 - *Commit message:* ${commitMsg}
-                 - *Image tag:* ${imageTag}
-                 - *Build Url:* ${env.BUILD_URL}
-                 """,
-              relatedIssues       : releaseTracking.getIssueKeysFromText(commitMsg),
-              datacentersImpacted : ["poz-dev"]
-              ]
-            )
-            echo "Jira issue key: ${issueKey}"
+              trackingKey = releaseTracking.deployStart(
+                      buildUrl: env.BUILD_URL,
+                      organization: 'Wikia',
+                      repository: 'jwplayer-fandom',
+                      commit: GIT_COMMIT_HASH,
+                      imageTag: "jwplayer-$imageTag",
+                      service: 'jwplayer',
+                      environment: 'Development',
+                      datacenter: ["poz-dev"],
+                      components: ['Fandom Community Platform']
+              )
+              echo "Tracking key: ${trackingKey}"
             }
           }
         }
@@ -115,12 +109,10 @@ pipeline {
         stage('Track change completion in Jira') {
           steps {
             script {
-              releaseTracking.changeComplete(
-              [
-                environment : "Development",
-                issueKey    : issueKey,
-                success     : true
-                ]
+              releaseTracking.deployEnd(
+                 environment : 'Development',
+                 trackingKey : trackingKey,
+                 success     : true
               )
             }
           }
