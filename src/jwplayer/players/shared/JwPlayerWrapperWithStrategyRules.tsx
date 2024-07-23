@@ -174,9 +174,23 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 		} else {
 			customParams.media_id = mediaId;
 		}
+
 		customParams.recommendations_playlist_id = recommendationPlaylistId;
 		customParams.preroll_ad_tag = prerollAdTag;
 		customParams.vastxml = vastXml;
+
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore PoC to be released on a sandbox for JWP
+		const { mapping } = window?.mw?.config?.get('wgArticleFeaturedVideo') ?? {};
+		const { connatixMediaId, connatixPlaylistId } = mapping ?? {};
+		// https://github.com/Wikia/video-player/blob/main/lib/connatix/consts.ts#L2
+		customParams.cnxPlayerId = '48772c3c-b63e-4cb1-a1e4-14ed9830e8c7';
+
+		if (connatixPlaylistId) {
+			customParams.cnxPlaylistId = connatixPlaylistId;
+		} else {
+			customParams.cnxMediaId = connatixMediaId;
+		}
 	};
 	const onLoad = () => {
 		console.debug('Strategy rules embed loaded. Waiting for player...');
