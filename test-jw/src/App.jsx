@@ -3,7 +3,7 @@ import { DesktopArticleVideoLoader } from '@fandom/jwplayer-fandom/DesktopArticl
 import { MobileArticleVideoLoader } from '@fandom/jwplayer-fandom/MobileArticleVideoLoader';
 
 import { unblockPlayer, unblockPlayerForStrategyRules, unblockPlayerForVastXml } from './adEngineMock';
-import { WIREWAX_VIDEO, CANONICAL_VIDEO, ARTICLE_VIDEO_DETAILS } from './videoConfigs';
+import { CANONICAL_VIDEO, ARTICLE_VIDEO_DETAILS } from './videoConfigs';
 
 import './app.css';
 

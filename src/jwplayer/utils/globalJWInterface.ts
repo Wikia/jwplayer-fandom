@@ -7,7 +7,6 @@ import { Player } from 'jwplayer/types';
 
 export interface WindowWithJWPlayer {
 	jwplayer: (playerId: string | null) => Player;
-	currentPlaylistItemWirewax: boolean | null;
 }
 
 declare let window: WindowWithJWPlayer;
@@ -84,7 +83,7 @@ export const getPublishDate = withTryCatchDefault<number | undefined>((playerId:
 });
 
 export const getIsInteractable = withTryCatchDefault<boolean | null>(() => {
-	return !!window.currentPlaylistItemWirewax;
+	return false;
 });
 
 export const getJWAdBlockState = withTryCatchDefault<boolean>((playerId: string) => {

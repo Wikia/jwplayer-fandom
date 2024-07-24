@@ -1,7 +1,5 @@
 import { MutableRefObject } from 'react';
 
-import FandomWirewaxPlugin from './plugins/fandom-wirewax.plugin';
-
 // export type FeaturedVideoApi = (targetContainer: string, playerURL: string) => void;
 interface PlayerDefaults {
 	related: {
@@ -274,7 +272,7 @@ export type Player = {
 	getState: () => string;
 	getMute: () => boolean;
 	setup(options: PlayerConfig): Player;
-	registerPlugin(name: string, version: string, plugin: Record<string, unknown> | typeof FandomWirewaxPlugin): void;
+	registerPlugin(name: string, version: string, plugin: Record<string, unknown>): void;
 	getConfig: () => PlayerConfig;
 	getContainer: () => HTMLElement;
 	seek: (seekTo: number) => void;
@@ -298,11 +296,6 @@ export type Player = {
 	setCurrentCaptions: (index: number) => null;
 	getCurrentCaptions: () => number;
 	id: string;
-};
-export type CreateWirewaxEmbedder = () => Embedder;
-export type WirewaxPluginOptions = {
-	player: Player;
-	ready: JwEventData;
 };
 
 export interface AdTimeData {

@@ -1,4 +1,3 @@
-export const WIREWAX_VIDEO = 'https://cdn.jwplayer.com/v2/media/dWVV3F7S';
 export const CANONICAL_VIDEO = 'https://cdn.jwplayer.com/v2/media/r46kS55a';
 
 export const ARTICLE_VIDEO_DETAILS = {
