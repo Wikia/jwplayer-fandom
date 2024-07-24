@@ -32,6 +32,7 @@ export function unblockPlayerForStrategyRules() {
 		...adEngineSetupJWPlayerActionPayload,
 		strategyRulesEnabled: true,
 		vastUrl: VAST_URL,
+		vastXml: VAST_XML,
 	});
 }
 

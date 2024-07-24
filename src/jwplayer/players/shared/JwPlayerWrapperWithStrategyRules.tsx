@@ -43,6 +43,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	shouldLoadSponsoredContentList = true,
 	jwPlayerContainerEmbedId = 'featured-video__player',
 	vastUrl,
+	vastXml,
 	parentRef,
 }) => {
 	const { mediaId, playlistId } = config;
@@ -197,11 +198,8 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 
 	useBeforeJwpWrapperRendered(initPlayer, shouldLoadSponsoredContentList);
 
-	const playlistOrMediaKeyVal = playlistId ? `playlist_id=${playlistId}` : `media_id=${mediaId}`;
-	const strategyRulesUrl = `https://cdn.jwplayer.com/v2/sites/cGlKNUnj/placements/${strategyRulesPlacementId}/embed.js?custom.${strategyRulesPlacementId}.${playlistOrMediaKeyVal}&custom.${strategyRulesPlacementId}.recommendations_playlist_id=${recommendationPlaylistId}&custom.${strategyRulesPlacementId}.preroll_ad_tag=${encodeURIComponent(
-		prerollAdTag,
-	)}`;
-	const newRelicVideoUrl =
+	const strategyRulesURL = `https://cdn.jwplayer.com/v2/sites/cGlKNUnj/placements/${strategyRulesPlacementId}/embed.js`;
+	const newRelicVideoURL =
 		'https://script.wikia.nocookie.net/fandom-ae-assets/temp/nandy/newrelic-video-jwplayer.min.js';
 	const onBeforeLoad = () => {
 		recordAndTrackDifference(
@@ -216,16 +214,30 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 			);
 			recordNewRelicTimeAction('video_player_start_load', playerStartLoadTime);
 		}
+
+		window.jwDataStore = window.jwDataStore || { custom: {} };
+		window.jwDataStore.custom[strategyRulesPlacementId] = window.jwDataStore.custom[strategyRulesPlacementId] || {};
+
+		const customParams = window.jwDataStore.custom[strategyRulesPlacementId];
+
+		if (playlistId) {
+			customParams.playlist_id = playlistId;
+		} else {
+			customParams.media_id = mediaId;
+		}
+		customParams.recommendations_playlist_id = recommendationPlaylistId;
+		customParams.preroll_ad_tag = prerollAdTag;
+		customParams.vastxml = vastXml;
 	};
 	const onLoad = () => {
 		console.debug('Strategy rules embed loaded. Waiting for player...');
 		window.jwplacements._getPlacementReadyPromise(strategyRulesPlacementId).then(jwPlayerLoaded);
 	};
 
-	useScript(newRelicVideoUrl, parentRef.current, null, {
+	useScript(newRelicVideoURL, parentRef.current, null, {
 		id: 'nr-video',
 	});
-	useScript(strategyRulesUrl, parentRef.current, onBeforeLoad, {
+	useScript(strategyRulesURL, parentRef.current, onBeforeLoad, {
 		onLoad,
 		className,
 		id: jwPlayerContainerEmbedId,
