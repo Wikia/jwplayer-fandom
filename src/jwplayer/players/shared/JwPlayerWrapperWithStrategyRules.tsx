@@ -28,8 +28,9 @@ interface WindowJWPlayer extends Window {
 
 declare let window: WindowJWPlayer;
 
-function recordNewRelicTimeAction(actionName: string, time: number) {
-	window.newrelic.addPageAction(actionName, {
+function recordNewRelicTimeAction(eventName: string, time: number) {
+	window.newrelic.addPageAction('videoPlayerEvent', {
+		eventName,
 		time,
 	});
 }
