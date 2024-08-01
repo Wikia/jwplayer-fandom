@@ -4,7 +4,6 @@ This repository contains Fandom's custom solution/wrapper for media reproduction
 
 **Note**:
 
-- This player has registered the `wirewax` plugin as default (wirewax is most likely become deprecated by now)
 - This project is bundled up using [rollup](https://rollupjs.org/guide/en/#installation).
 
 ## Usage
