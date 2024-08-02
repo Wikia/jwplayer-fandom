@@ -504,10 +504,18 @@
   version "0.0.0"
   uid ""
 
-"@fandom/tracking-metrics@0.4.1":
+"@fandom/tracking-metrics@0.4.1", "@fandom/tracking-metrics@^0.4.1":
   version "0.4.1"
   resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/tracking-metrics/-/@fandom/tracking-metrics-0.4.1.tgz#16e19ebab4c3e8ce01d1b907a5e94c59a643f842"
   integrity sha512-5rBvgGdPwHJq1u9MWjeRIkMraSjHgxDrmpnsf+K9YeK2jKTuFwt96wkNxGjVAjm2yA6fEYwu/ZFjOGx/YEzFhQ==
+
+"@fandom/video-player@0.9.0":
+  version "0.9.0"
+  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/video-player/-/@fandom/video-player-0.9.0.tgz#8c5bc8c396d6d00fd0de646f095fcc34062ecf6f"
+  integrity sha512-ZHKflYToMi54ZLsPCENR0NxKnAFrgsCe0EHuzM/N9LOGzZgg9qLQ8hRzJYXxvMnnqQ10mg3dTGBQycnRo2zcOQ==
+  dependencies:
+    "@fandom/tracking-metrics" "^0.4.1"
+    throttle-debounce "^5.0.0"
 
 "@floating-ui/core@^1.4.2":
   version "1.5.0"
@@ -1259,6 +1267,11 @@ supports-preserve-symlinks-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
+
+throttle-debounce@^5.0.0:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/throttle-debounce/-/throttle-debounce-5.0.2.tgz#ec5549d84e053f043c9fd0f2a6dd892ff84456b1"
+  integrity sha512-B71/4oyj61iNH0KeCamLuE2rmKuTO5byTOSVwECM5FA7TiAiAW+UqTKZ9ERueC4qvgSttUhdmq1mXC3kJqGX7A==
 
 to-fast-properties@^2.0.0:
   version "2.0.0"

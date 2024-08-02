@@ -142,11 +142,11 @@
 		"zx": "^4.2.0"
 	},
 	"peerDependencies": {
+		"@fandom/tracking-metrics": "^0.4.1",
 		"i18next": "^19.7.0",
 		"react": "^16.14.0 || ^17.0.2 || ^18.0.0",
 		"react-dom": "^16.14.0 || ^17.0.2 || ^18.0.0",
-		"react-i18next": "^11.7.1",
-		"@fandom/tracking-metrics": "^0.4.1"
+		"react-i18next": "^11.7.1"
 	},
 	"dependencies": {
 		"@fandom-frontend/design-system": "15.18.1",
