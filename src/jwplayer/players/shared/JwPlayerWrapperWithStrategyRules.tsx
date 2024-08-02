@@ -10,22 +10,15 @@ import {
 import { PlayerContext } from 'jwplayer/players/shared/PlayerContext';
 import { JwPlayerWrapperProps } from 'jwplayer/types';
 import { jwPlayerPlaybackTracker } from 'jwplayer/utils/videoTracking';
-import { recordAndTrackDifference, STRATEGY_RULES_VIDEO_RECORD_EVENTS } from 'jwplayer/utils/videoTimingEvents';
+import { CommunicationService, JWPlayer, recordAndTrackDifference, STRATEGY_RULES_VIDEO_RECORD_EVENTS } from '@fandom/video-player'
+import { JWPlayerWindow } from '@fandom/video-player/lib/jwplayer/types'
 import JWEvents from 'jwplayer/players/shared/JWEvents';
 import addBaseTrackingEvents from 'jwplayer/players/shared/addBaseTrackingEvents';
 import useBeforeJwpWrapperRendered from 'jwplayer/utils/useBeforeJwpWrapperRendered';
 import useScript from 'jwplayer/utils/useScript';
-import { getCommunicationService } from 'jwplayer/utils/communication/communicationService';
 import { updateRVParam } from 'jwplayer/utils/updateRVParam';
 
-interface WindowJWPlayer extends Window {
-	jwplayer?: JWPlayerApi;
-	jwplacements?: JWPlacementApi;
-	jwDataStore?: Record<string, unknown>;
-	sponsoredVideos?: string[];
-}
-
-declare let window: WindowJWPlayer;
+declare let window: JWPlayerWindow;
 
 const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	config,
@@ -43,10 +36,12 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	const searchParams = new URLSearchParams(window.location.search);
 	const strategyRulesPlacementId = searchParams.get('jwp_placement_id') ?? 'KmMLkvao';
 	const recommendationPlaylistId = 'FOhaD53w';
-	const communicationService = getCommunicationService();
+	const communicationService = CommunicationService.getInstance();
 	const prerollAdTag = vastUrl ?? '';
 	const adIndexRef = React.useRef(1);
 	const { setPlayer, setConfig } = useContext(PlayerContext);
+
+	const jwPlayer = new JWPlayer('cGlKNUnj', strategyRulesPlacementId)
 
 	const registerEventHandlers = (playerInstance: Player) => {
 		if (!playerInstance) {
@@ -133,7 +128,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 		registerEventHandlers(playerInstance);
 		setPlayer(playerInstance);
 
-		communicationService.dispatch({
+		communicationService.broadcast({
 			type: '[Video] Player rendered',
 			payload: {
 				renderedId: 'JW player',
@@ -156,34 +151,22 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 
 	useBeforeJwpWrapperRendered(initPlayer, shouldLoadSponsoredContentList);
 
-	const strategyRulesURL = `https://cdn.jwplayer.com/v2/sites/cGlKNUnj/placements/${strategyRulesPlacementId}/embed.js`;
 	const onBeforeLoad = () => {
-		recordAndTrackDifference(
-			STRATEGY_RULES_VIDEO_RECORD_EVENTS.JW_PLAYER_SCRIPTS_LOAD_START,
-			STRATEGY_RULES_VIDEO_RECORD_EVENTS.FEATURED_VIDEO_INIT,
-		);
-		jwPlayerPlaybackTracker({ event_name: 'video_player_start_load' });
-
-		window.jwDataStore = window.jwDataStore || { custom: {} };
-		window.jwDataStore.custom[strategyRulesPlacementId] = window.jwDataStore.custom[strategyRulesPlacementId] || {};
-
-		const customParams = window.jwDataStore.custom[strategyRulesPlacementId];
-
-		if (playlistId) {
-			customParams.playlist_id = playlistId;
-		} else {
-			customParams.media_id = mediaId;
-		}
-		customParams.recommendations_playlist_id = recommendationPlaylistId;
-		customParams.preroll_ad_tag = prerollAdTag;
-		customParams.vastxml = vastXml;
+		jwPlayer.onBeforeLoad()
+		jwPlayer.mergeCustomParams({
+			...(playlistId ? { playlist_id: playlistId } : { media_id: mediaId }),
+			recommendations_playlist_id: recommendationPlaylistId,
+			preroll_ad_tag: prerollAdTag,
+			vastxml: vastXml,
+		});
 	};
+
 	const onLoad = () => {
 		console.debug('Strategy rules embed loaded. Waiting for player...');
 		window.jwplacements._getPlacementReadyPromise(strategyRulesPlacementId).then(jwPlayerLoaded);
 	};
 
-	useScript(strategyRulesURL, parentRef.current, onBeforeLoad, {
+	useScript(jwPlayer.strategyRulesUrl, parentRef.current, onBeforeLoad, {
 		onLoad,
 		className,
 		id: jwPlayerContainerEmbedId,
