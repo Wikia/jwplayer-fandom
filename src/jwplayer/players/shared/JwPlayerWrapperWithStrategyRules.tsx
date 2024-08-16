@@ -39,7 +39,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 	vastXml,
 	parentRef,
 }) => {
-	const { mediaId, playlistId } = config;
+	const { mediaId, playlistId, showAds } = config;
 	const searchParams = new URLSearchParams(window.location.search);
 	const strategyRulesPlacementId = searchParams.get('jwp_placement_id') ?? 'KmMLkvao';
 	const recommendationPlaylistId = 'FOhaD53w';
@@ -138,7 +138,7 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 			payload: {
 				renderedId: 'JW player',
 				videoAdsOptions: {
-					showAds: true,
+					showAds,
 				},
 			},
 		});
@@ -175,8 +175,12 @@ const JwPlayerWrapperWithStrategyRules: React.FC<JwPlayerWrapperProps> = ({
 			customParams.media_id = mediaId;
 		}
 		customParams.recommendations_playlist_id = recommendationPlaylistId;
-		customParams.preroll_ad_tag = prerollAdTag;
-		customParams.vastxml = vastXml;
+		customParams.showAds = showAds;
+
+		if (showAds) {
+			customParams.preroll_ad_tag = prerollAdTag;
+			customParams.vastxml = vastXml;
+		}
 	};
 	const onLoad = () => {
 		console.debug('Strategy rules embed loaded. Waiting for player...');

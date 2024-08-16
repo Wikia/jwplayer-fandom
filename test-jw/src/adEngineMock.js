@@ -17,7 +17,7 @@ function sendMockedAdEngineConfiguredAction() {
 
 const adEngineSetupJWPlayerActionPayload = {
 	type: '[Ad Engine] Setup JWPlayer',
-	showAds: true,
+	showAds: false,
 	autoplayDisabled: false,
 };
 

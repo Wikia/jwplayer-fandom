@@ -36,6 +36,7 @@ export type PlayerConfig = {
 	description?: string;
 	title?: string;
 	lang?: string;
+	showAds?: boolean;
 };
 
 export type Playlist = PlaylistItem | PlaylistItem[] | string | string[];

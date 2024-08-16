@@ -48,7 +48,7 @@ function isPlaylistEmpty(playlist) {
 	return typeof playlist === 'object' && playlist?.length > 0;
 }
 
-export const getArticleVideoConfig = (videoDetails) => {
+export const getArticleVideoConfig = (videoDetails, showAds = true) => {
 	const lang = videoDetails?.lang || 'en';
 
 	if (!videoDetails || !isPlaylistEmpty(videoDetails.playlist)) {
@@ -70,5 +70,6 @@ export const getArticleVideoConfig = (videoDetails) => {
 		mediaId: videoId,
 		lang: videoDetails.lang,
 		advertising: getAdvertisingConfig(lang),
+		showAds,
 	};
 };
