@@ -17,7 +17,7 @@ function sendMockedAdEngineConfiguredAction() {
 
 const adEngineSetupJWPlayerActionPayload = {
 	type: '[Ad Engine] Setup JWPlayer',
-	showAds: false,
+	showAds: true,
 	autoplayDisabled: false,
 };
 
@@ -32,7 +32,23 @@ export function unblockPlayerForStrategyRules() {
 		...adEngineSetupJWPlayerActionPayload,
 		strategyRulesEnabled: true,
 		vastUrl: VAST_URL,
+	});
+}
+
+export function unblockPlayerForStrategyRulesWithVastXml() {
+	communicationService.dispatch({
+		...adEngineSetupJWPlayerActionPayload,
+		strategyRulesEnabled: true,
+		vastUrl: VAST_URL,
 		vastXml: VAST_XML,
+	});
+}
+
+export function unblockPlayerForStrategyRulesWithNoVideoAds() {
+	communicationService.dispatch({
+		...adEngineSetupJWPlayerActionPayload,
+		showAds: false,
+		strategyRulesEnabled: true,
 	});
 }
 
