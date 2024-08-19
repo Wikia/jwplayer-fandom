@@ -92,7 +92,7 @@ export const MobileArticleVideoPlayerContent: React.FC<MobileArticleVideoPlayerP
 						<>
 							<StrategyRulesWrapper
 								getDismissed={getDismissed}
-								config={getArticleVideoConfig(videoDetails)}
+								config={getArticleVideoConfig(videoDetails, jwpAdsSetupComplete.showAds)}
 								onReady={onPlayerInstanceReady}
 							/>
 							<input type="hidden" value={String(dismissed)} name={inputName} />
