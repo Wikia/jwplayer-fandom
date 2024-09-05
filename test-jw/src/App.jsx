@@ -21,6 +21,8 @@ const fandomContextTrackingMock = {
 	pvNumberGlobal: 777,
 };
 
+window.canPlayVideo = () => true;
+
 window.fandomContext = {
 	tracking: fandomContextTrackingMock,
 };
