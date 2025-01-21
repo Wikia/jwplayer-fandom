@@ -504,10 +504,10 @@
   version "0.0.0"
   uid ""
 
-"@fandom/tracking-metrics@0.4.2-TACO-796":
-  version "0.4.2-TACO-796"
-  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/tracking-metrics/-/@fandom/tracking-metrics-0.4.2-TACO-796.tgz#55b3fa852563a1cb3d325a64d59e11e0efc4ff66"
-  integrity sha512-6a43M2NTODnbHnFlCUf0KjPEd6uWaKllIhf5HqK2a9SO0JAngaVPapP0sbnX6RRR99Q3ke6M1ljKBPOxi7Y8Vw==
+"@fandom/tracking-metrics@0.4.2":
+  version "0.4.2"
+  resolved "https://artifactory.wikia-inc.com:443/artifactory/api/npm/wikia-npm/@fandom/tracking-metrics/-/@fandom/tracking-metrics-0.4.2.tgz#0d9cf932a3be7b92b2cb308dd1cf886ce3cfc625"
+  integrity sha512-Xo8/nxbE6NjK29ZaPQleX0RmovY8/G5ICuUc5VZ80twzLoi98SG1sd5oJD7pYSoB3NojCg0IUINoRdk7234wNw==
 
 "@floating-ui/core@^1.4.2":
   version "1.5.0"

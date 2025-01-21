@@ -3,7 +3,7 @@
   "private": true,
   "dependencies": {
     "@fandom/jwplayer-fandom": "link:..",
-    "@fandom/tracking-metrics": "0.4.2-TACO-796",
+    "@fandom/tracking-metrics": "0.4.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },
