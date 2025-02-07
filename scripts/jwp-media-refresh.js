@@ -138,7 +138,7 @@ async function updateMediaInJWPlayer({ mediaMapping, refreshedClips }) {
 					metadata: {
 						custom_params: {
 							...media.metadata.custom_params,
-							'fandom:thumbnail': refreshedClip.thumbnailUrl,
+							thumbnail: refreshedClip.thumbnailUrl,
 						},
 					},
 				}),
