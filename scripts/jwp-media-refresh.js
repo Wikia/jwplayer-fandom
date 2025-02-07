@@ -136,6 +136,8 @@ async function updateMediaInJWPlayer({ mediaMapping, refreshedClips }) {
 				headers: jwpRequestHeaders,
 				body: JSON.stringify({
 					metadata: {
+						publish_start_date: new Date(refreshedClip.publishedAt).toISOString(),
+						publish_end_date: new Date(refreshedClip.urlsExpireAt).toISOString(),
 						custom_params: {
 							...media.metadata.custom_params,
 							thumbnail: refreshedClip.thumbnailUrl,
