@@ -22,84 +22,108 @@ const medalRequestHeaders = {
 	'X-Authentication': medalApiSecret,
 };
 
-function fetchDynamicPlaylists() {
-	const query = new URLSearchParams({
-		page: 1,
-		page_length: 100,
-		q: 'playlist_type:dynamic',
-	});
-	console.group('Fetching playlists...');
-	console.debug(query);
-	return fetch(`${jwpApiUrl}/playlists?${query}`, { headers: jwpRequestHeaders })
-		.then((response) => response.json())
-		.then(({ total, playlists }) => {
-			console.log(`Found ${total} dynamic playlists`);
-			return playlists.map((playlist) => playlist.id);
-		})
-		.catch((err) => console.error(err))
-		.finally(() => console.groupEnd());
+async function fetchDynamicPlaylists() {
+	try {
+		const query = new URLSearchParams({
+			page: 1,
+			page_length: 100,
+			q: 'playlist_type:dynamic',
+		});
+		console.group('Fetching playlists...');
+		console.debug(query.toString());
+		const response = await fetch(`${jwpApiUrl}/playlists?${query.toString()}`, { headers: jwpRequestHeaders });
+		const data = await response.json();
+		const { total, playlists } = data;
+		console.log(`Found ${total} dynamic playlists`);
+		return playlists.map((playlist) => playlist.id);
+	} catch (err) {
+		console.error(err);
+		throw err;
+	} finally {
+		console.groupEnd();
+	}
 }
 
-function fetchDynamicPlaylist(playlistId) {
-	return fetch(`${jwpApiUrl}/playlists/${playlistId}/dynamic_playlist`, { headers: jwpRequestHeaders })
-		.then((response) => response.json())
-		.catch((err) => console.error(err));
+async function fetchDynamicPlaylist(playlistId) {
+	try {
+		const response = await fetch(`${jwpApiUrl}/playlists/${playlistId}/dynamic_playlist`, {
+			headers: jwpRequestHeaders,
+		});
+		return await response.json();
+	} catch (err) {
+		console.error(err);
+		throw err;
+	}
 }
 
 async function collectTagsToInclude(playlistIds) {
 	const tags = [];
 	for (const playlistId of playlistIds) {
-		const {
-			metadata: { tag_filter: tagFilter },
-		} = await fetchDynamicPlaylist(playlistId);
-		tags.push(...tagFilter?.include?.values);
+		try {
+			const {
+				metadata: { tag_filter: tagFilter },
+			} = await fetchDynamicPlaylist(playlistId);
+			if (tagFilter?.include?.values) {
+				tags.push(...tagFilter.include.values);
+			}
+		} catch (error) {
+			console.error(error);
+		}
 		await delay(1000);
 	}
 	return tags.filter((value, index, arr) => arr.indexOf(value) === index && value !== 'medal-approved');
 }
 
-function fetchMediaByTags(tags) {
-	const query = new URLSearchParams({
-		page: 1,
-		page_length: 1000,
-		q: `tags:(${tags.join(' OR ')})`,
-	});
-	console.group('Fetching media...');
-	console.debug(query);
-	return fetch(`${jwpApiUrl}/media?${query}`, { headers: jwpRequestHeaders })
-		.then((response) => response.json())
-		.then(({ total, media }) => {
-			console.log(`Found ${total ?? 0} media`);
-			return media;
-		})
-		.catch((err) => console.error(err))
-		.finally(() => console.groupEnd());
+async function fetchMediaByTags(tags) {
+	try {
+		const query = new URLSearchParams({
+			page: 1,
+			page_length: 1000,
+			q: `tags:(${tags.join(' OR ')})`,
+		});
+		console.group('Fetching media...');
+		console.debug(query.toString());
+		const response = await fetch(`${jwpApiUrl}/media?${query.toString()}`, { headers: jwpRequestHeaders });
+		const data = await response.json();
+		const { total, media } = data;
+		console.log(`Found ${total ?? 0} media`);
+		return media;
+	} catch (err) {
+		console.error(err);
+		throw err;
+	} finally {
+		console.groupEnd();
+	}
 }
 
 async function refreshMediaContent(media) {
-	const mapping = media.map((video) => {
+	const mediaMapping = media.map((video) => {
 		const contentId = video.metadata.custom_params.import_guid.split('/').filter(Boolean).pop();
 		return { media: video, contentId };
 	});
-
-	const contentIds = mapping.map((item) => item.contentId);
+	const contentIds = mediaMapping.map((item) => item.contentId);
 
 	console.group('Refreshing media content on Medal...');
-	const response = await fetch(`${medalApiUrl}/content/refresh`, {
-		method: 'POST',
-		headers: medalRequestHeaders,
-		body: JSON.stringify({ contentIds }),
-	});
-	const refreshedClips = await response.json();
-	console.log(`Received ${refreshedClips.length} refreshed clips`);
-	console.groupEnd();
-
-	return { mapping, refreshedClips };
+	try {
+		const response = await fetch(`${medalApiUrl}/content/refresh`, {
+			method: 'POST',
+			headers: medalRequestHeaders,
+			body: JSON.stringify({ contentIds }),
+		});
+		const refreshedClips = await response.json();
+		console.log(`Received ${refreshedClips.length} refreshed clips`);
+		return { mediaMapping, refreshedClips };
+	} catch (err) {
+		console.error(err);
+		throw err;
+	} finally {
+		console.groupEnd();
+	}
 }
 
-async function updateMediaInJWPlayer({ mapping, refreshedClips }) {
+async function updateMediaInJWPlayer({ mediaMapping, refreshedClips }) {
 	console.group('Updating media in JWPlayer...');
-	for (const { media, contentId } of mapping) {
+	for (const { media, contentId } of mediaMapping) {
 		const refreshedClip = refreshedClips.find((clip) => clip.contentId === contentId);
 		if (!refreshedClip) {
 			console.warn(`No refreshed data available for JW media ${media.id}`);
@@ -156,9 +180,16 @@ async function updateMediaInJWPlayer({ mapping, refreshedClips }) {
 	console.groupEnd();
 }
 
-fetchDynamicPlaylists()
-	.then(collectTagsToInclude)
-	.then(fetchMediaByTags)
-	.then(refreshMediaContent)
-	.then(updateMediaInJWPlayer)
-	.catch((error) => console.error(error));
+async function main() {
+	try {
+		const playlists = await fetchDynamicPlaylists();
+		const tags = await collectTagsToInclude(playlists);
+		const media = await fetchMediaByTags(tags);
+		const refreshed = await refreshMediaContent(media);
+		await updateMediaInJWPlayer(refreshed);
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+void main();
