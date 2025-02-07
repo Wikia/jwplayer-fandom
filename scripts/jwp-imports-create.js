@@ -21,7 +21,7 @@ const buildMrssFeedUrl = (categorySlug) => {
 	return url.toString();
 };
 
-const createImport = (categorySLug) => {
+const createImport = (categorySlug) => {
 	const options = {
 		method: 'POST',
 		headers: {
@@ -32,9 +32,10 @@ const createImport = (categorySLug) => {
 		body: JSON.stringify({
 			metadata: {
 				host_on_import: false,
-				url: buildMrssFeedUrl(categorySLug),
-				title: `Medal.tv / ${categorySLug}`,
+				url: buildMrssFeedUrl(categorySlug),
+				title: `Medal.tv / ${categorySlug}`,
 				state: 'importing',
+				simple_ingest_custom_params: ['fandom:thumbnail'],
 			},
 		}),
 	};
