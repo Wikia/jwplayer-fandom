@@ -1,4 +1,5 @@
 const [siteId, jwpApiSecret, medalApiSecret, dryRun] = process.argv.slice(2);
+const isDryRun = Boolean(dryRun);
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 if (!siteId || !jwpApiSecret || !medalApiSecret) {
@@ -130,51 +131,65 @@ async function updateMediaInJWPlayer({ mediaMapping, refreshedClips }) {
 			continue;
 		}
 
-		try {
-			const patchResponse = await fetch(`${jwpApiUrl}/media/${media.id}`, {
-				method: 'PATCH',
-				headers: jwpRequestHeaders,
-				body: JSON.stringify({
-					metadata: {
-						publish_start_date: new Date(refreshedClip.publishedAt).toISOString(),
-						publish_end_date: new Date(refreshedClip.urlsExpireAt).toISOString(),
-						custom_params: {
-							...media.metadata.custom_params,
-							thumbnail: refreshedClip.thumbnailUrl,
+		if (isDryRun) {
+			console.log(
+				`[Dry-run] Would update JW media ${media.id} with thumbnail: ${
+					refreshedClip.thumbnailUrl
+				}, publish_start_date: ${new Date(refreshedClip.publishedAt).toISOString()}, publish_end_date: ${new Date(
+					refreshedClip.urlsExpireAt,
+				).toISOString()}`,
+			);
+		} else {
+			try {
+				const patchResponse = await fetch(`${jwpApiUrl}/media/${media.id}`, {
+					method: 'PATCH',
+					headers: jwpRequestHeaders,
+					body: JSON.stringify({
+						metadata: {
+							publish_start_date: new Date(refreshedClip.publishedAt).toISOString(),
+							publish_end_date: new Date(refreshedClip.urlsExpireAt).toISOString(),
+							custom_params: {
+								...media.metadata.custom_params,
+								thumbnail: refreshedClip.thumbnailUrl,
+							},
 						},
-					},
-				}),
-			});
-			if (!patchResponse.ok) {
-				console.error(`Error updating media ${media.id}: ${patchResponse.statusText}`);
+					}),
+				});
+				if (!patchResponse.ok) {
+					console.error(`Error updating media ${media.id}: ${patchResponse.statusText}`);
+					continue;
+				} else {
+					console.log(`JW media ${media.id} - thumbnail updated successfully`);
+				}
+			} catch (error) {
+				console.error(`Error updating media ${media.id}: ${error.message}`);
 				continue;
-			} else {
-				console.log(`JW media ${media.id} - thumbnail updated successfully`);
 			}
-		} catch (error) {
-			console.error(`Error updating media ${media.id}: ${error.message}`);
-			continue;
 		}
 
-		try {
-			const reuploadResponse = await fetch(`${jwpApiUrl}/media/${media.id}/reupload`, {
-				method: 'PUT',
-				headers: jwpRequestHeaders,
-				body: JSON.stringify({
-					upload: {
-						method: 'external',
-						mime_type: 'video/mp4',
-						source_url: refreshedClip.videoUrl,
-					},
-				}),
-			});
-			if (!reuploadResponse.ok) {
-				console.error(`Error reuploading media ${media.id}: ${reuploadResponse.statusText}`);
-			} else {
-				console.log(`JW media ${media.id} - reupload completed successfully`);
+		if (isDryRun) {
+			console.log(`[Dry-run] Would reupload JW media ${media.id} with source_url: ${refreshedClip.videoUrl}`);
+		} else {
+			try {
+				const reuploadResponse = await fetch(`${jwpApiUrl}/media/${media.id}/reupload`, {
+					method: 'PUT',
+					headers: jwpRequestHeaders,
+					body: JSON.stringify({
+						upload: {
+							method: 'external',
+							mime_type: 'video/mp4',
+							source_url: refreshedClip.videoUrl,
+						},
+					}),
+				});
+				if (!reuploadResponse.ok) {
+					console.error(`Error reuploading media ${media.id}: ${reuploadResponse.statusText}`);
+				} else {
+					console.log(`JW media ${media.id} - reupload completed successfully`);
+				}
+			} catch (error) {
+				console.error(`Error reuploading media ${media.id}: ${error.message}`);
 			}
-		} catch (error) {
-			console.error(`Error reuploading media ${media.id}: ${error.message}`);
 		}
 
 		await delay(1000);
