@@ -1,5 +1,3 @@
-const fs = require('fs');
-
 const [siteId, jwpApiSecret, dryRun] = process.argv.slice(2);
 
 if (!siteId || !jwpApiSecret) {
