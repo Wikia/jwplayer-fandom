@@ -1,5 +1,6 @@
 const [siteId, jwpApiSecret, medalApiSecret, dryRun] = process.argv.slice(2);
 const isDryRun = Boolean(dryRun);
+// Useful for rate-limiting requests to prevent "Too Many Requests" errors
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 if (!siteId || !jwpApiSecret || !medalApiSecret) {
@@ -23,6 +24,13 @@ const medalRequestHeaders = {
 	'X-Authentication': medalApiSecret,
 };
 
+/**
+ * Fetches a list of dynamic playlists from the JWP API.
+ *
+ * The request retrieves up to 100 playlists at a time, which is sufficient
+ * as we are handling a fixed number of playlists. Pagination is not required
+ * at this stage.
+ */
 async function fetchDynamicPlaylists() {
 	try {
 		const query = new URLSearchParams({
@@ -75,6 +83,12 @@ async function collectTagsToInclude(playlistIds) {
 	return tags.filter((value, index, arr) => arr.indexOf(value) === index && value !== 'medal-approved');
 }
 
+/**
+ * Fetches media items filtered by the specified tags from the JWP API.
+ *
+ * The request retrieves up to 1000 media items at a time, which is sufficient
+ * for our current needs. Pagination is not required at this stage.
+ */
 async function fetchMediaByTags(tags) {
 	try {
 		const query = new URLSearchParams({
