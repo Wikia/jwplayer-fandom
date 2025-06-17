@@ -18,7 +18,7 @@ jobs:
           cache: 'npm'
 
       - name: Package size report
-        uses: pkg-size/action@v1
+        uses: pkg-size/action@a637fb0897b6f14f18e776d8c3dbccb34a1ad27b
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
