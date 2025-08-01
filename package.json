@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.16.2-TACO-1143-1",
+	"version": "2.16.2-TACO-1143",
 	"description": "JWPlayer for Fandom",
 	"engines": {
 		"node": ">=18.0.0"
@@ -146,13 +146,13 @@
 		"react": "^16.14.0 || ^17.0.2 || ^18.0.0",
 		"react-dom": "^16.14.0 || ^17.0.2 || ^18.0.0",
 		"react-i18next": "^11.7.1",
-		"@fandom/tracking-metrics": "0.4.2-TACO-1143-4"
+		"@fandom/tracking-metrics": "0.4.3-TACO-1143"
 	},
 	"dependencies": {
 		"@fandom-frontend/design-system": "15.18.1",
 		"@fandom-frontend/react-common": "13.23.1",
 		"@fandom/context": "^0.6.1",
-		"@fandom/tracking-metrics": "0.4.2-TACO-1143-4",
+		"@fandom/tracking-metrics": "0.4.3-TACO-1143",
 		"@wikia/post-quecast": "2.0.1",
 		"clsx": "1.2.1",
 		"js-cookie": "3.0.1"
