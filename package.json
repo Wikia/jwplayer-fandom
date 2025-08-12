@@ -1,6 +1,6 @@
 {
 	"name": "@fandom/jwplayer-fandom",
-	"version": "2.16.2-TACO-1143-test",
+	"version": "2.16.2",
 	"description": "JWPlayer for Fandom",
 	"engines": {
 		"node": ">=18.0.0"
