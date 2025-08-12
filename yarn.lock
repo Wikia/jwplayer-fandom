@@ -1381,10 +1381,10 @@
   dependencies:
     "@fandom/context" "^0.6.2"
 
-"@fandom/tracking-metrics@0.4.3-TACO-1143-test":
-  version "0.4.3-TACO-1143-test"
-  resolved "https://artifactory.wikia-inc.com/artifactory/api/npm/wikia-npm/@fandom/tracking-metrics/-/@fandom/tracking-metrics-0.4.3-TACO-1143-test.tgz#965d6af65cb0cca68150e9ade200047dadee1841"
-  integrity sha512-2nO/8MekHra3bxgl0YFpqyR5luHWmeIO5nTx63P5R+2mvdK+MRmzbJRGdacUylYZK8fV4oLr9XdoPyrp8mH6qQ==
+"@fandom/tracking-metrics@0.4.4":
+  version "0.4.4"
+  resolved "https://artifactory.wikia-inc.com/artifactory/api/npm/wikia-npm/@fandom/tracking-metrics/-/@fandom/tracking-metrics-0.4.4.tgz#1eb4f133bb8f4428af3d28bd7534966a34b85bac"
+  integrity sha512-QaHZHGXU9QXCO02CcN0o3TVBOzkJSRuxLc33ox/j0Y+4+rHf1vIXEjICHH4KE6kR1Fs4oyY/Um77py4W5phZYA==
 
 "@floating-ui/core@^1.4.1":
   version "1.4.1"
