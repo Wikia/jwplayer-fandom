@@ -146,7 +146,7 @@
 		"react": "^16.14.0 || ^17.0.2 || ^18.0.0",
 		"react-dom": "^16.14.0 || ^17.0.2 || ^18.0.0",
 		"react-i18next": "^11.7.1",
-		"@fandom/tracking-metrics": "^0.4.3"
+		"@fandom/tracking-metrics": "^0.4.4"
 	},
 	"dependencies": {
 		"@fandom-frontend/design-system": "15.18.1",
