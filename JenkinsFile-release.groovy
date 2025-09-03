@@ -8,6 +8,20 @@ DOCKER_IMAGE = 'node:18-slim'
 
 pipeline {
   agent { label 'docker-daemon' }
+
+  parameters {
+      choice(
+        name: 'version',
+        choices: ['patch', 'minor', 'major'],
+        description: 'Version bump type'
+      )
+      booleanParam(
+        name: 'dry_run',
+        defaultValue: false,
+        description: 'Run in dry-run mode (skip deployment steps)'
+      )
+    }
+
   options {
     buildDiscarder(
       // Reduces the size of builds and artifacts kept on Jenkins
