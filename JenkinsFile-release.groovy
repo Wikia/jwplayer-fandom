@@ -82,7 +82,9 @@ pipeline {
 
         stage('Track change start in Jira') {
           when {
-            not { params.dry_run }
+            not { 
+              params.dry_run == true 
+            }
           }
           steps {
             script {
@@ -104,7 +106,9 @@ pipeline {
 
         stage('publish') {
           when {
-            not { params.dry_run }
+            not { 
+              params.dry_run == true 
+            }
           }
           steps {
             script {
@@ -116,7 +120,9 @@ pipeline {
 
         stage('Track change completion in Jira') {
           when {
-            not { params.dry_run }
+            not { 
+              params.dry_run == true 
+            }
           }
           steps {
             script {
