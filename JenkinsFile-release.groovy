@@ -72,6 +72,8 @@ pipeline {
         stage('fetch version') {
           steps {
             script {
+              sh 'git config --global user.name "Sir Jenkins"'
+              sh 'git config --global user.email "jenkins@fandom.com"'
               imageTag = sh(returnStdout: true, script: "npm version "+params.version).trim()
               FAILED_STAGE = 'version'
             }
@@ -79,6 +81,9 @@ pipeline {
         }
 
         stage('Track change start in Jira') {
+          when {
+            not { params.dry_run }
+          }
           steps {
             script {
               trackingKey = releaseTracking.deployStart(
@@ -98,6 +103,9 @@ pipeline {
         }
 
         stage('publish') {
+          when {
+            not { params.dry_run }
+          }
           steps {
             script {
               sh("yarn pub")
@@ -107,6 +115,9 @@ pipeline {
         }
 
         stage('Track change completion in Jira') {
+          when {
+            not { params.dry_run }
+          }
           steps {
             script {
               releaseTracking.deployEnd(
