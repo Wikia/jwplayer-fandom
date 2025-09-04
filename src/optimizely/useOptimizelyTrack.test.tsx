@@ -20,13 +20,29 @@ const setup = (experimentId = '1234') => {
 	);
 };
 
+declare global {
+	interface Window {
+		fandomCmp?: {
+			ready: boolean;
+			optOut: boolean;
+			allowed: {
+				tracking: boolean;
+				ads: boolean;
+			};
+		};
+	}
+}
+
 describe('useOptimizelyTrack', () => {
-	it('should make a tracking request when experiment is active', () => {
+	beforeEach(() => {
+		window.fandomCmp = { ready: true, allowed: { tracking: true } } as unknown as typeof window.fandomCmp;
+	});
+	it('should make a tracking request when experiment is active', async () => {
 		const fetchMock = mockFetch();
 		mockOptimizely();
 		setup('1234');
 
-		act(() => {
+		await act(() => {
 			communicationService.dispatch({ type: '[Platform] optimizely loaded' });
 		});
 
