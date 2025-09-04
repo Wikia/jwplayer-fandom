@@ -8,6 +8,20 @@ DOCKER_IMAGE = 'node:18-slim'
 
 pipeline {
   agent { label 'docker-daemon' }
+
+  parameters {
+      choice(
+        name: 'version',
+        choices: ['patch', 'minor', 'major'],
+        description: 'Version bump type'
+      )
+      booleanParam(
+        name: 'dry_run',
+        defaultValue: false,
+        description: 'Run in dry-run mode (skip deployment steps)'
+      )
+    }
+
   options {
     buildDiscarder(
       // Reduces the size of builds and artifacts kept on Jenkins
@@ -72,6 +86,8 @@ pipeline {
         stage('fetch version') {
           steps {
             script {
+              sh 'git config --global user.name "Sir Jenkins"'
+              sh 'git config --global user.email "jenkins@fandom.com"'
               imageTag = sh(returnStdout: true, script: "npm version "+params.version).trim()
               FAILED_STAGE = 'version'
             }
@@ -79,6 +95,9 @@ pipeline {
         }
 
         stage('Track change start in Jira') {
+          when {
+            expression { !params.dry_run }
+          }
           steps {
             script {
               trackingKey = releaseTracking.deployStart(
@@ -98,6 +117,9 @@ pipeline {
         }
 
         stage('publish') {
+          when {
+            expression { !params.dry_run }
+          }
           steps {
             script {
               sh("yarn pub")
@@ -107,6 +129,9 @@ pipeline {
         }
 
         stage('Track change completion in Jira') {
+          when {
+            expression { !params.dry_run }
+          }
           steps {
             script {
               releaseTracking.deployEnd(
