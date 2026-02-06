@@ -3,14 +3,14 @@
 1. Currently the `/src` folder at the root of the project and the `/stand-alone` folder at the root of the project
    are separate apps. The main JWPlayer code is all located in the `/src` folder.
 2. The stand-alone folder relies on the main JWPlayer code being compiled.
-3. In the /stand-alone/package.json file you'll notice that `"@fandom/jwplayer-fandom": "link:../dist"`
+3. In the /stand-alone/package.json file you'll notice that `"@wikia/jwplayer-fandom": "link:../dist"`
    entry is linked to the root project's `/dist` folder.
 4. You'll notice that the following `import` statement in the `/stand-alone/standalone-loader.tsx` file has a `@ts-ignore`
    annotation added, due to some typing issues that came up when doing local package linking:
 
 ```
 // @ts-ignore (This package does exist, after the fandom player is built with 'yarn build-fandom-player')
-import RedVentureVideoPlayer from '@fandom/jwplayer-fandom/RedVentureVideoPlayer';
+import RedVentureVideoPlayer from '@wikia/jwplayer-fandom/RedVentureVideoPlayer';
 ```
 
 5. This issue may need to be fixed in the future, specifically when trying to automate deployments through tools
@@ -51,6 +51,7 @@ import RedVentureVideoPlayer from '@fandom/jwplayer-fandom/RedVentureVideoPlayer
 8. Repeat steps 2-7 to redeploy new builds
 
 # Purging a file deployed to GCS
+
 In some instances, we may want to instantly purge a file that's hosted on GCS, and cached through Fandom's CDNs.
 This is not a simple thing to do, as it requires purging multiple CDN nodes at once.
 Fortunately, there is a script provided that can purge all the caches on which the stand-alone video player is cached on.

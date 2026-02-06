@@ -1,6 +1,6 @@
 {
-	"name": "@fandom/jwplayer-fandom",
-	"version": "2.16.4",
+	"name": "@wikia/jwplayer-fandom",
+	"version": "2.16.7",
 	"description": "JWPlayer for Fandom",
 	"engines": {
 		"node": ">=18.0.0"
@@ -79,7 +79,10 @@
 	"publishConfig": {
 		"registry": "https://artifactory.wikia-inc.com/artifactory/api/npm/wikia-npm/"
 	},
-	"repository": "git+https://github.com/Wikia/jwplayer-fandom.git",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Wikia/jwplayer-fandom.git"
+	},
 	"author": "Warren Leaverton <wleaverton@fandom.com>",
 	"license": "ISC",
 	"bugs": {

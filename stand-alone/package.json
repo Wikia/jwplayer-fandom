@@ -53,7 +53,7 @@
 		"zx": "^4.2.0"
 	},
 	"dependencies": {
-		"@fandom/jwplayer-fandom": "link:../dist",
+		"@wikia/jwplayer-fandom": "link:../dist",
 		"i18next": "^19.7.0",
 		"react": "^18.0.0",
 		"react-dom": "^18.0.0",

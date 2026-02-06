@@ -1,6 +1,6 @@
-import CanonicalVideoLoader from '@fandom/jwplayer-fandom/CanonicalVideoLoader';
-import { DesktopArticleVideoLoader } from '@fandom/jwplayer-fandom/DesktopArticleVideoLoader';
-import { MobileArticleVideoLoader } from '@fandom/jwplayer-fandom/MobileArticleVideoLoader';
+import CanonicalVideoLoader from '@wikia/jwplayer-fandom/CanonicalVideoLoader';
+import { DesktopArticleVideoLoader } from '@wikia/jwplayer-fandom/DesktopArticleVideoLoader';
+import { MobileArticleVideoLoader } from '@wikia/jwplayer-fandom/MobileArticleVideoLoader';
 
 import {
 	unblockPlayer,
