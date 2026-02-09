@@ -95,7 +95,7 @@ The first thing you need to do is to clone repo, install dependencies and run `y
 
 - Clone repo
 - Run `yarn install`
-- Run `yarn start` to build the player inside the `/dist` directory and watch for changes and start test app (which lives in `test-jw` directory)
+- Run `yarn start` to build the player inside the `/dist` directory and watch for changes and start test app (which lives in `test-jw` directory).
 - Open up the `App.js` file in `/test-jw/src/` and check that the right player is loading in the app.
   The default one that should be loaded is the `DesktopArticleVideoLoader`.
   This will load the Desktop version of the JWPlayer that's loaded on all of our wiki pages.
