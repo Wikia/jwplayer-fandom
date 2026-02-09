@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 // @ts-ignore (This package does exist, after the fandom player is built with 'yarn build-fandom-player')
-import RedVentureVideoPlayer from '@fandom/jwplayer-fandom/RedVentureVideoPlayer';
+import RedVentureVideoPlayer from '@wikia/jwplayer-fandom/RedVentureVideoPlayer';
 import {
 	assurePlayerUrl,
 	buildRedVentureVideoDetails,

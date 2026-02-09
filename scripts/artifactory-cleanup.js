@@ -22,7 +22,7 @@ const semver = require('semver');
 const packageJson = require('../package.json');
 
 const BASE_ARTIFATORY_URL = 'https://artifactory.wikia-inc.com/artifactory';
-const BASE_PACKAGE_PATH = '/npm-local/@fandom/jwplayer-fandom/-/@fandom';
+const BASE_PACKAGE_PATH = '/npm-local/@wikia/jwplayer-fandom/-/@fandom';
 const BASE_READ_PATH = `/api/storage${BASE_PACKAGE_PATH}`;
 const BASE_DELETE_PATH = BASE_PACKAGE_PATH;
 

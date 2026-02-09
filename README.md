@@ -2,6 +2,14 @@
 
 This repository contains Fandom's custom solution/wrapper for media reproduction to deliver seamless video experiences using [JWPlayer](https://developer.jwplayer.com/jwplayer/docs).
 
+> **⚠️ Security Note:** This package name is reserved for Fandom's internal use.
+
+This is a **dummy placeholder version** published to the public registry to prevent dependency confusion attacks. It does not contain functional code and should not be installed or used by external developers.
+
+### Internal Developers
+
+If you are looking for the actual library, please ensure your `.npmrc` or `yarn.lock` is configured to point to our internal Artifactory instance.
+
 **Note**:
 
 - This project is bundled up using [rollup](https://rollupjs.org/guide/en/#installation).
@@ -11,13 +19,13 @@ This repository contains Fandom's custom solution/wrapper for media reproduction
 1. Install the package in your project.
 
 ```bash
-yarn add jwplayer-fandom
+yarn add @wikia/jwplayer-fandom
 ```
 
 2. The main component is called `VideoPlayer` and accepts an URL with `mediaId` in its `playlist` prop.
 
 ```js
-import { VideoPlayer } from 'jwplayer-fandom';
+import { VideoPlayer } from '@wikia/jwplayer-fandom';
 
 function App() {
 	return (
@@ -41,7 +49,7 @@ The player has some initialization steps that need to happen client side, for th
 ```js
 import dynamic from 'next/dynamic';
 
-const JWPlayerFandom = dynamic(() => import('@fandom/jwplayer-fandom').then((module) => module.VideoPlayer), {
+const JWPlayerFandom = dynamic(() => import('@wikia/jwplayer-fandom').then((module) => module.VideoPlayer), {
 	ssr: false,
 });
 ```
