@@ -4,19 +4,19 @@ interface ScriptOptions {
 	id?: string;
 	async?: boolean;
 	className?: string;
-	onLoad: () => void;
+	onLoad?: () => void;
 }
 
 export default function useScript(
 	url: string,
 	parentNode: HTMLElement,
-	beforeLoad: () => void,
+	beforeLoad: () => void | null,
 	scriptOptions: ScriptOptions,
 ) {
 	const [scriptInjected, setScriptInjected] = useState(false);
 
 	useEffect(() => {
-		beforeLoad();
+		typeof beforeLoad === 'function' ? beforeLoad() : null;
 
 		const script = document.createElement('script');
 
