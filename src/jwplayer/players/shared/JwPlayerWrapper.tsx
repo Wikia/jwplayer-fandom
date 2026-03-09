@@ -133,6 +133,8 @@ const JwPlayerWrapper: React.FC<JwPlayerWrapperProps> = ({
 					VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_CONTENT_OR_AD,
 					VIDEO_RECORD_EVENTS.JW_PLAYER_READY,
 				);
+
+				recordAndTrackDifference(VIDEO_RECORD_EVENTS.JW_PLAYER_PLAYING_AD, VIDEO_RECORD_EVENTS.JW_PLAYER_READY);
 			});
 
 			playerInstance.on(JWEvents.READY, () => {
