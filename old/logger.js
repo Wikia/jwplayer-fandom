@@ -1,5 +1,5 @@
 function wikiaJWPlayerLogger(options) {
-	var servicesDomain = options.servicesDomain || 'services.wikia.com',
+	var servicesDomain = options.servicesDomain || 'services.fandom.com',
 		loggerPath = '/event-logger/',
 		loggerUrl = 'https://' + servicesDomain + loggerPath,
 		prefix = 'JWPlayer',
@@ -8,7 +8,7 @@ function wikiaJWPlayerLogger(options) {
 			info: 1,
 			warn: 2,
 			error: 3,
-			off: 4
+			off: 4,
 		},
 		loggerOptions = options.logger || {},
 		logLevel = loggerOptions.logLevel ? logLevels[loggerOptions.logLevel] : logLevels['error'],
@@ -26,7 +26,7 @@ function wikiaJWPlayerLogger(options) {
 	function logToService(resource, name, description) {
 		var request = new XMLHttpRequest(),
 			data = {
-				name: prefix + ' ' + name
+				name: prefix + ' ' + name,
 			};
 
 		if (description) {
@@ -97,6 +97,6 @@ function wikiaJWPlayerLogger(options) {
 		info: info,
 		warn: warn,
 		error: error,
-		subscribeToPlayerErrors: subscribeToPlayerErrors
+		subscribeToPlayerErrors: subscribeToPlayerErrors,
 	};
 }
