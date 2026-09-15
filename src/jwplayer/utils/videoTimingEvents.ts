@@ -7,6 +7,7 @@ export const VIDEO_RECORD_EVENTS = {
 	JW_PLAYER_READY: 'jw-player-ready',
 	JW_PLAYER_PLAYING_VIDEO_CONTENT: 'jw-player-playing-initial-video',
 	JW_PLAYER_PLAYING_CONTENT_OR_AD: 'jw-player-playing-content-or-ad',
+	JW_PLAYER_PLAYING_AD: 'jw-player-playing-ad',
 };
 
 export const STRATEGY_RULES_VIDEO_RECORD_EVENTS = {
@@ -16,6 +17,7 @@ export const STRATEGY_RULES_VIDEO_RECORD_EVENTS = {
 	JW_PLAYER_READY: 'jw-sr-player-ready',
 	JW_PLAYER_PLAYING_VIDEO_CONTENT: 'jw-sr-player-playing-initial-video',
 	JW_PLAYER_PLAYING_CONTENT_OR_AD: 'jw-sr-player-playing-content-or-ad',
+	JW_PLAYER_PLAYING_AD: 'jw-sr-player-playing-ad',
 };
 
 const recordOptions = { sampleRate: 1 };
