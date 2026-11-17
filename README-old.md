@@ -110,7 +110,7 @@ Id of DOM element where the player should be placed
     // client version
     clientVersion: string,
   },
-  // services domain, required by logging errors to event-logger service, default: 'services.wikia.com'
+  // services domain, required by logging errors to event-logger service, default: 'services.fandom.com'
   servicesDomian: string,
   // language code, default 'en'
   lang: string,

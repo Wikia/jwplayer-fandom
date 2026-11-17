@@ -1,5 +1,5 @@
 function wikiaJWPlayerLogger(options) {
-	var servicesDomain = options.servicesDomain || 'services.wikia.com',
+	var servicesDomain = options.servicesDomain || 'services.fandom.com',
 		loggerPath = '/event-logger/',
 		loggerUrl = 'https://' + servicesDomain + loggerPath,
 		prefix = 'JWPlayer',
